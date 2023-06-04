@@ -1,0 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+input:focus {
+  outline: none;
+}
+
+.login-screen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  font-size: 12px;
+}
+
+.login-screen .left {
+  background-color: #d9d9d9;
+  width: 714px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.login-screen .left .head {
+  left: 53px;
+  top: 36px;
+  position: absolute;
+}
+
+.login-screen .left .center {
+  display: flex;
+  flex-direction: column;
+  row-gap: 11px;
+  font-size: 31px;
+}
+
+.login-screen .left .center p {
+  font-size: 12px;
+}
+
+.login-screen .right {
+  width: 566px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  color: #4e4e4e;
+  position: relative;
+  padding-bottom: 22px;
+}
+
+.login-screen .right .container {
+  height: 680px;
+  width: 100%;
+  padding: 0 105px 0 105px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.login-screen .right .container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-screen .right .container h1 {
+  font-family: "Manrope", sans-serif;
+  font-size: 25px;
+  line-height: 34.15px;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.login-screen .right .container form .input {
+  border: none;
+  border-bottom: 1px solid #414141;
+  margin-top: 64px;
+  padding-bottom: 22px;
+}
+
+.login-screen .right .container form .forgotten {
+  font-weight: 400;
+  margin-top: 11px;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 35px;
+}
+.login-screen .right .container form .remember-me {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-weight: 400;
+  margin-bottom: 35px;
+}
+
+.login-screen .right .container form .remember-me input {
+  width: 23px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.login-screen .right .container form button {
+  height: 65px;
+}
+
+.login-screen .right .container form button.login-btn {
+  color: #fff;
+  background-color: #1a3e9c;
+  border: none;
+  margin-bottom: 50px;
+}
+
+.login-screen .right .container form button.create-account {
+  border: 1px solid #1a3e9c;
+  color: #1a3e9c;
+  background-color: #fff;
+  margin-top: 16px;
+}
+
+.login-screen .right .form-logo {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding-right: 48px;
+  margin-top: 47px;
+}
+
+@media screen and (max-height: 750px) {
+  .login-screen .right .container {
+    padding: 40px 85px 0 85px;
+  }
+
+  .login-screen .right .container form .input {
+    margin-top: 50px;
+  }
+
+  .login-screen .right .container form .forgotten {
+    padding-bottom: 20px;
+  }
+
+  .login-screen .right .container form button {
+    height: 50px;
+  }
+
+  .login-screen .right .container form button.login-btn {
+    margin-bottom: 30px;
+  }
+
+  .login-screen .right .form-logo {
+    padding-right: 10px;
+    margin-top: 10px;
+  }
+}
