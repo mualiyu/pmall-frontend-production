@@ -1,11 +1,13 @@
-import LoginScreen from "./pages/Login-screen";
+import React from 'react';
+import './App.css';
+import './assets/fonts/fonts/fonts.css';
+import Application from './components';
 
-
-function App() {
+function App(){
   return (
-    <div className="App">
-      <LoginScreen />
-    </div>
+      <div className="layout">
+        <Application />
+      </div>
   );
 }
 
