@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import './assets/fonts/fontello/css/cloud9.css';
 import './assets/fonts/fonts/fonts.css';
 import Application from './components';
 
