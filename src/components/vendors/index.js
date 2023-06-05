@@ -39,6 +39,7 @@ const columns = [
   { id: "plan", label: "Package" },
   { id: "prod_qty", label: "Prod. Qty" },
   { id: "status", label: "Status" },
+  { id: "registered", label: "Registered" },
   { id: "action", label: "" },
 ];
 
@@ -64,8 +65,8 @@ const data = {
 
 
 
-function createData(vendor, location, email, phone, plan, product_qty, status, action) {
-  return { vendor, location, email, phone, plan, product_qty, status, action };
+function createData(vendor, location, email, phone, plan, product_qty, status, registered, action) {
+  return { vendor, location, email, phone, plan, product_qty, status, registered, action };
 }
 
 const Vendors = () => {
@@ -184,6 +185,7 @@ const Vendors = () => {
                 {" "}
                 <span className="badge bg-error">Inactive </span>
               </TableCell>
+              <TableCell> June 12, 1982 </TableCell>
               <TableCell>
                 {" "}
                 <MoreVertIcon />{" "}
@@ -211,6 +213,7 @@ const Vendors = () => {
                 {" "}
                 <span className="badge bg-error">Inactive </span>
               </TableCell>
+              <TableCell> June 12, 1982 </TableCell>
               <TableCell>
                 {" "}
                 <MoreVertIcon />{" "}
@@ -238,6 +241,7 @@ const Vendors = () => {
                 {" "}
                 <span className="badge bg-error">Inactive </span>
               </TableCell>
+              <TableCell> June 12, 1982 </TableCell>
               <TableCell>
                 {" "}
                 <MoreVertIcon />{" "}
@@ -264,6 +268,7 @@ const Vendors = () => {
                 {" "}
                 <span className="badge bg-success">Active </span>
               </TableCell>
+              <TableCell> June 12, 1982 </TableCell>
               <TableCell>
                 {" "}
                 <MoreVertIcon />{" "}

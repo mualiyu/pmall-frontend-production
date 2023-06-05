@@ -40,6 +40,7 @@ const columns = [
   { id: "store", label: "Assigned Store" },
   { id: "account_type", label: "User Type" },
   { id: "status", label: "Status" },
+  { id: "registered", label: "Registered" },
   { id: "action", label: "" },
 ];
 
@@ -64,8 +65,8 @@ const data = {
 
 
 
-function createData(user, email, contact, store, account_type, status, action) {
-  return { user, email, contact, store, account_type, status, action };
+function createData(user, email, contact, store, account_type, status, registered, action) {
+  return { user, email, contact, store, account_type, status, registered, action };
 }
 
 const Users = () => {
@@ -160,6 +161,7 @@ const Users = () => {
                 {" "}
                 <span className="badge bg-success">Active</span>{" "}
               </TableCell>
+              <TableCell> June 12, 1982 </TableCell>
               <TableCell>
                 {" "}
                 <MoreVertIcon />{" "}
@@ -194,6 +196,7 @@ const Users = () => {
                 {" "}
                 <span className="badge bg-error">Inactive </span>
               </TableCell>
+              <TableCell> June 12, 1982 </TableCell>
               <TableCell>
                 {" "}
                 <MoreVertIcon />{" "}
@@ -227,6 +230,7 @@ const Users = () => {
                 {" "}
                 <span className="badge bg-error">Inactive </span>
               </TableCell>
+              <TableCell> June 12, 1982 </TableCell>
               <TableCell>
                 {" "}
                 <MoreVertIcon />{" "}
@@ -259,6 +263,7 @@ const Users = () => {
                 {" "}
                 <span className="badge bg-error">Inactive </span>
               </TableCell>
+              <TableCell> June 12, 1982 </TableCell>
               <TableCell>
                 {" "}
                 <MoreVertIcon />{" "}
@@ -291,6 +296,7 @@ const Users = () => {
                 {" "}
                 <span className="badge bg-success">Active </span>
               </TableCell>
+              <TableCell> June 12, 1982 </TableCell>
               <TableCell>
                 {" "}
                 <MoreVertIcon />{" "}
