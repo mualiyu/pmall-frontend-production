@@ -5,8 +5,8 @@ import Typography from "@mui/material/Typography";
 
 export default function NewModal(props) {
     
-    const [newBusModal, setNewBusModal] = useState(false);
-    const handleModalClose = () => setNewBusModal(false);
+    const [newModal, setNewModal] = useState(false);
+    const handleModalClose = () => setNewModal(false);
 
 
     const style = {
