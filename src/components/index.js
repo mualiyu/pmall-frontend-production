@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./auth/login";
+import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
 import Users from "./users";
 import Vendors from "./vendors";
@@ -12,6 +13,7 @@ function Application() {
         <Switch>
           <React.Fragment>
             <Route path="/app/Login" component={Login} />
+            <Route path="/app/Signup" component={SignUp} />
             <div className="flex-container">
               <div className="sidenav">
                 <Sidebar />
