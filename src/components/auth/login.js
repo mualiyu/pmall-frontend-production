@@ -1,4 +1,5 @@
 import react from "react";
+import { Link } from "react-router-dom";
 import useForm from "../../utils/useForm";
 
 const Login = () => {
@@ -60,7 +61,7 @@ const Login = () => {
             </span>
             <button className="login-btn"  type="submit" onClick={loginHandler}>Login</button>
             <p>Don't have an account yet?</p>
-            <button className="create-account">Create account</button>
+            <Link to="/app/Signup"><button className="create-account">Create account</button></Link>
         </form>
     </div>
     <div className="form-logo">

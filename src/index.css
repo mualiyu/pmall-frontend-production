@@ -5,18 +5,17 @@
   --color-chalk: #e3e3e3;
 }
 
-
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -31,28 +30,67 @@ input:focus {
   outline: none;
 }
 
-.login-screen {
+button {
+  cursor: pointer;
+}
+
+.purple {
+  color: #800081;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.login-screen,
+.signup-screen {
   width: 100%;
   height: 100vh;
   display: flex;
   font-size: 12px;
 }
 
-.login-screen .left {
+.signup-screen {
+  display: flex;
+}
+
+.login-screen .left,
+.signup-screen .left {
   background-color: #d9d9d9;
   width: 714px;
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.login-screen .left {
   align-items: center;
   justify-content: center;
-  position: relative;
+}
+
+.signup-screen .left {
+  width: 100%;
+  justify-content: space-between;
 }
 
 .login-screen .left .head {
   left: 53px;
   top: 36px;
   position: absolute;
+}
+
+.signup-screen .left .head {
+  padding-left: 53px;
+  padding-top: 36px;
+}
+
+.signup-screen .left .copyright-footer {
+  padding-bottom: 33px;
+  display: flex;
+  justify-content: center;
+  font-weight: 400;
+  color: #4e4e4e;
 }
 
 .login-screen .left .center {
@@ -66,8 +104,8 @@ input:focus {
   font-size: 12px;
 }
 
-.login-screen .right {
-  width: 566px;
+.login-screen .right,
+.signup-screen .right {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -75,16 +113,38 @@ input:focus {
   align-items: center;
   color: #4e4e4e;
   position: relative;
+}
+
+.login-screen .right {
+  width: 566px;
   padding-bottom: 22px;
+}
+
+.signup-screen .right {
+  padding-bottom: 15px;
+}
+
+.signup-screen .right {
+  width: 100%;
+}
+
+.login-screen .right .container,
+.signup-screen .right .main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .login-screen .right .container {
   height: 680px;
   width: 100%;
   padding: 0 105px 0 105px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+}
+
+.signup-screen .right .main {
+  height: 721px;
+  width: 100%;
+  padding: 0 68px 0 60px;
 }
 
 .login-screen .right .container form {
@@ -92,7 +152,8 @@ input:focus {
   flex-direction: column;
 }
 
-.login-screen .right .container h1 {
+.login-screen .right .container h1,
+.signup-screen .right .main h1 {
   font-family: "Manrope", sans-serif;
   font-size: 25px;
   line-height: 34.15px;
@@ -100,11 +161,61 @@ input:focus {
   color: #000;
 }
 
-.login-screen .right .container form .input {
-  border: none;
-  border-bottom: 1px solid #414141;
-  margin-top: 64px;
+.signup-screen .right .main .right-head {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.signup-screen .right .main .vendor-affilate-container {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.signup-screen .right .main .vendor-affilate-container .vendor-affilate {
+  display: flex;
+  gap: 56px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.signup-screen .right .main .line {
+  display: flex;
+  width: 39px;
+  height: 5px;
+  position: absolute;
+  top: 20px;
+  right: 110px;
+  background: #800081;
+}
+
+.signup-screen .right .main form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-screen .right .container form .input,
+.signup-screen .right .main form input {
   padding-bottom: 22px;
+}
+
+.signup-screen .right .main form .flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.signup-screen .right .main form .flex input.email {
+  width: 280px;
+}
+
+.signup-screen .right .main form .flex input.phone {
+  width: 192px;
+}
+
+.signup-screen .right .main form .flex .pos-rel {
+  width: 100%;
 }
 
 .login-screen .right .container form .forgotten {
@@ -114,6 +225,7 @@ input:focus {
   justify-content: flex-end;
   padding-bottom: 35px;
 }
+
 .login-screen .right .container form .remember-me {
   display: flex;
   align-items: center;
@@ -122,13 +234,27 @@ input:focus {
   margin-bottom: 35px;
 }
 
-.login-screen .right .container form .remember-me input {
+.login-screen .right .container form .remember-me input,
+.signup-screen .right .main form .t-and-c input {
   width: 23px;
   height: 22px;
   cursor: pointer;
 }
 
-.login-screen .right .container form button {
+.signup-screen .right .main form .t-and-c {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 25px;
+  font-size: 12px;
+}
+
+.signup-screen .right .main form .t-and-c input {
+  margin-top: 0;
+}
+
+.login-screen .right .container form button,
+.signup-screen .right .main form button {
   height: 65px;
 }
 
@@ -137,6 +263,8 @@ input:focus {
   background-color: #1a3e9c;
   border: none;
   margin-bottom: 50px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .login-screen .right .container form button.create-account {
@@ -144,9 +272,32 @@ input:focus {
   color: #1a3e9c;
   background-color: #fff;
   margin-top: 16px;
+  width: 100%;
 }
 
-.login-screen .right .form-logo {
+.signup-screen .right .main form button.continue-btn {
+  color: #fff;
+  background-color: #800081;
+  border: none;
+  margin-bottom: 36px;
+}
+
+.signup-screen .right .main form button.back-to-login {
+  border: 1px solid #800081;
+  color: #800081;
+  background-color: #fff;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.signup-screen .right .main form .have-an-account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-screen .right .form-logo,
+.signup-screen .right .form-logo {
   display: flex;
   width: 100%;
   justify-content: flex-end;
@@ -155,19 +306,38 @@ input:focus {
 }
 
 @media screen and (max-height: 750px) {
+  .login-screen .right {
+    padding-bottom: 8px;
+  }
+
+  .signup-screen .right {
+    padding-bottom: 0;
+  }
+
   .login-screen .right .container {
-    padding: 40px 85px 0 85px;
+    padding: 20px 85px 0 85px;
+    justify-content: flex-start;
   }
 
   .login-screen .right .container form .input {
     margin-top: 50px;
   }
 
+  .signup-screen .right .main form .pos-rel input {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
   .login-screen .right .container form .forgotten {
     padding-bottom: 20px;
   }
 
-  .login-screen .right .container form button {
+  .signup-screen .right .main form .t-and-c {
+    margin-bottom: 10px;
+  }
+
+  .login-screen .right .container form button,
+  .signup-screen .right .main form button {
     height: 50px;
   }
 
@@ -175,7 +345,12 @@ input:focus {
     margin-bottom: 30px;
   }
 
-  .login-screen .right .form-logo {
+  .signup-screen .right .main form button.continue-btn {
+    margin-bottom: 15px;
+  }
+
+  .login-screen .right .form-logo,
+  .signup-screen .right .form-logo {
     padding-right: 10px;
     margin-top: 10px;
   }
