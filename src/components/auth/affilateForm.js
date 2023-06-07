@@ -7,29 +7,6 @@ const AffilateForm = ({inputValues, onChangeHandler}) => {
         <span className="affilate-form">
             <span className="flex">
                 <div className="pos-rel">
-                    <label className="abs py-10"> Username *</label>
-                    <input
-                        type="text" 
-                        name="userName" 
-                        className="form-control" 
-                        onChange={onChangeHandler}
-                        value={inputValues.userName || ""}
-                    />
-                </div>
-
-                <div className="pos-rel email">
-                    <label className="abs py-10"> Email *</label>
-                    <input
-                        type="email" 
-                        name="email" 
-                        className="form-control" 
-                        onChange={onChangeHandler}
-                        value={inputValues.email || ""}
-                    />
-                </div>
-            </span>
-            <span className="flex">
-                <div className="pos-rel">
                     <label className="abs py-10"> First Name * </label>
                     <input
                         type="text" 
@@ -48,6 +25,39 @@ const AffilateForm = ({inputValues, onChangeHandler}) => {
                         onChange={onChangeHandler}
                         value={inputValues.lastName || ""}
                     />
+                </div>
+            </span>
+            <div className="pos-rel flex">
+                <label className="abs py-10"> Email *</label>
+                <input
+                    type="email" 
+                    name="email" 
+                    className="form-control" 
+                    onChange={onChangeHandler}
+                    value={inputValues.email || ""}
+                />
+            </div>
+            <span className="flex">
+                <div className="pos-rel">
+                    <label className="abs py-10"> Username *</label>
+                    <input
+                        type="text" 
+                        name="userName" 
+                        className="form-control" 
+                        onChange={onChangeHandler}
+                        value={inputValues.userName || ""}
+                    />
+                </div>
+
+                <div className="pos-rel">
+                <label className="abs py-10"> Phone Number * </label>
+                <input
+                    type="number" 
+                    name="phoneNumber" 
+                    className="form-control"
+                    onChange={onChangeHandler}
+                    value={inputValues.phoneNumber || ""}
+                />
                 </div>
             </span>
             <span className="flex">

@@ -122,10 +122,11 @@ button {
 
 .signup-screen .right {
   padding-bottom: 15px;
+  width: 100%;
 }
 
-.signup-screen .right {
-  width: 100%;
+.signup-screen .right.pb-0 {
+  padding-bottom: 0;
 }
 
 .login-screen .right .container,
@@ -199,6 +200,10 @@ button {
   display: flex;
   flex-direction: column;
   margin-bottom: 47px;
+}
+
+.signup-screen .right .main form.affilate {
+  margin-bottom: 10px;
 }
 
 .login-screen .right .container form .input,
@@ -298,6 +303,10 @@ button {
   margin-bottom: 36px;
 }
 
+.signup-screen .right .main form button.continue-btn.affilate {
+  margin-bottom: 16px;
+}
+
 .signup-screen .right .main form button.back-to-login {
   border: 1px solid #800081;
   color: #800081;
@@ -332,6 +341,7 @@ button {
   .login-screen .right .container {
     padding: 20px 85px 0 85px;
     justify-content: flex-start;
+    height: auto;
   }
 
   .login-screen .right .container form .input {
@@ -342,13 +352,17 @@ button {
     margin-bottom: 10px;
   }
 
+  .signup-screen .right .main form.affilate {
+    margin-bottom: 0px;
+  }
+
   .signup-screen .right .main form .pos-rel input {
     padding-top: 20px;
     padding-bottom: 20px;
   }
 
   .signup-screen .right .main form .affilate-form .pos-rel .form-control {
-    margin: 13px 0;
+    margin: 10px 0;
   }
 
   .login-screen .right .container form .forgotten {
@@ -364,12 +378,20 @@ button {
     height: 50px;
   }
 
+  .signup-screen .right .main form button.affilate {
+    height: 40px;
+  }
+
   .login-screen .right .container form button.login-btn {
     margin-bottom: 30px;
   }
 
   .signup-screen .right .main form button.continue-btn {
     margin-bottom: 15px;
+  }
+
+  .signup-screen .right .main form button.continue-btn.affilate {
+    margin-bottom: 8px;
   }
 
   .login-screen .right .form-logo,

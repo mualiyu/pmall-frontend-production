@@ -12,12 +12,14 @@ function Application() {
       <div>
         <Switch>
           <React.Fragment>
-            <Route path="/app/Login" component={Login} />
-            <Route path="/app/Signup" component={SignUp} />
+            <Route path="/auth/app/Login" component={Login} />
+            <Route path="/auth/app/Signup" component={SignUp} />
             <div className="flex-container">
-              <div className="sidenav">
-                <Sidebar />
-              </div>
+              <Route  path="/app">
+                <div className="sidenav">
+                  <Sidebar />
+                </div>
+              </Route>
               <div className="main__content">
                 <Route path="/app/manage-users" component={Users} />
                 <Route path="/app/manage-vendors" component={Vendors} />

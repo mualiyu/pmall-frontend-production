@@ -61,7 +61,7 @@ const Login = () => {
             </span>
             <button className="login-btn"  type="submit" onClick={loginHandler}>Login</button>
             <p>Don't have an account yet?</p>
-            <Link to="/app/Signup"><button className="create-account">Create account</button></Link>
+            <Link to="/auth/app/Signup"><button className="create-account">Create account</button></Link>
         </form>
     </div>
     <div className="form-logo">

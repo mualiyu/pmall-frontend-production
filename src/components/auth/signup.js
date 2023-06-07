@@ -26,7 +26,7 @@ const SignUp = () => {
                 <p className="head">Admin Login</p>
                 <p className="copyright-footer">Copyright  2023 - All rights reserved</p>
             </div>
-            <div className="right">
+            <div className={`right ${!vendorForm && "pb-0"}`}>
                 <div className="main">
                     <h1>Create new account</h1>
                     <p className="right-head">Connecting people and services</p>
@@ -37,7 +37,7 @@ const SignUp = () => {
                         </div>
                         <span className={`line  ${!vendorForm && "affilate"}`}></span>
                     </div>
-                    <form action="">
+                    <form action="" className={!vendorForm && "affilate"}>
                         {vendorForm?<VendorForm inputValues = {inputValues} onChangeHandler={onChangeHandler} onSubmitHandler= {onChangeHandler}/>:<AffilateForm inputValues = {inputValues} onChangeHandler={onChangeHandler} onSubmitHandler= {onChangeHandler}/>}
                         <span className="t-and-c">
                         <input
@@ -47,13 +47,13 @@ const SignUp = () => {
                         <p>I agree to the <Link to="/app/Terms" className="purple">terms</Link> and <Link to="/app/Conditions" className="purple">conditions</Link> of Pmall Nigeria</p>
                         </span>
                         <button
-                            className="continue-btn" 
+                            className={`continue-btn ${!vendorForm && "affilate"}`} 
                             onClick={signUpHandler}
                         >
                             Continue
                         </button>
                         <p className="have-an-account">Already have an account?</p>
-                        <Link to="/app/Login"><button className="back-to-login">Back to Login</button></Link>
+                        <Link to="/auth/app/Login"><button className={`back-to-login ${!vendorForm && "affilate"}`}>Back to Login</button></Link>
                     </form>
                 </div>
                 <div className="form-logo">
