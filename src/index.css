@@ -186,13 +186,19 @@ button {
   height: 5px;
   position: absolute;
   top: 20px;
-  right: 110px;
+  transform: translateX(-110px);
   background: #800081;
+  transition: all 0.5s;
+}
+
+.signup-screen .right .main .line.affilate {
+  transform: translateX(-15px);
 }
 
 .signup-screen .right .main form {
   display: flex;
   flex-direction: column;
+  margin-bottom: 47px;
 }
 
 .login-screen .right .container form .input,
@@ -206,16 +212,26 @@ button {
   gap: 20px;
 }
 
-.signup-screen .right .main form .flex input.email {
-  width: 280px;
-}
-
-.signup-screen .right .main form .flex input.phone {
-  width: 192px;
-}
-
 .signup-screen .right .main form .flex .pos-rel {
   width: 100%;
+}
+
+.signup-screen .right .main form .flex .pos-rel.email {
+  width: 120%;
+}
+
+.signup-screen .right .main form .flex .pos-rel.phone {
+  width: 80%;
+}
+
+.signup-screen .right .main form .affilate-form .pos-rel label {
+  padding: 0 10px;
+  top: -5px;
+}
+
+.signup-screen .right .main form .affilate-form .pos-rel .form-control {
+  margin: 20px 0;
+  padding: 15px 10px;
 }
 
 .login-screen .right .container form .forgotten {
@@ -302,7 +318,6 @@ button {
   width: 100%;
   justify-content: flex-end;
   padding-right: 48px;
-  margin-top: 47px;
 }
 
 @media screen and (max-height: 750px) {
@@ -323,9 +338,17 @@ button {
     margin-top: 50px;
   }
 
+  .signup-screen .right .main form {
+    margin-bottom: 10px;
+  }
+
   .signup-screen .right .main form .pos-rel input {
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+
+  .signup-screen .right .main form .affilate-form .pos-rel .form-control {
+    margin: 13px 0;
   }
 
   .login-screen .right .container form .forgotten {
@@ -352,6 +375,5 @@ button {
   .login-screen .right .form-logo,
   .signup-screen .right .form-logo {
     padding-right: 10px;
-    margin-top: 10px;
   }
 }
