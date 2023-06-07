@@ -43,19 +43,17 @@ button {
 }
 
 .login-screen,
-.signup-screen {
+.signup-screen,
+.reset-password {
   width: 100%;
   height: 100vh;
   display: flex;
   font-size: 12px;
 }
 
-.signup-screen {
-  display: flex;
-}
-
 .login-screen .left,
-.signup-screen .left {
+.signup-screen .left,
+.reset-password .left {
   background-color: #d9d9d9;
   width: 714px;
   height: 100%;
@@ -64,7 +62,8 @@ button {
   position: relative;
 }
 
-.login-screen .left {
+.login-screen .left,
+.reset-password .left {
   align-items: center;
   justify-content: center;
 }
@@ -74,7 +73,8 @@ button {
   justify-content: space-between;
 }
 
-.login-screen .left .head {
+.login-screen .left .head,
+.reset-password .left .head {
   left: 53px;
   top: 36px;
   position: absolute;
@@ -93,19 +93,30 @@ button {
   color: #4e4e4e;
 }
 
-.login-screen .left .center {
+.login-screen .left .center,
+.reset-password .left .center {
   display: flex;
   flex-direction: column;
   row-gap: 11px;
   font-size: 31px;
+  color: #000;
 }
 
-.login-screen .left .center p {
+.login-screen .left .center h3,
+.reset-password .left .center h3 {
+  font-size: 31px;
+  font-weight: 500;
+  line-height: 37.52px;
+}
+
+.login-screen .left .center p,
+.reset-password .left .center p {
   font-size: 12px;
 }
 
 .login-screen .right,
-.signup-screen .right {
+.signup-screen .right,
+.reset-password .right {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -115,7 +126,8 @@ button {
   position: relative;
 }
 
-.login-screen .right {
+.login-screen .right,
+.reset-password .right {
   width: 566px;
   padding-bottom: 22px;
 }
@@ -130,16 +142,21 @@ button {
 }
 
 .login-screen .right .container,
-.signup-screen .right .main {
+.signup-screen .right .main,
+.reset-password .right .container {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-.login-screen .right .container {
-  height: 680px;
+.login-screen .right .container,
+.reset-password .right .container {
   width: 100%;
   padding: 0 105px 0 105px;
+}
+
+.login-screen .right .container {
+  height: 680px;
 }
 
 .signup-screen .right .main {
@@ -148,13 +165,25 @@ button {
   padding: 0 68px 0 60px;
 }
 
-.login-screen .right .container form {
+.reset-password .right .container {
+  margin-top: 135px;
+}
+
+.login-screen .right .container form,
+.reset-password .right .container form {
   display: flex;
   flex-direction: column;
 }
 
+.reset-password .right .container form {
+  margin-top: 50px;
+  justify-content: space-between;
+  height: 400px;
+}
+
 .login-screen .right .container h1,
-.signup-screen .right .main h1 {
+.signup-screen .right .main h1,
+.reset-password .right .container h1 {
   font-family: "Manrope", sans-serif;
   font-size: 25px;
   line-height: 34.15px;
@@ -207,7 +236,8 @@ button {
 }
 
 .login-screen .right .container form .input,
-.signup-screen .right .main form input {
+.signup-screen .right .main form input,
+.reset-password .right .container form .input {
   padding-bottom: 22px;
 }
 
@@ -275,25 +305,38 @@ button {
 }
 
 .login-screen .right .container form button,
-.signup-screen .right .main form button {
+.signup-screen .right .main form button,
+.reset-password .right .container form button {
   height: 65px;
 }
 
-.login-screen .right .container form button.login-btn {
+.login-screen .right .container form button.login-btn,
+.reset-password .right .container form button.reset-btn {
   color: #fff;
   background-color: #1a3e9c;
   border: none;
   margin-bottom: 50px;
   font-size: 12px;
   font-weight: 500;
+  width: 100%;
 }
 
-.login-screen .right .container form button.create-account {
+.reset-password .right .container form button.reset-btn {
+  background-color: #800081;
+}
+
+.login-screen .right .container form button.create-account,
+.reset-password .right .container form button.back-to-login {
   border: 1px solid #1a3e9c;
   color: #1a3e9c;
   background-color: #fff;
   margin-top: 16px;
   width: 100%;
+}
+
+.reset-password .right .container form button.back-to-login {
+  border: 1px solid #800081;
+  color: #800081;
 }
 
 .signup-screen .right .main form button.continue-btn {
@@ -322,7 +365,8 @@ button {
 }
 
 .login-screen .right .form-logo,
-.signup-screen .right .form-logo {
+.signup-screen .right .form-logo,
+.reset-password .right .form-logo {
   display: flex;
   width: 100%;
   justify-content: flex-end;
@@ -330,7 +374,8 @@ button {
 }
 
 @media screen and (max-height: 750px) {
-  .login-screen .right {
+  .login-screen .right,
+  .reset-password .right {
     padding-bottom: 8px;
   }
 
@@ -344,12 +389,20 @@ button {
     height: auto;
   }
 
+  .reset-password .right .container {
+    margin-top: 35px;
+  }
+
   .login-screen .right .container form .input {
     margin-top: 50px;
   }
 
   .signup-screen .right .main form {
     margin-bottom: 10px;
+  }
+
+  .reset-password .right .container form {
+    height: 350px;
   }
 
   .signup-screen .right .main form.affilate {
@@ -395,7 +448,8 @@ button {
   }
 
   .login-screen .right .form-logo,
-  .signup-screen .right .form-logo {
+  .signup-screen .right .form-logo,
+  .reset-password .right .form-logo {
     padding-right: 10px;
   }
 }

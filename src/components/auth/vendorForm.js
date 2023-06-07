@@ -29,7 +29,7 @@ const VendorForm = ({inputValues, onChangeHandler, onSubmitHandler}) => {
                 <div className="pos-rel phone">
                     <label className="abs py-10"> Phone Number *</label>
                     <input
-                        type="text" 
+                        type="number" 
                         name="phoneNumber" 
                         className="form-control"
                         onChange={onChangeHandler}

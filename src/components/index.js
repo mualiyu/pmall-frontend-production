@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./auth/login";
+import ResetPassword from "./auth/passwordReset";
 import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
 import Users from "./users";
@@ -14,6 +15,7 @@ function Application() {
           <React.Fragment>
             <Route path="/auth/app/Login" component={Login} />
             <Route path="/auth/app/Signup" component={SignUp} />
+            <Route path="/auth/app/Reset-password" component={ResetPassword} />
             <div className="flex-container">
               <Route  path="/app">
                 <div className="sidenav">
