@@ -15,20 +15,19 @@ function Application() {
       <div>
         <Switch>
           <React.Fragment>
+            {/* <Route path="/app/Login" component={Login} /> */}
             <Route path="/auth/app/Login" component={Login} />
             <Route path="/auth/app/Signup" component={SignUp} />
             <Route path="/auth/app/Reset-password" component={ResetPassword} />
             <Route path="/auth/app/Set-new-password" component={NewPasswordPage} />
             <div className="flex-container">
-              <Route  path="/app">
-                <div className="sidenav">
-                  <Sidebar />
-                </div>
-              </Route>
+              <div className="sidenav">
+                <Sidebar />
+              </div>
               <div className="main__content">
                 <Route path="/app/manage-users" component={Users} />
                 <Route path="/app/manage-vendors" component={Vendors} />
-                <Route path="/pmall" component={Store} />
+                <Route path="/" component={Store} />
               </div>
             </div>
           </React.Fragment>
