@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./auth/login";
+import NewPasswordPage from "./auth/newPasswordPage";
 import ResetPassword from "./auth/passwordReset";
 import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
@@ -16,6 +17,7 @@ function Application() {
             <Route path="/auth/app/Login" component={Login} />
             <Route path="/auth/app/Signup" component={SignUp} />
             <Route path="/auth/app/Reset-password" component={ResetPassword} />
+            <Route path="/auth/app/Set-new-password" component={NewPasswordPage} />
             <div className="flex-container">
               <Route  path="/app">
                 <div className="sidenav">

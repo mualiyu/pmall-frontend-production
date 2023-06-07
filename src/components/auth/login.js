@@ -54,7 +54,7 @@ const Login = () => {
             />
           </div>
 
-            <p className="forgotten">forgotten?</p>
+            <Link to="/auth/app/Reset-password" className="forgotten"><p>forgotten?</p></Link>
             <span className="remember-me">
                 <input type="checkbox" name="remember-me" />
                 <p>Remember me</p>

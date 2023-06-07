@@ -5,6 +5,12 @@
   --color-chalk: #e3e3e3;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -40,6 +46,12 @@ button {
 
 .pointer {
   cursor: pointer;
+}
+
+.gap-10 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .login-screen,
@@ -275,6 +287,7 @@ button {
   display: flex;
   justify-content: flex-end;
   padding-bottom: 35px;
+  text-decoration: none;
 }
 
 .login-screen .right .container form .remember-me {
@@ -323,6 +336,10 @@ button {
 
 .reset-password .right .container form button.reset-btn {
   background-color: #800081;
+}
+
+.new-password .right .container form button.reset-btn {
+  margin-bottom: 0;
 }
 
 .login-screen .right .container form button.create-account,
