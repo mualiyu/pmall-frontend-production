@@ -1,4 +1,5 @@
 import react from "react";
+import { Link } from "react-router-dom";
 import useForm from "../../utils/useForm";
 
 const Login = () => {
@@ -53,14 +54,14 @@ const Login = () => {
             />
           </div>
 
-            <p className="forgotten">forgotten?</p>
+            <Link to="/auth/app/Reset-password" className="forgotten"><p>forgotten?</p></Link>
             <span className="remember-me">
                 <input type="checkbox" name="remember-me" />
                 <p>Remember me</p>
             </span>
             <button className="login-btn"  type="submit" onClick={loginHandler}>Login</button>
             <p>Don't have an account yet?</p>
-            <button className="create-account">Create account</button>
+            <Link to="/auth/app/Signup"><button className="create-account">Create account</button></Link>
         </form>
     </div>
     <div className="form-logo">

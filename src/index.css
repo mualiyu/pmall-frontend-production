@@ -5,18 +5,23 @@
   --color-chalk: #e3e3e3;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -31,43 +36,99 @@ input:focus {
   outline: none;
 }
 
-.login-screen {
+button {
+  cursor: pointer;
+}
+
+.purple {
+  color: #800081;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.gap-10 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-screen,
+.signup-screen,
+.reset-password {
   width: 100%;
   height: 100vh;
   display: flex;
   font-size: 12px;
 }
 
-.login-screen .left {
+.login-screen .left,
+.signup-screen .left,
+.reset-password .left {
   background-color: #d9d9d9;
   width: 714px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   position: relative;
 }
 
-.login-screen .left .head {
+.login-screen .left,
+.reset-password .left {
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-screen .left {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.login-screen .left .head,
+.reset-password .left .head {
   left: 53px;
   top: 36px;
   position: absolute;
 }
 
-.login-screen .left .center {
+.signup-screen .left .head {
+  padding-left: 53px;
+  padding-top: 36px;
+}
+
+.signup-screen .left .copyright-footer {
+  padding-bottom: 33px;
+  display: flex;
+  justify-content: center;
+  font-weight: 400;
+  color: #4e4e4e;
+}
+
+.login-screen .left .center,
+.reset-password .left .center {
   display: flex;
   flex-direction: column;
   row-gap: 11px;
   font-size: 31px;
+  color: #000;
 }
 
-.login-screen .left .center p {
+.login-screen .left .center h3,
+.reset-password .left .center h3 {
+  font-size: 31px;
+  font-weight: 500;
+  line-height: 37.52px;
+}
+
+.login-screen .left .center p,
+.reset-password .left .center p {
   font-size: 12px;
 }
 
-.login-screen .right {
-  width: 566px;
+.login-screen .right,
+.signup-screen .right,
+.reset-password .right {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -75,24 +136,66 @@ input:focus {
   align-items: center;
   color: #4e4e4e;
   position: relative;
+}
+
+.login-screen .right,
+.reset-password .right {
+  width: 566px;
   padding-bottom: 22px;
 }
 
-.login-screen .right .container {
-  height: 680px;
+.signup-screen .right {
+  padding-bottom: 15px;
   width: 100%;
-  padding: 0 105px 0 105px;
+}
+
+.signup-screen .right.pb-0 {
+  padding-bottom: 0;
+}
+
+.login-screen .right .container,
+.signup-screen .right .main,
+.reset-password .right .container {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-.login-screen .right .container form {
+.login-screen .right .container,
+.reset-password .right .container {
+  width: 100%;
+  padding: 0 105px 0 105px;
+}
+
+.login-screen .right .container {
+  height: 680px;
+}
+
+.signup-screen .right .main {
+  height: 721px;
+  width: 100%;
+  padding: 0 68px 0 60px;
+}
+
+.reset-password .right .container {
+  margin-top: 135px;
+}
+
+.login-screen .right .container form,
+.reset-password .right .container form {
   display: flex;
   flex-direction: column;
 }
 
-.login-screen .right .container h1 {
+.reset-password .right .container form {
+  margin-top: 50px;
+  justify-content: space-between;
+  height: 400px;
+}
+
+.login-screen .right .container h1,
+.signup-screen .right .main h1,
+.reset-password .right .container h1 {
   font-family: "Manrope", sans-serif;
   font-size: 25px;
   line-height: 34.15px;
@@ -100,11 +203,82 @@ input:focus {
   color: #000;
 }
 
-.login-screen .right .container form .input {
-  border: none;
-  border-bottom: 1px solid #414141;
-  margin-top: 64px;
+.signup-screen .right .main .right-head {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.signup-screen .right .main .vendor-affilate-container {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.signup-screen .right .main .vendor-affilate-container .vendor-affilate {
+  display: flex;
+  gap: 56px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.signup-screen .right .main .line {
+  display: flex;
+  width: 39px;
+  height: 5px;
+  position: absolute;
+  top: 20px;
+  transform: translateX(-110px);
+  background: #800081;
+  transition: all 0.5s;
+}
+
+.signup-screen .right .main .line.affilate {
+  transform: translateX(-15px);
+}
+
+.signup-screen .right .main form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 47px;
+}
+
+.signup-screen .right .main form.affilate {
+  margin-bottom: 10px;
+}
+
+.login-screen .right .container form .input,
+.signup-screen .right .main form input,
+.reset-password .right .container form .input {
   padding-bottom: 22px;
+}
+
+.signup-screen .right .main form .flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.signup-screen .right .main form .flex .pos-rel {
+  width: 100%;
+}
+
+.signup-screen .right .main form .flex .pos-rel.email {
+  width: 120%;
+}
+
+.signup-screen .right .main form .flex .pos-rel.phone {
+  width: 80%;
+}
+
+.signup-screen .right .main form .affilate-form .pos-rel label {
+  padding: 0 10px;
+  top: -5px;
+}
+
+.signup-screen .right .main form .affilate-form .pos-rel .form-control {
+  margin: 20px 0;
+  padding: 15px 10px;
 }
 
 .login-screen .right .container form .forgotten {
@@ -113,7 +287,9 @@ input:focus {
   display: flex;
   justify-content: flex-end;
   padding-bottom: 35px;
+  text-decoration: none;
 }
+
 .login-screen .right .container form .remember-me {
   display: flex;
   align-items: center;
@@ -122,61 +298,175 @@ input:focus {
   margin-bottom: 35px;
 }
 
-.login-screen .right .container form .remember-me input {
+.login-screen .right .container form .remember-me input,
+.signup-screen .right .main form .t-and-c input {
   width: 23px;
   height: 22px;
   cursor: pointer;
 }
 
-.login-screen .right .container form button {
+.signup-screen .right .main form .t-and-c {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 25px;
+  font-size: 12px;
+}
+
+.signup-screen .right .main form .t-and-c input {
+  margin-top: 0;
+}
+
+.login-screen .right .container form button,
+.signup-screen .right .main form button,
+.reset-password .right .container form button {
   height: 65px;
 }
 
-.login-screen .right .container form button.login-btn {
+.login-screen .right .container form button.login-btn,
+.reset-password .right .container form button.reset-btn {
   color: #fff;
   background-color: #1a3e9c;
   border: none;
   margin-bottom: 50px;
+  font-size: 12px;
+  font-weight: 500;
+  width: 100%;
 }
 
-.login-screen .right .container form button.create-account {
+.reset-password .right .container form button.reset-btn {
+  background-color: #800081;
+}
+
+.new-password .right .container form button.reset-btn {
+  margin-bottom: 0;
+}
+
+.login-screen .right .container form button.create-account,
+.reset-password .right .container form button.back-to-login {
   border: 1px solid #1a3e9c;
   color: #1a3e9c;
   background-color: #fff;
   margin-top: 16px;
+  width: 100%;
 }
 
-.login-screen .right .form-logo {
+.reset-password .right .container form button.back-to-login {
+  border: 1px solid #800081;
+  color: #800081;
+}
+
+.signup-screen .right .main form button.continue-btn {
+  color: #fff;
+  background-color: #800081;
+  border: none;
+  margin-bottom: 36px;
+}
+
+.signup-screen .right .main form button.continue-btn.affilate {
+  margin-bottom: 16px;
+}
+
+.signup-screen .right .main form button.back-to-login {
+  border: 1px solid #800081;
+  color: #800081;
+  background-color: #fff;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.signup-screen .right .main form .have-an-account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-screen .right .form-logo,
+.signup-screen .right .form-logo,
+.reset-password .right .form-logo {
   display: flex;
   width: 100%;
   justify-content: flex-end;
   padding-right: 48px;
-  margin-top: 47px;
 }
 
 @media screen and (max-height: 750px) {
+  .login-screen .right,
+  .reset-password .right {
+    padding-bottom: 8px;
+  }
+
+  .signup-screen .right {
+    padding-bottom: 0;
+  }
+
   .login-screen .right .container {
-    padding: 40px 85px 0 85px;
+    padding: 20px 85px 0 85px;
+    justify-content: flex-start;
+    height: auto;
+  }
+
+  .reset-password .right .container {
+    margin-top: 35px;
   }
 
   .login-screen .right .container form .input {
     margin-top: 50px;
   }
 
+  .signup-screen .right .main form {
+    margin-bottom: 10px;
+  }
+
+  .reset-password .right .container form {
+    height: 350px;
+  }
+
+  .signup-screen .right .main form.affilate {
+    margin-bottom: 0px;
+  }
+
+  .signup-screen .right .main form .pos-rel input {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .signup-screen .right .main form .affilate-form .pos-rel .form-control {
+    margin: 10px 0;
+  }
+
   .login-screen .right .container form .forgotten {
     padding-bottom: 20px;
   }
 
-  .login-screen .right .container form button {
+  .signup-screen .right .main form .t-and-c {
+    margin-bottom: 10px;
+  }
+
+  .login-screen .right .container form button,
+  .signup-screen .right .main form button {
     height: 50px;
+  }
+
+  .signup-screen .right .main form button.affilate {
+    height: 40px;
   }
 
   .login-screen .right .container form button.login-btn {
     margin-bottom: 30px;
   }
 
-  .login-screen .right .form-logo {
+  .signup-screen .right .main form button.continue-btn {
+    margin-bottom: 15px;
+  }
+
+  .signup-screen .right .main form button.continue-btn.affilate {
+    margin-bottom: 8px;
+  }
+
+  .login-screen .right .form-logo,
+  .signup-screen .right .form-logo,
+  .reset-password .right .form-logo {
     padding-right: 10px;
-    margin-top: 10px;
   }
 }
