@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import useForm from "../../utils/useForm";
+import AffilateForm from "./affilateForm";
+import VendorForm from "./vendorForm";
+import { useRef, useState } from 'react';
 
 const SignUp = () => {
 
@@ -15,6 +18,7 @@ const SignUp = () => {
       };
     
     const [inputValues, onChangeHandler, onSubmitHandler] = useForm(signUpHandler);
+    const [vendorForm,setVendorForm] = useState(true);
 
     return ( 
         <div className="signup-screen">
@@ -22,87 +26,34 @@ const SignUp = () => {
                 <p className="head">Admin Login</p>
                 <p className="copyright-footer">Copyright  2023 - All rights reserved</p>
             </div>
-            <div className="right">
+            <div className={`right ${!vendorForm && "pb-0"}`}>
                 <div className="main">
                     <h1>Create new account</h1>
                     <p className="right-head">Connecting people and services</p>
                     <div className="vendor-affilate-container">
                         <div className="vendor-affilate">
-                            <p className="pointer">Vendor</p>
-                            <p className="pointer">Affilate</p>
+                            <p className="pointer" onClick={()=>{setVendorForm(true)}}>Vendor</p>
+                            <p className="pointer" onClick={()=>{setVendorForm(false)}}>Affilate</p>
                         </div>
-                        <span className="line"></span>
+                        <span className={`line  ${!vendorForm && "affilate"}`}></span>
                     </div>
-                    <form action="">
-                    <div className="pos-rel">
-                        <label className="abs py-10"> Store Name*</label>
-                        <input
-                         type="text" 
-                         name="storeName" 
-                         className="form-control" 
-                         onChange={onChangeHandler}
-                         value={inputValues.storeName || ""}
-                    />
-                    </div>
-                        <span className="flex">
-                            <div className="pos-rel">
-                                <label className="abs py-10"> Email*</label>
-                                <input
-                                 type="email" 
-                                 name="email" 
-                                 className="email form-control" 
-                                 onChange={onChangeHandler}
-                                 value={inputValues.email || ""}
-                                />
-                            </div>
-                            <div className="pos-rel">
-                                <label className="abs py-10"> Phone Number*</label>
-                                <input
-                                 type="text" 
-                                 name="phoneNumber" 
-                                 className="phone form-control"
-                                 onChange={onChangeHandler}
-                                 value={inputValues.phoneNumber || ""}
-                                />
-                            </div>
-                        </span>
-                        <span className="flex">
-                            <div className="pos-rel">
-                                <label className="abs py-10"> First Name* </label>
-                                <input
-                                 type="text" 
-                                 name="firstName" 
-                                 className="first-name form-control"
-                                 onChange={onChangeHandler}
-                                 value={inputValues.firstName || ""}
-                                />
-                            </div>
-                            <div className="pos-rel">
-                                <label className="abs py-10"> Last Name* </label>
-                                <input
-                                 type="text" 
-                                 name="lastName" 
-                                 className="last-name form-control"
-                                 onChange={onChangeHandler}
-                                 value={inputValues.lastName || ""}
-                                />
-                            </div>
-                        </span>
+                    <form action="" className={!vendorForm && "affilate"}>
+                        {vendorForm?<VendorForm inputValues = {inputValues} onChangeHandler={onChangeHandler} onSubmitHandler= {onChangeHandler}/>:<AffilateForm inputValues = {inputValues} onChangeHandler={onChangeHandler} onSubmitHandler= {onChangeHandler}/>}
                         <span className="t-and-c">
-                            <input
-                             type="checkbox" 
-                             name="t-and-c" 
-                            />
-                            <p>I agree to the <Link to="/app/Terms" className="purple">terms</Link> and <Link to="/app/Conditions" className="purple">conditions</Link> of Pmall Nigeria</p>
+                        <input
+                            type="checkbox" 
+                            name="t-and-c" 
+                        />
+                        <p>I agree to the <Link to="/app/Terms" className="purple">terms</Link> and <Link to="/app/Conditions" className="purple">conditions</Link> of Pmall Nigeria</p>
                         </span>
                         <button
-                         className="continue-btn" 
-                         onClick={signUpHandler}
+                            className={`continue-btn ${!vendorForm && "affilate"}`} 
+                            onClick={signUpHandler}
                         >
                             Continue
                         </button>
                         <p className="have-an-account">Already have an account?</p>
-                        <Link to="/app/Login"><button className="back-to-login">Back to Login</button></Link>
+                        <Link to="/auth/app/Login"><button className={`back-to-login ${!vendorForm && "affilate"}`}>Back to Login</button></Link>
                     </form>
                 </div>
                 <div className="form-logo">
