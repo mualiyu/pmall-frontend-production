@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Affilates from "./affilates";
 import Login from "./auth/login";
 import NewPasswordPage from "./auth/newPasswordPage";
 import ResetPassword from "./auth/passwordReset";
@@ -25,8 +26,9 @@ function Application() {
                 </div>
               </Route>
               <div className="main__content">
-                <Route path="/app/manage-users" component={Users} />
-                <Route path="/app/manage-vendors" component={Vendors} />
+                <Route path="/app/users/list" component={Users} />
+                <Route path="/app/vendors/list" component={Vendors} />
+                <Route path="/app/affilates/list" component={Affilates} />
               </div>
             </div>
           </React.Fragment>
