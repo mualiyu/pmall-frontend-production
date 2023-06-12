@@ -1,10 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Affilates from "./affilates";
 import Login from "./auth/login";
 import NewPasswordPage from "./auth/newPasswordPage";
 import ResetPassword from "./auth/passwordReset";
 import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
+import ProductList from "./productList";
 import Users from "./users";
 import Vendors from "./vendors";
 import Store from "./store";
@@ -25,9 +27,11 @@ function Application() {
                 <Sidebar />
               </div>
               <div className="main__content">
-                <Route path="/app/manage-users" component={Users} />
-                <Route path="/app/manage-vendors" component={Vendors} />
                 <Route path="/" component={Store} />
+                <Route path="/app/users/list" component={Users} />
+                <Route path="/app/vendors/list" component={Vendors} />
+                <Route path="/app/affilates/list" component={Affilates} />
+                <Route path="/app/product/list" component={ProductList} />
               </div>
             </div>
           </React.Fragment>
