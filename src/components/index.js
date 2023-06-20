@@ -6,7 +6,7 @@ import NewPasswordPage from "./auth/newPasswordPage";
 import ResetPassword from "./auth/passwordReset";
 import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
-import ProductList from "./productList";
+import Products from "./products";
 import Users from "./users";
 import Vendors from "./vendors";
 import Store from "./store";
@@ -31,7 +31,7 @@ function Application() {
                 <Route path="/app/users/list" component={Users} />
                 <Route path="/app/vendors/list" component={Vendors} />
                 <Route path="/app/affilates/list" component={Affilates} />
-                <Route path="/app/product/list" component={ProductList} />
+                <Route path="/app/products/list" component={Products} />
               </div>
             </div>
           </React.Fragment>

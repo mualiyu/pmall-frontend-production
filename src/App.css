@@ -367,6 +367,15 @@ tr:nth-child(even) {
   font-size: 9px;
   font-weight: 500;
 }
+.product__avatar {
+    border-radius: 10px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
 .w100 {
   width: 100%;
 }
@@ -432,6 +441,24 @@ tr:nth-child(even) {
 .m-10 {
   margin: 10px;
 }
+.css-1q79v3g-MuiButtonBase-root-MuiChip-root .MuiChip-deleteIcon {
+  font-size: 11px!important;
+  margin: 0 !important
+}
+.no-border {
+  border: none;
+}
+css-6od3lo-MuiChip-label {
+  padding: 3px!important;
+  padding-left: 8px!important;
+}
+.css-1hfcwwv-MuiStack-root {
+  border: thin solid #8c8c8c30!important;
+}
+.css-1q79v3g-MuiButtonBase-root-MuiChip-root .MuiChip-deleteIcon {
+  color: white!important;
+  border-radius: 50%!important;
+}
 
 .d-divider {
   border-bottom: thin dashed #f4f4f4;
@@ -441,8 +468,8 @@ tr:nth-child(even) {
   background: var(--primary-bg-color);
   color: var(--primary-color);
   z-index: 5;
-  height: 100vh;
   position: relative;
+  height: 100vh;
 }
 
 .lheight13 {
