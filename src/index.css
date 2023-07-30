@@ -32,7 +32,8 @@ code {
   font-family: "Inter", sans-serif;
 }
 
-input:focus {
+input:focus,
+select:focus {
   outline: none;
 }
 
@@ -52,6 +53,62 @@ button {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.g-10 {
+  gap: 10px;
+}
+.g-20 {
+  display: flex;
+  gap: 20px;
+}
+
+.g-5 {
+  display: flex;
+  gap: 5px;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justsb {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex {
+  display: flex;
+}
+
+ul {
+  list-style-type: none;
+}
+.all-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.px-5 {
+  padding: 0 5px;
+}
+.py-20 {
+  padding: 20px 0;
+}
+
+.pdy-10 {
+  padding: 10px 0;
+}
+.my-20 {
+  margin: 20px 0;
+}
+
+.chalk {
+  color: #8c8c8cd6;
 }
 
 .login-screen,
@@ -388,6 +445,311 @@ button {
   width: 100%;
   justify-content: flex-end;
   padding-right: 48px;
+}
+
+.dashboard .page__header li.active {
+  color: #000;
+}
+
+.dashboard .balance {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  height: 90px;
+  border-radius: 5px;
+}
+
+.dashboard .balance.available {
+  background-color: rgb(23, 175, 23);
+}
+
+.dashboard .balance.pending {
+  background-color: rgb(160, 87, 160);
+}
+
+.dashboard .balance h1 {
+  font-size: 20px;
+}
+
+.dashboard .balance-icon-container {
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 15px;
+}
+
+.dashboard .balance .balance-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dashboard .balance .balance-text .balance-percentage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 0 5px;
+  border-radius: 10px;
+}
+
+.dashboard .dashboard-chart {
+  margin: 10px 0;
+  padding: 10px;
+  box-shadow: 0 0 2px 2px rgb(0 0 0 / 0.1);
+}
+
+.dashboard .dashboard-chart ul {
+  color: #80808091;
+}
+
+.dashboard .dashboard-chart ul .active {
+  color: #000;
+  text-decoration: underline;
+}
+
+.dashboard .dashboard-chart button {
+  padding: 0 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: rgb(160, 87, 160);
+}
+
+.total-profit select {
+  border: none;
+  width: 200px;
+}
+
+.total-profit img {
+  width: 25px;
+}
+
+.total-profit .withdraw {
+  margin-top: 20px;
+}
+
+.total-profit,
+.recent-vendors,
+.recent-affilates {
+  padding: 10px;
+  box-shadow: 0 0 1px 1px rgb(0 0 0 / 0.1);
+}
+
+.total-profit .withdraw button {
+  width: 100%;
+  background-color: #1a3e9c;
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.vendor-details .stat-p {
+  font-size: 9px;
+  color: #8c8c8cd6;
+  display: flex;
+  align-items: center;
+}
+
+.vendor-details .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  margin-right: 2px;
+}
+
+.vendor-details .right-sidebar .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  font-size: 11px;
+}
+
+.vendor-details .stat-p .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  font-size: 8px;
+}
+
+.vendor-details .stat-p.green .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  color: green;
+}
+
+.vendor-details .stat-p.yellow .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  color: orange;
+}
+
+.vendor-details .stat-p.green .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  color: green;
+}
+
+.vendor-details .stat-p.red .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  color: rgb(204, 8, 8);
+}
+
+.vendor-details .stat-digits {
+  padding: 0.5px 4px;
+  border-radius: 30%;
+  background-color: #dbdbdbd6;
+}
+
+.vendor-details .list-grid p {
+  padding: 5px;
+  color: #d1d0d0d6;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.vendor-details .list-grid p.active {
+  background-color: #eeededd6;
+}
+
+.vendor-details .list-grid p .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  margin-right: 2px;
+  font-size: 12px;
+}
+
+.vendor-details .list-grid p.active,
+.vendor-details .list-grid p.active .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root,
+.vendor-details .black .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  color: black;
+}
+
+.vendor-details .calender {
+  border: 1px solid #eeededd6;
+  border-radius: 5px;
+}
+
+.vendor-details .calender select,
+.vendor-details .calender input {
+  border: none;
+}
+
+.vendor-details .main-stats,
+.vendor-details .right-sidebar {
+  box-shadow: 0 0 1px 1px rgb(0 0 0 / 0.1);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.vendor-details .right-sidebar {
+  margin-top: 20px;
+}
+
+.vendor-details .profile_pic {
+  width: 40px;
+  height: 40px;
+}
+
+.vendor-details .bdtop {
+  border-top: 1px solid #d1d0d0d6;
+}
+
+.prod-details {
+  display: flex;
+  gap: 30px;
+  margin: 20px 100px;
+}
+
+.prod-details .main-image {
+  height: 400px;
+  width: 430px;
+  margin-bottom: 10px;
+}
+
+.prod-details .other-images {
+  display: flex;
+  gap: 10px;
+}
+
+.prod-details .other-images .image {
+  width: 100px;
+  height: 100px;
+}
+
+.prod-details .right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prod-details .right .prod-name {
+  font-size: 25px;
+}
+
+.prod-details .right .prod-price {
+  font-size: 25px;
+}
+.prod-details .right .former-price {
+  font-size: 15px;
+  text-decoration: line-through;
+  color: #4e4e4e;
+  margin-left: 10px;
+}
+
+.prod-details .right .prod-desc {
+  font-size: 12px;
+  color: #4e4e4e;
+  line-height: 2em;
+}
+
+.prod-details .right .variations {
+  display: flex;
+  gap: 30px;
+  color: #4e4e4e;
+}
+
+.prod-details .right .variations .size {
+  border: 1px solid #4e4e4e;
+  padding: 5px 10px;
+}
+
+.prod-details .right button,
+.prod-details .right .favourite {
+  background: #000;
+  color: white;
+}
+.prod-details .right button {
+  width: 200px;
+  padding: 10px 0px;
+}
+
+.prod-details .right .favourite {
+  padding: 5px 20px;
+}
+
+.prod-details .right .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  margin-right: 0;
+}
+
+.prod-details .right .MuiRating-root {
+  color: yellow;
+}
+
+.f18 {
+  font-size: 18px;
+}
+
+.f-13 {
+  font-size: 13px;
+}
+.f-bold {
+  font-weight: 700;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
 }
 
 @media screen and (max-height: 750px) {

@@ -8,6 +8,7 @@ import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import EmailIcon from '@mui/icons-material/Email';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import BuildIcon from '@mui/icons-material/Build';
 import LuggageIcon from '@mui/icons-material/Luggage';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -29,15 +30,16 @@ function Sidebar() {
             {/* <h3 className="ml-20p"> Administrators </h3> */}
             <SidebarRow path="/app/dashboard"  Icon={SpeedIcon} title="Dashboard"/>
             <SidebarRow path="/app" Icon={AddBusinessIcon} title="Store Management"/>
-            <SidebarRow path="/app"  Icon={ShoppingCartIcon} title="Product Management"/>
-            <SidebarRow path="/app/manage-vendors"  Icon={GroupsIcon} title="Vendor Resources"/>
-            <SidebarRow path="/app/manage-users"  Icon={AccessibilityNewIcon} title="User Management"/>
+            <SidebarRow path="/app/product/list"  Icon={ShoppingCartIcon} title="Product Management"/>
+            <SidebarRow path="/app/order-management"  Icon={ListAltIcon} title="Order Management"/>
+            <SidebarRow path="/app/vendors/list"  Icon={GroupsIcon} title="Vendor Resources"/>
+            <SidebarRow path="/app/users/list"  Icon={AccessibilityNewIcon} title="User Management"/>
            
             
 
             <div className="s-divider"></div>
             {/* <SidebarRow path="/app/front-desk"  Icon={HomeWorkIcon} title="Front Desk"/> */}
-            <SidebarRow path="/app"  Icon={HubIcon} title="Affiliate Management"/>
+            <SidebarRow path="/app/affilates/list"  Icon={HubIcon} title="Affiliate Management"/>
             <SidebarRow path="/app"  Icon={DirectionsCarIcon} title="Logistics Management"/>
             <SidebarRow path="/app"  Icon={EmailIcon} title="Messaging/Support"/>
             <SidebarRow path="/app" Icon={AssignmentIcon} title="Reports"/>

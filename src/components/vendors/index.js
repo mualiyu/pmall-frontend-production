@@ -34,7 +34,7 @@ const style = {
 const columns = [
   { id: "vendor", label: "Vendor Name" },
   { id: "location", label: "location" },
-  { id: "email", label: "Email" },
+  { id: "sales", label: "Sales" },
   { id: "phone", label: "Phone Number" },
   { id: "plan", label: "Package" },
   { id: "prod_qty", label: "Prod. Qty" },
@@ -64,8 +64,8 @@ const data = {
 
 
 
-function createData(vendor, location, email, phone, plan, product_qty, status, action) {
-  return { vendor, location, email, phone, plan, product_qty, status, action };
+function createData(vendor, location, sales, phone, plan, product_qty, status, action) {
+  return { vendor, location, sales, phone, plan, product_qty, status, action };
 }
 
 const Vendors = () => {
@@ -148,7 +148,7 @@ const Vendors = () => {
                 </div>
               </TableCell>
               <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> talk2ahmedpeter@gmail.com</TableCell>
+              <TableCell> 67</TableCell>
               <TableCell> 0803 000 0000</TableCell>
               <TableCell> Basic </TableCell>
               <TableCell> 3 </TableCell>
@@ -176,7 +176,7 @@ const Vendors = () => {
                 </div>
               </TableCell>
               <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> fakemail@outlook.com</TableCell>
+              <TableCell> 120</TableCell>
               <TableCell> 0803 000 0000</TableCell>
               <TableCell> Premium </TableCell>
               <TableCell> 9 </TableCell>
@@ -203,7 +203,7 @@ const Vendors = () => {
                 </div>
               </TableCell>
               <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> fakemail@outlook.com</TableCell>
+              <TableCell> 26 </TableCell>
               <TableCell> 0803 000 0000</TableCell>
               <TableCell> Basic </TableCell>
               <TableCell> 2 </TableCell>
@@ -230,7 +230,7 @@ const Vendors = () => {
                 </div>
               </TableCell>
               <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> fakemail@outlook.com</TableCell>
+              <TableCell> 99</TableCell>
               <TableCell> 0803 000 0000</TableCell>
               <TableCell> Deluxe  </TableCell>
               <TableCell> 40 </TableCell>
@@ -256,7 +256,7 @@ const Vendors = () => {
                 </div>
               </TableCell>
               <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> fakemail@outlook.com</TableCell>
+              <TableCell>17</TableCell>
               <TableCell> 0803 000 0000</TableCell>
               <TableCell> Basic </TableCell>
               <TableCell> 3 </TableCell>
