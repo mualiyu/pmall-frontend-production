@@ -14,6 +14,7 @@ import Vendors from "./vendors";
 import VendorDetails from "./vendors/details";
 import AffilateDetails from "./affilates/details";
 import ProductDetails from "./singleProductDetails";
+import RolesAndPriviledges from "./rolesAndPriviledges";
 
 function Application() {
   return (
@@ -25,7 +26,6 @@ function Application() {
             <Route path="/auth/app/Signup" component={SignUp} />
             <Route path="/auth/app/Reset-password" component={ResetPassword} />
             <Route path="/auth/app/Set-new-password" component={NewPasswordPage} />
-            <Route path="/product/detail" component={ProductDetails} />
             <div className="flex-container">
               <Route  path="/app">
                 <div className="sidenav">
@@ -39,8 +39,10 @@ function Application() {
                 <Route path="/app/affilates/list" component={Affilates} />
                 <Route path="/app/affilates/details" component={AffilateDetails} />
                 <Route path="/app/product/list" component={ProductList} />
+                <Route path="/app/product/detail" component={ProductDetails} />
                 <Route path="/app/dashboard" component={Dashboard} />
                 <Route path="/app/order-management" component={OrderManagement} />
+                <Route path="/app/roles-and-priviledges" component={RolesAndPriviledges} />
               </div>
             </div>
           </React.Fragment>

@@ -658,7 +658,7 @@ ul {
 .prod-details {
   display: flex;
   gap: 30px;
-  margin: 20px 100px;
+  margin: 20px 30px;
 }
 
 .prod-details .main-image {
@@ -726,6 +726,7 @@ ul {
 
 .prod-details .right .favourite {
   padding: 5px 20px;
+  cursor: pointer;
 }
 
 .prod-details .right .css-i4bv87-MuiSvgIcon-root,
@@ -750,6 +751,41 @@ ul {
 
 .mb-10 {
   margin-bottom: 10px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.affilate-links {
+  background-color: #d9d9d9;
+  color: rgb(77, 75, 75);
+  padding: 10px;
+  position: absolute;
+  top: -100px;
+  left: -20px;
+  display: none;
+}
+
+.affilate-links.active {
+  display: flex;
+}
+
+.affilate-links .link {
+  border-bottom: 1px solid #333;
+}
+
+.affilate-links .link:hover {
+  color: black;
+}
+
+.roles-n-priviledges .user-info {
+  background-color: #eee;
+  padding: 10px;
+}
+
+.access-level select {
+  width: 400px;
 }
 
 @media screen and (max-height: 750px) {

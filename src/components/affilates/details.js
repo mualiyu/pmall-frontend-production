@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState} from "react";
+import { useState,useRef} from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import GroupsIcon from '@mui/icons-material/Groups';
 import Table from "@mui/material/Table";
@@ -63,13 +63,14 @@ const style = {
 };
 
 const columns = [
-  { id: "sent_date", label: "REGISTERED DATE" },
-  { id: "docs", label: "REFERRAL ID" },
-  { id: "associated_project", label: "USERNAME" },
-  { id: "value", label: "USER ACCT" },
-  { id: "balance_due", label: "TEL" },
-  { id: "status", label: "STATUS" },
-  { id: "date", label: "EMAIL" },
+  { id: "docs", label: "Id" },
+  { id: "associated_project", label: "Full Name" },
+  { id: "status", label: "Referrals" },
+  { id: "date", label: "Contact" },
+  { id: "date", label: "Status" },
+  { id: "date", label: "Paid Amt" },
+  { id: "date", label: "Unpaid Amt" },
+  { id: "sent_date", label: "Affilate Since" },
 ];
 
 const data = {
@@ -129,13 +130,16 @@ const AffilateDetails = () => {
   const [newVendorModal, setNewVendorModal] = useState(false);
   const handleModalClose = () => setNewVendorModal(false);
   const [value, setValue] = React.useState(0);
+  const [affilateLinks, setAfillateLinks] =useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const linkRef = useRef();
+
   return (
-    <section className="vendor-details">
+    <section className="vendor-details" >
       <section className="page__header">
         <div className="flex-container alc">
             <h3 style={{fontSize: "15px"}}><span style={{color: "#8c8c8cd6",fontSize: "15px"}}>Affilates /</span> Zain Ahmad</h3>
@@ -156,33 +160,23 @@ const AffilateDetails = () => {
       <section>
           <div className="flex main-stats" style={{gap:"80px"}}>
             <div className="flex-col g-20">
-                <h3 className="g-5">Amount Accumulated</h3>
+                <h3 className="g-5 f18">Amount Accumulated</h3>
                 <div className="flex g-20">
                     <div className="flex-col g-5">
-                        <h3>#22.47k</h3>
-                        <p className="capitalize stat-p green"><TripOriginRoundedIcon/> Delievered (2) </p>
-                    </div>
-                    <div className="flex-col g-5">
-                        <h3>#5.47k</h3>
-                        <p className="capitalize stat-p yellow"><TripOriginRoundedIcon/> PENDING (4)</p>
+                        <p className="capitalize stat-p green" style={{fontSize:"20px"}}><TripOriginRoundedIcon style={{fontSize:"15px"}}/> #48.4k</p>
                     </div>
                 </div>
             </div>
             <div  className="flex-col g-20">
-                <h3>Amount Withdrawn</h3>
+                <h3 className="f18">Amount Withdrawn</h3>
                 <div className="flex g-20">
                     <div className="flex-col g-5">
-                        <h3>#34.2k</h3>
-                        <p className="capitalize stat-p green"><TripOriginRoundedIcon/>  Delievered (1)</p>
-                    </div>
-                    <div className="flex-col g-5">
-                        <h3>#10.8k</h3>
-                        <p className="capitalize stat-p yellow"> <TripOriginRoundedIcon/> PENDING (1)</p>
+                        <p className="capitalize stat-p green" style={{fontSize:"20px"}}><TripOriginRoundedIcon style={{fontSize:"15px"}}/> #14.2k</p>
                     </div>
                 </div>
             </div>
             <div  className="flex-col g-20">
-                <h3>Balance Left</h3>
+                <h3 className="f18">Balance Left</h3>
                 <div className="flex g-20">
                     <div className="flex-col g-5">
                         <p className="capitalize stat-p green" style={{fontSize:"20px"}}><TripOriginRoundedIcon style={{fontSize:"15px"}}/> #34.2k</p>
@@ -241,148 +235,164 @@ const AffilateDetails = () => {
               </TableHead>
               <TableBody>
                   <TableRow>
-                  <TableCell className="b-r">Nov 10, 2000</TableCell>
-                  <TableCell>
-                      <div className="lheight13">
-                          <h4 className="f-300">Estimate</h4>
-                          <p className="sub__title">#001006</p>
-                      </div>
+                  <TableCell>50</TableCell>
+                  <TableCell>Ahmed Peter </TableCell>
+                  <TableCell> 6</TableCell>
+                  <TableCell> 
+                    <div className="lheight13">
+                        <h4 className="f-300">zain@email.com </h4>
+                        <p className="sub__title">08012345678</p>
+                    </div>  
                   </TableCell>
-                  <TableCell>Halal Lab </TableCell>
-                  <TableCell> #200 </TableCell>
-                  <TableCell> 08012345678</TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-success">Accepted</span>{" "}
                   </TableCell>
-                  <TableCell>zain@email.com </TableCell>
+                  <TableCell>#9,000</TableCell>
+                  <TableCell className="b-r">#0.00</TableCell>
+                  <TableCell className="b-r">Nov 10, 2000</TableCell>
                   <TableCell>
+                    <div style={{position:"relative"}}>
                       {" "}
-                      <MoreVertIcon />{" "}
+                        <MoreVertIcon onClick={()=> setAfillateLinks(!affilateLinks)} />{" "}
+                        <div className={`flex flex-col g-5 affilate-links ${affilateLinks && "active"}`}>
+                        <p className="link">Affilate Profile</p>
+                        <p className="link">Transactions</p>
+                        <p className="link">Reports</p>
+                        <p className="link">Direct Email</p>
+                      </div>
+                    </div>
                   </TableCell>
                   </TableRow>
                   <TableRow>
-                  <TableCell className="b-r">Nov 10, 2000</TableCell>
+                  <TableCell>12</TableCell>
+                  <TableCell> Ahmed Peter </TableCell>
+                  <TableCell> 63 </TableCell>
                   <TableCell>
-                      <div className="lheight13">
-                          <h4 className="f-300">Estimate</h4>
-                          <p className="sub__title">#001006</p>
-                      </div>
+                    <div className="lheight13">
+                        <h4 className="f-300">zain@email.com </h4>
+                        <p className="sub__title">08012345678</p>
+                    </div>  
                   </TableCell>
-                  <TableCell> Halal Lab </TableCell>
-                  <TableCell> #1000 </TableCell>
-                  <TableCell>08012345678</TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-warning">pending</span>{" "}
                   </TableCell>
-                  <TableCell> zain@email.com </TableCell>
+                  <TableCell>#9,000</TableCell>
+                  <TableCell className="b-r">#0.00</TableCell>
+                  <TableCell className="b-r">Nov 10, 2000</TableCell>
                   <TableCell>
                       {" "}
-                      <MoreVertIcon />{" "}
+                        <MoreVertIcon />{" "}
                   </TableCell>
                   </TableRow>
 
                   <TableRow>
-                  <TableCell className="b-r">Nov 10, 2000</TableCell>
+                  <TableCell>15</TableCell>
+                  <TableCell>Ahmed Peter</TableCell>
+                  <TableCell> 350 </TableCell>
                   <TableCell>
-                      <div className="lheight13">
-                          <h4 className="f-300">Estimate</h4>
-                          <p className="sub__title">#001006</p>
-                      </div>
+                    <div className="lheight13">
+                        <h4 className="f-300">zain@email.com </h4>
+                        <p className="sub__title">08012345678</p>
+                    </div>  
                   </TableCell>
-                  <TableCell>Halal Lab</TableCell>
-                  <TableCell> #350 </TableCell>
-                  <TableCell> 08012345678 </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-error">Overdue</span>{" "}
                   </TableCell>
-                  <TableCell> zain@email.com </TableCell>
+                  <TableCell>#9,000</TableCell>
+                  <TableCell className="b-r">#0.00</TableCell>
+                  <TableCell className="b-r">Nov 10, 2000</TableCell>
                   <TableCell>
                       {" "}
                       <MoreVertIcon />{" "}
                   </TableCell>
                   </TableRow>
                   <TableRow>
-                  <TableCell className="b-r">Nov 10, 2000</TableCell>
+                  <TableCell>6</TableCell>
+                  <TableCell> Ahmed Peter </TableCell>
+                  <TableCell> 120 </TableCell>
                   <TableCell>
-                      <div className="lheight13">
-                          <h4 className="f-300">Estimate</h4>
-                          <p className="sub__title">#001006</p>
-                      </div>
+                    <div className="lheight13">
+                        <h4 className="f-300">zain@email.com </h4>
+                        <p className="sub__title">08012345678</p>
+                    </div>  
                   </TableCell>
-                  <TableCell> Halal Lab </TableCell>
-                  <TableCell> #200 </TableCell>
-                  <TableCell>08012345678 </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-success">Accepted</span>{" "}
                   </TableCell>
-                  <TableCell>zain@email.com </TableCell>
+                  <TableCell>#9,000</TableCell>
+                  <TableCell className="b-r">#0.00</TableCell>
+                  <TableCell className="b-r">Nov 10, 2000</TableCell>
                   <TableCell>
                       {" "}
                       <MoreVertIcon />{" "}
                   </TableCell>
                   </TableRow>
                   <TableRow>
-                  <TableCell className="b-r">Nov 10, 2000</TableCell>
+                  <TableCell>52</TableCell>
+                  <TableCell>Ahmed Peter</TableCell>
+                  <TableCell> 100 </TableCell>
                   <TableCell>
-                      <div className="lheight13">
-                          <h4 className="f-300">Estimate</h4>
-                          <p className="sub__title">#001006</p>
-                      </div>
+                    <div className="lheight13">
+                        <h4 className="f-300">zain@email.com </h4>
+                        <p className="sub__title">08012345678</p>
+                    </div>  
                   </TableCell>
-                  <TableCell>Halal Lab</TableCell>
-                  <TableCell> #1000 </TableCell>
-                  <TableCell> 08012345678 </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-warning">pending</span>{" "}
                   </TableCell>
-                  <TableCell> zain@email.com </TableCell>
+                  <TableCell>#9,000</TableCell>
+                  <TableCell className="b-r">#0.00</TableCell>
+                  <TableCell className="b-r">Nov 10, 2000</TableCell>
                   <TableCell>
                       {" "}
                       <MoreVertIcon />{" "}
                   </TableCell>
                   </TableRow>
                   <TableRow>
-                  <TableCell className="b-r">Nov 10, 200</TableCell>
+                  <TableCell>33</TableCell>
+                  <TableCell> Ahmed Peter </TableCell>
+                  <TableCell> 200 </TableCell>
                   <TableCell>
-                      <div className="lheight13">
-                          <h4 className="f-300">Estimate</h4>
-                          <p className="sub__title">#001006</p>
-                      </div>
+                    <div className="lheight13">
+                        <h4 className="f-300">zain@email.com </h4>
+                        <p className="sub__title">08012345678</p>
+                    </div>  
                   </TableCell>
-                  <TableCell> Halal Lab </TableCell>
-                  <TableCell> #200 </TableCell>
-                  <TableCell> 08012345678</TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-success">Accepted</span>{" "}
                   </TableCell>
-                  <TableCell>zain@email.com </TableCell>
+                  <TableCell>#9,000</TableCell>
+                  <TableCell className="b-r">#0.00</TableCell>
+                  <TableCell className="b-r">Nov 10, 2000</TableCell>
                   <TableCell>
                       {" "}
                       <MoreVertIcon />{" "}
                   </TableCell>
                   </TableRow>
                   <TableRow>
-                  <TableCell className="b-r">Nov 10, 200</TableCell>
+                  <TableCell>27</TableCell>
+                  <TableCell>Ahmed Peter </TableCell>
+                  <TableCell> 10 </TableCell>
                   <TableCell>
-                      <div className="lheight13">
-                          <h4 className="f-300">Estimate</h4>
-                          <p className="sub__title">#001006</p>
-                      </div>
+                    <div className="lheight13">
+                        <h4 className="f-300">zain@email.com </h4>
+                        <p className="sub__title">08012345678</p>
+                    </div>  
                   </TableCell>
-                  <TableCell>Halal Lab </TableCell>
-                  <TableCell> #1000 </TableCell>
-                  <TableCell> 08012345678 </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-warning">pending</span>{" "}
                   </TableCell>
-                  <TableCell>zain@email.com </TableCell>
+                  <TableCell>#9,000</TableCell>
+                  <TableCell className="b-r">#0.00</TableCell>
+
+                  <TableCell className="b-r">Nov 10, 2000</TableCell>
                   <TableCell>
                       {" "}
                       <MoreVertIcon />{" "}
@@ -397,65 +407,6 @@ const AffilateDetails = () => {
         </TabPanel>
 
         </Box>
-        <section>
-          <div className="right-sidebar">
-            <div className="flex g-10" style={{alignItems:"center",marginBottom:"20px"}}>
-              <img src={profile} alt="" className="profile_pic b-round"/>
-              <div>
-                <h3>Zain Ahmad</h3>
-                <p  className="chalk">Halal Lab</p>
-              </div>
-            </div>
-            <div className="gap-10">
-              <h3 className="capitalize chalk">CUSTOMER INFO</h3>
-              <div className="gap-10" style={{marginBottom:"10px"}}>
-                <div className="flex g-10">
-                  <EmailOutlinedIcon/>
-                  <span className="gap-10">
-                    <p><span className="chalk">Work :</span> zain@email.com</p>
-                    <p><span className="chalk">Personal :</span> zain@halallab.co</p>
-                  </span>
-                </div>
-                <div className="flex g-10">
-                  <LocalPhoneOutlinedIcon />
-                  <span className="gap-10">
-                    <p><span className="chalk">Work :</span> (480) 555-0103</p>
-                    <p><span className="chalk">Personal :</span> (316) 555-0116</p>
-                  </span>
-                </div>
-                <div className="flex g-10">
-                  <PlaceOutlinedIcon />
-                  <span className="gap-10">
-                    <p>4517 Washinton Ave, Manchester, Kentucky 39495</p>
-                    <p>2118 Thornridge Cir, Syracuse, Connecticut 35624</p>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="py-20 bdtop">
-              <h3 className="capitalize chalk">LEAD SOURCE</h3>
-              <p>Facebook Ad</p>
-            </div>
-            <div className="py-20 bdtop">
-              <h3 className="capitalize chalk">CREATED</h3>
-              <p><span className="chalk">by</span> Nijum Chy <span className="chalk">on</span> 03/14/2021</p>
-            </div>
-            <div className="pdy-10 bdtop gap-10">
-              <h3 className="capitalize chalk">SALES REPRESENTATIVE</h3>
-              <div className="flex">
-                <img src={profile} alt="" className="profile_pic b-round"/>
-                <select className="search__bar" defaultValue={'default'} style={{border:"none"}}>
-                  <option value="default"> Select Date</option>
-                  <option value="Parent 1"> Feb 17-Feb 21, 2022</option>
-                </select>
-              </div>
-            </div>
-            <div className="bdtop py-20">
-              <h3 className="capitalize chalk">NOTES</h3>
-              <p>Faruk ahmad is an awesome people,Lorem ipsum dolor sit amet consectetur, adipisicing elitd?</p>
-            </div>
-          </div>
-        </section>
       </div>
 
       {/* Modal for vendors */}

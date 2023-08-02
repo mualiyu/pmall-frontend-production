@@ -63,13 +63,14 @@ const style = {
 };
 
 const columns = [
-  { id: "sent_date", label: "SENT DATE" },
-  { id: "docs", label: "DOCUMENTS" },
-  { id: "associated_project", label: "ASSOCIATED PROJECT" },
-  { id: "value", label: "VALUE" },
-  { id: "balance_due", label: "BALANCE DUE" },
+  { id: "store_name", label: "Store Name" },
+  { id: "contact", label: "Contact" },
+  { id: "product", label: "Product" },
+  { id: "value", label: "Value" },
+  { id: "balance_due", label: "Balance Due" },
+  { id: "categories", label: "Categories" },
   { id: "status", label: "Status" },
-  { id: "date", label: "DUE Date" },
+  { id: "reg_date", label: "Registered Date" },
 ];
 
 const data = {
@@ -265,6 +266,7 @@ const VendorDetails = () => {
                   <TableCell> Puma Bag </TableCell>
                   <TableCell> #200 </TableCell>
                   <TableCell> #600 </TableCell>
+                  <TableCell> Beauty </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-success">Accepted</span>{" "}
@@ -286,6 +288,7 @@ const VendorDetails = () => {
                   <TableCell> Gucci Shoe </TableCell>
                   <TableCell> #1000 </TableCell>
                   <TableCell> #4800 </TableCell>
+                  <TableCell> Beauty </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-warning">pending</span>{" "}
@@ -308,6 +311,7 @@ const VendorDetails = () => {
                   <TableCell>Wig </TableCell>
                   <TableCell> #350 </TableCell>
                   <TableCell> #1000 </TableCell>
+                  <TableCell> Beauty </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-error">Overdue</span>{" "}
@@ -329,6 +333,7 @@ const VendorDetails = () => {
                   <TableCell> Puma Bag </TableCell>
                   <TableCell> #200 </TableCell>
                   <TableCell> #1000 </TableCell>
+                  <TableCell> Beauty </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-success">Accepted</span>{" "}
@@ -350,6 +355,7 @@ const VendorDetails = () => {
                   <TableCell> Gucci Shoe </TableCell>
                   <TableCell> #1000 </TableCell>
                   <TableCell> #5000 </TableCell>
+                  <TableCell> Beauty </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-warning">pending</span>{" "}
@@ -371,6 +377,7 @@ const VendorDetails = () => {
                   <TableCell> Puma Bag </TableCell>
                   <TableCell> #200 </TableCell>
                   <TableCell> #1200</TableCell>
+                  <TableCell> Beauty </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-success">Accepted</span>{" "}
@@ -392,6 +399,7 @@ const VendorDetails = () => {
                   <TableCell> Gucci Shoe </TableCell>
                   <TableCell> #1000 </TableCell>
                   <TableCell> #3000 </TableCell>
+                  <TableCell> Beauty </TableCell>
                   <TableCell>
                       {" "}
                       <span className="badge bg-warning">pending</span>{" "}
