@@ -358,110 +358,206 @@ const Users = () => {
             </TableContainer>
           </TabPanel>
           <TabPanel value={value} index={1}>
-          <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} size="small" aria-label="Users Table">
-                <TableHead>
+            <div>
+              <button className="btn btn-primary p-25 mt-15">Add new role</button>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} size="small" aria-label="Users Table">
+                  <TableHead>
+                    <TableRow>
+                      {roles.map((column) => (
+                        <TableCell>{column.label}</TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
                   <TableRow>
-                    {roles.map((column) => (
-                      <TableCell>{column.label}</TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                <TableRow>
-                    <TableCell className="b-r">
-                      Company Admin
-                    </TableCell>
-                    
-                    <TableCell> Quickbooks Default</TableCell>
-                    <TableCell>1</TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-success">Active</span>{" "}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="b-r">
-                      Custom Access (Ben Thompson)
-                    </TableCell>
-                    
-                    <TableCell> Custom Role</TableCell>
-                    <TableCell>1</TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-success">Active</span>{" "}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="b-r">
-                      Custom Access 1
-                    </TableCell>
-                    
-                    <TableCell> Custom Role</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-error">Inactive</span>{" "}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="b-r">
-                    Inventory Manager
-                    </TableCell>
-                    <TableCell> Custom Role</TableCell>
-                    <TableCell>2</TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-success">active</span>{" "}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="b-r">
-                      Master Admin
-                    </TableCell>
-                    
-                    <TableCell> Quickbooks Default</TableCell>
-                    <TableCell>1</TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-success">Active</span>{" "}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
+                      <TableCell className="b-r">
+                        Company Admin
+                      </TableCell>
+                      
+                      <TableCell> Quickbooks Default</TableCell>
+                      <TableCell>1</TableCell>
+                      <TableCell>
+                        {" "}
+                        <span className="badge bg-success">Active</span>{" "}
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        <MoreVertIcon />{" "}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="b-r">
+                        Custom Access (Ben Thompson)
+                      </TableCell>
+                      
+                      <TableCell> Custom Role</TableCell>
+                      <TableCell>1</TableCell>
+                      <TableCell>
+                        {" "}
+                        <span className="badge bg-success">Active</span>{" "}
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        <MoreVertIcon />{" "}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="b-r">
+                        Custom Access 1
+                      </TableCell>
+                      
+                      <TableCell> Custom Role</TableCell>
+                      <TableCell>0</TableCell>
+                      <TableCell>
+                        {" "}
+                        <span className="badge bg-error">Inactive</span>{" "}
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        <MoreVertIcon />{" "}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="b-r">
+                      Inventory Manager
+                      </TableCell>
+                      <TableCell> Custom Role</TableCell>
+                      <TableCell>2</TableCell>
+                      <TableCell>
+                        {" "}
+                        <span className="badge bg-success">active</span>{" "}
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        <MoreVertIcon />{" "}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="b-r">
+                        Master Admin
+                      </TableCell>
+                      
+                      <TableCell> Quickbooks Default</TableCell>
+                      <TableCell>1</TableCell>
+                      <TableCell>
+                        {" "}
+                        <span className="badge bg-success">Active</span>{" "}
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        <MoreVertIcon />{" "}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <div>
+            <div className="flex flex-col g-20">
               <div className="mt-10 access-level">
-                  <h3>Access level</h3>
-                  <select className="search__bar mt-10" defaultValue={'default'}>
+                  <h3>Roles</h3>
+                  <select className="search__bar mt-10 w-400" defaultValue={'default'}>
                       <option value="default"> Limited Access</option>
                       <option value="Store 1"> Store 1</option>
                       <option value="Store 2"> Store 2</option>
                       <option value="Store 3"> Store 3</option>
                       <option value="Store 4"> Store 4</option>
                   </select>
+              </div>
+              <div className="flex justsb">
+                <div className="flex g-20 w-480 justsb">
+                  <p>Permissions</p>
+                  <div className="flex g-20 chalk ">
+                    <p>MEMBERS</p>
+                    <p>PERMISSIONS</p>
+                  </div>
+                </div>
+                <div className="flex g-20 chalk">
+                  <p>MEMBERS</p>
+                  <p>PERMISSIONS</p>
+                </div>
+              </div>
+              <div className="flex g-10 flex-wrap">
+                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
+                  <div className="flex items-center g-5">
+                  <label class="switch">
+                    <input type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
+                    <p>CUSTOMERS</p>
+                  </div>
+                  <div className="flex g-20 chalk items-center">
+                    <p className="w30">3</p>
+                    <button className="btn btn-primary p-25 ">Edit</button>
+                  </div>
+                </div>
+                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
+                <div className="flex items-center g-5">
+                  <label class="switch">
+                    <input type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
+                    <p>SALES</p>
+                  </div>
+                  <div className="flex g-20 chalk items-center">
+                    <p className="w30">3</p>
+                    <button className="btn btn-primary p-25 ">Edit</button>
+                  </div>
+                </div>
+                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
+                <div className="flex items-center g-5">
+                  <label class="switch">
+                    <input type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
+                    <p>VENDORS</p>
+                  </div>
+                  <div className="flex g-20 chalk items-center">
+                    <p className="w30">3</p>
+                    <button className="btn btn-primary p-25 ">Edit</button>
+                  </div>
+                </div>
+                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
+                <div className="flex items-center g-5">
+                  <label class="switch">
+                    <input type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
+                    <p>INVENTORY</p>
+                  </div>
+                  <div className="flex g-20 chalk items-center">
+                    <p className="w30">3</p>
+                    <button className="btn btn-primary p-25 ">Edit</button>
+                  </div>
+                </div>
+                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
+                <div className="flex items-center g-5">
+                  <label class="switch">
+                    <input type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
+                    <p>PAYROLL</p>
+                  </div>
+                  <div className="flex g-20 chalk items-center">
+                    <p className="w30">3</p>
+                    <button className="btn btn-primary p-25 ">Edit</button>
+                  </div>
+                </div>
+                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
+                <div className="flex items-center g-5">
+                  <label class="switch">
+                    <input type="checkbox" />
+                    <span class="slider round"></span>
+                  </label>
+                    <p>BOOK KEEPING</p>
+                  </div>
+                  <div className="flex g-20 chalk items-center">
+                    <p className="w30">3</p>
+                    <button className="btn btn-primary p-25 ">Edit</button>
+                  </div>
+                </div>
               </div>
             </div>
           </TabPanel>

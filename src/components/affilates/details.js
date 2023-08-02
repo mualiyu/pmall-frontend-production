@@ -136,6 +136,10 @@ const AffilateDetails = () => {
     setValue(newValue);
   };
 
+  const handlePopup = (id) => {
+    setAfillateLinks(!affilateLinks)
+  };
+
   const linkRef = useRef();
 
   return (
@@ -254,8 +258,8 @@ const AffilateDetails = () => {
                   <TableCell>
                     <div style={{position:"relative"}}>
                       {" "}
-                        <MoreVertIcon onClick={()=> setAfillateLinks(!affilateLinks)} />{" "}
-                        <div className={`flex flex-col g-5 affilate-links ${affilateLinks && "active"}`}>
+                        <MoreVertIcon id="1" onClick={handlePopup} />{" "}
+                        <div className={`flex flex-col g-5 affilate-links ${affilateLinks && "active"}`} >
                         <p className="link">Affilate Profile</p>
                         <p className="link">Transactions</p>
                         <p className="link">Reports</p>
@@ -282,8 +286,16 @@ const AffilateDetails = () => {
                   <TableCell className="b-r">#0.00</TableCell>
                   <TableCell className="b-r">Nov 10, 2000</TableCell>
                   <TableCell>
+                  <div style={{position:"relative"}}>
                       {" "}
-                        <MoreVertIcon />{" "}
+                        <MoreVertIcon onClick={(id)=> setAfillateLinks(!affilateLinks)} />{" "}
+                        <div className={`flex flex-col g-5 affilate-links ${affilateLinks && "active"}`} >
+                        <p className="link">Affilate Profile</p>
+                        <p className="link">Transactions</p>
+                        <p className="link">Reports</p>
+                        <p className="link">Direct Email</p>
+                      </div>
+                    </div>
                   </TableCell>
                   </TableRow>
 
