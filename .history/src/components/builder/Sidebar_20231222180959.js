@@ -22,7 +22,7 @@ function Sidebar() {
   return (
     <div className="sidebar no-print">
       <div className="logo__holder">
-        <img src={logo} alt="Pmall" style={{ width: 130 }} />
+        <img src={logo} alt="Pmall" />
         {/* <h3> Logo </h3> */}
       </div>
 

@@ -9,7 +9,6 @@ import Sidebar from "./builder/Sidebar";
 import ProductList from "./productList";
 import Users from "./users";
 import Vendors from "./vendors";
-import Dashboard from "./dashboard";
 
 function Application() {
   return (
@@ -47,7 +46,6 @@ function Application() {
             {/* </Routes> */}
             <div className="main__content">
               <Routes>
-                <Route path="/app/dashboard" element={<Dashboard />} />
                 <Route path="/app/users/list" element={<Users />} />
                 <Route path="/app/vendors/list" element={<Vendors />} />
                 <Route path="/app/affilates/list" element={<Affilates />} />
