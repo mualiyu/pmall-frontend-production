@@ -12,8 +12,6 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Paper from "@mui/material/Paper";
 import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
@@ -41,15 +39,6 @@ const columns = [
   { id: "contact", label: "Phone Number" },
   { id: "store", label: "Assigned Store" },
   { id: "account_type", label: "User Type" },
-  { id: "roles", label: "Roles" },
-  { id: "status", label: "Status" },
-  { id: "action", label: "" },
-];
-
-const roles = [
-  { id: "name", label: "Name" },
-  { id: "type", label: "Type" },
-  { id: "members", label: "Members" },
   { id: "status", label: "Status" },
   { id: "action", label: "" },
 ];
@@ -73,33 +62,6 @@ const data = {
     options: {},
 };
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}  
-
-
 
 
 function createData(user, email, contact, store, account_type, status, action) {
@@ -110,10 +72,6 @@ const Users = () => {
   
     const [newUserModal, setnewUserModal] = useState(false);
     const handleModalClose = () => setnewUserModal(false);
-    const [value, setValue] = useState(0);
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-    };
 
   return (
     <section>
@@ -166,404 +124,181 @@ const Users = () => {
        
       </section>
 
-      <div className="flex g-0">
-        <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="Total Products (120)" {...a11yProps(0)} />
-              <Tab label="Roles" {...a11yProps(1)} />
-              <Tab label="Priviledges" {...a11yProps(2)} />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} size="small" aria-label="Users Table">
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell>{column.label}</TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className="b-r">
-                      <div className="d-flex alc f-10 flex-start">
-                        <div className="user__avatar bg-success">
-                          <h3>AP</h3>
-                        </div>
-                        <div className="lheight13">
-                        <h4 className="f-300">Ahmed Peter</h4>
-                        <p className="sub__title">governor</p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    
-                    <TableCell> talk2ahmedpeter@gmail.com</TableCell>
-                    <TableCell> 0803 000 0000</TableCell>
-                    <TableCell>
-                      <div className="lheight13">
-                            <h4 className="f-300">PMall Nigeria</h4>
-                            <p className="sub__title">882LR</p>
-                          </div>
-                    </TableCell>
-                    <TableCell> Admin </TableCell>
-                    <TableCell> Master Admin </TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-success">Active</span>{" "}
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="b-r">
-                      <div className="d-flex alc f-10 flex-start">
-                        <div className="user__avatar bg-error">
-                          <h3>PY</h3>
-                        </div>
-                        <div className="lheight13">
-                        <h4 className="f-300">Philip Yahaya</h4>
-                        <p className="sub__title">donPStores</p>
-                        </div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="Users Table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell>{column.label}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell className="b-r">
+                <div className="d-flex alc f-10 flex-start">
+                  <div className="user__avatar bg-success">
+                    <h3>AP</h3>
+                  </div>
+                  <div className="lheight13">
+                  <h4 className="f-300">Ahmed Peter</h4>
+                  <p className="sub__title">governor</p>
+                  </div>
+                </div>
+              </TableCell>
+              
+              <TableCell> talk2ahmedpeter@gmail.com</TableCell>
+              <TableCell> 0803 000 0000</TableCell>
+              <TableCell>
+                <div className="lheight13">
+                      <h4 className="f-300">PMall Nigeria</h4>
+                      <p className="sub__title">882LR</p>
+                    </div>
+              </TableCell>
+              <TableCell> Admin </TableCell>
+              <TableCell>
+                {" "}
+                <span className="badge bg-success">Active</span>{" "}
+              </TableCell>
+              <TableCell>
+                {" "}
+                <MoreVertIcon />{" "}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="b-r">
+                <div className="d-flex alc f-10 flex-start">
+                  <div className="user__avatar bg-error">
+                    <h3>PY</h3>
+                  </div>
+                  <div className="lheight13">
+                  <h4 className="f-300">Philip Yahaya</h4>
+                  <p className="sub__title">donPStores</p>
+                  </div>
 
-                        
-                      </div>
-                    </TableCell>
-                    <TableCell> fakemail@outlook.com</TableCell>
-                    
-                    
-                    <TableCell> 0803 000 0000</TableCell>
-                    <TableCell>
-                    <div className="lheight13">
-                          <h4 className="f-300">Calista Stores</h4>
-                          <p className="sub__title">3GTRT</p>
-                        </div>
-                    </TableCell>
-                    <TableCell> Vendor </TableCell>
-                    <TableCell> Custom Access </TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-error">Inactive </span>
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableCell className="b-r">
-                      <div className="d-flex alc f-10 flex-start">
-                        <div className="user__avatar bg-success">
-                          <h3>PY</h3>
-                        </div>
-                        <div className="lheight13">
-                        <h4 className="f-300">Philip Yahaya</h4>
-                        <p className="sub__title">yaksMan</p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell> fakemail@outlook.com</TableCell>
-                    
-                    
-                    <TableCell> 0803 000 0000</TableCell>
-                    <TableCell>
-                    <div className="lheight13">
-                          <h4 className="f-300">N/A</h4>
-                          <p className="sub__title">-</p>
-                        </div>
-                    </TableCell>
-                    <TableCell> Affiliate </TableCell>
-                    <TableCell> Time Tracking </TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-error">Inactive </span>
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="b-r">
-                      <div className="d-flex alc f-10 flex-start">
-                        <div className="user__avatar bg-warning">
-                          <h3>DA</h3>
-                        </div>
-                        <div className="lheight13">
-                        <h4 className="f-300">Dennis Abdulmalik</h4>
-                        <p className="sub__title">Abdul07</p>
-                        </div>
-                        
-                      </div>
-                    </TableCell>
                   
-                    <TableCell> fakemail@outlook.com</TableCell>
-                    <TableCell> 0803 000 0000</TableCell>
-                    <TableCell>
-                      <div className="lheight13">
-                          <h4 className="f-300">Abdulmalik Stores</h4>
-                          <p className="sub__title">AC810B</p>
-                        </div>
-                    </TableCell>
-                    <TableCell> Vendor </TableCell>
-                    <TableCell> Sales Manager </TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-error">Inactive </span>
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="b-r">
-                      <div className="d-flex alc f-10 flex-start">
-                        <div className="user__avatar bg-error">
-                          <h3>MS</h3>
-                        </div>
-                        <div className="lheight13">
-                        <h4 className="f-300">Dennis Abdulmalik</h4> 
-                        <p className="sub__title">danDGreat</p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    
-                    <TableCell> fakemail@outlook.com</TableCell>
-                    <TableCell> 0803 000 0000</TableCell>
-                    <TableCell>
+                </div>
+              </TableCell>
+              <TableCell> fakemail@outlook.com</TableCell>
+              
+              
+              <TableCell> 0803 000 0000</TableCell>
+              <TableCell>
+              <div className="lheight13">
+                    <h4 className="f-300">Calista Stores</h4>
+                    <p className="sub__title">3GTRT</p>
+                  </div>
+              </TableCell>
+              <TableCell> Vendor </TableCell>
+              <TableCell>
+                {" "}
+                <span className="badge bg-error">Inactive </span>
+              </TableCell>
+              <TableCell>
+                {" "}
+                <MoreVertIcon />{" "}
+              </TableCell>
+            </TableRow>
 
-                    <div className="lheight13">
-                            <h4 className="f-300">PMall Nigeria</h4>
-                            <p className="sub__title">882LR</p>
-                          </div>
-                    </TableCell>
-                    <TableCell> Admin </TableCell>
-                    <TableCell> Company Admin </TableCell>
-                    <TableCell>
-                      {" "}
-                      <span className="badge bg-success">Active </span>
-                    </TableCell>
-                    <TableCell>
-                      {" "}
-                      <MoreVertIcon />{" "}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <div>
-              <button className="btn btn-primary p-25 mt-15">Add new role</button>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} size="small" aria-label="Users Table">
-                  <TableHead>
-                    <TableRow>
-                      {roles.map((column) => (
-                        <TableCell>{column.label}</TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                  <TableRow>
-                      <TableCell className="b-r">
-                        Company Admin
-                      </TableCell>
-                      
-                      <TableCell> Quickbooks Default</TableCell>
-                      <TableCell>1</TableCell>
-                      <TableCell>
-                        {" "}
-                        <span className="badge bg-success">Active</span>{" "}
-                      </TableCell>
-                      <TableCell>
-                        {" "}
-                        <MoreVertIcon />{" "}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="b-r">
-                        Custom Access (Ben Thompson)
-                      </TableCell>
-                      
-                      <TableCell> Custom Role</TableCell>
-                      <TableCell>1</TableCell>
-                      <TableCell>
-                        {" "}
-                        <span className="badge bg-success">Active</span>{" "}
-                      </TableCell>
-                      <TableCell>
-                        {" "}
-                        <MoreVertIcon />{" "}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="b-r">
-                        Custom Access 1
-                      </TableCell>
-                      
-                      <TableCell> Custom Role</TableCell>
-                      <TableCell>0</TableCell>
-                      <TableCell>
-                        {" "}
-                        <span className="badge bg-error">Inactive</span>{" "}
-                      </TableCell>
-                      <TableCell>
-                        {" "}
-                        <MoreVertIcon />{" "}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="b-r">
-                      Inventory Manager
-                      </TableCell>
-                      <TableCell> Custom Role</TableCell>
-                      <TableCell>2</TableCell>
-                      <TableCell>
-                        {" "}
-                        <span className="badge bg-success">active</span>{" "}
-                      </TableCell>
-                      <TableCell>
-                        {" "}
-                        <MoreVertIcon />{" "}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="b-r">
-                        Master Admin
-                      </TableCell>
-                      
-                      <TableCell> Quickbooks Default</TableCell>
-                      <TableCell>1</TableCell>
-                      <TableCell>
-                        {" "}
-                        <span className="badge bg-success">Active</span>{" "}
-                      </TableCell>
-                      <TableCell>
-                        {" "}
-                        <MoreVertIcon />{" "}
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </div>
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <div className="flex flex-col g-20">
-              <div className="mt-10 access-level">
-                  <h3>Roles</h3>
-                  <select className="search__bar mt-10 w-400" defaultValue={'default'}>
-                      <option value="default"> Limited Access</option>
-                      <option value="Store 1"> Store 1</option>
-                      <option value="Store 2"> Store 2</option>
-                      <option value="Store 3"> Store 3</option>
-                      <option value="Store 4"> Store 4</option>
-                  </select>
-              </div>
-              <div className="flex justsb">
-                <div className="flex g-20 w-480 justsb">
-                  <p>Permissions</p>
-                  <div className="flex g-20 chalk ">
-                    <p>MEMBERS</p>
-                    <p>PERMISSIONS</p>
+            <TableRow>
+              <TableCell className="b-r">
+                <div className="d-flex alc f-10 flex-start">
+                  <div className="user__avatar bg-success">
+                    <h3>PY</h3>
+                  </div>
+                  <div className="lheight13">
+                  <h4 className="f-300">Philip Yahaya</h4>
+                  <p className="sub__title">yaksMan</p>
                   </div>
                 </div>
-                <div className="flex g-20 chalk">
-                  <p>MEMBERS</p>
-                  <p>PERMISSIONS</p>
+              </TableCell>
+              <TableCell> fakemail@outlook.com</TableCell>
+              
+              
+              <TableCell> 0803 000 0000</TableCell>
+              <TableCell>
+              <div className="lheight13">
+                    <h4 className="f-300">N/A</h4>
+                    <p className="sub__title">-</p>
+                  </div>
+              </TableCell>
+              <TableCell> Affiliate </TableCell>
+              <TableCell>
+                {" "}
+                <span className="badge bg-error">Inactive </span>
+              </TableCell>
+              <TableCell>
+                {" "}
+                <MoreVertIcon />{" "}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="b-r">
+                <div className="d-flex alc f-10 flex-start">
+                  <div className="user__avatar bg-warning">
+                    <h3>DA</h3>
+                  </div>
+                  <div className="lheight13">
+                  <h4 className="f-300">Dennis Abdulmalik</h4>
+                  <p className="sub__title">Abdul07</p>
+                  </div>
+                  
                 </div>
-              </div>
-              <div className="flex g-10 flex-wrap">
-                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
-                  <div className="flex items-center g-5">
-                  <label class="switch">
-                    <input type="checkbox" />
-                    <span class="slider round"></span>
-                  </label>
-                    <p>CUSTOMERS</p>
+              </TableCell>
+             
+              <TableCell> fakemail@outlook.com</TableCell>
+              <TableCell> 0803 000 0000</TableCell>
+              <TableCell>
+                <div className="lheight13">
+                    <h4 className="f-300">Abdulmalik Stores</h4>
+                    <p className="sub__title">AC810B</p>
                   </div>
-                  <div className="flex g-20 chalk items-center">
-                    <p className="w30">3</p>
-                    <button className="btn btn-primary p-25 ">Edit</button>
+              </TableCell>
+              <TableCell> Vendor </TableCell>
+              <TableCell>
+                {" "}
+                <span className="badge bg-error">Inactive </span>
+              </TableCell>
+              <TableCell>
+                {" "}
+                <MoreVertIcon />{" "}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="b-r">
+                <div className="d-flex alc f-10 flex-start">
+                  <div className="user__avatar bg-error">
+                    <h3>MS</h3>
                   </div>
-                </div>
-                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
-                <div className="flex items-center g-5">
-                  <label class="switch">
-                    <input type="checkbox" />
-                    <span class="slider round"></span>
-                  </label>
-                    <p>SALES</p>
-                  </div>
-                  <div className="flex g-20 chalk items-center">
-                    <p className="w30">3</p>
-                    <button className="btn btn-primary p-25 ">Edit</button>
-                  </div>
-                </div>
-                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
-                <div className="flex items-center g-5">
-                  <label class="switch">
-                    <input type="checkbox" />
-                    <span class="slider round"></span>
-                  </label>
-                    <p>VENDORS</p>
-                  </div>
-                  <div className="flex g-20 chalk items-center">
-                    <p className="w30">3</p>
-                    <button className="btn btn-primary p-25 ">Edit</button>
-                  </div>
-                </div>
-                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
-                <div className="flex items-center g-5">
-                  <label class="switch">
-                    <input type="checkbox" />
-                    <span class="slider round"></span>
-                  </label>
-                    <p>INVENTORY</p>
-                  </div>
-                  <div className="flex g-20 chalk items-center">
-                    <p className="w30">3</p>
-                    <button className="btn btn-primary p-25 ">Edit</button>
-                  </div>
-                </div>
-                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
-                <div className="flex items-center g-5">
-                  <label class="switch">
-                    <input type="checkbox" />
-                    <span class="slider round"></span>
-                  </label>
-                    <p>PAYROLL</p>
-                  </div>
-                  <div className="flex g-20 chalk items-center">
-                    <p className="w30">3</p>
-                    <button className="btn btn-primary p-25 ">Edit</button>
+                  <div className="lheight13">
+                  <h4 className="f-300">Dennis Abdulmalik</h4> 
+                  <p className="sub__title">danDGreat</p>
                   </div>
                 </div>
-                <div className="flex justsb w-480 items-center" style={{border:"1px solid #8c8c8cd6",padding:"5px"}}>  
-                <div className="flex items-center g-5">
-                  <label class="switch">
-                    <input type="checkbox" />
-                    <span class="slider round"></span>
-                  </label>
-                    <p>BOOK KEEPING</p>
-                  </div>
-                  <div className="flex g-20 chalk items-center">
-                    <p className="w30">3</p>
-                    <button className="btn btn-primary p-25 ">Edit</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </TabPanel>
-       </Box>
-      </div>
+              </TableCell>
+              
+              <TableCell> fakemail@outlook.com</TableCell>
+              <TableCell> 0803 000 0000</TableCell>
+              <TableCell>
 
+              <div className="lheight13">
+                      <h4 className="f-300">PMall Nigeria</h4>
+                      <p className="sub__title">882LR</p>
+                    </div>
+              </TableCell>
+              <TableCell> Admin </TableCell>
+              <TableCell>
+                {" "}
+                <span className="badge bg-success">Active </span>
+              </TableCell>
+              <TableCell>
+                {" "}
+                <MoreVertIcon />{" "}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
 
 {/* Modal to add Driver */}
       <Modal
@@ -697,7 +432,7 @@ const Users = () => {
                </div>
          </section>
 
-<div className="flex__normal w-30 pull-right mt-w35">
+<div className="flex__normal w-30 pull-right mt-35">
               <button onClick={handleModalClose} className="btn btn-secondary p-25 pull-right mr-10">
                 Cancel
               </button>
