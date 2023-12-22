@@ -6,9 +6,14 @@ import NewPasswordPage from "./auth/newPasswordPage";
 import ResetPassword from "./auth/passwordReset";
 import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
+import Dashboard from "./dashboard";
+import OrderManagement from "./orderManagement";
 import ProductList from "./productList";
 import Users from "./users";
 import Vendors from "./vendors";
+import VendorDetails from "./vendors/details";
+import AffilateDetails from "./affilates/details";
+import ProductDetails from "./singleProductDetails";
 
 function Application() {
   return (
@@ -29,8 +34,13 @@ function Application() {
               <div className="main__content">
                 <Route path="/app/users/list" component={Users} />
                 <Route path="/app/vendors/list" component={Vendors} />
+                <Route path="/app/vendors/details" component={VendorDetails} />
                 <Route path="/app/affilates/list" component={Affilates} />
+                <Route path="/app/affilates/details" component={AffilateDetails} />
                 <Route path="/app/product/list" component={ProductList} />
+                <Route path="/app/product/detail" component={ProductDetails} />
+                <Route path="/app/dashboard" component={Dashboard} />
+                <Route path="/app/order-management" component={OrderManagement} />
               </div>
             </div>
           </React.Fragment>

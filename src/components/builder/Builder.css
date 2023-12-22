@@ -160,8 +160,8 @@
   user-select: none;
   width: 1em;
   height: 1em;
-  margin-right: 10px !important;
-  color: var(--color-chalk) !important;
+  margin-right: 10px;
+  color: var(--color-chalk);
   display: inline-block;
   fill: currentColor;
   -webkit-flex-shrink: 0;
