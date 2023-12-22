@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   font-size: 10px;
-  font-family: "manrope", "Open Sans", "sans-serif" !important;
+  font-family: "manrope-light", "Open Sans", "sans-serif" !important;
 }
 
 .App {
@@ -157,7 +157,7 @@
 }
 .sub__title {
   font-size: 8px;
-  font-weight: normal;
+  font-weight: 600;
   color: #80808091;
 }
 
@@ -672,8 +672,8 @@ thead {
   /* font-weight: 600!important; */
   padding: 15px !important;
   font-size: 9px !important;
-  /* font-family: 'Open Sans'!important; */
-  color: #9aa4b0 !important;
+  color: #505b68 !important;
+  font-weight: 900!important;
 }
 
 .w100-m10 {
