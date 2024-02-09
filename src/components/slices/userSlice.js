@@ -14,18 +14,18 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
-  extraReducers: {
-    [userFetch.pending]: (state, action) => {
-      state.status = "Pending";
-    },
-    [userFetch.fulfilled]: (state, action) => {
-      state.status = "Success";
-      state.items = action.payload;
-    },
-    [userFetch.rejected]: (state, action) => {
-      state.status = "Rejected";
-    },
-  },
+  // extraReducers: {
+  //   [userFetch.pending]: (state, action) => {
+  //     state.status = "Pending";
+  //   },
+  //   [userFetch.fulfilled]: (state, action) => {
+  //     state.status = "Success";
+  //     state.items = action.payload;
+  //   },
+  //   [userFetch.rejected]: (state, action) => {
+  //     state.status = "Rejected";
+  //   },
+  // },
 });
 
 export default userSlice.reducer;
