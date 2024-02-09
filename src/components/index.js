@@ -22,7 +22,7 @@ function Application() {
       <React.Fragment>
         <div>
           <Routes>
-            <Route path="/auth/app/Login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="/auth/app/Signup" element={<SignUp />} />
             <Route
               path="/auth/app/Reset-password"
