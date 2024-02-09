@@ -6,9 +6,14 @@ import NewPasswordPage from "./auth/newPasswordPage";
 import ResetPassword from "./auth/passwordReset";
 import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
-import ProductList from "./productList";
+import Products from "./products";
 import Users from "./users";
 import Vendors from "./vendors";
+import Store from "./store";
+import OrderManagement from "./orderManagement";
+import VendorDetails from "./vendors/details";
+import ProductDetails from "./products/details";
+import AffilateDetails from "./affilates/details";
 import Dashboard from "./dashboard";
 
 function Application() {
@@ -42,16 +47,36 @@ function Application() {
             {/* <Route path="/app"> */}
             <div className="sidenav">
               <Sidebar />
+              <Routes>
+                <Route path="/" element={<Store />} />
+              </Routes>
             </div>
             {/* </Route> */}
             {/* </Routes> */}
             <div className="main__content">
               <Routes>
                 <Route path="/app/dashboard" element={<Dashboard />} />
-                <Route path="/app/users/list" element={<Users />} />
-                <Route path="/app/vendors/list" element={<Vendors />} />
-                <Route path="/app/affilates/list" element={<Affilates />} />
-                <Route path="/app/product/list" element={<ProductList />} />
+                <Route path="/app/users" element={<Users />} />
+                <Route path="/app/vendors" element={<Vendors />} />
+
+                <Route
+                  path="/app/order-management"
+                  element={<OrderManagement />}
+                />
+                <Route
+                  path="/app/vendors/details"
+                  element={<VendorDetails />}
+                />
+                <Route
+                  path="/app/products/details"
+                  element={<ProductDetails />}
+                />
+                <Route path="/app/affilates" element={<Affilates />} />
+                <Route
+                  path="/app/affilates/details"
+                  element={<AffilateDetails />}
+                />
+                <Route path="/app/products" element={<Products />} />
               </Routes>
             </div>
           </div>

@@ -35,17 +35,18 @@ function Sidebar() {
         title="Store Management"
       />
       <SidebarRow
-        path="/app/products/list"
+        path="/app/order-management"
         Icon={ShoppingCartIcon}
-        title="Product Management"
+        title="Order Management"
       />
+
       <SidebarRow
-        path="/app/vendors/list"
+        path="/app/vendors"
         Icon={GroupsIcon}
         title="Vendor Resources"
       />
       <SidebarRow
-        path="/app/users/list"
+        path="/app/users"
         Icon={AccessibilityNewIcon}
         title="User Management"
       />
@@ -53,9 +54,14 @@ function Sidebar() {
       <div className="s-divider"></div>
       {/* <SidebarRow path="/app/front-desk"  Icon={HomeWorkIcon} title="Front Desk"/> */}
       <SidebarRow
-        path="/app/affilates/list"
+        path="/app/affilates"
         Icon={HubIcon}
         title="Affiliate Management"
+      />
+      <SidebarRow
+        path="/app/products"
+        Icon={ShoppingCartIcon}
+        title="Product Management"
       />
       <SidebarRow
         path="/app"

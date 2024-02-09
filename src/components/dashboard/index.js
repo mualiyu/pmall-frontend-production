@@ -190,7 +190,7 @@ const Dashboard = () => {
       </section>
       {dashboardTab && (
         <div className="flex g-10 justsb">
-          <div>
+          <div style={{ width: "75%" }}>
             <section>
               <div className="flex g-10">
                 <div className="balance available">
@@ -497,8 +497,8 @@ const Dashboard = () => {
                     <h3>AP</h3>
                   </div>
                   <div>
-                    <h4 className="f-300">Ahmed Peter (84)</h4>
-                    <p className="sub__title">ahp374</p>
+                    <h4 className="f-300">Ahmed Peter </h4>
+                    <p className="sub__title">Dec 12 at 08:50 PM</p>
                   </div>
                 </div>
                 <div className="flex">
@@ -506,8 +506,8 @@ const Dashboard = () => {
                     <h3>PY</h3>
                   </div>
                   <div>
-                    <h4 className="f-300">Philip Yahaya (200)</h4>
-                    <p className="sub__title">py3030</p>
+                    <h4 className="f-300">Philip Yahaya</h4>
+                    <p className="sub__title">Dec 12 at 08:50 PM</p>
                   </div>
                 </div>
                 <div className="flex">
@@ -515,8 +515,8 @@ const Dashboard = () => {
                     <h3>DA</h3>
                   </div>
                   <div>
-                    <h4 className="f-300">Dennis Abdulmalik (78)</h4>
-                    <p className="sub__title">daj093</p>
+                    <h4 className="f-300">Dennis Abdulmalik</h4>
+                    <p className="sub__title">Dec 12 at 08:50 PM</p>
                   </div>
                 </div>
                 <div className="flex">
@@ -524,8 +524,8 @@ const Dashboard = () => {
                     <h3>OD</h3>
                   </div>
                   <div>
-                    <h4 className="f-300">Ogun Dunamis (66)</h4>
-                    <p className="sub__title">od6723</p>
+                    <h4 className="f-300">Ogun Dunamis</h4>
+                    <p className="sub__title">Dec 12 at 08:50 PM</p>
                   </div>
                 </div>
                 <div className="flex">
@@ -533,8 +533,51 @@ const Dashboard = () => {
                     <h3>AP</h3>
                   </div>
                   <div>
-                    <h4 className="f-300">Busayo Ifeoluwa(90)</h4>
-                    <p className="sub__title">bat345</p>
+                    <h4 className="f-300">Busayo Ifeoluwa</h4>
+                    <p className="sub__title">Dec 12 at 08:50 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="recent-affilates">
+              <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
+                HIGHEST PAYOUT affilates
+              </h1>
+              <div className="gap-10">
+                <div className="flex">
+                  <div className="user__avatar bg-success">
+                    <h3>AP</h3>
+                  </div>
+                  <div>
+                    <h4 className="f-300">Ahmed Peter (84 Downlines)</h4>
+                    <p className="sub__title">&#x20A6; 812,935</p>
+                  </div>
+                </div>
+                <div className="flex">
+                  <div className="user__avatar bg-error">
+                    <h3>PY</h3>
+                  </div>
+                  <div>
+                    <h4 className="f-300">Philip Yahaya (200 Downlines)</h4>
+                    <p className="sub__title">&#x20A6; 812,935</p>
+                  </div>
+                </div>
+                <div className="flex">
+                  <div className="user__avatar bg-success">
+                    <h3>DA</h3>
+                  </div>
+                  <div>
+                    <h4 className="f-300">Dennis Abdulmalik (78 Downlines)</h4>
+                    <p className="sub__title">&#x20A6; 812,935</p>
+                  </div>
+                </div>
+                <div className="flex">
+                  <div className="user__avatar bg-warning">
+                    <h3>OD</h3>
+                  </div>
+                  <div>
+                    <h4 className="f-300">Ogun Dunamis (66 Downlines)</h4>
+                    <p className="sub__title">&#x20A6; 812,935</p>
                   </div>
                 </div>
               </div>
