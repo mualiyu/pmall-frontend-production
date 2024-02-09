@@ -5,8 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import productSlice, { userFetch } from "./components/slices/productSlice";
-import userSlice from "./components/slices/userSlice";
+import productSlice from "./components/slices/productSlice";
+import userSlice, { userFetch } from "./components/slices/userSlice";
 
 const store = configureStore({
   reducer: {
