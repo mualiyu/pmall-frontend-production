@@ -15,6 +15,9 @@ import VendorDetails from "./vendors/details";
 import ProductDetails from "./products/details";
 import AffilateDetails from "./affilates/details";
 import Dashboard from "./dashboard";
+import UserDetails from "./users/details";
+import ProductList from "./productList";
+import Categories from "./categories";
 
 function Application() {
   return (
@@ -57,6 +60,7 @@ function Application() {
               <Routes>
                 <Route path="/app/dashboard" element={<Dashboard />} />
                 <Route path="/app/users" element={<Users />} />
+                <Route path="/app/users/details" element={<UserDetails />} />
                 <Route path="/app/vendors" element={<Vendors />} />
 
                 <Route
@@ -71,12 +75,17 @@ function Application() {
                   path="/app/products/details"
                   element={<ProductDetails />}
                 />
+                <Route
+                  path="/app/products/list"
+                  element={<ProductList />}
+                />
                 <Route path="/app/affilates" element={<Affilates />} />
                 <Route
                   path="/app/affilates/details"
                   element={<AffilateDetails />}
                 />
                 <Route path="/app/products" element={<Products />} />
+                <Route path="/app/categories" element={<Categories/>} />
               </Routes>
             </div>
           </div>
