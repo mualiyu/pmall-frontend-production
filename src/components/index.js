@@ -18,6 +18,8 @@ import Dashboard from "./dashboard";
 import UserDetails from "./users/details";
 import ProductList from "./productList";
 import Categories from "./categories";
+import Gallery from "./gallery";
+import OrderDetails from "./orderManagement/details";
 
 function Application() {
   return (
@@ -86,6 +88,8 @@ function Application() {
                 />
                 <Route path="/app/products" element={<Products />} />
                 <Route path="/app/categories" element={<Categories/>} />
+                <Route path="/app/gallery" element={<Gallery/>} />
+                <Route path="/app/order/details" element={<OrderDetails/>} />
               </Routes>
             </div>
           </div>
