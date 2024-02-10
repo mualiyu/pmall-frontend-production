@@ -11,8 +11,8 @@ input::-webkit-inner-spin-button {
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont,"Manrope" "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, "Manrope" "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -119,13 +119,13 @@ ul {
   justify-content: center;
   background: url("./assets/imgs/8.png");
   background-size: cover;
-    background-repeat: no-repeat;
+  background-repeat: no-repeat;
 }
 .signup-screen .left {
   background: url("./assets/imgs/7.png");
   background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .login-screen .left::before {
   position: absolute; /* Sit on top of the page content */
@@ -136,7 +136,7 @@ ul {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
   z-index: 999; /* Specify a stack order in case you're using a different order for other elements */
   cursor: pointer; /* Add a pointer on hover */
 }
@@ -417,12 +417,22 @@ ul {
 }
 .dashboard .balance.available {
   /* background-color: rgb(23, 175, 23); */
-  background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(26,62,156,1) 51%, rgba(2,0,36,1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 212, 255, 1) 0%,
+    rgba(26, 62, 156, 1) 51%,
+    rgba(2, 0, 36, 1) 100%
+  );
   color: #dadada;
 }
 .dashboard .balance.pending {
-  background: linear-gradient(90deg, rgba(160,87,160,1) 0%, rgba(145,77,145,1) 51%, rgba(0,0,0,1) 100%);
-    color: #dadada;
+  background: linear-gradient(
+    90deg,
+    rgba(160, 87, 160, 1) 0%,
+    rgba(145, 77, 145, 1) 51%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  color: #dadada;
 }
 .dashboard .balance h1 {
   font-size: 20px;
@@ -814,4 +824,78 @@ input:checked + .slider:before {
   .reset-password .right .form-logo {
     padding-right: 10px;
   }
+}
+
+.user-details .left h1,
+.user-details .page__header h1 {
+  font-size: 20px;
+}
+
+.user-details .left,
+.user-details .right {
+  padding: 30px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3%;
+}
+
+.user-details .left .top {
+  margin-top: -80px;
+}
+
+.user-details .left .details .flex-container {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+}
+
+.user-details .left h3 {
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.user-details input {
+  height: 40px;
+  width: 200px;
+  padding-left: 5px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.form-control.package {
+  padding-top: 10px;
+}
+
+.category h1 {
+  font-size: 18px;
+}
+
+.category h3 {
+  width: 180px;
+  color: #8c8c8cd6;
+  font-weight: 200;
+}
+
+.category input,
+.category select,
+.category textarea {
+  height: 40px;
+  padding-left: 3px;
+  width: 100%;
+  border: 1px solid #8c8c8c30;
+  border-radius: 5px;
+  color: #8c8c8cd6;
+}
+.category textarea {
+  height: 150px;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+.category textarea:focus {
+  outline: none;
+}
+.g-40 {
+  gap: 40px;
+}
+
+.w-full {
+  width: 100%;
 }
