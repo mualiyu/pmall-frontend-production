@@ -987,6 +987,7 @@ input:checked + .slider:before {
   border-radius: 5px;
   height: 40px;
   color: #1a3e9c;
+  cursor: pointer;
 }
 
 .order-summary .right .track-btn p {
@@ -996,4 +997,66 @@ input:checked + .slider:before {
 .order-summary .right .track-btn .css-i4bv87-MuiSvgIcon-root,
 .MuiSvgIcon-root {
   color: blue;
+}
+
+.order-summary .tab-icons {
+  width: 600px;
+}
+
+.order-summary .tab-btn {
+  background-color: #eee;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 8px;
+  color: #fff;
+}
+.order-summary .tab-btn .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  color: white !important;
+}
+
+.order-summary .tab-btn.active {
+  background-color: #1a3e9c;
+}
+
+.order-summary .bar {
+  width: 100%;
+  height: 2px;
+  display: flex;
+  background-color: #eee;
+}
+
+.order-summary .bar.active {
+  background-color: #1a3e9c;
+}
+
+.order-summary .billing-btn {
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.border {
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.border input {
+  cursor: pointer;
+}
+
+.shadow {
+  padding: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3%;
+}
+
+.hidden {
+  display: none;
 }
