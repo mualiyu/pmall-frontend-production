@@ -10,20 +10,20 @@ const AffilateForm = ({inputValues, onChangeHandler}) => {
                     <label className="abs py-10"> First Name * </label>
                     <input
                         type="text" 
-                        name="firstName" 
+                        name="fname" 
                         className="first-name form-control"
                         onChange={onChangeHandler}
-                        value={inputValues.firstName || ""}
+                        value={inputValues.fname || ""}
                     />
                 </div>
                 <div className="pos-rel">
                     <label className="abs py-10"> Last Name * </label>
                     <input
                         type="text" 
-                        name="lastName" 
+                        name="lname" 
                         className="last-name form-control"
                         onChange={onChangeHandler}
-                        value={inputValues.lastName || ""}
+                        value={inputValues.lname || ""}
                     />
                 </div>
             </span>
@@ -42,10 +42,10 @@ const AffilateForm = ({inputValues, onChangeHandler}) => {
                     <label className="abs py-10"> Username *</label>
                     <input
                         type="text" 
-                        name="userName" 
+                        name="username" 
                         className="form-control" 
                         onChange={onChangeHandler}
-                        value={inputValues.userName || ""}
+                        value={inputValues.username || ""}
                     />
                 </div>
 
@@ -53,10 +53,10 @@ const AffilateForm = ({inputValues, onChangeHandler}) => {
                 <label className="abs py-10"> Phone Number * </label>
                 <input
                     type="number" 
-                    name="phoneNumber" 
+                    name="phone" 
                     className="form-control"
                     onChange={onChangeHandler}
-                    value={inputValues.phoneNumber || ""}
+                    value={inputValues.phone || ""}
                 />
                 </div>
             </span>
@@ -72,13 +72,13 @@ const AffilateForm = ({inputValues, onChangeHandler}) => {
                     />
                 </div>
                 <div className="pos-rel">
-                    <label className="abs py-10"> Confirm password * </label>
+                    <label className="abs py-10"> package_id * </label>
                     <input
-                        type="password" 
-                        name="confirmPassword" 
+                        type="number" 
+                        name="package_id" 
                         className="form-control"
                         onChange={onChangeHandler}
-                        value={inputValues.confirmPassword || ""}
+                        value={inputValues.package_id || ""}
                     />
                 </div>
             </span>
@@ -86,10 +86,10 @@ const AffilateForm = ({inputValues, onChangeHandler}) => {
                 <label className="abs py-10"> Referral id</label>
                 <input
                     type="text" 
-                    name="referralId" 
+                    name="ref_id" 
                     className="form-control"
                     onChange={onChangeHandler}
-                    value={inputValues.referralId || ""}
+                    value={inputValues.ref_id || ""}
                 />
             </div>
         </span>

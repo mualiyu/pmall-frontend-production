@@ -1060,3 +1060,82 @@ input:checked + .slider:before {
 .hidden {
   display: none;
 }
+
+.settings {
+  margin: 30px 0;
+  color: rgb(77, 75, 75);
+}
+
+.settings .tab {
+  border-bottom: 1px dashed rgb(203, 197, 197);
+  padding: 30px 0;
+}
+
+.bb-dashed {
+  border-bottom: 1px dashed rgb(203, 197, 197);
+  padding-bottom: 30px;
+}
+
+.settings .tab .right {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 10px;
+}
+
+.settings .tab .right .dotted {
+  border: 1.5px dashed rgb(203, 197, 197);
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.settings .tab .right .dotted .icon {
+  font-size: 30px;
+}
+
+.settings .tab .right .img {
+  border: 1px solid rgb(203, 197, 197);
+  border-radius: 5px;
+  width: 160px;
+  position: relative;
+}
+
+.settings .tab .right .close {
+  font-size: 10px;
+  position: absolute;
+  top: 1px;
+  right: -5px;
+  background-color: rgb(194, 35, 35);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 1px;
+}
+
+.blue {
+  color: var(--primary-bg-color);
+}
+
+.scroll-container {
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.red {
+  color: rgb(194, 35, 35);
+}
+
+.bg-blue {
+  padding: 3px 5px;
+  background-color: #1a3e9c;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}

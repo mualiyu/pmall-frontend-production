@@ -18,6 +18,7 @@ import Paper from "@mui/material/Paper";
 import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import { Chart, ArcElement } from "chart.js";
+import { useVendor } from "../../context/VendorSignupContext";
 Chart.register(ArcElement);
 
 const style = {
@@ -103,7 +104,8 @@ const Users = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const {submittedValues} = useVendor();
+  console.log(submittedValues)
   return (
     <section>
       <section className="page__header">

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useVendor } from "../../context/VendorSignupContext";
 import useForm from "../../utils/useForm";
 
 const ResetPassword = () => {
@@ -13,7 +14,8 @@ const ResetPassword = () => {
     console.log(inputValues);
   };
 
-  const [inputValues, onChangeHandler, onSubmitHandler] = useForm(resetHandler);
+  //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(resetHandler);
+  const {inputValues, onChangeHandler, onForgotPasswordHandler} = useVendor();
 
   return (
     <section>
@@ -33,16 +35,16 @@ const ResetPassword = () => {
                         <div className="pos-rel">
                             <label className="abs py-10">Username/Email </label>
                             <input
-                            type="text"
+                            type="email"
                             className="form-control"
-                            name="username"
+                            name="email"
                             onChange={onChangeHandler}
                             placeholder="talk2ahmedpeter@gmail.com"
-                            value={inputValues.username || ""}
+                            value={inputValues.email || ""}
                             />
                         </div>
                         <span>
-                            <button className="reset-btn"  type="submit" onClick={resetHandler}>Reset Password</button>
+                            <button className="reset-btn"  type="submit" onClick={onForgotPasswordHandler}>Reset Password</button>
                             <p>Suddenly remember it?</p>
                             <Link to="/auth/app/Login"><button className="back-to-login">Back to Login</button></Link>
                         </span>

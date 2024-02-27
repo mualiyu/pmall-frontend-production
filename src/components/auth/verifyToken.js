@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useForm from "../../utils/useForm";
 import { useVendor } from "../../context/VendorSignupContext";
 
-const NewPasswordPage = () => {
+const VerifyToken = () => {
   const onEnter = (e) => {
     e.stopPropagation();
     if (e.key === "Enter") {
@@ -15,7 +15,7 @@ const NewPasswordPage = () => {
   };
 
   //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(newPasswordHandler);
-  const {inputValues, onChangeHandler,handleResetPassword} = useVendor();
+  const {inputValues, onChangeHandler,handleVerifyToken} = useVendor();
   return (
     <section className="new-password">
         <div className="reset-password">
@@ -28,33 +28,23 @@ const NewPasswordPage = () => {
             </div>
             <div className="right">
                 <div className="container">
-                    <h1>Set New Password</h1>
-                    <p>Please choose your new password</p>
+                    <h1>Enter Token</h1>
+                    <p>Please input the token sent to your email</p>
                     <form action="">
                         <span className="flex gap-10">
                             <div className="pos-rel flex">
-                                <label className="abs py-10">New Password </label>
+                                <label className="abs py-10">Token </label>
                                 <input
-                                type="password"
+                                type="text"
                                 className="form-control"
-                                name="password"
+                                name="token"
                                 onChange={onChangeHandler}
-                                value={inputValues.password || ""}
-                                />
-                            </div>
-                            <div className="pos-rel">
-                                <label className="abs py-10">Confirm Password </label>
-                                <input
-                                type="password"
-                                className="form-control"
-                                name="confirmPassword"
-                                onChange={onChangeHandler}
-                                value={inputValues.confirmPassword || ""}
+                                value={inputValues.token || ""}
                                 />
                             </div>
                         </span>
                         <span>
-                            <button className="reset-btn"  type="submit" onClick={handleResetPassword}>Save New Password</button>
+                            <button className="reset-btn"  type="submit" onClick={ handleVerifyToken}>Save New Password</button>
                         </span>
                     </form>
                 </div>
@@ -68,4 +58,4 @@ const NewPasswordPage = () => {
   );
 };
 
-export default NewPasswordPage ;
+export default VerifyToken ;
