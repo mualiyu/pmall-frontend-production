@@ -18,6 +18,10 @@ import Dashboard from "./dashboard";
 import UserDetails from "./users/details";
 import ProductList from "./productList";
 import Categories from "./categories";
+import Gallery from "./gallery";
+import OrderDetails from "./orderManagement/details";
+import SiteSettings from "./siteSettings";
+import VerifyToken from "./auth/verifyToken";
 
 function Application() {
   return (
@@ -34,6 +38,10 @@ function Application() {
             <Route
               path="/auth/app/Set-new-password"
               element={<NewPasswordPage />}
+            />
+            <Route
+              path="/auth/app/verify-token"
+              element={<VerifyToken />}
             />
           </Routes>
           <div className="flex-container">
@@ -86,6 +94,9 @@ function Application() {
                 />
                 <Route path="/app/products" element={<Products />} />
                 <Route path="/app/categories" element={<Categories/>} />
+                <Route path="/app/gallery" element={<Gallery/>} />
+                <Route path="/app/order/details" element={<OrderDetails/>} />
+                <Route path="/app/settings" element={<SiteSettings />} />
               </Routes>
             </div>
           </div>

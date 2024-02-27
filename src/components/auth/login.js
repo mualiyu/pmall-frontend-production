@@ -1,5 +1,6 @@
 import react from "react";
 import { Link } from "react-router-dom";
+import { useVendor } from "../../context/VendorSignupContext";
 import useForm from "../../utils/useForm";
 
 const Login = () => {
@@ -14,8 +15,8 @@ const Login = () => {
     console.log(inputValues);
   };
 
-  const [inputValues, onChangeHandler, onSubmitHandler] = useForm(loginHandler);
-
+  //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(loginHandler);
+  const {inputValues, onChangeHandler, handleLogin} = useVendor();
   return (
     <section>
 <div className="login-screen">
@@ -59,7 +60,7 @@ const Login = () => {
                 <input type="checkbox" name="remember-me" />
                 <p>Remember me</p>
             </span>
-            <button className="login-btn"  type="submit" onClick={loginHandler}>Login</button>
+            <button className="login-btn"  type="submit" onClick={handleLogin}>Login</button>
             <p>Don't have an account yet?</p>
             <Link to="/auth/app/Signup"><button className="create-account">Create account</button></Link>
         </form>

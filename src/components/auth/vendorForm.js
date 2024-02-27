@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import useForm from "../../utils/useForm";
 
-const VendorForm = ({inputValues, onChangeHandler, onSubmitHandler}) => {
+const VendorForm = ({inputValues, onChangeHandler}) => {
         
     return ( 
         <div>
@@ -9,10 +9,10 @@ const VendorForm = ({inputValues, onChangeHandler, onSubmitHandler}) => {
                 <label className="abs py-10"> Store Name *</label>
                 <input
                     type="text" 
-                    name="storeName" 
+                    name="store_name" 
                     className="form-control" 
                     onChange={onChangeHandler}
-                    value={inputValues.storeName || ""}
+                    value={inputValues.store_name || ""}
             />
             </div>
             <span className="flex">
@@ -30,10 +30,10 @@ const VendorForm = ({inputValues, onChangeHandler, onSubmitHandler}) => {
                     <label className="abs py-10"> Phone Number *</label>
                     <input
                         type="number" 
-                        name="phoneNumber" 
+                        name="phone" 
                         className="form-control"
                         onChange={onChangeHandler}
-                        value={inputValues.phoneNumber || ""}
+                        value={inputValues.phone || ""}
                     />
                 </div>
             </span>
@@ -42,20 +42,42 @@ const VendorForm = ({inputValues, onChangeHandler, onSubmitHandler}) => {
                     <label className="abs py-10"> First Name * </label>
                     <input
                         type="text" 
-                        name="firstName" 
+                        name="fname" 
                         className="first-name form-control"
                         onChange={onChangeHandler}
-                        value={inputValues.firstName || ""}
+                        value={inputValues.fname || ""}
                     />
                 </div>
                 <div className="pos-rel">
                     <label className="abs py-10"> Last Name * </label>
                     <input
                         type="text" 
-                        name="lastName" 
+                        name="lname" 
                         className="last-name form-control"
                         onChange={onChangeHandler}
-                        value={inputValues.lastName || ""}
+                        value={inputValues.lname || ""}
+                    />
+                </div>
+            </span>
+            <span className="flex">
+                <div className="pos-rel">
+                    <label className="abs py-10">Ref id * </label>
+                    <input
+                        type="text" 
+                        name="ref_id" 
+                        className="first-name form-control"
+                        onChange={onChangeHandler}
+                        value={inputValues.ref_id || ""}
+                    />
+                </div>
+                <div className="pos-rel">
+                    <label className="abs py-10"> package id * </label>
+                    <input
+                        type="number" 
+                        name="package_id" 
+                        className="last-name form-control"
+                        onChange={onChangeHandler}
+                        value={inputValues.package_id || ""}
                     />
                 </div>
             </span>

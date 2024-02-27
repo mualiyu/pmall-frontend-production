@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import useForm from "../../utils/useForm";
 import AffilateForm from "./affilateForm";
 import VendorForm from "./vendorForm";
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
+import {useVendor} from "../../context/VendorSignupContext";
 
 const SignUp = () => {
 
@@ -17,9 +18,9 @@ const SignUp = () => {
         console.log(inputValues);
       };
     
-    const [inputValues, onChangeHandler, onSubmitHandler] = useForm(signUpHandler);
+    //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(signUpHandler);
+    const {inputValues, onChangeHandler, onSubmitHandler,onAffilateSubmitHandler,submittedValues} = useVendor();
     const [vendorForm,setVendorForm] = useState(true);
-
     return ( 
         <div className="signup-screen">
             <div className="left">
@@ -37,8 +38,8 @@ const SignUp = () => {
                         </div>
                         <span className={`line  ${!vendorForm && "affilate"}`}></span>
                     </div>
-                    <form action="" className={!vendorForm && "affilate"}>
-                        {vendorForm?<VendorForm inputValues = {inputValues} onChangeHandler={onChangeHandler} onSubmitHandler= {onChangeHandler}/>:<AffilateForm inputValues = {inputValues} onChangeHandler={onChangeHandler} onSubmitHandler= {onChangeHandler}/>}
+                    <form action="" className={!vendorForm && "affilate"} onSubmit={onSubmitHandler}>
+                        {vendorForm?<VendorForm inputValues = {inputValues} onChangeHandler={onChangeHandler} onSubmitHandler= {onSubmitHandler}/>:<AffilateForm inputValues = {inputValues} onChangeHandler={onChangeHandler} onSubmitHandler= {onChangeHandler}/>}
                         <span className="t-and-c">
                         <input
                             type="checkbox" 
@@ -46,12 +47,19 @@ const SignUp = () => {
                         />
                         <p>I agree to the <Link to="/app/Terms" className="purple">terms</Link> and <Link to="/app/Conditions" className="purple">conditions</Link> of Pmall Nigeria</p>
                         </span>
+                        {vendorForm?
                         <button
                             className={`continue-btn ${!vendorForm && "affilate"}`} 
-                            onClick={signUpHandler}
+                            onClick={signUpHandler} 
                         >
                             Continue
-                        </button>
+                        </button>:
+                        <button
+                            className={`continue-btn ${!vendorForm && "affilate"}`} 
+                            onClick={onAffilateSubmitHandler} 
+                        >
+                            Continue 
+                        </button>}
                         <p className="have-an-account">Already have an account?</p>
                         <Link to="/auth/app/Login"><button className={`back-to-login ${!vendorForm && "affilate"}`}>Back to Login</button></Link>
                     </form>

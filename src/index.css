@@ -832,10 +832,17 @@ input:checked + .slider:before {
 }
 
 .user-details .left,
+.gallery .left,
+.gallery .right,
 .user-details .right {
   padding: 30px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 3%;
+}
+
+.gallery .left,
+.gallery .right {
+  padding: 20px;
 }
 
 .user-details .left .top {
@@ -852,7 +859,8 @@ input:checked + .slider:before {
   font-weight: 300;
 }
 
-.user-details input {
+.user-details input,
+.gallery input {
   height: 40px;
   width: 200px;
   padding-left: 5px;
@@ -898,4 +906,236 @@ input:checked + .slider:before {
 
 .w-full {
   width: 100%;
+}
+
+.gallery-tag {
+  border: 1px solid #eee;
+  padding: 8px 15px;
+  border-radius: 10px;
+}
+
+.gallery .left select,
+.order-summary .left select {
+  border: none;
+}
+
+.gallery img {
+  width: 150px;
+}
+
+.gallery .left .img-grid {
+  background-color: #eee;
+  width: 180px;
+  height: 180px;
+  border-radius: 5px;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.bold {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.img-detail {
+  padding-bottom: 10px;
+}
+
+.underline {
+  border-bottom: 1px solid #eee;
+}
+
+.gallery .right .url {
+  border: 1px solid #eee;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.gallery .right .url .copy {
+  font-size: 12px;
+}
+
+.order-summary .left {
+  padding: 30px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3%;
+}
+
+.backshadow {
+  padding: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3%;
+}
+
+.order-summary .left .img-grid {
+  padding-bottom: 10px;
+}
+
+.order-summary img {
+  width: 50px;
+}
+
+.order-summary .right .track-btn {
+  border: 1px solid #1a3e9c;
+  border-radius: 5px;
+  height: 40px;
+  color: #1a3e9c;
+  cursor: pointer;
+}
+
+.order-summary .right .track-btn p {
+  font-size: 12px;
+}
+
+.order-summary .right .track-btn .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  color: blue;
+}
+
+.order-summary .tab-icons {
+  width: 600px;
+}
+
+.order-summary .tab-btn {
+  background-color: #eee;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 8px;
+  color: #fff;
+}
+.order-summary .tab-btn .css-i4bv87-MuiSvgIcon-root,
+.MuiSvgIcon-root {
+  color: white !important;
+}
+
+.order-summary .tab-btn.active {
+  background-color: #1a3e9c;
+}
+
+.order-summary .bar {
+  width: 100%;
+  height: 2px;
+  display: flex;
+  background-color: #eee;
+}
+
+.order-summary .bar.active {
+  background-color: #1a3e9c;
+}
+
+.order-summary .billing-btn {
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.border {
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.border input {
+  cursor: pointer;
+}
+
+.shadow {
+  padding: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3%;
+}
+
+.hidden {
+  display: none;
+}
+
+.settings {
+  margin: 30px 0;
+  color: rgb(77, 75, 75);
+}
+
+.settings .tab {
+  border-bottom: 1px dashed rgb(203, 197, 197);
+  padding: 30px 0;
+}
+
+.bb-dashed {
+  border-bottom: 1px dashed rgb(203, 197, 197);
+  padding-bottom: 30px;
+}
+
+.settings .tab .right {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 10px;
+}
+
+.settings .tab .right .dotted {
+  border: 1.5px dashed rgb(203, 197, 197);
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.settings .tab .right .dotted .icon {
+  font-size: 30px;
+}
+
+.settings .tab .right .img {
+  border: 1px solid rgb(203, 197, 197);
+  border-radius: 5px;
+  width: 160px;
+  position: relative;
+}
+
+.settings .tab .right .close {
+  font-size: 10px;
+  position: absolute;
+  top: 1px;
+  right: -5px;
+  background-color: rgb(194, 35, 35);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 1px;
+}
+
+.blue {
+  color: var(--primary-bg-color);
+}
+
+.scroll-container {
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.red {
+  color: rgb(194, 35, 35);
+}
+
+.bg-blue {
+  padding: 3px 5px;
+  background-color: #1a3e9c;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.mt-50 {
+  margin-top: 50px;
 }

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import useForm from "../../utils/useForm";
+import { useVendor } from "../../context/VendorSignupContext";
 
 const NewPasswordPage = () => {
   const onEnter = (e) => {
@@ -13,8 +14,8 @@ const NewPasswordPage = () => {
     console.log(inputValues);
   };
 
-  const [inputValues, onChangeHandler, onSubmitHandler] = useForm(newPasswordHandler);
-
+  //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(newPasswordHandler);
+  const {inputValues, onChangeHandler,handleResetPassword} = useVendor();
   return (
     <section className="new-password">
         <div className="reset-password">
@@ -36,9 +37,9 @@ const NewPasswordPage = () => {
                                 <input
                                 type="password"
                                 className="form-control"
-                                name="newPassword"
+                                name="password"
                                 onChange={onChangeHandler}
-                                value={inputValues.newPassword || ""}
+                                value={inputValues.password || ""}
                                 />
                             </div>
                             <div className="pos-rel">
@@ -53,7 +54,7 @@ const NewPasswordPage = () => {
                             </div>
                         </span>
                         <span>
-                            <button className="reset-btn"  type="submit" onClick={newPasswordHandler}>Save New Password</button>
+                            <button className="reset-btn"  type="submit" onClick={handleResetPassword}>Save New Password</button>
                         </span>
                     </form>
                 </div>

@@ -7,6 +7,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import productSlice from "./components/slices/productSlice";
 import userSlice, { userFetch } from "./components/slices/userSlice";
+import { VendorSignupProvider } from './context/VendorSignupContext'
 
 const store = configureStore({
   reducer: {
@@ -21,7 +22,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <VendorSignupProvider>
+        <App />
+      </VendorSignupProvider>
     </Provider>
   </React.StrictMode>
 );
