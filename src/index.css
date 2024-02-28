@@ -1,7 +1,7 @@
 :root {
-  --primary-bg-color: #1a3e9c;
-  --secondary-bg-color: ;
-  --primary-color: #fff;
+  --primary-color: #1a3e9c;
+  --secondary-color: ;
+  /* --primary-color: #fff; */
   --color-chalk: #e3e3e3;
 }
 input::-webkit-outer-spin-button,
@@ -122,7 +122,7 @@ ul {
   background-repeat: no-repeat;
 }
 .signup-screen .left {
-  background: url("./assets/imgs/7.png");
+  background: url("./assets/imgs/8.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -207,7 +207,7 @@ ul {
 .reset-password .right .container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .login-screen .right .container,
 .reset-password .right .container {
@@ -219,8 +219,8 @@ ul {
 }
 .signup-screen .right .main {
   height: 721px;
-  width: 100%;
-  padding: 0 68px 0 60px;
+  width: 70%;
+  /* padding: 0 68px 0 60px; */
 }
 .reset-password .right .container {
   margin-top: 135px;
@@ -229,6 +229,7 @@ ul {
 .reset-password .right .container form {
   display: flex;
   flex-direction: column;
+  margin-top: 35px;
 }
 .reset-password .right .container form {
   margin-top: 50px;
@@ -252,7 +253,7 @@ ul {
   position: relative;
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 20px;
+  margin: 40px 0;
 }
 .signup-screen .right .main .vendor-affilate-container .vendor-affilate {
   display: flex;
@@ -262,12 +263,12 @@ ul {
 }
 .signup-screen .right .main .line {
   display: flex;
-  width: 39px;
-  height: 5px;
+  width: 30px;
+  height: 3px;
   position: absolute;
   top: 20px;
-  transform: translateX(-110px);
-  background: #800081;
+  transform: translateX(-145px);
+  background: var(--primary-color);
   transition: all 0.5s;
 }
 .signup-screen .right .main .line.affilate {
@@ -284,7 +285,7 @@ ul {
 .login-screen .right .container form .input,
 .signup-screen .right .main form input,
 .reset-password .right .container form .input {
-  padding-bottom: 22px;
+  padding-bottom: 9px;
 }
 .signup-screen .right .main form .flex {
   display: flex;
@@ -342,7 +343,17 @@ ul {
 .login-screen .right .container form button,
 .signup-screen .right .main form button,
 .reset-password .right .container form button {
-  height: 65px;
+  height: 45px;
+}
+.lg-btn {
+  width: 100%;
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  border: 0;
+  outline: 0;
+  font-weight: 900;
 }
 .login-screen .right .container form button.login-btn,
 .reset-password .right .container form button.reset-btn {
@@ -354,9 +365,9 @@ ul {
   font-weight: 500;
   width: 100%;
 }
-.reset-password .right .container form button.reset-btn {
+/* .reset-password .right .container form button.reset-btn {
   background-color: #800081;
-}
+} */
 .new-password .right .container form button.reset-btn {
   margin-bottom: 0;
 }
@@ -436,6 +447,7 @@ ul {
 }
 .dashboard .balance h1 {
   font-size: 20px;
+  color: #606060;
 }
 .dashboard .balance-icon-container {
   background-color: #000;

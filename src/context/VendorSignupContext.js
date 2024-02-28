@@ -60,7 +60,7 @@ export const VendorSignupProvider = ({ children }) => {
       
         // Validate credentials 
       
-        fetch("http://18.119.84.184/api/v1/login",{
+        fetch("https://18.119.84.184/api/v1/login",{
           method:"POST",
           headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -163,8 +163,39 @@ export const VendorSignupProvider = ({ children }) => {
         
     }
 
+    
+    const onGetUsers = async(e) => {
+      if (e) {
+        e.preventDefault(); 
+        let accessToken = "5|4AcmYF8KTFHzdxi7PL178zte1uPZ4Gnz61UCr2f89d8b7156"
+      try {
+        const response = await fetch('http://18.119.84.184/api/v1/profile', {
+          method: 'GET',
+          headers:{ 
+            'Content-Type': 'application/json;charset=UTF-8', 
+            "Accept": "application/json" ,
+            'Authorization': `Bearer ${accessToken}`
+          },
+        });
+    
+        if (response.ok) {
+          const data = await response.json();
+          // Process the data (e.g., display it in a table, use it in your application)
+          console.log('Users:', data); // Example logging
+        } else {
+          const error = await response.text();
+          console.error('Error fetching users:', error);
+          // Handle errors appropriately (e.g., display an error message to the user)
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+        // Handle network errors or other unexpected issues
+      }
+    }
+    };
+
   return (
-    <VendorSignupContext.Provider value={{ inputValues, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,submittedValues}}>
+    <VendorSignupContext.Provider value={{ inputValues, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,onGetUsers,submittedValues}}>
       {children}
     </VendorSignupContext.Provider>
   );

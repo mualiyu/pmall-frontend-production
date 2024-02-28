@@ -30,6 +30,7 @@ import {
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
+import DebitCard from "../../utils/debitCard";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -191,41 +192,52 @@ const Dashboard = () => {
       {dashboardTab && (
         <div className="flex g-10 justsb">
           <div style={{ width: "75%" }}>
-            <section>
-              <div className="flex g-10">
-                <div className="balance available">
-                  <span className="balance-icon-container">
-                    <AccountBalanceOutlinedIcon />
-                  </span>
-                  <span className="balance-text">
-                    <h4>Available Balance</h4>
-                    <h1 className="flex">
-                      $14,823.20{" "}
-                      <span className="balance-percentage">
-                        <ArrowUpwardOutlinedIcon
-                          style={{ fontSize: "8px", marginRight: 2 }}
-                        />{" "}
-                        <p>8.0%</p>{" "}
-                      </span>
-                    </h1>
-                  </span>
+            <section style={{ marginBottom: 30 }}>
+              <div
+                className="flex g-10"
+                style={{ justifyContent: "space-between" }}>
+                <div className="left_top_dashboard">
+                  <div className="balance">
+                    <span className="balance-icon-container">
+                      <CurrencyExchangeOutlinedIcon />
+                    </span>
+                    <span className="balance-text">
+                      <h1 className="flex">&#x20A6;000.00 </h1>
+                      <h4 className="color-grey">Sales Today</h4>
+                    </span>
+                  </div>
+                  <div className="balance">
+                    <span className="balance-icon-container">
+                      <AccountBalanceOutlinedIcon />
+                    </span>
+                    <span className="balance-text">
+                      <h1 className="flex">000 </h1>
+                      <h4 className="color-grey">Total Products</h4>
+                    </span>
+                  </div>
                 </div>
-                <div className="balance pending">
-                  <span className="balance-icon-container">
-                    <CurrencyExchangeOutlinedIcon />
-                  </span>
-                  <span className="balance-text">
-                    <h4>Pending Balance</h4>
-                    <h1 className="flex">
-                      $2,498.80{" "}
-                      <span className="balance-percentage">
-                        <ArrowDownwardOutlinedIcon
-                          style={{ fontSize: "8px", marginRight: 2 }}
-                        />
-                        <p>2.0%</p>
-                      </span>
-                    </h1>
-                  </span>
+                <div className="left_top_dashboard">
+                  <div className="balance">
+                    <span className="balance-icon-container">
+                      <AccountBalanceOutlinedIcon />
+                    </span>
+                    <span className="balance-text">
+                      <h1 className="flex">000 </h1>
+                      <h4 className="color-grey">Total Affiliate</h4>
+                    </span>
+                  </div>
+                  <div className="balance">
+                    <span className="balance-icon-container">
+                      <AccountBalanceOutlinedIcon />
+                    </span>
+                    <span className="balance-text">
+                      <h1 className="flex">000 </h1>
+                      <h4 className="color-grey">Total Stores</h4>
+                    </span>
+                  </div>
+                </div>
+                <div className="center_top_dashboard">
+                  <DebitCard />
                 </div>
               </div>
             </section>
@@ -244,7 +256,7 @@ const Dashboard = () => {
                 <div className="flex-container">
                   <span className="flex flex-col g-5">
                     <p style={{ color: "#80808091" }}>Sale Generated</p>
-                    <h1 style={{ fontSize: 20 }}>$24,800 USD</h1>
+                    <h1 style={{ fontSize: 20 }}>&#x20A6;24,800</h1>
                   </span>
                   <button>View Report</button>
                 </div>
@@ -284,7 +296,7 @@ const Dashboard = () => {
                       <p className="sub__title">09:30 PM</p>
                     </TableCell>
                     <TableCell> Pay-3083-23 </TableCell>
-                    <TableCell> 12,340 USD </TableCell>
+                    <TableCell> 12,340 </TableCell>
                     <TableCell>
                       {" "}
                       <span className="badge bg-success"> Delievered</span>{" "}
@@ -311,7 +323,7 @@ const Dashboard = () => {
                       <p className="sub__title">08:50 PM</p>
                     </TableCell>
                     <TableCell> Mer-1249-23 </TableCell>
-                    <TableCell> 8,6265 USD </TableCell>
+                    <TableCell> 8,6265 </TableCell>
                     <TableCell>
                       {" "}
                       <span className="badge bg-error"> Undelievered</span>
@@ -340,7 +352,7 @@ const Dashboard = () => {
                       <p className="sub__title">09:30 PM</p>
                     </TableCell>
                     <TableCell> Pay-3083-23 </TableCell>
-                    <TableCell> 12,340 USD </TableCell>
+                    <TableCell> 12,340 </TableCell>
                     <TableCell>
                       {" "}
                       <span className="badge bg-success"> Delievered</span>{" "}
@@ -367,7 +379,7 @@ const Dashboard = () => {
                       <p className="sub__title">08:50 PM</p>
                     </TableCell>
                     <TableCell> Mer-1249-23 </TableCell>
-                    <TableCell> 8,6265 USD </TableCell>
+                    <TableCell> 8,6265 </TableCell>
                     <TableCell>
                       {" "}
                       <span className="badge bg-error"> Undelievered</span>
@@ -394,7 +406,7 @@ const Dashboard = () => {
                       <p className="sub__title">09:30 PM</p>
                     </TableCell>
                     <TableCell> Pay-3083-23 </TableCell>
-                    <TableCell> 12,340 USD </TableCell>
+                    <TableCell> 12,340 </TableCell>
                     <TableCell>
                       {" "}
                       <span className="badge bg-success"> Delievered</span>{" "}
@@ -411,7 +423,7 @@ const Dashboard = () => {
           <div className="g-20 flex-col">
             <div className="total-profit g-5 flex-col">
               <p>Total Profit</p>
-              <h1 style={{ fontSize: 20 }}>$1482.50</h1>
+              <h1 style={{ fontSize: 20 }}>&#x20A6;1482.50</h1>
               <div className="withdraw">
                 <div className="card">
                   <p>Pay With</p>
@@ -541,7 +553,7 @@ const Dashboard = () => {
             </div>
             <div className="recent-affilates">
               <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                HIGHEST PAYOUT affilates
+                HIGHEST PAYOUT AFFILIATES
               </h1>
               <div className="gap-10">
                 <div className="flex">
