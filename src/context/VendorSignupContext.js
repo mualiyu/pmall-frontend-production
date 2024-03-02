@@ -23,7 +23,7 @@ export const VendorSignupProvider = ({ children }) => {
             alert("successful")
             console.log(res)
             if(res.ok){
-            window.location.href ="/app/vendors"
+            window.location.href ="/"
             }
           }).catch((err)=>{
             console.log(err)
@@ -45,7 +45,7 @@ export const VendorSignupProvider = ({ children }) => {
             alert("successful")
             console.log(res)
             if(res.ok){
-            window.location.href ="/app/affilates"
+            window.location.href ="/"
             }
           }).catch((err)=>{
             console.log(err)
