@@ -34,7 +34,7 @@ export const VendorSignupProvider = ({ children }) => {
       const onAffilateSubmitHandler = async(e) => {
         if (e) {
           e.preventDefault(); 
-          fetch("http://18.119.84.184/api/v1/register/affiliate",{
+          fetch("https://18.119.84.184/api/v1/register/affiliate",{
             method:"POST",
             headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
@@ -60,7 +60,7 @@ export const VendorSignupProvider = ({ children }) => {
       
         // Validate credentials 
       
-        fetch("http://18.119.84.184/api/v1/login",{
+        fetch("https://18.119.84.184/api/v1/login",{
           method:"POST",
           headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -82,7 +82,7 @@ export const VendorSignupProvider = ({ children }) => {
       const onForgotPasswordHandler = async(e) => {
         if (e) {
           e.preventDefault(); 
-          fetch("http://18.119.84.184/api/v1/forgot-password",{
+          fetch("https://18.119.84.184/api/v1/forgot-password",{
             method:"POST",
             headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
@@ -106,7 +106,7 @@ export const VendorSignupProvider = ({ children }) => {
       
         // Validate credentials 
       
-        fetch("http://18.119.84.184/api/v1/reset-password",{
+        fetch("https://18.119.84.184/api/v1/reset-password",{
           method:"POST",
           headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -128,7 +128,7 @@ export const VendorSignupProvider = ({ children }) => {
       
         // Validate credentials 
       
-        fetch("http://18.119.84.184/api/v1/verify-code",{
+        fetch("https://18.119.84.184/api/v1/verify-code",{
           method:"POST",
           headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
