@@ -12,7 +12,7 @@ export const VendorSignupProvider = ({ children }) => {
     const onSubmitHandler = async(e) => {
         if (e) {
           e.preventDefault(); 
-          fetch("http://18.119.84.184/api/v1/register/vendor",{
+          fetch("https://18.119.84.184/api/v1/register/vendor",{
             method:"POST",
             headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
