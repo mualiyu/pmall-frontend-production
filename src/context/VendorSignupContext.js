@@ -54,29 +54,35 @@ export const VendorSignupProvider = ({ children }) => {
         console.log(inputValues)
       };
 
-      const handleLogin= async(e) => {
+     
+      const handleLogin = async (e) => {
         e.preventDefault(); // Prevent default form submission
+      
         inputValues.device_name = 1234;
       
-        // Validate credentials 
+        const response = await fetch("http://18.119.84.184/api/v1/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify(inputValues),
+        });
       
-        fetch("https://18.119.84.184/api/v1/login",{
-          method:"POST",
-          headers:{ 
-          'Content-Type': 'application/json;charset=UTF-8', 
-          "Accept": "application/json" 
-        },
-        body:JSON.stringify(inputValues)
-        }).then((res)=>{
-          alert("successful")
-          console.log(res)
-          if(res.ok){
-          window.location.href ="/app/dashboard"
-          }
-        }).catch((err)=>{
-          console.log(err)
-        })
-        console.log( inputValues)
+        if (!response.ok) {
+          const error = await response.text(); // Extract error message
+          console.error("Error:", error);
+          alert("Login failed: " + error); // Display error to user
+          return;
+        }
+      
+        const data = await response.json(); // Parse JSON response
+      
+        const token = data.data.token;
+        localStorage.setItem("userToken", token);
+        console.log("Login successful:", data); 
+      
+       window.location.href = "/app/dashboard";
       };
 
       const onForgotPasswordHandler = async(e) => {
@@ -167,35 +173,94 @@ export const VendorSignupProvider = ({ children }) => {
     const onGetUsers = async(e) => {
       if (e) {
         e.preventDefault(); 
-        let accessToken = "5|4AcmYF8KTFHzdxi7PL178zte1uPZ4Gnz61UCr2f89d8b7156"
+        const token = localStorage.getItem("userToken");
       try {
-        const response = await fetch('http://18.119.84.184/api/v1/profile', {
+        const response = await fetch('http://18.119.84.184/api/v1/get-all-users', {
           method: 'GET',
           headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
             "Accept": "application/json" ,
-            'Authorization': `Bearer ${accessToken}`
+            'Authorization': `Bearer ${token}`
           },
         });
     
         if (response.ok) {
           const data = await response.json();
-          // Process the data (e.g., display it in a table, use it in your application)
-          console.log('Users:', data); // Example logging
+          console.log('Users:', data); 
         } else {
           const error = await response.text();
           console.error('Error fetching users:', error);
-          // Handle errors appropriately (e.g., display an error message to the user)
         }
       } catch (error) {
         console.error('Network error:', error);
-        // Handle network errors or other unexpected issues
+      }
+    }
+    };
+
+    const VendorCreateProduct = async(e) => {
+      if (e) {
+        e.preventDefault(); 
+        const token = localStorage.getItem("userToken");
+      try {
+        const response = await fetch('http://18.119.84.184/api/v1/products/create', {
+          method: 'POST',
+          headers:{ 
+            'Content-Type': 'application/json;charset=UTF-8', 
+            "Accept": "application/json" ,
+            'Authorization': `Bearer ${token}`
+          },
+            body:JSON.stringify(inputValues)
+        });
+    console.log(inputValues)
+        if (response.ok) {
+          const data = await response.json();
+          console.log('product:', data); 
+        } else {
+          const error = await response.text();
+          console.error('Error posting product:', error);
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+      }
+    }
+    };
+
+    const uploadFile = async(e) => {
+      if (e) {
+        e.preventDefault(); 
+        const token = localStorage.getItem("userToken");
+        const formData = {};
+          const file = e.target.files;
+          if(file?.length){
+          formData.file = file[0].name;
+          console.log(file[0].name)
+          }
+      try {
+        const response = await fetch('https://test.igeecloset.com/api/v1/products/upload-file', {
+          method: 'POST',
+          headers:{ 
+            'Content-Type': 'application/json;charset=UTF-8', 
+            "Accept": "application/json" ,
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(formData),
+        });
+    
+        if (response.ok) {
+          const data = await response.json();
+          console.log('image:', data); 
+        } else {
+          const error = await response.text();
+          console.error('Error uploading file:', error);
+        }
+      } catch (error) {
+        console.error('Network error:', error);
       }
     }
     };
 
   return (
-    <VendorSignupContext.Provider value={{ inputValues, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,onGetUsers,submittedValues}}>
+    <VendorSignupContext.Provider value={{ inputValues, setState, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,onGetUsers,VendorCreateProduct,uploadFile,submittedValues}}>
       {children}
     </VendorSignupContext.Provider>
   );

@@ -1,0 +1,36 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import productSlice from "./components/slices/productSlice";
+import userSlice, { userFetch } from "./components/slices/userSlice";
+import { VendorSignupProvider } from "./context/AuthContext";
+import { UserProvider } from "./context/UserContext";
+
+const store = configureStore({
+  reducer: {
+    users: userSlice,
+    products: productSlice,
+  },
+});
+
+store.dispatch(userFetch());
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <UserProvider>
+      <VendorSignupProvider>
+        <App />
+      </VendorSignupProvider>
+    </UserProvider>
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

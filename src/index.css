@@ -39,7 +39,7 @@ button {
   flex-wrap: wrap;
 }
 .purple {
-  color: #800081;
+  color: var(--primary-bg-color);
 }
 .pointer {
   cursor: pointer;
@@ -107,7 +107,7 @@ ul {
 .signup-screen .left,
 .reset-password .left {
   background-color: #d9d9d9;
-  width: 714px;
+  width: 65%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -192,7 +192,7 @@ ul {
 }
 .login-screen .right,
 .reset-password .right {
-  width: 566px;
+  width: 35%;
   padding-bottom: 22px;
 }
 .signup-screen .right {
@@ -229,7 +229,11 @@ ul {
 .reset-password .right .container form {
   display: flex;
   flex-direction: column;
+<<<<<<< HEAD
   margin-top: 35px;
+=======
+  margin-top: 10%;
+>>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
 }
 .reset-password .right .container form {
   margin-top: 50px;
@@ -267,8 +271,13 @@ ul {
   height: 3px;
   position: absolute;
   top: 20px;
+<<<<<<< HEAD
   transform: translateX(-145px);
   background: var(--primary-color);
+=======
+  transform: translateX(-110px);
+  background: var(--primary-bg-color);
+>>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
   transition: all 0.5s;
 }
 .signup-screen .right .main .line.affilate {
@@ -343,6 +352,7 @@ ul {
 .login-screen .right .container form button,
 .signup-screen .right .main form button,
 .reset-password .right .container form button {
+<<<<<<< HEAD
   height: 45px;
 }
 .lg-btn {
@@ -354,47 +364,62 @@ ul {
   border: 0;
   outline: 0;
   font-weight: 900;
+=======
+  height: 50px;
+}
+button {
+  border-radius: 7px;
+  height: 50px;
+  font-size: 12px;
+>>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
 }
 .login-screen .right .container form button.login-btn,
 .reset-password .right .container form button.reset-btn {
   color: #fff;
-  background-color: #1a3e9c;
+  background-color: var(--primary-bg-color);
   border: none;
   margin-bottom: 50px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
   width: 100%;
 }
+<<<<<<< HEAD
 /* .reset-password .right .container form button.reset-btn {
   background-color: #800081;
 } */
+=======
+.reset-password .right .container form button.reset-btn {
+  background-color: var(--primary-bg-color);
+}
+>>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
 .new-password .right .container form button.reset-btn {
   margin-bottom: 0;
 }
 .login-screen .right .container form button.create-account,
 .reset-password .right .container form button.back-to-login {
-  border: 1px solid #1a3e9c;
-  color: #1a3e9c;
+  border: 1px solid var(--primary-bg-color);
+  color: var(--primary-bg-color);
   background-color: #fff;
   margin-top: 16px;
   width: 100%;
 }
 .reset-password .right .container form button.back-to-login {
-  border: 1px solid #800081;
-  color: #800081;
+  border: 1px solid var(--primary-bg-color);
+  color: var(--primary-bg-color);
 }
 .signup-screen .right .main form button.continue-btn {
   color: #fff;
-  background-color: #800081;
+  background-color: var(--primary-bg-color);
   border: none;
   margin-bottom: 36px;
+  font-weight: 800;
 }
 .signup-screen .right .main form button.continue-btn.affilate {
   margin-bottom: 16px;
 }
 .signup-screen .right .main form button.back-to-login {
-  border: 1px solid #800081;
-  color: #800081;
+  border: 1px solid var(--primary-bg-color);
+  color: var(--primary-bg-color);
   background-color: #fff;
   margin-top: 8px;
   width: 100%;
@@ -414,7 +439,7 @@ ul {
 }
 .dashboard .page__header li.active {
   color: #000;
-  /* border-left: 4px solid #1a3e9c;
+  /* border-left: 4px solid var(--primary-bg-color);
   padding-left: 6px; */
 }
 .dashboard .balance {
@@ -485,6 +510,9 @@ ul {
   color: #000;
   text-decoration: underline;
 }
+.button:disabled{
+  opacity: .8;
+}
 .dashboard .dashboard-chart button {
   padding: 0 15px;
   border-radius: 20px;
@@ -509,7 +537,7 @@ ul {
 }
 .total-profit .withdraw button {
   width: 100%;
-  background-color: #1a3e9c;
+  background-color: var(--primary-bg-color);
   border: none;
   height: 40px;
   border-radius: 5px;
@@ -995,10 +1023,10 @@ input:checked + .slider:before {
 }
 
 .order-summary .right .track-btn {
-  border: 1px solid #1a3e9c;
+  border: 1px solid var(--primary-bg-color);
   border-radius: 5px;
   height: 40px;
-  color: #1a3e9c;
+  color: var(--primary-bg-color);
   cursor: pointer;
 }
 
@@ -1032,7 +1060,7 @@ input:checked + .slider:before {
 }
 
 .order-summary .tab-btn.active {
-  background-color: #1a3e9c;
+  background-color: var(--primary-bg-color);
 }
 
 .order-summary .bar {
@@ -1043,7 +1071,7 @@ input:checked + .slider:before {
 }
 
 .order-summary .bar.active {
-  background-color: #1a3e9c;
+  background-color: var(--primary-bg-color);
 }
 
 .order-summary .billing-btn {
@@ -1143,7 +1171,7 @@ input:checked + .slider:before {
 
 .bg-blue {
   padding: 3px 5px;
-  background-color: #1a3e9c;
+  background-color: var(--primary-bg-color);
   color: #fff;
   border-radius: 3px;
 }

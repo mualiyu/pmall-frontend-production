@@ -1,16 +1,15 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
-import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
-import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Box from "@mui/material/Box";
 import profile from "../../assets/imgs/passport.png";
 import Typography from "@mui/material/Typography";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -27,10 +26,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import DebitCard from "../../utils/debitCard";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import DebitCard from "../../utils/debitCard";
+import { useUser } from "../../context/UserContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -138,7 +139,16 @@ const Dashboard = () => {
   const [vendorTab, setVendorTab] = useState(false);
   const [productTab, setProductTab] = useState(false);
   const handleModalClose = () => setNewVendorModal(false);
+  const { user } = useUser();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    let isLoggedIn = localStorage.getItem("authToken");
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+  }, []);
+  console.log(user);
   const dashboard = () => {
     setAffilateTab(false);
     setProductTab(false);
@@ -170,18 +180,29 @@ const Dashboard = () => {
         <div className="flex-container alc justsb w-100">
           <div>
             <ul className="flex-container g-20 sub__title">
+              {/* {user?.accountType === "Admin" && ( */}
               <li className="active pointer" onClick={dashboard}>
                 Dashboard
               </li>
-              <li className="pointer" onClick={affilate}>
-                Affilate
-              </li>
-              <li className="pointer" onClick={vendor}>
-                Vendor
-              </li>
-              <li className="pointer" onClick={product}>
-                Product
-              </li>
+              {/* )} */}
+              {(user?.accountType === "Affiliate" ||
+                user?.accountType === "Admin") && (
+                <li className="pointer" onClick={affilate}>
+                  Affilate Dashboard
+                </li>
+              )}
+              {(user?.accountType === "Vendor" ||
+                user?.accountType === "Admin") && (
+                <li className="pointer" onClick={vendor}>
+                  Vendor Dashboard
+                </li>
+              )}
+              {(user?.accountType === "Vendor" ||
+                user?.accountType === "Admin") && (
+                <li className="pointer" onClick={product}>
+                  Product
+                </li>
+              )}
             </ul>
           </div>
           <h3 className="pointer" onClick={() => setNewVendorModal(true)}>
@@ -273,7 +294,7 @@ const Dashboard = () => {
                 <TableHead>
                   <TableRow>
                     {columns.map((column) => (
-                      <TableCell>{column.label}</TableCell>
+                      <TableCell key={column.id}>{column.label}</TableCell>
                     ))}
                   </TableRow>
                 </TableHead>
