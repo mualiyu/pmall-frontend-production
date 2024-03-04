@@ -98,6 +98,11 @@ function createData(user, email, contact, store, account_type, status, action) {
 }
 
 const Users = () => {
+  const {onGetUsers} = useVendor();
+  React.useEffect(()=>{
+    onGetUsers()
+  },[])
+  
   const [newUserModal, setnewUserModal] = useState(false);
   const handleModalClose = () => setnewUserModal(false);
   const [value, setValue] = useState(0);
@@ -111,7 +116,7 @@ const Users = () => {
       <section className="page__header">
         <div className="flex-container alc">
           <AccessibilityNewIcon />
-          <h3>Manage Users</h3>
+          <h3 onClick={onGetUsers}>Manage Users</h3>
         </div>
         <div className="">
           <button

@@ -20,6 +20,7 @@ import Chip from "@mui/material/Chip";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
+import { useVendor } from "../../context/VendorSignupContext";
 Chart.register(ArcElement);
 
 const top100Films = [
@@ -97,6 +98,17 @@ function createData(
 }
 
 const ProductList = () => {
+  const [selectedTags, setSelectedTags] = React.useState([]); // State for selected tags
+
+  const {inputValues, setState, onChangeHandler,uploadFile, VendorCreateProduct} = useVendor();
+  const handleChange = (event, newValue) => {
+    const selectedTitles = newValue.map((tag) => tag.title).join(', '); // Join titles with comma
+    console.log(selectedTitles); // Update state with comma-separated string
+    setState((inputValues) => ({
+      ...inputValues,
+      tags: selectedTitles,
+    }));
+  };
   const [newProductModal, setNewProductModal] = useState(false);
   const handleModalClose = () => setNewProductModal(false);
   const navigate = useNavigate();
@@ -320,10 +332,19 @@ const ProductList = () => {
           <section className="flex__normal">
             <div className="w-200">
               <div className="profile_pic_holder">
-                <img src={profile} className="profile_pic" />
-                <button className="btn btn-primary p-25 mt-15">
+                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <div className="pos-rel w100-m10 ">
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="file"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={uploadFile}
+                  />
+                </div>
+                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
                   Upload Photo
-                </button>
+                </button> */}
               </div>
             </div>
             <form style={{ width: "100%" }}>
@@ -333,20 +354,25 @@ const ProductList = () => {
                   <input
                     type="text"
                     className="form-control-input "
-                    name="ProductName"
+                    name="name"
                     placeholder="e.g IPhone 14"
+                    onChange={onChangeHandler}
+                    value={inputValues.name || ""}
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
                   <label className="mb-7"> Product Category</label>
                   <select
                     className="search__bar w-100"
-                    defaultValue={"default"}>
+                    value={inputValues.category_id || ""}
+                    name="category_id"
+                    onChange={onChangeHandler}
+                    >
                     <option value="default"> Select Category</option>
-                    <option value="Parent 1"> Category 1</option>
-                    <option value="Parent 2"> Category 2</option>
-                    <option value="Parent 3"> Category 3</option>
-                    <option value="Parent 4"> Category 4</option>
+                    <option value="1"> Category 1</option>
+                    <option value="2"> Category 2</option>
+                    <option value="3"> Category 3</option>
+                    <option value="4"> Category 4</option>
                   </select>
                 </div>
               </section>
@@ -356,12 +382,15 @@ const ProductList = () => {
                   <label className="mb-7"> Product Brand</label>
                   <select
                     className="search__bar w-100"
-                    defaultValue={"default"}>
+                    name="brand_id"
+                    value={inputValues.brand_id || ""}
+                    onChange={onChangeHandler}
+                    >
                     <option value="default"> Select Brand</option>
-                    <option value="Parent 1"> Brand 1</option>
-                    <option value="Parent 2"> Brand 2</option>
-                    <option value="Parent 3"> Brand 3</option>
-                    <option value="Parent 4"> Brand 4</option>
+                    <option value="1"> Brand 1</option>
+                    <option value="2"> Brand 2</option>
+                    <option value="3"> Brand 3</option>
+                    <option value="4"> Brand 4</option>
                   </select>
                 </div>
 
@@ -370,8 +399,10 @@ const ProductList = () => {
                   <input
                     type="number"
                     className="form-control-input "
-                    name="costPrice"
+                    name="cost_price"
                     placeholder="1,500"
+                    onChange={onChangeHandler}
+                    value={inputValues.cost_price || ""}
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
@@ -379,8 +410,35 @@ const ProductList = () => {
                   <input
                     type="number"
                     className="form-control-input "
-                    name="sellingPrice"
+                    name="selling_price"
                     placeholder="1,200"
+                    onChange={onChangeHandler}
+                    value={inputValues.selling_price || ""}
+                  />
+                </div>
+              </section>
+              <section className="flex-container mb-lg">
+              <div className="pos-rel w100-m10 ">
+                  <label> In stock</label>
+                  <input
+                    type="number"
+                    className="form-control-input "
+                    name="inStock"
+                    placeholder="1,500"
+                    onChange={onChangeHandler}
+                    value={inputValues.inStock || ""}
+                  />
+                </div>
+
+                <div className="pos-rel w100-m10 ">
+                  <label>Quantity</label>
+                  <input
+                    type="number"
+                    className="form-control-input "
+                    name="quantity"
+                    placeholder="1,500"
+                    onChange={onChangeHandler}
+                    value={inputValues.quantity || ""}
                   />
                 </div>
               </section>
@@ -392,6 +450,9 @@ const ProductList = () => {
                       multiple
                       id="tags-outlined"
                       options={top100Films}
+                      name="tags"
+                      onChange={handleChange}
+                     // value={inputValues.tags || ""}
                       getOptionLabel={(option) => option.title}
                       filterSelectedOptions
                       renderInput={(params) => (
@@ -418,7 +479,11 @@ const ProductList = () => {
                   <label className="mb-7"> Product Description </label>
                   <textarea
                     placeholder="Enter product description"
-                    className="form-textarea w-100"></textarea>
+                    className="form-textarea w-100"
+                    name="description"
+                    onChange={onChangeHandler}
+                    value={inputValues.description || ""}
+                    ></textarea>
                 </div>
 
                 <div className="pos-rel w100-m10"></div>
@@ -430,7 +495,7 @@ const ProductList = () => {
                   className="btn btn-secondary p-25 pull-right mr-10">
                   Cancel
                 </button>
-                <button className="btn btn-primary p-25 pull-right">
+                <button className="btn btn-primary p-25 pull-right" onClick={ VendorCreateProduct}>
                   Save
                 </button>
               </div>
