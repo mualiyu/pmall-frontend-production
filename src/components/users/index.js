@@ -109,11 +109,8 @@ const Users = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-<<<<<<< HEAD
-=======
   const { submittedValues } = useVendor();
   console.log(submittedValues);
->>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
   return (
     <section>
       <section className="page__header">

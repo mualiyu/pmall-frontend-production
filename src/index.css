@@ -229,11 +229,7 @@ ul {
 .reset-password .right .container form {
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
-  margin-top: 35px;
-=======
   margin-top: 10%;
->>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
 }
 .reset-password .right .container form {
   margin-top: 50px;
@@ -271,13 +267,8 @@ ul {
   height: 3px;
   position: absolute;
   top: 20px;
-<<<<<<< HEAD
-  transform: translateX(-145px);
-  background: var(--primary-color);
-=======
   transform: translateX(-110px);
   background: var(--primary-bg-color);
->>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
   transition: all 0.5s;
 }
 .signup-screen .right .main .line.affilate {
@@ -352,26 +343,12 @@ ul {
 .login-screen .right .container form button,
 .signup-screen .right .main form button,
 .reset-password .right .container form button {
-<<<<<<< HEAD
-  height: 45px;
-}
-.lg-btn {
-  width: 100%;
-}
-.btn-primary {
-  background-color: var(--primary-color);
-  color: white;
-  border: 0;
-  outline: 0;
-  font-weight: 900;
-=======
   height: 50px;
 }
 button {
   border-radius: 7px;
   height: 50px;
   font-size: 12px;
->>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
 }
 .login-screen .right .container form button.login-btn,
 .reset-password .right .container form button.reset-btn {
@@ -383,15 +360,9 @@ button {
   font-weight: 700;
   width: 100%;
 }
-<<<<<<< HEAD
-/* .reset-password .right .container form button.reset-btn {
-  background-color: #800081;
-} */
-=======
 .reset-password .right .container form button.reset-btn {
   background-color: var(--primary-bg-color);
 }
->>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
 .new-password .right .container form button.reset-btn {
   margin-bottom: 0;
 }
@@ -510,8 +481,8 @@ button {
   color: #000;
   text-decoration: underline;
 }
-.button:disabled{
-  opacity: .8;
+.button:disabled {
+  opacity: 0.8;
 }
 .dashboard .dashboard-chart button {
   padding: 0 15px;

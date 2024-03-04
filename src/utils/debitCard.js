@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import "../index.css";
-// import "./debitCard.css";
-// import "../debitCard.css";
-
-export default function DebitCard(props) {
-  return (
-    <div class="debit_card_container">
-      <div class="debit_card">
-        <div class="debit_card-inner">
-          <div class="debit_card_front">
-            <img
-              src="https://i.ibb.co/PYss3yv/map.png"
-              class="map-img"
-              alt="Pmall"
-              style={{ opacity: "0.1" }}
-            />
-            <div class="row">
-=======
 import React, { useEffect } from "react";
 import { useUser } from "../context/UserContext";
 import moment from "moment";
@@ -42,7 +22,6 @@ export default function DebitCard(props) {
               style={{ opacity: "0.1" }}
             />
             <div className="row">
->>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
               <img
                 src="https://i.ibb.co/G9pDnYJ/chip.png"
                 width="45px"
@@ -55,14 +34,6 @@ export default function DebitCard(props) {
                 </p>
               </div>
             </div>
-<<<<<<< HEAD
-            <div class="row card-no">
-              <p style={{ fontSize: 18 }}>1234567891011213</p>
-            </div>
-            <div class="row debit_card_name">
-              <p>AHMED PETER</p>
-              <p>01 / 25</p>
-=======
             <div className="row card-no">
               <p style={{ fontSize: 18 }}>{user?.refId}</p>
             </div>
@@ -77,15 +48,9 @@ export default function DebitCard(props) {
                 <p>{moment(user?.regDate).add(1, "years").calendar()} </p>
                 <p style={{ color: "rgb(227 227 227 / 70%)" }}>Due Next</p>
               </div>
->>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 4202f51663fab617a3d00f26f63f63954a4b9731
+  )};
