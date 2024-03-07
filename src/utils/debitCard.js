@@ -53,5 +53,4 @@ export default function DebitCard(props) {
         </div>
       </div>
     </div>
-  );
-}
+  )};

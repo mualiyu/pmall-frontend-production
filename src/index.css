@@ -1,7 +1,7 @@
 :root {
-  --primary-bg-color: #1a3e9c;
-  --secondary-bg-color: ;
-  --primary-color: #fff;
+  --primary-color: #1a3e9c;
+  --secondary-color: ;
+  /* --primary-color: #fff; */
   --color-chalk: #e3e3e3;
   --primary-color-light : #c3d0f3;
 }
@@ -235,7 +235,7 @@ ul {
 .reset-password .right .container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .login-screen .right .container,
 .reset-password .right .container {
@@ -247,8 +247,8 @@ ul {
 }
 .signup-screen .right .main {
   height: 721px;
-  width: 100%;
-  padding: 0 68px 0 60px;
+  width: 70%;
+  /* padding: 0 68px 0 60px; */
 }
 .reset-password .right .container {
   margin-top: 135px;
@@ -512,8 +512,8 @@ button {
   color: #000;
   text-decoration: underline;
 }
-.button:disabled{
-  opacity: .8;
+.button:disabled {
+  opacity: 0.8;
 }
 .dashboard .dashboard-chart button {
   padding: 0 15px;
