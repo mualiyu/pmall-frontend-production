@@ -3,7 +3,7 @@
   --secondary-color: ;
   /* --primary-color: #fff; */
   --color-chalk: #e3e3e3;
-  --primary-color-light : #c3d0f3;
+  --primary-color-light: #c3d0f3;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -96,14 +96,14 @@ ul {
 .chalk {
   color: #8c8c8cd6;
 }
-.cnwjien{
-  display: flex; 
+.cnwjien {
+  display: flex;
   align-items: center;
 }
-.cnwjien >  svg {
+.cnwjien > svg {
   position: absolute;
-    right: 10px;
-    color: #727273!important;
+  right: 10px;
+  color: #727273 !important;
 }
 
 .login-screen,
@@ -157,7 +157,7 @@ ul {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 60%
+  width: 60%;
 }
 
 .vendor__banner {
@@ -165,7 +165,7 @@ ul {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 60%
+  width: 60%;
 }
 .signup-screen .left {
   width: 60%;
@@ -474,7 +474,7 @@ button {
   font-size: 20px;
 }
 .balance-icon-container > svg {
-  color: var(--primary-bg-color)!important;
+  color: var(--primary-bg-color) !important;
 }
 .dashboard .balance-icon-container {
   background-color: var(--primary-color-light);
@@ -888,7 +888,7 @@ input:checked + .slider:before {
 }
 
 .user-details .left .top {
-  margin-top: -80px;
+  width: 280px;
 }
 
 .user-details .left .details .flex-container {
@@ -978,6 +978,9 @@ input:checked + .slider:before {
 
 .grid-4 {
   grid-template-columns: repeat(4, 1fr);
+}
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .bold {
