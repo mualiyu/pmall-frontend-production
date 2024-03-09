@@ -73,7 +73,7 @@ function Application() {
                     element={<VendorDetails />}
                   />
                   <Route
-                    path="/app/products/details"
+                    path="/app/products/details/:id"
                     element={<ProductDetails />}
                   />
                   <Route path="/app/products/list" element={<ProductList />} />
