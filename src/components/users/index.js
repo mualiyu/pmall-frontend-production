@@ -19,9 +19,11 @@ import Paper from "@mui/material/Paper";
 import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import { Chart, ArcElement } from "chart.js";
-import { useVendor } from "../../context/AuthContext";
+
 import { useUser } from "../../context/UserContext";
 import getInitials from "../../utils/getInitials";
+import { Link, useNavigate } from "react-router-dom";
+import { useVendor } from "../../context/VendorSignupContext";
 Chart.register(ArcElement);
 
 const style = {
@@ -89,11 +91,7 @@ function createData(user, email, contact, store, account_type, status) {
 }
 
 const Users = () => {
-  const {onGetUsers} = useVendor();
-  React.useEffect(()=>{
-    onGetUsers()
-  },[])
-  
+  const navigate = useNavigate();
   const [newUserModal, setnewUserModal] = useState(false);
   const handleModalClose = () => setnewUserModal(false);
   const [value, setValue] = useState(0);
@@ -102,6 +100,7 @@ const Users = () => {
   const [affiliates, setAffiliates] = useState([]);
   const [admins, setAdmins] = useState([]);
   const { user } = useUser();
+  const { setProfileDetails } = useVendor();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -140,7 +139,7 @@ const Users = () => {
     })
       .then((resp) => resp.json())
       .then((result) => {
-        console.log(result);
+        console.log(result.data.users);
         setPmallUsers(result.data.users);
         userTypes(result.data.users);
       })
@@ -204,13 +203,16 @@ const Users = () => {
   const createUser = (e) => {
     e.preventDefault();
   };
-  const { submittedValues } = useVendor();
+  function setUserDetail(data){
+    navigate("details")
+    setProfileDetails(data)
+  }
   return (
     <section>
       <section className="page__header">
         <div className="flex-container alc">
           <AccessibilityNewIcon />
-          <h3 onClick={onGetUsers}>Manage Users</h3>
+          <h3>Manage Users</h3>
         </div>
         <div className="">
           <button
@@ -313,8 +315,8 @@ const Users = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {pmallUsers.map((user, index) => (
-                    <TableRow key={user.id}>
+                  {pmallUsers.map((user, index) => (                   
+                    <TableRow key={user.id} onClick={() => setUserDetail(user)}>
                       <TableCell className="b-r">
                         <div className="d-flex alc f-10 flex-start">
                           <div className="user__avatar bg-success">
