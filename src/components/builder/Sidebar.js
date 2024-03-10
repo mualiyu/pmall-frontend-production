@@ -77,28 +77,30 @@ function Sidebar() {
                <SidebarRow
                 path="/app/users/details/"
                 Icon={Person2Icon}
-                title="Profile"
+                title="Account Management"
               />
             </>
           )}
           {(user?.accountType === "Admin" ||
             user?.accountType === "Affiliate") && (
+              <>
             <SidebarRow
               path="/app/vendors"
               Icon={GroupsIcon}
               title="Vendor Resources"
             />
+            <SidebarRow
+            path="/app/users/details"
+            Icon={Person2Icon}
+            title="Account Management"
+          />
+          </>
           )}
           <SidebarRow
             path="/app/users"
             Icon={AccessibilityNewIcon}
             title="User Management"
           />
-          <SidebarRow
-              path="/app/users/details"
-              Icon={Person2Icon}
-              title="Profile"
-            />
 
           <div className="s-divider"></div>
           {/* <SidebarRow path="/app/front-desk"  Icon={HomeWorkIcon} title="Front Desk"/> */}

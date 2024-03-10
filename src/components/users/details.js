@@ -54,7 +54,7 @@ const UserDetails = () => {
         setValue(newValue);
       };
       const {inputValues,onChangeHandler,VendorUpdateProfile,newVendorModal,setNewVendorModal,submittedValues,setState,profileDetails,setProfileDetails, handleModalClose} = useVendor();
-    //  console.log(profileDetails)
+
       const getUsersDetails = () => {
         fetch("https://test.igeecloset.com/api/v1/profile", {
           method: "GET",

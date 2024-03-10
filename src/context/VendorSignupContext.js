@@ -170,111 +170,9 @@ export const VendorSignupProvider = ({ children }) => {
           }));
         }
           }
-          console.log("test",inputValues)
       }
 
-      
-      const onGetUsers = async(e) => {
-        if (e) {
-          e.preventDefault(); 
-          const token = localStorage.getItem("userToken");
-        try {
-          const response = await fetch('http://18.119.84.184/api/v1/get-all-users', {
-            method: 'GET',
-            headers:{ 
-              'Content-Type': 'application/json;charset=UTF-8', 
-              "Accept": "application/json" ,
-              'Authorization': `Bearer ${token}`
-            },
-          });
-      
-          if (response.ok) {
-            const data = await response.json();
-            console.log('Users:', data); 
-          } else {
-            const error = await response.text();
-            console.error('Error fetching users:', error);
-          }
-        } catch (error) {
-          console.error('Network error:', error);
-        }
-      }
-      };
-
-      const VendorCreateProduct = async(e) => {
-        if (e) {
-          e.preventDefault(); 
-          const token = localStorage.getItem("userToken");
-        try {
-          const response = await fetch('http://18.119.84.184/api/v1/products/create', {
-            method: 'POST',
-            headers:{ 
-              'Content-Type': 'application/json;charset=UTF-8', 
-              "Accept": "application/json" ,
-              'Authorization': `Bearer ${token}`
-            },
-              body:JSON.stringify(inputValues)
-          });
-      console.log(inputValues)
-          if (response.ok) {
-            const data = await response.json();
-            console.log('product:', data); 
-          } else {
-            const error = await response.text();
-            console.error('Error posting product:', error);
-          }
-        } catch (error) {
-          console.error('Network error:', error);
-        }
-      }
-      };
-
-      async function uploadFile(event) {
-        if (event) {
-          event.preventDefault(); // Prevent default form submission if applicable
-        }
-      
-        const token = localStorage.getItem("userToken"); // Assuming token is a string
-      
-        // Validate file selection
-        const file = event.target.files;
-        if (!file?.length) {
-          console.error("Please select a file to upload.");
-          return; // Exit if no file is selected
-        }
-      
-        // Create a FormData object for file upload
-        const formData = new FormData();
-        formData.append("file", file[0]);
-      
-        // Set appropriate headers for file upload and authorization
-        const headers = {
-          "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
-          "Accept": "application/json",
-          "Authorization": `Bearer ${token}`
-        };
-      
-        try {
-          // Send the POST request with the file data
-          const response = await fetch('https://test.igeecloset.com/api/v1/products/upload-file', {
-            method: 'POST',
-            headers,
-            body: formData
-          });
-      
-          if (response.ok) {
-            const data = await response.json();
-            console.log('Image:', data);
-          } else {
-            const error = await response.text();
-            console.error('Error uploading file:', error);
-            console.log(formData)
-          }
-        } catch (error) {
-          console.error('Network error:', error);
-        }
-      }
-
+     
       const VendorUpdateProfile = async(e) => {
         if (e) {
           e.preventDefault(); 
@@ -305,11 +203,11 @@ export const VendorSignupProvider = ({ children }) => {
       };
 
   return (
-    <VendorSignupContext.Provider value={{ inputValues, setState, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,onGetUsers,VendorCreateProduct,uploadFile,VendorUpdateProfile,newVendorModal,setNewVendorModal, handleModalClose,profileDetails,setProfileDetails,submittedValues}}>
+    <VendorSignupContext.Provider value={{ inputValues, setState, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,VendorUpdateProfile,newVendorModal,setNewVendorModal, handleModalClose,profileDetails,setProfileDetails,submittedValues}}>
       {children}
     </VendorSignupContext.Provider>
   );
-};
+      };
 
 export const useVendor = () => {
   const context = useContext(VendorSignupContext);

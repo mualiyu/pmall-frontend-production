@@ -1,50 +1,59 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
-import { useState } from "react";
-const details = [
-  {
-    mainImage:
-      "https://media.istockphoto.com/id/1392944438/photo/portrait-of-handsome-attractive-positive-curly-haired-indian-or-arabian-guy-wearing-white.webp?b=1&s=170667a&w=0&k=20&c=AuDfv9PdKqXO3nKHFc-uBZ1bt0SXXceqFLo-OhJnI6o=",
-    otherImages: [
-      {
-        image:
-          "https://media.istockphoto.com/id/1310094528/photo/basic-wear-hand-holding-black-t-shirt-on-a-hanger-against-white-background.webp?s=170667a&w=0&k=20&c=_gc1x-FkGLyRziOxZR_IhhaQiCpHR3IBx32Q2ou4QnI=",
-      },
-      {
-        image:
-          "https://media.istockphoto.com/id/1267770733/photo/blank-black-t-shirts-mockup-hanging-on-white-wall-template-for-your-design.webp?s=170667a&w=0&k=20&c=lFet_3NCFGqoC272Wg9bJNVVmza8k2v5uQeco8CtdFM=",
-      },
-      {
-        image:
-          "https://media.istockphoto.com/id/1339828542/photo/mockup-blank-black-t-shirt-for-advertising-isolated-on-white-background.webp?s=170667a&w=0&k=20&c=jcXu8KkZvpYluaeOVXQ4ytqrOEFP12LrIahDNeI42tA=",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=600&q=60",
-      },
-    ],
-  },
-];
+import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
+import { useUser } from "../../context/UserContext";
+
 const ProductDetails = () => {
+  const {id} = useParams();
+  const { user } = useUser();
   const [value, setValue] = useState(4);
+  const [detail, setDetails] = useState([]);
+  const getProductDetails = () => {
+    fetch("https://test.igeecloset.com/api/v1/products/get-single?product_id=" + id, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + user?.token,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result.data.product);
+        setDetails(result.data.product);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getProductDetails();
+  }, []);
+
+  const addCommasToNumberString = (numberString) =>{
+    return  numberString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
+  }
+
   return (
-    <div className="prod-details">
+    <div className="prod-details mt-50">
       <div className="left">
-        {details.map((detail) => (
+       
           <div>
             <div>
-              <img src={detail.mainImage} alt="" className="main-image" />
+              <img src={detail.image} alt="" className="main-image" />
             </div>
             <div className="other-images">
-              {detail.otherImages.map((img) => (
-                <img src={img.image} alt="" className="image" />
-              ))}
+              <img src={detail?.more_images} alt="" className="image" />
+              <img src={detail?.more_images} alt="" className="image" />
+              <img src={detail?.more_images} alt="" className="image" />
             </div>
           </div>
-        ))}
+      
       </div>
       <div className="right">
-        <h3 className="prod-name">Thick Cotton Shirt</h3>
+        <h3 className="prod-name">{detail.name}</h3>
         <Rating
           name="read-only"
           value={value}
@@ -54,14 +63,11 @@ const ProductDetails = () => {
           }}
           readOnly
         />
-        <h4 className="prod-price">
-          #10,000 <span className="former-price">#12,000</span>
-        </h4>
+        {detail.selling_price && <h4 className="prod-price">
+        &#x20A6;{addCommasToNumberString(detail?.selling_price)} <span className="former-price"> &#x20A6;{addCommasToNumberString(detail?.cost_price)}</span>
+        </h4>}
         <p className="prod-desc">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Distinctio
-          dolor, debitis, ducimus ipsum alias accusamus quibusdam voluptates
-          quaerat reprehenderit ratione quos fugiat sapiente delectus sequi,
-          dolore illo maiores dolorem. Omnis!
+          {detail.description}
         </p>
         <h3 className="f18">Available Options</h3>
         <div className="variations">
@@ -92,17 +98,23 @@ const ProductDetails = () => {
         </div>
         <div className="flex gap-10">
           <p className="f-13">
-            <span className="f-bold f-13">Category :</span> Clothing
+            <span className="f-bold f-13">Category :</span> {detail.category_id}
           </p>
           <p className="f-13">
-            <span className="f-bold f-13">Availability :</span> 180 products in
+            <span className="f-bold f-13">Brand :</span> {detail.brand_id}
+          </p>
+          <p className="f-13">
+            <span className="f-bold f-13">Availability :</span> {detail.quantity} products in
             stock
           </p>
           <p className="f-13">
-            <span className="f-bold f-13">Vendor :</span> Zain Ahmed (Halal Lab)
+            <span className="f-bold f-13">Vendor :</span> {detail.store_id} (Halal Lab)
           </p>
           <p className="f-13">
-            <span className="f-bold f-13">Amt Sold : </span> 2000
+            <span className="f-bold f-13">Amt Sold : </span> {detail.inStock}
+          </p>
+          <p className="f-13">
+            <span className="f-bold f-13">Tags : </span> {detail.tags}
           </p>
         </div>
       </div>

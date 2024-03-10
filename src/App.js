@@ -10,9 +10,9 @@ function App() {
   return (
     <div className="layout">
       <VendorSignupProvider>
-      <UserProvider>
-        <Application />
-      </UserProvider>
+        <UserProvider>
+          <Application />
+        </UserProvider>
       </VendorSignupProvider>
     </div>
   );

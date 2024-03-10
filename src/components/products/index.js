@@ -17,10 +17,16 @@ import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import { Chart, ArcElement } from "chart.js";
 import Chip from "@mui/material/Chip";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { useVendor } from "../../context/VendorSignupContext";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useUser } from "../../context/UserContext";
+import moment from "moment";
 Chart.register(ArcElement);
 
 const top100Films = [
@@ -53,11 +59,27 @@ const style = {
 const columns = [
   { id: "product_image", label: "Product Image" },
   { id: "name", label: "Name" },
-  // { id: "category", label: "Category" },
+  { id: "category", label: "Category" },
   { id: "brand", label: "Brand" },
-  { id: "selling_price", label: "Price" },
+  { id: "cost_price", label: "Cost Price" },
+  { id: "selling_price", label: "Selling Price" },
+  { id: "inStock", label: "In Stock" },
   { id: "created_at,", label: "Created At" },
   { id: "status", label: "Status" },
+];
+
+const categoryColumns = [
+  { id: "category_image", label: "Category Image" },
+  { id: "name", label: "Name" },
+  { id: "description", label: "Description" },
+  { id: "created_at,", label: "Created At" },
+];
+
+const brandColumns = [
+  { id: "brand_image", label: "Brand Image" },
+  { id: "name", label: "Name" },
+  { id: "description", label: "Description" },
+  { id: "created_at,", label: "Created At" },
 ];
 
 const data = {
@@ -97,10 +119,40 @@ function createData(
   };
 }
 
-const ProductList = () => {
-  const [selectedTags, setSelectedTags] = React.useState([]); // State for selected tags
 
-  const {inputValues, setState, onChangeHandler,uploadFile, VendorCreateProduct} = useVendor();
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}>
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+const ProductList = () => {
+  const [products, setProducts] = useState();
+  const [newProduct, setNewProduct] = useState();
+  const [value, setValue] = useState(0);
+  const [pmallUsers, setPmallUsers] = useState([]);
+  const { user } = useUser();
+  const {inputValues, setState, onChangeHandler} = useVendor();
   const handleChange = (event, newValue) => {
     const selectedTitles = newValue.map((tag) => tag.title).join(', '); // Join titles with comma
     console.log(selectedTitles); // Update state with comma-separated string
@@ -110,8 +162,81 @@ const ProductList = () => {
     }));
   };
   const [newProductModal, setNewProductModal] = useState(false);
+  const  [newCategoryModal, setNewCategoryModal] = useState(false);
+  const  [newBrandModal, setNewBrandModal] = useState(false);
   const handleModalClose = () => setNewProductModal(false);
+  const handleCategoryModalClose = () => setNewCategoryModal(false);
+  const handleBrandModalClose = () => setNewBrandModal(false);
   const navigate = useNavigate();
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const VendorCreateProduct = async(e) => {
+    if (e) {
+      e.preventDefault(); 
+      //inputValues.image = "ihjsdjhbknmkl"
+    try {
+      const response = await fetch('https://test.igeecloset.com/api/v1/products/create', {
+        method: 'POST',
+        headers:{ 
+          'Content-Type': 'application/json;charset=UTF-8', 
+          "Accept": "application/json" ,
+          'Authorization': `Bearer ${user?.token}`
+        },
+          body:JSON.stringify(inputValues)
+      });
+  console.log(inputValues)
+      if (response.ok) {
+        const data = await response.json();
+        console.log('product:', data); 
+        setNewProduct(data)
+        handleModalClose()
+      } else {
+        const error = await response.text();
+        console.error('Error posting product:', error);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  }
+  };
+
+  let publishedCount = 0;
+
+
+  const getProducts = () => {
+    fetch("https://test.igeecloset.com/api/v1/products", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result.data);
+        setProducts(result.data);
+        for (const item of result) {
+          if (item.status === 0) {
+            publishedCount++;
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addCommasToNumberString = (numberString) =>{
+    return  numberString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
+  }
+
+  React.useEffect(() => {
+    getProducts ();
+    console.log(publishedCount)
+  }, [newProduct]);
   return (
     <section>
       <section className="page__header">
@@ -128,193 +253,203 @@ const ProductList = () => {
               <Doughnut data={data} options={config} className="w80" />
             </div>
             <h3 className="stat__value ml-10">
-              209
+              {products?.length}
               <p className="sub__title">Total Products</p> &nbsp;
             </h3>
           </div>
           <div className="right__stat">
             <div className="right__sub s-divider">
-              <h3 className="stat__value c-success">83</h3>
+              <h3 className="stat__value c-success">{publishedCount}</h3>
               <p className="sub__title">Published</p>
             </div>
             <div className="right__sub">
-              <h3 className="stat__value c-error">20</h3>
+              <h3 className="stat__value c-error">{products?.length - publishedCount}</h3>
               <p className="sub__title">Pending</p>
             </div>
           </div>
         </div>
       </section>
-
-      <section className="flex-container alc p-y my-40">
-        <div className="">
-          <input
-            type="text"
-            className="search__bar w-200"
-            placeholder="Search by name or ID"
-          />
-          <select className="search__bar w-200" defaultValue={"default"}>
-            <option value="default"> Select Status</option>
-            <option value="Status 1"> Status 1</option>
-            <option value="Status 2"> Status 2</option>
-            <option value="Status 3"> Status 3</option>
-            <option value="Status 4"> Status 4</option>
-          </select>
-        </div>
-        <div className="">
-          <button
-            className="btn btn-primary p-25"
-            onClick={() => setNewProductModal(true)}>
-            Add product
-          </button>
-        </div>
-      </section>
-
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="Porduct Table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell>{column.label}</TableCell>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs
+              value={value}
+              onChange={handleTabChange}
+              aria-label="basic tabs example">
+                  <Tab label="Products list" {...a11yProps(0)} />
+                  <Tab label="Categories" {...a11yProps(1)} />
+                  <Tab label="Brands" {...a11yProps(2)} />
+            </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        <section className="flex-container alc p-y my-40">
+          <div className="">
+            <input
+              type="text"
+              className="search__bar w-200"
+              placeholder="Search by name or ID"
+            />
+            <select className="search__bar w-200" defaultValue={"default"}>
+              <option value="default"> Select Status</option>
+              <option value="Status 1"> Status 1</option>
+              <option value="Status 2"> Status 2</option>
+              <option value="Status 3"> Status 3</option>
+              <option value="Status 4"> Status 4</option>
+            </select>
+          </div>
+          <div className="">
+            <button
+              className="btn btn-primary p-25"
+              onClick={() => setNewProductModal(true)}>
+              Add product
+            </button>
+          </div>
+        </section>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="Porduct Table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell>{column.label}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {products && products.map((product, index) => (                   
+                <TableRow key={product.id} onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                <TableCell className="b-r">
+                  <div className="d-flex alc f-10 flex-start">
+                    <div className="product__avatar avatar__large bg-success">
+                      <img src={product.image} alt="" className="w50"/>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="lheight13">
+                    <h4 className="f-300">{product.name} </h4>
+                  </div>
+                </TableCell>
+                <TableCell>{product.category_id}</TableCell>
+                <TableCell> {product.brand_id} </TableCell>
+                <TableCell> &#x20A6;{addCommasToNumberString(product.cost_price)} </TableCell>
+                <TableCell> &#x20A6;{addCommasToNumberString(product.selling_price)} </TableCell>
+                <TableCell> {product.inStock} </TableCell>
+                <TableCell> {moment(product.created_at).add(1, "years").calendar()} </TableCell>
+                <TableCell>
+                  {" "}
+                  {product.status == 1 ?
+                  <span className="badge bg-success">Published</span>
+                  : <span className="badge bg-success">unPublished</span>
+                  }
+                </TableCell>
+                <TableCell>
+                  {" "}
+                  <EditIcon />{" "}
+                </TableCell>
+                <TableCell>
+                  {" "}
+                  <DeleteIcon/>{" "}
+                </TableCell>
+              </TableRow>
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow onClick={() => navigate("details")}>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <div className="product__avatar avatar__large bg-success">
-                    <h3>AP</h3>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <section className="flex-container alc p-y my-40">
+          <div className="w-full">
+            <button
+              className="btn btn-primary p-25 pull-right"
+              onClick={() => setNewCategoryModal(true)}>
+              Add Category
+            </button>
+          </div>
+        </section>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="Porduct Table">
+            <TableHead>
+              <TableRow>
+                {categoryColumns.map((column) => (
+                  <TableCell>{column.label}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {products && products.map((product, index) => (                   
+                <TableRow key={product.id} onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                <TableCell className="b-r">
+                  <div className="d-flex alc f-10 flex-start">
+                    <div className="product__avatar avatar__large bg-success">
+                      <img src={product.image} alt="" className="w50"/>
+                    </div>
                   </div>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="lheight13">
-                  <h4 className="f-300">Iphone 14 Pro Max </h4>
-                  <p className="sub__title">Product Category</p>
-                </div>
-              </TableCell>
-              <TableCell> IPhone </TableCell>
-              <TableCell> 1,100,000 </TableCell>
-              <TableCell> June 12, 2005 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-success">Published</span>{" "}
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-            <TableRow onClick={() => navigate("details")}>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <div className="product__avatar bg-error">
-                    <h3>PY</h3>
+                </TableCell>
+                <TableCell>
+                    <h4 className="f-300">Category name </h4>
+                </TableCell>
+                <TableCell>Category description</TableCell>
+                <TableCell> {moment(product.created_at).add(1, "years").calendar()} </TableCell>
+                <TableCell>
+                  {" "}
+                  <EditIcon />{" "}
+                </TableCell>
+                <TableCell>
+                  {" "}
+                  <DeleteIcon/>{" "}
+                </TableCell>
+              </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+      <section className="flex-container alc p-y my-40">
+          <div className="w-full">
+            <button
+              className="btn btn-primary p-25 pull-right"
+              onClick={() => setNewBrandModal(true)}>
+              Add Brand
+            </button>
+          </div>
+        </section>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="Porduct Table">
+            <TableHead>
+              <TableRow>
+                {brandColumns.map((column) => (
+                  <TableCell>{column.label}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {products && products.map((product, index) => (                   
+                <TableRow key={product.id} onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                <TableCell className="b-r">
+                  <div className="d-flex alc f-10 flex-start">
+                    <div className="product__avatar avatar__large bg-success">
+                      <img src={product.image} alt="" className="w50"/>
+                    </div>
                   </div>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="lheight13">
-                  <h4 className="f-300">Philip Yahaya</h4>
-                  <p className="sub__title">Product Category</p>
-                </div>
-              </TableCell>
-              <TableCell> Cough </TableCell>
-              <TableCell> 200,000 </TableCell>
-              <TableCell> June 12, 2005 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-error">Pending </span>
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-
-            <TableRow onClick={() => navigate("details")}>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <div className="product__avatar bg-success">
-                    <h3>PY</h3>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="lheight13">
-                  <h4 className="f-300">Philip Yahaya</h4>
-                  <p className="sub__title">Product Category</p>
-                </div>{" "}
-              </TableCell>
-              <TableCell> Thermocool</TableCell>
-              <TableCell> 150,000 </TableCell>
-              <TableCell> June 12, 2005 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-error"> Pending </span>
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-            <TableRow onClick={() => navigate("details")}>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <div className="product__avatar bg-warning">
-                    <h3>DA</h3>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="lheight13">
-                  <h4 className="f-300">Dennis Abdulmalik</h4>
-                  <p className="sub__title">Product Category</p>
-                </div>
-              </TableCell>
-              <TableCell> Home electronics</TableCell>
-              <TableCell> 390,000 </TableCell>
-              <TableCell> June 12, 2005 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-error">Pending </span>
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-            <TableRow onClick={() => navigate("details")}>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <div className="product__avatar bg-error">
-                    <h3>MS</h3>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="lheight13">
-                  <h4 className="f-300">Dennis Abdulmalik</h4>
-                  <p className="sub__title">Product Category</p>
-                </div>
-              </TableCell>
-              <TableCell> Phones </TableCell>
-
-              <TableCell> 400,000 </TableCell>
-              <TableCell> June 12, 2005 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-success">Published </span>
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-
+                </TableCell>
+                <TableCell>
+                    <h4 className="f-300">Brand name </h4>
+                </TableCell>
+                <TableCell>Brand description</TableCell>
+                <TableCell> {moment(product.created_at).add(1, "years").calendar()} </TableCell>
+                <TableCell>
+                  {" "}
+                  <EditIcon />{" "}
+                </TableCell>
+                <TableCell>
+                  {" "}
+                  <DeleteIcon/>{" "}
+                </TableCell>
+              </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </TabPanel>
       {/* Modal for vendors */}
 
       <Modal
@@ -339,7 +474,40 @@ const ProductList = () => {
                     className="form-control-input no-border"
                     name="file"
                     accept=".jpg,.png,.jpeg"
-                    onChange={uploadFile}
+                    onChange={(e) => {
+                      // if (selectedName == "") {
+                      //   setAlert("Please Select a file name");
+                      //   return;
+                      // }
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            image: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
                   />
                 </div>
                 {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
@@ -468,8 +636,38 @@ const ProductList = () => {
                   <input
                     type="file"
                     className="form-control-input no-border"
-                    name="moreImages"
+                    name="more_images"
                     accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            more_images: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
                     multiple
                   />
                 </div>
@@ -500,6 +698,202 @@ const ProductList = () => {
                 </button>
               </div>
             </form>
+          </section>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={newCategoryModal}
+        onClose={handleCategoryModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <div className="mb-35">
+            <Typography id="modal-modal-title">
+              <h4 className="summary__title t-xl title-case">Add Product</h4>
+            </Typography>
+            <div className="s-divider"></div>
+          </div>
+          <section className="flex__normal">
+            <div className="w-200">
+              <div className="profile_pic_holder">
+                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <div className="pos-rel w100-m10 ">
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="file"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      // if (selectedName == "") {
+                      //   setAlert("Please Select a file name");
+                      //   return;
+                      // }
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            image: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                  />
+                </div>
+                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
+                  Upload Photo
+                </button> */}
+              </div>
+            </div>
+            <section className="flex-container flex-col g-20 mb-lg w-full">
+              <form className="flex-container flex-col g-20 mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label> Category Name</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="name"
+                    placeholder="e.g IPhone 14"
+                    onChange={onChangeHandler}
+                    value={inputValues.name || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7">Category description</label>
+                  <textarea
+                    className="search__bar w-100"
+                    value={inputValues.description|| ""}
+                    name="description"
+                    rows={6}
+                    onChange={onChangeHandler}
+                    >
+                  </textarea>
+                </div>
+                <div className="flex__normal mt-10 w-full ">
+                  <button className="btn btn-primary p-25 pull-right">
+                    Create Category
+                  </button>
+                </div>
+              </form>
+            </section>
+          </section>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={newBrandModal}
+        onClose={handleBrandModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <div className="mb-35">
+            <Typography id="modal-modal-title">
+              <h4 className="summary__title t-xl title-case">Add Brand</h4>
+            </Typography>
+            <div className="s-divider"></div>
+          </div>
+          <section className="flex__normal">
+            <div className="w-200">
+              <div className="profile_pic_holder">
+                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <div className="pos-rel w100-m10 ">
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="file"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      // if (selectedName == "") {
+                      //   setAlert("Please Select a file name");
+                      //   return;
+                      // }
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            image: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                  />
+                </div>
+                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
+                  Upload Photo
+                </button> */}
+              </div>
+            </div>
+            <section className="flex-container flex-col g-20 mb-lg w-full">
+              <form className="flex-container flex-col g-20 mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label> Brand Name</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="name"
+                    placeholder="e.g IPhone 14"
+                    onChange={onChangeHandler}
+                    value={inputValues.name || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7">Brand description</label>
+                  <textarea
+                    className="search__bar w-100"
+                    value={inputValues.description|| ""}
+                    name="description"
+                    rows={6}
+                    onChange={onChangeHandler}
+                    >
+                  </textarea>
+                </div>
+                <div className="flex__normal mt-10 w-full ">
+                  <button className="btn btn-primary p-25 pull-right">
+                    Create Brand
+                  </button>
+                </div>
+              </form>
+            </section>
           </section>
         </Box>
       </Modal>

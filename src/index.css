@@ -641,6 +641,9 @@ button {
   height: 400px;
   width: 430px;
   margin-bottom: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  object-fit: cover;
 }
 .prod-details .other-images {
   display: flex;
@@ -747,6 +750,9 @@ button {
 }
 .w30 {
   width: 30px;
+}
+.w50 {
+  width: 50px;
 }
 .items-center {
   align-items: center;
