@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Table from "@mui/material/Table";
@@ -27,6 +27,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useUser } from "../../context/UserContext";
 import moment from "moment";
+import Vendors from "../vendors";
 Chart.register(ArcElement);
 
 const top100Films = [
@@ -66,6 +67,8 @@ const columns = [
   { id: "inStock", label: "In Stock" },
   { id: "created_at,", label: "Created At" },
   { id: "status", label: "Status" },
+  { id: "edit", label: "Edit" },
+  { id: "delete", label: "Delete" },
 ];
 
 const categoryColumns = [
@@ -73,6 +76,8 @@ const categoryColumns = [
   { id: "name", label: "Name" },
   { id: "description", label: "Description" },
   { id: "created_at,", label: "Created At" },
+  { id: "edit", label: "Edit" },
+  { id: "delete", label: "Delete" },
 ];
 
 const brandColumns = [
@@ -80,6 +85,8 @@ const brandColumns = [
   { id: "name", label: "Name" },
   { id: "description", label: "Description" },
   { id: "created_at,", label: "Created At" },
+  { id: "edit", label: "Edit" },
+  { id: "delete", label: "Delete" },
 ];
 
 const data = {
@@ -148,6 +155,9 @@ function a11yProps(index) {
 
 const ProductList = () => {
   const [products, setProducts] = useState();
+  const [brands, setBrand] = useState();
+  const [categories, setCategories] = useState();
+  const [subCategories, setSubCategories] = useState();
   const [newProduct, setNewProduct] = useState();
   const [value, setValue] = useState(0);
   const [pmallUsers, setPmallUsers] = useState([]);
@@ -163,10 +173,20 @@ const ProductList = () => {
   };
   const [newProductModal, setNewProductModal] = useState(false);
   const  [newCategoryModal, setNewCategoryModal] = useState(false);
+  const  [newSubCategoryModal, setNewSubCategoryModal] = useState(false);
   const  [newBrandModal, setNewBrandModal] = useState(false);
+  const  [editProductModal, setEditProductModal] = useState(false);
+  const  [editCategoryModal, setEditCategoryModal] = useState(false);
+  const  [editSubCategoryModal, setEditSubCategoryModal] = useState(false);
+  const  [editBrandModal, setEditBrandModal] = useState(false);
   const handleModalClose = () => setNewProductModal(false);
   const handleCategoryModalClose = () => setNewCategoryModal(false);
+  const handleSubCategoryModalClose = () => setNewSubCategoryModal(false);
   const handleBrandModalClose = () => setNewBrandModal(false);
+  const handleEditProductModalClose = () => setEditProductModal(false);
+  const handleEditCategoryModalClose = () => setEditCategoryModal(false);
+  const handleEditSubCategoryModalClose = () => setEditSubCategoryModal(false);
+  const handleEditBrandModalClose = () => setEditBrandModal(false);
   const navigate = useNavigate();
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -202,11 +222,241 @@ const ProductList = () => {
   }
   };
 
+  const vendorUpdateProduct = async(e) => {
+    if (e) {
+      e.preventDefault(); 
+    try {
+      const response = await fetch('https://test.igeecloset.com/api/v1/products/update/1', {
+        method: 'POST',
+        headers:{ 
+          'Content-Type': 'application/json;charset=UTF-8', 
+          "Accept": "application/json" ,
+          'Authorization': `Bearer ${user?.token}`
+        },
+          body:JSON.stringify(inputValues)
+      });
+      console.log(inputValues)
+      if (response.ok) {
+        const data = await response.json();
+        console.log('product:', data);
+        setNewProduct(data)
+        handleEditProductModalClose()
+      } else {
+        const error = await response.text();
+        console.error('Error posting product:', error);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  }
+  };
+
+  const vendorUpdateCategory = async(e) => {
+    if (e) {
+      e.preventDefault(); 
+    try {
+      const response = await fetch('https://test.igeecloset.com/api/v1/product-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+        method: 'POST',
+        headers:{ 
+          'Content-Type': 'application/json;charset=UTF-8', 
+          "Accept": "application/json" ,
+          'Authorization': `Bearer ${user?.token}`
+        },
+      });
+      console.log(inputValues)
+      if (response.ok) {
+        const data = await response.json();
+        console.log('product:', data);
+        setNewProduct(data)
+        handleEditCategoryModalClose()
+      } else {
+        const error = await response.text();
+        console.error('Error posting product:', error);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  }
+  };
+
+  
+  const vendorUpdateSubCategory = async(e) => {
+    if (e) {
+      e.preventDefault(); 
+    try {
+      const response = await fetch('https://test.igeecloset.com/api/v1/product-sub-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+        method: 'POST',
+        headers:{ 
+          'Content-Type': 'application/json;charset=UTF-8', 
+          "Accept": "application/json" ,
+          'Authorization': `Bearer ${user?.token}`
+        },
+      });
+      console.log(inputValues)
+      if (response.ok) {
+        const data = await response.json();
+        console.log('product:', data);
+        setNewProduct(data)
+        handleEditSubCategoryModalClose()
+      } else {
+        const error = await response.text();
+        console.error('Error posting product:', error);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  }
+  };
+
+  const vendorUpdateBrand = async(e) => {
+    if (e) {
+      e.preventDefault(); 
+    try {
+      const response = await fetch('https://test.igeecloset.com/api/v1/product-brand/update?brand_id=' + inputValues.id + '&brand_image=' + inputValues.brand_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+        method: 'POST',
+        headers:{ 
+          'Content-Type': 'application/json;charset=UTF-8', 
+          "Accept": "application/json" ,
+          'Authorization': `Bearer ${user?.token}`
+        },
+      });
+      console.log(inputValues)
+      if (response.ok) {
+        const data = await response.json();
+        console.log('product:', data);
+        setNewProduct(data)
+        handleEditBrandModalClose()
+      } else {
+        const error = await response.text();
+        console.error('Error posting product:', error);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  }
+  };
+
+
+ function editProduct(data){
+    setEditProductModal(true)
+    console.log(data)
+    setState(data)
+  }
+
+ function editCategory(data){
+  setEditCategoryModal(true)
+  console.log(data)
+  setState(data)
+ }
+
+ function editSubCategory(data){
+  setEditSubCategoryModal(true)
+  console.log(data)
+  setState(data)
+ }
+
+ function editBrand(data){
+  setEditBrandModal(true)
+  console.log(data)
+  setState(data)
+ }
+
+
   let publishedCount = 0;
 
+  const id = "PMS-892040"
 
   const getProducts = () => {
-    fetch("https://test.igeecloset.com/api/v1/products", {
+    if(user.type  == "vendor"){
+      fetch("https://test.igeecloset.com/api/v1/products", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        },
+      })
+        .then((resp) => resp.json())
+        .then((result) => {
+          console.log(result);
+          setProducts(result.data);
+          for (const item of result) {
+            if (item.status === 0) {
+              publishedCount++;
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const addCategory = (e) => {
+    e.preventDefault()
+    fetch("https://test.igeecloset.com/api/v1/product-category/create?category_image="+ inputValues.category_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result);
+        setNewProduct(result)
+        handleCategoryModalClose()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addSubCategory = (e) => {
+    e.preventDefault()
+    fetch("https://test.igeecloset.com/api/v1/product-sub-category/create?category_id=" + inputValues.id + "&category_image" + inputValues.category_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result);
+        setNewProduct(result)
+        handleCategoryModalClose()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addBrand = (e) => {
+    e.preventDefault()
+    fetch("https://test.igeecloset.com/api/v1/product-brand/create?brand_image="+inputValues.brand_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result);
+        setNewProduct(result)
+        handleBrandModalClose()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getCategories = () => {
+    fetch("https://test.igeecloset.com/api/v1/product-category/get-all",{
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -216,25 +466,130 @@ const ProductList = () => {
     })
       .then((resp) => resp.json())
       .then((result) => {
-        console.log(result.data);
-        setProducts(result.data);
-        for (const item of result) {
-          if (item.status === 0) {
-            publishedCount++;
-          }
-        }
+        console.log(result);
+        setCategories(result.data.categories)
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  
+  const getBrands = () => {
+    fetch("https://test.igeecloset.com/api/v1/product-brand/get-all?store_id=" +id, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result);
+        setBrand(result.data.brands)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteProduct = (productId) => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this item?');
+    if (isConfirmed) {
+      fetch("https://test.igeecloset.com/api/v1/products/delete-account?product_id=" + productId, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        },
+      })
+        .then((resp) => resp.json())
+        .then((result) => {
+          console.log(result);
+          setNewProduct(result)
+        })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  };
+
+  const deleteCategory = (categoryId) => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this category?');
+    if (isConfirmed) {
+      fetch("https://test.igeecloset.com/api/v1/product-category/delete?category_id=" + categoryId, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        },
+      })
+        .then((resp) => resp.json())
+        .then((result) => {
+          console.log(result);
+          setNewProduct(result)
+        })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  };
+  const deleteSubCategory = (categoryId) => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this category?');
+    if (isConfirmed) {
+      fetch("https://test.igeecloset.com/api/v1/product-sub-category/delete?sub_category_id=" + categoryId, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        },
+      })
+        .then((resp) => resp.json())
+        .then((result) => {
+          console.log(result);
+          setNewProduct(result)
+        })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  };
+
+
+  const deleteBrand = (brandId) => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this brand?');
+    if (isConfirmed) {
+      fetch("https://test.igeecloset.com/api/v1/product-brand/delete?brand_id=" + brandId, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        },
+      })
+        .then((resp) => resp.json())
+        .then((result) => {
+          console.log(result);
+          setNewProduct(result)
+        })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  };
+
   const addCommasToNumberString = (numberString) =>{
     return  numberString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     getProducts ();
+    getBrands()
+    getCategories()
     console.log(publishedCount)
   }, [newProduct]);
   return (
@@ -277,6 +632,7 @@ const ProductList = () => {
                   <Tab label="Products list" {...a11yProps(0)} />
                   <Tab label="Categories" {...a11yProps(1)} />
                   <Tab label="Brands" {...a11yProps(2)} />
+                  <Tab label="Sub Categories" {...a11yProps(2)} />
             </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -304,7 +660,7 @@ const ProductList = () => {
           </div>
         </section>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="Porduct Table">
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="Product Table">
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
@@ -313,42 +669,48 @@ const ProductList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products && products.map((product, index) => (                   
-                <TableRow key={product.id} onClick={() => navigate(`/app/products/details/${product.id}`)}>
-                <TableCell className="b-r">
-                  <div className="d-flex alc f-10 flex-start">
-                    <div className="product__avatar avatar__large bg-success">
-                      <img src={product.image} alt="" className="w50"/>
+              {user.type=="vendor" && products?.map((product, index) => (                   
+                <TableRow key={product.id} >
+                  <TableCell className="b-r" onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                    <div className="d-flex alc f-10 flex-start">
+                        <img src={product.image} alt="" className="w50"/>
                     </div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="lheight13">
-                    <h4 className="f-300">{product.name} </h4>
-                  </div>
-                </TableCell>
-                <TableCell>{product.category_id}</TableCell>
-                <TableCell> {product.brand_id} </TableCell>
-                <TableCell> &#x20A6;{addCommasToNumberString(product.cost_price)} </TableCell>
-                <TableCell> &#x20A6;{addCommasToNumberString(product.selling_price)} </TableCell>
-                <TableCell> {product.inStock} </TableCell>
-                <TableCell> {moment(product.created_at).add(1, "years").calendar()} </TableCell>
-                <TableCell>
-                  {" "}
-                  {product.status == 1 ?
-                  <span className="badge bg-success">Published</span>
-                  : <span className="badge bg-success">unPublished</span>
-                  }
-                </TableCell>
-                <TableCell>
-                  {" "}
-                  <EditIcon />{" "}
-                </TableCell>
-                <TableCell>
-                  {" "}
-                  <DeleteIcon/>{" "}
-                </TableCell>
-              </TableRow>
+                  </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                    <div className="lheight13">
+                      <h4 className="f-300">{product.name} </h4>
+                    </div>
+                  </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                    {categories.map(category =>(
+                    category.id == product.category_id && category.name 
+                  ))}       
+                  </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                    {brands.map(brand =>(
+                      brand.id == product.brand_id && brand.name 
+                    ))}
+                  </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}> &#x20A6;{addCommasToNumberString(product.cost_price)} </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}> &#x20A6;{addCommasToNumberString(product.selling_price)} </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}> {product.inStock} </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}> {moment(product.created_at).add(1, "years").calendar()} </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                    {" "}
+                    {product.status == 1 ?
+                    <span className="badge">Published</span>
+                    : <span className="badge">unPublished</span>
+                    }
+                  </TableCell>
+                  <TableCell  onClick={() => editProduct(product)}>
+                    {" "}
+                    <EditIcon />{" "}
+                  </TableCell>
+                  <TableCell onClick={()=>deleteProduct(product.id)}>
+                    {" "}
+                    <DeleteIcon/>{" "}
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
@@ -374,25 +736,23 @@ const ProductList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products && products.map((product, index) => (                   
-                <TableRow key={product.id} onClick={() => navigate(`/app/products/details/${product.id}`)}>
+              {categories && categories.map((category, index) => (                   
+                <TableRow key={category.id}>
                 <TableCell className="b-r">
                   <div className="d-flex alc f-10 flex-start">
-                    <div className="product__avatar avatar__large bg-success">
-                      <img src={product.image} alt="" className="w50"/>
-                    </div>
+                      <img src={category.category_image} alt="" className="w50"/>
                   </div>
                 </TableCell>
                 <TableCell>
-                    <h4 className="f-300">Category name </h4>
+                    <h4 className="f-300">{category.name} </h4>
                 </TableCell>
-                <TableCell>Category description</TableCell>
-                <TableCell> {moment(product.created_at).add(1, "years").calendar()} </TableCell>
-                <TableCell>
+                <TableCell>{category.description}</TableCell>
+                <TableCell> {moment(category.created_at).add(1, "years").calendar()} </TableCell>
+                <TableCell onClick={()=>editCategory(category)}> 
                   {" "}
                   <EditIcon />{" "}
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>deleteCategory(category.id)}>
                   {" "}
                   <DeleteIcon/>{" "}
                 </TableCell>
@@ -422,25 +782,71 @@ const ProductList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products && products.map((product, index) => (                   
-                <TableRow key={product.id} onClick={() => navigate(`/app/products/details/${product.id}`)}>
+              {brands && brands.map((brand, index) => (                   
+                <TableRow key={brand.id}>
                 <TableCell className="b-r">
                   <div className="d-flex alc f-10 flex-start">
                     <div className="product__avatar avatar__large bg-success">
-                      <img src={product.image} alt="" className="w50"/>
+                      <img src={brand.brand_image} alt="" className="w50"/>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                    <h4 className="f-300">Brand name </h4>
+                    <h4 className="f-300">{brand.name}</h4>
                 </TableCell>
-                <TableCell>Brand description</TableCell>
-                <TableCell> {moment(product.created_at).add(1, "years").calendar()} </TableCell>
-                <TableCell>
+                <TableCell>{brand.description}</TableCell>
+                <TableCell> {moment(brand.created_at).add(1, "years").calendar()} </TableCell>
+                <TableCell onClick={()=>editBrand(brand)}>
                   {" "}
                   <EditIcon />{" "}
                 </TableCell>
+                <TableCell onClick={()=>deleteBrand(brand.id)}>
+                  {" "}
+                  <DeleteIcon/>{" "}
+                </TableCell>
+              </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <section className="flex-container alc p-y my-40">
+          <div className="w-full">
+            <button
+              className="btn btn-primary p-25 pull-right"
+              onClick={() => setNewSubCategoryModal(true)}>
+              Add Sub category
+            </button>
+          </div>
+        </section>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="Porduct Table">
+            <TableHead>
+              <TableRow>
+                {categoryColumns.map((column) => (
+                  <TableCell>{column.label}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {subCategories && subCategories?.map((category, index) => (                   
+                <TableRow key={category.id}>
+                <TableCell className="b-r">
+                  <div className="d-flex alc f-10 flex-start">
+                      <img src={category.category_image} alt="" className="w50"/>
+                  </div>
+                </TableCell>
                 <TableCell>
+                    <h4 className="f-300">{category.name} </h4>
+                </TableCell>
+                <TableCell>{category.description}</TableCell>
+                <TableCell> {moment(category.created_at).add(1, "years").calendar()} </TableCell>
+                <TableCell onClick={()=>editSubCategory(category)}> 
+                  {" "}
+                  <EditIcon />{" "}
+                </TableCell>
+                <TableCell onClick={()=>deleteSubCategory(category.id)}>
                   {" "}
                   <DeleteIcon/>{" "}
                 </TableCell>
@@ -537,6 +943,20 @@ const ProductList = () => {
                     onChange={onChangeHandler}
                     >
                     <option value="default"> Select Category</option>
+                    {categories?.map((category) => (
+                      <option value={category.id}>{category.name}</option>
+                    ))}
+                  </select>
+                </div>
+              <div className="pos-rel w100-m10 ">
+                  <label className="mb-7"> Sub Category</label>
+                  <select
+                    className="search__bar w-100"
+                    value={inputValues.sub_category_id || ""}
+                    name="sub_category_id"
+                    onChange={onChangeHandler}
+                    >
+                    <option value="default"> Select Sub Category</option>
                     <option value="1"> Category 1</option>
                     <option value="2"> Category 2</option>
                     <option value="3"> Category 3</option>
@@ -555,10 +975,9 @@ const ProductList = () => {
                     onChange={onChangeHandler}
                     >
                     <option value="default"> Select Brand</option>
-                    <option value="1"> Brand 1</option>
-                    <option value="2"> Brand 2</option>
-                    <option value="3"> Brand 3</option>
-                    <option value="4"> Brand 4</option>
+                    {brands?.map((brand) => (
+                      <option value={brand.id}>{brand.name}</option>
+                    ))}
                   </select>
                 </div>
 
@@ -701,16 +1120,16 @@ const ProductList = () => {
           </section>
         </Box>
       </Modal>
-
+      
       <Modal
-        open={newCategoryModal}
-        onClose={handleCategoryModalClose}
+        open={editProductModal}
+        onClose={handleEditProductModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
           <div className="mb-35">
             <Typography id="modal-modal-title">
-              <h4 className="summary__title t-xl title-case">Add Product</h4>
+              <h4 className="summary__title t-xl title-case">Update Product</h4>
             </Typography>
             <div className="s-divider"></div>
           </div>
@@ -765,6 +1184,269 @@ const ProductList = () => {
                 </button> */}
               </div>
             </div>
+            <form style={{ width: "100%" }}>
+              <section className="flex-container mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label> Product Name</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="name"
+                    placeholder="e.g IPhone 14"
+                    onChange={onChangeHandler}
+                    value={inputValues.name || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7"> Product Category</label>
+                  <select
+                    className="search__bar w-100"
+                    value={inputValues.category_id || ""}
+                    name="category_id"
+                    onChange={onChangeHandler}
+                    >
+                    <option value="default"> Select Category</option>
+                    {categories?.map((category) => (
+                      <option value={category.id}>{category.name}</option>
+                    ))}
+                  </select>
+                </div>
+              <div className="pos-rel w100-m10 ">
+                  <label className="mb-7"> Sub Category</label>
+                  <select
+                    className="search__bar w-100"
+                    value={inputValues.sub_category_id || ""}
+                    name="sub_category_id"
+                    onChange={onChangeHandler}
+                    >
+                    <option value="default"> Select Sub Category</option>
+                    <option value="1"> Category 1</option>
+                    <option value="2"> Category 2</option>
+                    <option value="3"> Category 3</option>
+                    <option value="4"> Category 4</option>
+                  </select>
+                </div>
+              </section>
+
+              <section className="flex-container mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7"> Product Brand</label>
+                  <select
+                    className="search__bar w-100"
+                    name="brand_id"
+                    value={inputValues.brand_id || ""}
+                    onChange={onChangeHandler}
+                    >
+                    <option value="default"> Select Brand</option>
+                    {brands?.map((brand) => (
+                      <option value={brand.id}>{brand.name}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="pos-rel w100-m10 ">
+                  <label> Cost Price</label>
+                  <input
+                    type="number"
+                    className="form-control-input "
+                    name="cost_price"
+                    placeholder="1,500"
+                    onChange={onChangeHandler}
+                    value={inputValues.cost_price || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label>Selling Price</label>
+                  <input
+                    type="number"
+                    className="form-control-input "
+                    name="selling_price"
+                    placeholder="1,200"
+                    onChange={onChangeHandler}
+                    value={inputValues.selling_price || ""}
+                  />
+                </div>
+              </section>
+              <section className="flex-container mb-lg">
+              <div className="pos-rel w100-m10 ">
+                  <label> In stock</label>
+                  <input
+                    type="number"
+                    className="form-control-input "
+                    name="inStock"
+                    placeholder="1,500"
+                    onChange={onChangeHandler}
+                    value={inputValues.inStock || ""}
+                  />
+                </div>
+
+                <div className="pos-rel w100-m10 ">
+                  <label>Quantity</label>
+                  <input
+                    type="number"
+                    className="form-control-input "
+                    name="quantity"
+                    placeholder="1,500"
+                    onChange={onChangeHandler}
+                    value={inputValues.quantity || ""}
+                  />
+                </div>
+              </section>
+              <section className="flex-container mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label>Add Tags</label>
+                  <Stack spacing={3} sx={{ width: 500 }}>
+                    <Autocomplete
+                      multiple
+                      id="tags-outlined"
+                      options={top100Films}
+                      name="tags"
+                      onChange={handleChange}
+                     // value={inputValues.tags || ""}
+                      getOptionLabel={(option) => option.title}
+                      filterSelectedOptions
+                      renderInput={(params) => (
+                        <TextField {...params} placeholder="New tag" />
+                      )}
+                    />
+                  </Stack>
+                </div>
+              </section>
+              <section className="flex-container mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label>More Images</label>
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="more_images"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            more_images: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                    multiple
+                  />
+                </div>
+              </section>
+              <section className="flex-container mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7"> Product Description </label>
+                  <textarea
+                    placeholder="Enter product description"
+                    className="form-textarea w-100"
+                    name="description"
+                    onChange={onChangeHandler}
+                    value={inputValues.description || ""}
+                    ></textarea>
+                </div>
+
+                <div className="pos-rel w100-m10"></div>
+              </section>
+
+              <div className="flex__normal w-30 pull-right mt-35">
+                <button
+                  onClick={handleModalClose}
+                  className="btn btn-secondary p-25 pull-right mr-10">
+                  Cancel
+                </button>
+                <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateProduct}>
+                  Save
+                </button>
+              </div>
+            </form>
+          </section>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={newCategoryModal}
+        onClose={handleCategoryModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <div className="mb-35">
+            <Typography id="modal-modal-title">
+              <h4 className="summary__title t-xl title-case">Add Product</h4>
+            </Typography>
+            <div className="s-divider"></div>
+          </div>
+          <section className="flex__normal">
+            <div className="w-200">
+              <div className="profile_pic_holder">
+                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <div className="pos-rel w100-m10 ">
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="file"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      // if (selectedName == "") {
+                      //   setAlert("Please Select a file name");
+                      //   return;
+                      // }
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            category_image: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                  />
+                </div>
+                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
+                  Upload Photo
+                </button> */}
+              </div>
+            </div>
             <section className="flex-container flex-col g-20 mb-lg w-full">
               <form className="flex-container flex-col g-20 mb-lg">
                 <div className="pos-rel w100-m10 ">
@@ -790,8 +1472,165 @@ const ProductList = () => {
                   </textarea>
                 </div>
                 <div className="flex__normal mt-10 w-full ">
-                  <button className="btn btn-primary p-25 pull-right">
+                  <button className="btn btn-primary p-25 pull-right" onClick={addCategory}>
                     Create Category
+                  </button>
+                </div>
+              </form>
+            </section>
+          </section>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={editCategoryModal}
+        onClose={handleEditCategoryModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <div className="mb-35">
+            <Typography id="modal-modal-title">
+              <h4 className="summary__title t-xl title-case">Update Category</h4>
+            </Typography>
+            <div className="s-divider"></div>
+          </div>
+          <section className="flex__normal">
+            <div className="w-200">
+              <div className="profile_pic_holder">
+                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <div className="pos-rel w100-m10 ">
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="file"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      // if (selectedName == "") {
+                      //   setAlert("Please Select a file name");
+                      //   return;
+                      // }
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            category_image: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                  />
+                </div>
+                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
+                  Upload Photo
+                </button> */}
+              </div>
+            </div>
+            <section className="flex-container flex-col g-20 mb-lg w-full">
+              <form className="flex-container flex-col g-20 mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label> Category Name</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="name"
+                    placeholder="e.g IPhone 14"
+                    onChange={onChangeHandler}
+                    value={inputValues.name || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7">Category description</label>
+                  <textarea
+                    className="search__bar w-100"
+                    value={inputValues.description|| ""}
+                    name="description"
+                    rows={6}
+                    onChange={onChangeHandler}
+                    >
+                  </textarea>
+                </div>
+                <div className="flex__normal mt-10 w-full ">
+                  <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateCategory}>
+                    Update Category
+                  </button>
+                </div>
+              </form>
+            </section>
+          </section>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={newSubCategoryModal}
+        onClose={handleSubCategoryModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <div className="mb-35">
+            <Typography id="modal-modal-title">
+              <h4 className="summary__title t-xl title-case">Update Sub Category</h4>
+            </Typography>
+            <div className="s-divider"></div>
+          </div>
+          <section className="flex__normal">
+            <div className="w-200">
+              <div className="profile_pic_holder">
+                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <div className="pos-rel w100-m10 ">
+                  
+                </div>
+                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
+                  Upload Photo
+                </button> */}
+              </div>
+            </div>
+            <section className="flex-container flex-col g-20 mb-lg w-full">
+              <form className="flex-container flex-col g-20 mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label> Sub Category Name</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="name"
+                    placeholder="e.g IPhone 14"
+                    onChange={onChangeHandler}
+                    value={inputValues.name || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7">Sub Category description</label>
+                  <textarea
+                    className="search__bar w-100"
+                    value={inputValues.description|| ""}
+                    name="description"
+                    rows={6}
+                    onChange={onChangeHandler}
+                    >
+                  </textarea>
+                </div>
+                <div className="flex__normal mt-10 w-full ">
+                  <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateSubCategory}>
+                    Update Sub Category
                   </button>
                 </div>
               </form>
@@ -847,7 +1686,7 @@ const ProductList = () => {
                           console.log(data)
                           setState((inputValues) => ({
                             ...inputValues,
-                            image: data.url, 
+                            brand_image: data.url, 
                           }))
                           console.log(inputValues)
                         })
@@ -888,7 +1727,105 @@ const ProductList = () => {
                   </textarea>
                 </div>
                 <div className="flex__normal mt-10 w-full ">
-                  <button className="btn btn-primary p-25 pull-right">
+                  <button className="btn btn-primary p-25 pull-right" onClick={addBrand}>
+                    Create Brand
+                  </button>
+                </div>
+              </form>
+            </section>
+          </section>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={editBrandModal}
+        onClose={handleEditBrandModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <div className="mb-35">
+            <Typography id="modal-modal-title">
+              <h4 className="summary__title t-xl title-case">Update Brand</h4>
+            </Typography>
+            <div className="s-divider"></div>
+          </div>
+          <section className="flex__normal">
+            <div className="w-200">
+              <div className="profile_pic_holder">
+                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <div className="pos-rel w100-m10 ">
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="file"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      // if (selectedName == "") {
+                      //   setAlert("Please Select a file name");
+                      //   return;
+                      // }
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            brand_image: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                  />
+                </div>
+                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
+                  Upload Photo
+                </button> */}
+              </div>
+            </div>
+            <section className="flex-container flex-col g-20 mb-lg w-full">
+              <form className="flex-container flex-col g-20 mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label> Brand Name</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="name"
+                    placeholder="e.g IPhone 14"
+                    onChange={onChangeHandler}
+                    value={inputValues.name || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7">Brand description</label>
+                  <textarea
+                    className="search__bar w-100"
+                    value={inputValues.description|| ""}
+                    name="description"
+                    rows={6}
+                    onChange={onChangeHandler}
+                    >
+                  </textarea>
+                </div>
+                <div className="flex__normal mt-10 w-full ">
+                  <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateBrand}>
                     Create Brand
                   </button>
                 </div>

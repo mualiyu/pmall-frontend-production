@@ -9,6 +9,8 @@ import { useVendor } from "../../context/VendorSignupContext";
 import Modal from "@mui/material/Modal";
 import { useUser } from "../../context/UserContext";
 import { useParams } from 'react-router-dom';
+import  nigeriaStateAndLgas  from "../nigeriaStateAndLgas.json";
+
 
 const style = {
     position: "absolute",
@@ -45,15 +47,68 @@ function TabPanel(props) {
       "aria-controls": `simple-tabpanel-${index}`,
     };
   }
+
+ const banks = [
+    { "id": "1", "name": "Access Bank" ,"code":"044" },
+    { "id": "2", "name": "Citibank","code":"023" },
+    { "id": "3", "name": "Diamond Bank","code":"063" },
+    { "id": "4", "name": "Dynamic Standard Bank","code":"" },
+    { "id": "5", "name": "Ecobank Nigeria","code":"050" },
+    { "id": "6", "name": "Fidelity Bank Nigeria","code":"070" },
+    { "id": "7", "name": "First Bank of Nigeria","code":"011" },
+    { "id": "8", "name": "First City Monument Bank","code":"214" },
+    { "id": "9", "name": "Guaranty Trust Bank","code":"058" },
+    { "id": "10", "name": "Heritage Bank Plc","code":"030" },
+    { "id": "11", "name": "Jaiz Bank","code":"301" },
+    { "id": "12", "name": "Keystone Bank Limited","code":"082" },
+    { "id": "13", "name": "Providus Bank Plc","code":"101" },
+    { "id": "14", "name": "Polaris Bank","code":"076" },
+    { "id": "15", "name": "Stanbic IBTC Bank Nigeria Limited","code":"221" },
+    { "id": "16", "name": "Standard Chartered Bank","code":"068" },
+    { "id": "17", "name": "Sterling Bank","code":"232" },
+    { "id": "18", "name": "Suntrust Bank Nigeria Limited","code":"100" },
+    { "id": "19", "name": "Union Bank of Nigeria","code":"032" },
+    { "id": "20", "name": "United Bank for Africa","code":"033" },
+    { "id": "21", "name": "Unity Bank Plc","code":"215" },
+    { "id": "22", "name": "Wema Bank","code":"035" },
+    { "id": "23", "name": "Zenith Bank","code":"057" },
+    { "id": "24", "name": "Opay Microfinance Bank","code":"059" },
+    { "id": "25", "name": "Kuda Microfinance Bank","code":"017" },
+    { "id": "26", "name": "Moniepoint Microfinance Bank","code":"077" }
+]
   
 
 const UserDetails = () => {
     const [value, setValue] = React.useState(4);
-    const { user, setUser } = useUser();
+    const { user} = useUser();
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
-      const {inputValues,onChangeHandler,VendorUpdateProfile,newVendorModal,setNewVendorModal,submittedValues,setState,profileDetails,setProfileDetails, handleModalClose} = useVendor();
+    const {inputValues,onChangeHandler,VendorUpdateProfile,newVendorModal,setNewVendorModal,submittedValues,setState,profileDetails,setProfileDetails, handleModalClose} = useVendor();
+
+    const [selectedState, setSelectedState] = useState('');
+    const [lgas, setLgas] = useState([]);
+
+    const handleStateChange = (e) => {
+        const newState = e.target.value;
+        setSelectedState(newState);
+
+        const matchingLgas = nigeriaStateAndLgas.find((state) => state.state === newState)?.lgas || [];
+        setLgas(matchingLgas);
+        if(!e?.persist){
+            setState(inputValues, ({...inputValues, [e?.target.name]: e?.target.value })); 
+        }else {
+            e?.persist();
+            const target = e?.target;
+      if (target?.name) {
+        setState((inputValues) => ({
+          ...inputValues,
+          [target.name]: target.value,
+        }));
+      }
+        }
+    };
+
 
       const getUsersDetails = () => {
         fetch("https://test.igeecloset.com/api/v1/profile", {
@@ -69,6 +124,7 @@ const UserDetails = () => {
             console.log(result);
             if(profileDetails == undefined){
                 setProfileDetails(result.data.user);
+                console.log(profileDetails)
             }
             setState({
                 fname:result.data.user.fname,
@@ -94,6 +150,7 @@ const UserDetails = () => {
       useEffect(() => {
         getUsersDetails();
       }, [submittedValues]);
+
     return ( 
         <section className="page__header w-full" style={{display:"block"}}>
             <div className="user-details">
@@ -152,15 +209,11 @@ const UserDetails = () => {
                                 </div>
                                 <div className="flex g-10">
                                     <p>Username</p>
-                                    <h4>{profileDetails?.username}</h4>
+                                    <h4>{profileDetails?.username || "null"}</h4>
                                 </div>
                                 <div className="flex g-10">
                                     <p>User Type</p>
                                     <h4>{profileDetails?.user_type}</h4>
-                                </div>
-                                <div className="flex g-10">
-                                    <p>Description</p>
-                                    <h4>{profileDetails?.description || "null"}</h4>
                                 </div>
                                 <div className="flex g-10">
                                     <p>Ref Id</p>
@@ -175,11 +228,11 @@ const UserDetails = () => {
                                     <h4>{profileDetails?.acct_name || "null"}</h4>
                                 </div>
                                 <div className="flex g-10">
-                                    <p>Account Number</p>
+                                    <p>Bank Account Number</p>
                                     <h4>{profileDetails?.acct_number || "null"}</h4>
                                 </div>
                                 <div className="flex g-10">
-                                    <p>Account Type</p>
+                                    <p>Bank Account Type</p>
                                     <h4>{profileDetails?.acct_type || "null"}</h4>
                                 </div>
                                 <div className="flex g-10">
@@ -386,10 +439,11 @@ const UserDetails = () => {
                             value={inputValues.bank||  profileDetails.bank}
                             >
                             <option value="default"> Select Bank</option>
-                            <option value="Bank 1"> Bank 1</option>
-                            <option value="Bank 2"> Bank 2</option>
-                            <option value="Bank 3"> Bank 3</option>
-                            <option value="Bank 4"> Bank 4</option>
+                            {banks.map((bank) => (
+                                <option key={bank.id} value={bank.name}>
+                                {bank.name}
+                                </option>
+                            ))}
                         </select>
                         </div>
                         <div className="pos-rel w100-m10 ">
@@ -398,14 +452,15 @@ const UserDetails = () => {
                             className="search__bar w-100"
                             defaultValue={"default"}
                             name="state"
-                            onChange={onChangeHandler}
-                            value={inputValues.state ||  profileDetails.state}
+                            value={selectedState || inputValues.state ||  profileDetails.state}
+                            onChange={handleStateChange}
                             >
                             <option value="default"> Select State</option>
-                            <option value="State 1"> State 1</option>
-                            <option value="State 2"> State 2</option>
-                            <option value="State 3"> State 3</option>
-                            <option value="State 4"> State 4</option>
+                            {nigeriaStateAndLgas.map((nigeriaStates) => (
+                                <option key={nigeriaStates.state} value={nigeriaStates.state}>
+                                {nigeriaStates.state}
+                                </option>
+                            ))}
                         </select>
                         </div>
                         <div className="pos-rel w100-m10 ">
@@ -415,13 +470,15 @@ const UserDetails = () => {
                             defaultValue={"default"}
                             name="lga"
                             onChange={onChangeHandler}
-                            value={inputValues.lga ||  profileDetails.lga}
+                            value={inputValues.lga ||  profileDetails?.lga}
+                            disabled={!selectedState}
                             >
                             <option value="default"> Select LGA</option>
-                            <option value="LGA 1"> LGA 1</option>
-                            <option value="LGA 2"> LGA 2</option>
-                            <option value="LGA 3"> LGA 3</option>
-                            <option value="LGA 4"> LGA 4</option>
+                            {lgas.map((lga) => (
+                            <option key={lga} value={lga}>
+                                {lga}
+                            </option>
+                            ))}
                         </select>
                         </div>
                     </section>

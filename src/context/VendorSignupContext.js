@@ -170,6 +170,7 @@ export const VendorSignupProvider = ({ children }) => {
           }));
         }
           }
+          console.log(inputValues)
       }
 
      
