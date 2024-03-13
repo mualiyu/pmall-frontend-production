@@ -4,6 +4,8 @@ import AffilateForm from "./affilateForm";
 import VendorForm from "./vendorForm";
 import { useContext, useRef, useState } from "react";
 import { useVendor } from "../../context/AuthContext";
+import Toaster from "../../utils/toaster";
+import ButtonLoader from "../../utils/buttonLoader";
 
 const SignUp = () => {
   const onEnter = (e) => {
@@ -23,6 +25,9 @@ const SignUp = () => {
     onChangeHandler,
     onSubmitHandler,
     onAffilateSubmitHandler,
+    toastMsg,
+    toastType,
+    loading,
     submittedValues,
   } = useVendor();
   const [vendorForm, setVendorForm] = useState(true);
@@ -34,6 +39,7 @@ const SignUp = () => {
         <p className="copyright-footer">Copyright 2023 - All rights reserved</p>
       </div>
       <div className={`right ${!vendorForm && "pb-0"}`}>
+        <Toaster text={toastMsg} className={toastType} />
         <div className="main">
           <h1>{vendorForm ? "Become a Vendor" : "Become an Affiliate"}</h1>
           <p className="right-head bold">Connecting people and services</p>
@@ -90,14 +96,18 @@ const SignUp = () => {
             {vendorForm ? (
               <button
                 className={`continue-btn my-20 ${!vendorForm && "affilate"}`}
-                onClick={signUpHandler}>
-                Continue
+                onClick={signUpHandler}
+                disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : "Continue"}
               </button>
             ) : (
               <button
                 className={`continue-btn my-20 ${!vendorForm && "affilate"}`}
-                onClick={onAffilateSubmitHandler}>
-                Continue
+                onClick={onAffilateSubmitHandler}
+               disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : "Continue"}
               </button>
             )}
             <p className="have-an-account bold">

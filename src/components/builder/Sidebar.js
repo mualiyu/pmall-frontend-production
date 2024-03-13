@@ -14,6 +14,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+import Person2Icon from '@mui/icons-material/Person2';
 import HubIcon from "@mui/icons-material/Hub";
 import { useUser } from "../../context/UserContext";
 import logo from "../../assets/imgs/pmall_logo_200.png";
@@ -73,15 +74,27 @@ function Sidebar() {
                 Icon={ShoppingCartIcon}
                 title="Order Management"
               />
+               <SidebarRow
+                path="/app/users/details/"
+                Icon={Person2Icon}
+                title="Account Management"
+              />
             </>
           )}
           {(user?.accountType === "Admin" ||
             user?.accountType === "Affiliate") && (
+              <>
             <SidebarRow
               path="/app/vendors"
               Icon={GroupsIcon}
               title="Vendor Resources"
             />
+            <SidebarRow
+            path="/app/users/details"
+            Icon={Person2Icon}
+            title="Account Management"
+          />
+          </>
           )}
           <SidebarRow
             path="/app/users"

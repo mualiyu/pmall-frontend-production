@@ -97,14 +97,14 @@ ul {
 .chalk {
   color: #8c8c8cd6;
 }
-.cnwjien{
-  display: flex; 
+.cnwjien {
+  display: flex;
   align-items: center;
 }
-.cnwjien >  svg {
+.cnwjien > svg {
   position: absolute;
-    right: 10px;
-    color: #727273!important;
+  right: 10px;
+  color: #727273 !important;
 }
 
 .login-screen,
@@ -158,7 +158,7 @@ ul {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 60%
+  width: 60%;
 }
 
 .vendor__banner {
@@ -166,7 +166,7 @@ ul {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 60%
+  width: 60%;
 }
 .signup-screen .left {
   width: 60%;
@@ -475,7 +475,7 @@ button {
   font-size: 20px;
 }
 .balance-icon-container > svg {
-  color: var(--primary-bg-color)!important;
+  color: var(--primary-bg-color) !important;
 }
 .dashboard .balance-icon-container {
   background-color: var(--primary-color-light);
@@ -642,6 +642,9 @@ button {
   height: 400px;
   width: 430px;
   margin-bottom: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  object-fit: cover;
 }
 .prod-details .other-images {
   display: flex;
@@ -748,6 +751,9 @@ button {
 }
 .w30 {
   width: 30px;
+}
+.w50 {
+  width: 50px;
 }
 .items-center {
   align-items: center;
@@ -889,7 +895,7 @@ input:checked + .slider:before {
 }
 
 .user-details .left .top {
-  margin-top: -80px;
+  width: 280px;
 }
 
 .user-details .left .details .flex-container {
@@ -979,6 +985,9 @@ input:checked + .slider:before {
 
 .grid-4 {
   grid-template-columns: repeat(4, 1fr);
+}
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .bold {

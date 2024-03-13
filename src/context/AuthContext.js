@@ -8,6 +8,8 @@ export const VendorSignupProvider = ({ children }) => {
   const [inputValues, setState] = useState({});
   const [submittedValues, setSubmittedValues] = useState({});
   const [loading, setLoading] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
+  const [toastType, setToastType] = useState("");
   const { setUser } = useUser();
 
   const onSubmitHandler = async (e) => {
@@ -27,8 +29,19 @@ export const VendorSignupProvider = ({ children }) => {
           setLoading(false);
           console.log(res);
           if (res.ok) {
-            window.location.href = "/";
+            setToastMsg("Awesome! Signup successful");
+            setToastType("success")
+            setInterval(() => {
+              setToastMsg("");
+            }, 5000);
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 2000);
+  
             setLoading(false);
+          }else{
+            setToastMsg("Oops! there seems to be an error. Confirm Signupcredientials")
+            setToastType("error")
           }
         })
         .catch((err) => {
@@ -54,8 +67,19 @@ export const VendorSignupProvider = ({ children }) => {
           alert("successful");
           console.log(res);
           if (res.ok) {
+            setToastMsg("Awesome! Signup successful");
+            setToastType("success")
+            setInterval(() => {
+              setToastMsg("");
+            }, 5000);
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 2000);
+  
             setLoading(false);
-            // window.location.href = "/";
+          }else{
+            setToastMsg("Oops! there seems to be an error. Confirm Signup credientials")
+            setToastType("error")
           }
         })
         .catch((err) => {
@@ -99,6 +123,11 @@ export const VendorSignupProvider = ({ children }) => {
             regDate: result.data.user.created_at,
             refId: result.data.user.my_ref_id,
           });
+          setToastMsg("Awesome! Login successful");
+          setToastType("success")
+          setInterval(() => {
+            setToastMsg("");
+          }, 5000);
           setTimeout(() => {
             window.location.href = "/app/dashboard";
           }, 2000);
@@ -106,11 +135,12 @@ export const VendorSignupProvider = ({ children }) => {
           setLoading(false);
         } else {
           console.log(result.message);
+          setToastMsg("Oops! there seems to be an error. Confirm login credientials")
+          setToastType("error")
         }
       })
       .catch((err) => {
         console.log(err);
-        Toaster("Oops! " + err.message);
         setLoading(false);
       });
   };
@@ -128,11 +158,21 @@ export const VendorSignupProvider = ({ children }) => {
         body: JSON.stringify(inputValues),
       })
         .then((res) => {
-          alert("successful");
           console.log(res);
           if (res.ok) {
+            setToastMsg("Successful!");
+          setToastType("success")
+          setInterval(() => {
+            setToastMsg("");
+          }, 5000);
+          setTimeout(() => {
+            window.location.href = "/auth/app/verify-token";  
+          }, 2000);
             setLoading(false);
-            window.location.href = "/auth/app/verify-token";
+          }
+          else{
+            setToastMsg("Oops! there seems to be an error. Confirm email")
+            setToastType("error")
           }
         })
         .catch((err) => {
@@ -157,9 +197,22 @@ export const VendorSignupProvider = ({ children }) => {
       body: JSON.stringify(inputValues),
     })
       .then((res) => {
-        alert("successful");
-        setLoading(false);
-        console.log(res);
+        if (res.status) {
+          setToastMsg("Successful!");
+          setToastType("success")
+          setInterval(() => {
+            setToastMsg("");
+          }, 5000);
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 2000);
+            setLoading(false);
+        }
+        else{
+          setToastMsg("Oops! there seems to be an error. Retry")
+          setToastType("error")
+        }
+        
       })
       .catch((err) => {
         console.log(err);
@@ -187,8 +240,19 @@ export const VendorSignupProvider = ({ children }) => {
         alert("successful");
         console.log(res);
         if (res.ok) {
-          setLoading(false);
+          setToastMsg("Successful!");
+        setToastType("success")
+        setInterval(() => {
+          setToastMsg("");
+        }, 5000);
+        setTimeout(() => {
           window.location.href = "/auth/app/Set-new-password";
+        }, 2000);
+          setLoading(false);
+        }
+        else{
+          setToastMsg("Incorrect token, please confirm in your email")
+          setToastType("error")
         }
       })
       .catch((err) => {
@@ -227,6 +291,8 @@ export const VendorSignupProvider = ({ children }) => {
         onForgotPasswordHandler,
         handleResetPassword,
         handleVerifyToken,
+        toastMsg, 
+        toastType,
         submittedValues,
         loading,
       }}>

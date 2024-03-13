@@ -5,12 +5,15 @@ export default function Toaster({ text, className }) {
   if (className === "error") {
     backgroundColor = "red";
   } else if (className === "success") {
-    backgroundColor = "green";
+    backgroundColor = "#1348af";
   }
 
   return (
-    <div className={`alert ${className}`} style={{ backgroundColor }}>
+    <div
+      className={`alert ${className} ${text && "active"}`}
+      style={{ backgroundColor }}>
       <span>{text}</span>
+         
     </div>
   );
 }
