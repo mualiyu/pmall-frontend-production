@@ -137,7 +137,7 @@ const UserDetails = () => {
       .then((resp) => resp.json())
       .then((result) => {
         console.log(result);
-        if (profileDetails === undefined) {
+        if (profileDetails == undefined) {
           setProfileDetails(result.data.user);
           console.log(profileDetails);
         }
@@ -185,18 +185,27 @@ const UserDetails = () => {
             <div className="br">
               <div className="top flex flex-col g-20 items-center">
                 <img src={profile} className="profile_pic b-round" />
-                <h1 style={{ textTransform: "capitalize" }}>
+                <h1>
                   {profileDetails?.fname} {profileDetails?.lname}
                 </h1>
                 <div className="flex alc">
                   <Rating name="read-only" value={value} readOnly />
-                  <p>0 Rates</p>
+                  <p>214 Rates</p>
                 </div>
               </div>
             </div>
             {profileDetails && (
               <div className="details w-full grid grid-3 g-40">
-                {profileDetails.user_type === "Vendor" && (
+                <div className="flex g-10">
+                  <p>First Name</p>
+                  <h4>{profileDetails?.fname}</h4>
+                </div>
+                <div className="flex g-10">
+                  <p>Last Name</p>
+                  <h4>{profileDetails?.lname || "null"}</h4>
+                </div>
+
+                {profileDetails.accountType === "Vendor" && (
                   <div className="flex g-10">
                     <p>Store Name</p>
                     {<h4>{profileDetails?.store_name}</h4>}
@@ -206,7 +215,10 @@ const UserDetails = () => {
                   <p>Email</p>
                   <h4>{profileDetails?.email}</h4>
                 </div>
-
+                <div className="flex g-10">
+                  <p>Last interaction</p>
+                  <h4>40 mins ago</h4>
+                </div>
                 <div className="flex g-10">
                   <p>Phone Number</p>
                   <h4>{profileDetails?.phone}</h4>
@@ -218,68 +230,51 @@ const UserDetails = () => {
 
                 <div className="flex g-10">
                   <p>Username</p>
-                  <h4>{profileDetails?.username || "N/A"}</h4>
+                  <h4>{profileDetails?.username || "null"}</h4>
                 </div>
                 <div className="flex g-10">
                   <p>User Type</p>
                   <h4>{profileDetails?.user_type}</h4>
                 </div>
                 <div className="flex g-10">
-                  <p>My Ref ID</p>
-                  <h4>{profileDetails?.my_ref_id || "N/A"}</h4>
+                  <p>Ref Id</p>
+                  <h4>{profileDetails?.ref_id || "null"}</h4>
                 </div>
-                {profileDetails.user_type === "Vendor" && (
-                  <div className="flex g-10">
-                    <p>Store ID</p>
-                    <h4>{profileDetails?.store_id || "N/A"}</h4>
-                  </div>
-                )}
-
+                <div className="flex g-10">
+                  <p>Store id</p>
+                  <h4>{profileDetails?.store_id || "null"}</h4>
+                </div>
                 <div className="flex g-10">
                   <p>Bank Account Name</p>
-                  <h4>{profileDetails?.acct_name || "N/A"}</h4>
+                  <h4>{profileDetails?.acct_name || "null"}</h4>
                 </div>
                 <div className="flex g-10">
                   <p>Bank Account Number</p>
-                  <h4>{profileDetails?.acct_number || "N/A"}</h4>
+                  <h4>{profileDetails?.acct_number || "null"}</h4>
                 </div>
                 <div className="flex g-10">
                   <p>Bank Account Type</p>
-                  <h4>{profileDetails?.acct_type || "N/A"}</h4>
+                  <h4>{profileDetails?.acct_type || "null"}</h4>
                 </div>
                 <div className="flex g-10">
                   <p>Bank</p>
-                  <h4>{profileDetails?.bank || "N/A"}</h4>
-                </div>
-                {profileDetails.user_type === "Vendor" && (
-                  <>
-                    <div className="flex g-10">
-                      <p>State</p>
-                      <h4>{profileDetails?.state || "N/A"}</h4>
-                    </div>
-                    <div className="flex g-10">
-                      <p>LGA</p>
-                      <h4>{profileDetails?.lga || "N/A"}</h4>
-                    </div>
-                  </>
-                )}
-                {/* <div className="flex g-10">
-                  <p>Role ID</p>
-                  <h4>{profileDetails?.role_id || "N/A"}</h4>
-                </div> */}
-                <div className="flex g-10">
-                  <p>Package ID</p>
-                  <h4>{profileDetails?.package_id || "N/A"}</h4>
+                  <h4>{profileDetails?.bank || "null"}</h4>
                 </div>
                 <div className="flex g-10">
-                  <p>Account Status</p>
-                  <h4>
-                    {profileDetails?.status === "1" ? "Active" : "Not Active"}
-                  </h4>
+                  <p>State</p>
+                  <h4>{profileDetails?.state || "null"}</h4>
                 </div>
                 <div className="flex g-10">
-                  <p>Last interaction</p>
-                  <h4>40 mins ago</h4>
+                  <p>LGA</p>
+                  <h4>{profileDetails?.lga || "null"}</h4>
+                </div>
+                <div className="flex g-10">
+                  <p>Role id</p>
+                  <h4>{profileDetails?.role_id || "null"}</h4>
+                </div>
+                <div className="flex g-10">
+                  <p>Package Id</p>
+                  <h4>{profileDetails?.package_id || "null"}</h4>
                 </div>
               </div>
             )}
@@ -389,37 +384,34 @@ const UserDetails = () => {
                     />
                   </div>
                 </section>
-                {profileDetails.user_type === "Vendor" && (
-                  <section className="flex-container mb-lg">
-                    <div className="pos-rel w100-m10 ">
-                      <label> Store Name </label>
-                      <input
-                        type="text"
-                        className="form-control-input "
-                        name="store_name"
-                        placeholder="e.g Hooli Stores"
-                        onChange={onChangeHandler}
-                        value={
-                          inputValues.store_name || profileDetails.store_name
-                        }
-                      />
-                    </div>
-                    <div className="pos-rel w100-m10 ">
-                      <label> Store ULR </label>
-                      <input
-                        type="text"
-                        disabled
-                        className="form-control-input "
-                        name="store_url"
-                        placeholder="https://pmall.ng/hooli_stores"
-                        onChange={onChangeHandler}
-                        value={
-                          inputValues.store_url || profileDetails.store_url
-                        }
-                      />
-                    </div>
-                  </section>
-                )}
+
+                <section className="flex-container mb-lg">
+                  <div className="pos-rel w100-m10 ">
+                    <label> Store Name </label>
+                    <input
+                      type="text"
+                      className="form-control-input "
+                      name="store_name"
+                      placeholder="e.g Hooli Stores"
+                      onChange={onChangeHandler}
+                      value={
+                        inputValues.store_name || profileDetails.store_name
+                      }
+                    />
+                  </div>
+                  <div className="pos-rel w100-m10 ">
+                    <label> Store ULR </label>
+                    <input
+                      type="text"
+                      disabled
+                      className="form-control-input "
+                      name="store_url"
+                      placeholder="https://pmall.ng/hooli_stores"
+                      onChange={onChangeHandler}
+                      value={inputValues.store_url || profileDetails.store_url}
+                    />
+                  </div>
+                </section>
                 <section className="flex-container mb-lg">
                   <div className="pos-rel w100-m10 ">
                     <label>Bank Account Name </label>
@@ -477,49 +469,45 @@ const UserDetails = () => {
                       ))}
                     </select>
                   </div>
-                  {profileDetails.user_type === "Vendor" && (
-                    <>
-                      <div className="pos-rel w100-m10 ">
-                        <label className="mb-7"> Store Location</label>
-                        <select
-                          className="search__bar w-100"
-                          defaultValue={"default"}
-                          name="state"
-                          value={
-                            selectedState ||
-                            inputValues.state ||
-                            profileDetails.state
-                          }
-                          onChange={handleStateChange}>
-                          <option value="default"> Select State</option>
-                          {nigeriaStateAndLgas.map((nigeriaStates) => (
-                            <option
-                              key={nigeriaStates.state}
-                              value={nigeriaStates.state}>
-                              {nigeriaStates.state}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="pos-rel w100-m10 ">
-                        <label className="mb-7"> Local Government Area</label>
-                        <select
-                          className="search__bar w-100"
-                          defaultValue={"default"}
-                          name="lga"
-                          onChange={onChangeHandler}
-                          value={inputValues.lga || profileDetails?.lga}
-                          disabled={!selectedState}>
-                          <option value="default"> Select LGA</option>
-                          {lgas.map((lga) => (
-                            <option key={lga} value={lga}>
-                              {lga}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </>
-                  )}
+                  <div className="pos-rel w100-m10 ">
+                    <label className="mb-7"> Store Location</label>
+                    <select
+                      className="search__bar w-100"
+                      defaultValue={"default"}
+                      name="state"
+                      value={
+                        selectedState ||
+                        inputValues.state ||
+                        profileDetails.state
+                      }
+                      onChange={handleStateChange}>
+                      <option value="default"> Select State</option>
+                      {nigeriaStateAndLgas.map((nigeriaStates) => (
+                        <option
+                          key={nigeriaStates.state}
+                          value={nigeriaStates.state}>
+                          {nigeriaStates.state}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="pos-rel w100-m10 ">
+                    <label className="mb-7"> Local Government Area</label>
+                    <select
+                      className="search__bar w-100"
+                      defaultValue={"default"}
+                      name="lga"
+                      onChange={onChangeHandler}
+                      value={inputValues.lga || profileDetails?.lga}
+                      disabled={!selectedState}>
+                      <option value="default"> Select LGA</option>
+                      {lgas.map((lga) => (
+                        <option key={lga} value={lga}>
+                          {lga}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </section>
                 <section className="flex-container mb-lg">
                   <div className="pos-rel w100-m10 ">

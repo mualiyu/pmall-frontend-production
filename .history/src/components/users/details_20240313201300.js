@@ -185,18 +185,18 @@ const UserDetails = () => {
             <div className="br">
               <div className="top flex flex-col g-20 items-center">
                 <img src={profile} className="profile_pic b-round" />
-                <h1 style={{ textTransform: "capitalize" }}>
+                <h1>
                   {profileDetails?.fname} {profileDetails?.lname}
                 </h1>
                 <div className="flex alc">
                   <Rating name="read-only" value={value} readOnly />
-                  <p>0 Rates</p>
+                  <p>214 Rates</p>
                 </div>
               </div>
             </div>
             {profileDetails && (
               <div className="details w-full grid grid-3 g-40">
-                {profileDetails.user_type === "Vendor" && (
+                {profileDetails.accountType === "Vendor" && (
                   <div className="flex g-10">
                     <p>Store Name</p>
                     {<h4>{profileDetails?.store_name}</h4>}
@@ -228,7 +228,7 @@ const UserDetails = () => {
                   <p>My Ref ID</p>
                   <h4>{profileDetails?.my_ref_id || "N/A"}</h4>
                 </div>
-                {profileDetails.user_type === "Vendor" && (
+                {profileDetails.accountType === "Vendor" && (
                   <div className="flex g-10">
                     <p>Store ID</p>
                     <h4>{profileDetails?.store_id || "N/A"}</h4>
@@ -251,7 +251,7 @@ const UserDetails = () => {
                   <p>Bank</p>
                   <h4>{profileDetails?.bank || "N/A"}</h4>
                 </div>
-                {profileDetails.user_type === "Vendor" && (
+                {profileDetails.accountType === "Vendor" && (
                   <>
                     <div className="flex g-10">
                       <p>State</p>
@@ -389,7 +389,7 @@ const UserDetails = () => {
                     />
                   </div>
                 </section>
-                {profileDetails.user_type === "Vendor" && (
+                {profileDetails.accountType === "Vendor" && (
                   <section className="flex-container mb-lg">
                     <div className="pos-rel w100-m10 ">
                       <label> Store Name </label>
@@ -477,7 +477,7 @@ const UserDetails = () => {
                       ))}
                     </select>
                   </div>
-                  {profileDetails.user_type === "Vendor" && (
+                  {profileDetails.accountType === "Vendor" && (
                     <>
                       <div className="pos-rel w100-m10 ">
                         <label className="mb-7"> Store Location</label>
