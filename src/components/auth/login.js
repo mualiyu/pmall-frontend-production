@@ -36,6 +36,7 @@ const Login = () => {
         </div>
         <div className="right">
           <div className="container">
+            <Toaster text="Success message" className="success" />
             <h1>Hello again!</h1>
             <p className="bold">Welcome back, you've been missed!</p>
             <form action="">

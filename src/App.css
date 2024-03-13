@@ -956,7 +956,7 @@ tbody > tr.MuiTableRow-root.css-1q1u3t4-MuiTableRow-root:hover {
   margin-right: 10px;
 }
 .login__bg {
-  background: url(./assets//imgs/truck.jpeg);
+  /* background: url(./assets//imgs/truck.jpeg); */
   height: 90vh;
   width: 50%;
   background-size: cover;

@@ -4,6 +4,7 @@
   /* --primary-color: #fff; */
   --color-chalk: #e3e3e3;
   --primary-color-light : #c3d0f3;
+  --user-badge-light : rgba(var(--ct-link-color-rgb), var(--ct-link-opacity, 1));
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -240,7 +241,7 @@ ul {
 .login-screen .right .container,
 .reset-password .right .container {
   width: 100%;
-  padding: 0 105px 0 105px;
+  /* padding: 0 105px 0 105px; */
 }
 .login-screen .right .container {
   height: 680px;
