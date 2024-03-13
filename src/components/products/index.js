@@ -28,6 +28,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useUser } from "../../context/UserContext";
 import moment from "moment";
 import Vendors from "../vendors";
+import Toaster from "../../utils/toaster";
+import ButtonLoader from "../../utils/buttonLoader";
 Chart.register(ArcElement);
 
 const top100Films = [
@@ -75,6 +77,7 @@ const categoryColumns = [
   { id: "category_image", label: "Category Image" },
   { id: "name", label: "Name" },
   { id: "description", label: "Description" },
+  { id: "sub_categories", label: "Sub Categories" },
   { id: "created_at,", label: "Created At" },
   { id: "edit", label: "Edit" },
   { id: "delete", label: "Delete" },
@@ -162,7 +165,7 @@ const ProductList = () => {
   const [value, setValue] = useState(0);
   const [pmallUsers, setPmallUsers] = useState([]);
   const { user } = useUser();
-  const {inputValues, setState, onChangeHandler} = useVendor();
+  const {inputValues, setState, onChangeHandler,loading} = useVendor();
   const handleChange = (event, newValue) => {
     const selectedTitles = newValue.map((tag) => tag.title).join(', '); // Join titles with comma
     console.log(selectedTitles); // Update state with comma-separated string
@@ -171,6 +174,8 @@ const ProductList = () => {
       tags: selectedTitles,
     }));
   };
+  const [toastType, setToastType] = useState("");
+  const [toastMsg, setToastMsg] = useState("");
   const [newProductModal, setNewProductModal] = useState(false);
   const  [newCategoryModal, setNewCategoryModal] = useState(false);
   const  [newSubCategoryModal, setNewSubCategoryModal] = useState(false);
@@ -192,6 +197,29 @@ const ProductList = () => {
     setValue(newValue);
   };
 
+  // const handleCategoryChange = (e) => {
+  //     const newCategory = e.target.value;
+  //     setCategories(newCategory);
+
+  //     const matchingSubCategories = categories.find((sub_categories) => sub_categories.sub_categories === newCategory)?.sub_categories || [];
+  //     setSubCategories(matchingSubCategories);
+  //     if(!e?.persist){
+  //         setState(inputValues, ({...inputValues, [e?.target.name]: e?.target.value })); 
+  //     }else {
+  //         e?.persist();
+  //         const target = e?.target;
+  //   if (target?.name) {
+  //     setState((inputValues) => ({
+  //       ...inputValues,
+  //       [target.name]: target.value,
+  //     }));
+  //   }
+  //     }
+  // };
+
+  
+
+
   const VendorCreateProduct = async(e) => {
     if (e) {
       e.preventDefault(); 
@@ -206,15 +234,22 @@ const ProductList = () => {
         },
           body:JSON.stringify(inputValues)
       });
-  console.log(inputValues)
+      console.log(inputValues)
       if (response.ok) {
         const data = await response.json();
         console.log('product:', data); 
+        setToastMsg("Great! Product added successfully");
+        setToastType("success")
+        setInterval(() => {
+          setToastMsg("");
+        }, 5000);
         setNewProduct(data)
         handleModalClose()
       } else {
         const error = await response.text();
         console.error('Error posting product:', error);
+        setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+        setToastType("error")
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -241,9 +276,16 @@ const ProductList = () => {
         console.log('product:', data);
         setNewProduct(data)
         handleEditProductModalClose()
+        setToastMsg("Great! Product updated successfully");
+        setToastType("success")
+        setInterval(() => {
+          setToastMsg("");
+        }, 5000);
       } else {
         const error = await response.text();
         console.error('Error posting product:', error);
+        setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+        setToastType("error")
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -264,14 +306,21 @@ const ProductList = () => {
         },
       });
       console.log(inputValues)
-      if (response.ok) {
+      if (response.status) {
         const data = await response.json();
         console.log('product:', data);
         setNewProduct(data)
         handleEditCategoryModalClose()
+        setToastMsg("Great! Category updated successfully");
+        setToastType("success")
+        setInterval(() => {
+          setToastMsg("");
+        }, 5000);
       } else {
         const error = await response.text();
         console.error('Error posting product:', error);
+        setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+        setToastType("error")
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -298,9 +347,16 @@ const ProductList = () => {
         console.log('product:', data);
         setNewProduct(data)
         handleEditSubCategoryModalClose()
+        setToastMsg("Great! Product added successfully");
+        setToastType("success")
+        setInterval(() => {
+          setToastMsg("");
+        }, 5000);
       } else {
         const error = await response.text();
         console.error('Error posting product:', error);
+        setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+        setToastType("error")
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -326,9 +382,16 @@ const ProductList = () => {
         console.log('product:', data);
         setNewProduct(data)
         handleEditBrandModalClose()
+        setToastMsg("Great! Brand updated successfully");
+        setToastType("success")
+        setInterval(() => {
+          setToastMsg("");
+        }, 5000);
       } else {
         const error = await response.text();
         console.error('Error posting product:', error);
+        setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+        setToastType("error")
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -367,7 +430,7 @@ const ProductList = () => {
   const id = "PMS-892040"
 
   const getProducts = () => {
-    if(user.type  == "vendor"){
+    if(user){
       fetch("https://test.igeecloset.com/api/v1/products", {
         method: "GET",
         headers: {
@@ -404,9 +467,19 @@ const ProductList = () => {
     })
       .then((resp) => resp.json())
       .then((result) => {
+        if(result.status){
+          setToastMsg("Great! Category added successfully");
+          setToastType("success")
+          setInterval(() => {
+            setToastMsg("");
+          }, 5000);
         console.log(result);
         setNewProduct(result)
         handleCategoryModalClose()
+        }else{
+          setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+          setToastType("error")
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -415,7 +488,7 @@ const ProductList = () => {
 
   const addSubCategory = (e) => {
     e.preventDefault()
-    fetch("https://test.igeecloset.com/api/v1/product-sub-category/create?category_id=" + inputValues.id + "&category_image" + inputValues.category_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch("https://test.igeecloset.com/api/v1/product-sub-category/create?category_id=" + inputValues.category_id  + "&name=" + inputValues.name + "&description=" + inputValues.description, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -425,9 +498,19 @@ const ProductList = () => {
     })
       .then((resp) => resp.json())
       .then((result) => {
+        if(result.status){
+          setToastMsg("Great! Subcategory added successfully");
+          setToastType("success")
+          setInterval(() => {
+            setToastMsg("");
+          }, 5000);
         console.log(result);
         setNewProduct(result)
-        handleCategoryModalClose()
+        handleSubCategoryModalClose()
+        }else{
+          setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+          setToastType("error")
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -446,9 +529,20 @@ const ProductList = () => {
     })
       .then((resp) => resp.json())
       .then((result) => {
-        console.log(result);
-        setNewProduct(result)
-        handleBrandModalClose()
+        if(result.status){
+          setToastMsg("Great! Brand added successfully");
+          setToastType("success")
+          setInterval(() => {
+            setToastMsg("");
+          }, 5000);
+          console.log(result);
+          setNewProduct(result)
+          handleBrandModalClose()
+        }else{
+          setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+          setToastType("error")
+        }
+        
       })
       .catch((err) => {
         console.log(err);
@@ -473,7 +567,6 @@ const ProductList = () => {
         console.log(err);
       });
   };
-
   
   const getBrands = () => {
     fetch("https://test.igeecloset.com/api/v1/product-brand/get-all?store_id=" +id, {
@@ -529,8 +622,19 @@ const ProductList = () => {
       })
         .then((resp) => resp.json())
         .then((result) => {
-          console.log(result);
-          setNewProduct(result)
+          if(result.status){
+            setToastMsg("Great! Category deleted successfully");
+            setToastType("success")
+            setInterval(() => {
+              setToastMsg("");
+            }, 5000);
+            console.log(result);
+            setNewProduct(result)
+          }else{
+            setToastMsg("Oops! there seems to be an error. Try again")
+            setToastType("error")
+          }
+          
         })
       .catch((err) => {
         console.log(err);
@@ -550,8 +654,18 @@ const ProductList = () => {
       })
         .then((resp) => resp.json())
         .then((result) => {
-          console.log(result);
-          setNewProduct(result)
+          if(result.status){
+            setToastMsg("Great! Subcategory deleted successfully");
+            setToastType("success")
+            setInterval(() => {
+              setToastMsg("");
+            }, 5000);
+            console.log(result);
+            setNewProduct(result)
+          }else{
+            setToastMsg("Oops! there seems to be an error. Try again")
+            setToastType("error")
+          }
         })
       .catch((err) => {
         console.log(err);
@@ -573,8 +687,18 @@ const ProductList = () => {
       })
         .then((resp) => resp.json())
         .then((result) => {
-          console.log(result);
-          setNewProduct(result)
+          if(result.status){
+            setToastMsg("Great! Brand deleted successfully");
+            setToastType("success")
+            setInterval(() => {
+              setToastMsg("");
+            }, 5000);
+            console.log(result);
+            setNewProduct(result)
+          }else{
+            setToastMsg("Oops! there seems to be an error. Try again")
+            setToastType("error")
+          }
         })
       .catch((err) => {
         console.log(err);
@@ -587,13 +711,15 @@ const ProductList = () => {
   }
 
   useEffect(() => {
-    getProducts ();
+    getProducts();
+    Toaster("Sucessful", "sucess-bg")
     getBrands()
     getCategories()
     console.log(publishedCount)
   }, [newProduct]);
   return (
     <section>
+      <Toaster text={toastMsg} className={toastType} />
       <section className="page__header">
         <div className="flex-container alc">
           <ShoppingCartIcon />
@@ -669,7 +795,7 @@ const ProductList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {user.type=="vendor" && products?.map((product, index) => (                   
+              {user && products?.map((product, index) => (                   
                 <TableRow key={product.id} >
                   <TableCell className="b-r" onClick={() => navigate(`/app/products/details/${product.id}`)}>
                     <div className="d-flex alc f-10 flex-start">
@@ -747,6 +873,9 @@ const ProductList = () => {
                     <h4 className="f-300">{category.name} </h4>
                 </TableCell>
                 <TableCell>{category.description}</TableCell>
+                <TableCell>
+                    <h4 className="f-300">{category.sub_categories.map((item) => item.name).join(', ')} </h4>
+                </TableCell>
                 <TableCell> {moment(category.created_at).add(1, "years").calendar()} </TableCell>
                 <TableCell onClick={()=>editCategory(category)}> 
                   {" "}
@@ -953,14 +1082,15 @@ const ProductList = () => {
                   <select
                     className="search__bar w-100"
                     value={inputValues.sub_category_id || ""}
-                    name="sub_category_id"
+                    name="sub_category"
                     onChange={onChangeHandler}
+                    value={inputValues.sub_categories}
+                    disabled={!categories}
                     >
                     <option value="default"> Select Sub Category</option>
-                    <option value="1"> Category 1</option>
-                    <option value="2"> Category 2</option>
-                    <option value="3"> Category 3</option>
-                    <option value="4"> Category 4</option>
+                    {subCategories?.map((category) => (
+                      <option value={category.id}>{category.name}</option>
+                    ))}
                   </select>
                 </div>
               </section>
@@ -1112,8 +1242,11 @@ const ProductList = () => {
                   className="btn btn-secondary p-25 pull-right mr-10">
                   Cancel
                 </button>
-                <button className="btn btn-primary p-25 pull-right" onClick={ VendorCreateProduct}>
-                  Save
+                <button className="btn btn-primary p-25 pull-right"
+                 onClick={ VendorCreateProduct}
+                disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : "Save"}
                 </button>
               </div>
             </form>
@@ -1375,8 +1508,9 @@ const ProductList = () => {
                   className="btn btn-secondary p-25 pull-right mr-10">
                   Cancel
                 </button>
-                <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateProduct}>
-                  Save
+                <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateProduct} disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : " Save"}
                 </button>
               </div>
             </form>
@@ -1472,8 +1606,9 @@ const ProductList = () => {
                   </textarea>
                 </div>
                 <div className="flex__normal mt-10 w-full ">
-                  <button className="btn btn-primary p-25 pull-right" onClick={addCategory}>
-                    Create Category
+                  <button className="btn btn-primary p-25 pull-right" onClick={addCategory} disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : " Create Category"}
                   </button>
                 </div>
               </form>
@@ -1570,8 +1705,9 @@ const ProductList = () => {
                   </textarea>
                 </div>
                 <div className="flex__normal mt-10 w-full ">
-                  <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateCategory}>
-                    Update Category
+                  <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateCategory} disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : "Update Category"}
                   </button>
                 </div>
               </form>
@@ -1588,7 +1724,7 @@ const ProductList = () => {
         <Box sx={style}>
           <div className="mb-35">
             <Typography id="modal-modal-title">
-              <h4 className="summary__title t-xl title-case">Update Sub Category</h4>
+              <h4 className="summary__title t-xl title-case">Add Sub Category</h4>
             </Typography>
             <div className="s-divider"></div>
           </div>
@@ -1628,9 +1764,24 @@ const ProductList = () => {
                     >
                   </textarea>
                 </div>
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7"> Parent Category</label>
+                  <select
+                    className="search__bar w-100"
+                    value={inputValues.category_id || ""}
+                    name="category_id"
+                    onChange={onChangeHandler}
+                    >
+                    <option value="default"> Select Category</option>
+                    {categories?.map((category) => (
+                      <option value={category.id}>{category.name}</option>
+                    ))}
+                  </select>
+                </div>
                 <div className="flex__normal mt-10 w-full ">
-                  <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateSubCategory}>
-                    Update Sub Category
+                  <button className="btn btn-primary p-25 pull-right" onClick={addSubCategory} disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : " Update Sub Category"}
                   </button>
                 </div>
               </form>
@@ -1727,8 +1878,9 @@ const ProductList = () => {
                   </textarea>
                 </div>
                 <div className="flex__normal mt-10 w-full ">
-                  <button className="btn btn-primary p-25 pull-right" onClick={addBrand}>
-                    Create Brand
+                  <button className="btn btn-primary p-25 pull-right" onClick={addBrand} disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : "Create Brand"}
                   </button>
                 </div>
               </form>
@@ -1825,8 +1977,9 @@ const ProductList = () => {
                   </textarea>
                 </div>
                 <div className="flex__normal mt-10 w-full ">
-                  <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateBrand}>
-                    Create Brand
+                  <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateBrand}  disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : "Create Brand"}
                   </button>
                 </div>
               </form>

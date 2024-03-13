@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
+import Toaster from '../utils/toaster';
 
 const VendorSignupContext = createContext();
 
 export const VendorSignupProvider = ({ children }) => {
     //const navigate = useNavigate();
     const [inputValues, setState]  = useState({});
+    const [loading, setLoading] = useState(false);
     const [submittedValues, setSubmittedValues]  = useState({});
     const [newVendorModal, setNewVendorModal] = useState(false);
     const handleModalClose = () => setNewVendorModal(false);
@@ -85,8 +87,11 @@ export const VendorSignupProvider = ({ children }) => {
         const token = data.data.token;
         localStorage.setItem("userToken", token);
         console.log("Login successful:", data); 
+        Toaster("Sucessful","sucess")
+      setTimeout(()=>{
+        window.location.href = "/app/dashboard";
+      },500000);
       
-       window.location.href = "/app/dashboard";
       };
 
       const onForgotPasswordHandler = async(e) => {
@@ -204,7 +209,7 @@ export const VendorSignupProvider = ({ children }) => {
       };
 
   return (
-    <VendorSignupContext.Provider value={{ inputValues, setState, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,VendorUpdateProfile,newVendorModal,setNewVendorModal, handleModalClose,profileDetails,setProfileDetails,submittedValues}}>
+    <VendorSignupContext.Provider value={{ inputValues, setState, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,VendorUpdateProfile,newVendorModal,setNewVendorModal, handleModalClose,profileDetails,setProfileDetails,submittedValues,loading, setLoading}}>
       {children}
     </VendorSignupContext.Provider>
   );

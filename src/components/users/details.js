@@ -10,6 +10,7 @@ import Modal from "@mui/material/Modal";
 import { useUser } from "../../context/UserContext";
 import { useParams } from 'react-router-dom';
 import  nigeriaStateAndLgas  from "../nigeriaStateAndLgas.json";
+import ButtonLoader from "../../utils/buttonLoader";
 
 
 const style = {
@@ -84,7 +85,7 @@ const UserDetails = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
-    const {inputValues,onChangeHandler,VendorUpdateProfile,newVendorModal,setNewVendorModal,submittedValues,setState,profileDetails,setProfileDetails, handleModalClose} = useVendor();
+    const {inputValues,onChangeHandler,VendorUpdateProfile,newVendorModal,setNewVendorModal,submittedValues,setState,profileDetails,setProfileDetails, handleModalClose,loading } = useVendor();
 
     const [selectedState, setSelectedState] = useState('');
     const [lgas, setLgas] = useState([]);
@@ -502,8 +503,9 @@ const UserDetails = () => {
                         className="btn btn-secondary p-25 pull-right mr-10">
                         Cancel
                         </button>
-                        <button className="btn btn-primary p-25 pull-right" onClick={VendorUpdateProfile }>
-                        Save
+                        <button className="btn btn-primary p-25 pull-right" onClick={VendorUpdateProfile } disabled={loading}
+                        >
+                        {loading ?<ButtonLoader /> : "Save"}
                         </button>
                     </div>
                     </form>

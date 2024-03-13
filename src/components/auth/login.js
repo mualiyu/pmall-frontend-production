@@ -4,6 +4,7 @@ import { useVendor } from "../../context/AuthContext";
 import Toaster from "../../utils/toaster";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import ButtonLoader from "../../utils/buttonLoader";
 
 const Login = () => {
   const onEnter = (e) => {
@@ -23,7 +24,7 @@ const Login = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const { inputValues, onChangeHandler, handleLogin, loading } = useVendor();
+  const { inputValues, onChangeHandler, handleLogin, loading,toastMsg, toastType} = useVendor();
   return (
     <section>
       <div className="login-screen">
@@ -35,7 +36,8 @@ const Login = () => {
           </div>
         </div>
         <div className="right">
-          <div className="container">
+          <div className="container">,
+          <Toaster text={toastMsg} className={toastType} />
             <h1>Hello again!</h1>
             <p className="bold">Welcome back, you've been missed!</p>
             <form action="">
@@ -82,7 +84,7 @@ const Login = () => {
                 disabled={loading}
                 type="submit"
                 onClick={handleLogin}>
-                {loading ? "Loading..." : "Login"}
+                 {loading ?<ButtonLoader /> : "Login"}
               </button>
               <p className="center">Don't have an account yet?</p>
               <Link to="/auth/app/Signup">
