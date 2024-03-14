@@ -17,6 +17,7 @@ import Paper from "@mui/material/Paper";
 import { Line } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import moment from 'moment';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -32,6 +33,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { useUser } from "../../context/UserContext";
+import getInitials from "../../utils/getInitials";
+import { useVendor } from "../../context/VendorSignupContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -142,6 +145,7 @@ const Dashboard = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const [pmallUsers, setPmallUsers] = useState([]);
+  const {loading,setLoading} = useVendor
 
   const getUsers = () => {
     fetch("https://test.igeecloset.com/api/v1/get-all-users", {
@@ -161,6 +165,34 @@ const Dashboard = () => {
         console.log(err);
       });
   };
+
+  const getUsersDetails = () => {
+    //setLoading(true)
+  fetch("https://test.igeecloset.com/api/v1/profile", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+      Accept: "application/json",
+      Authorization: "Bearer " + user?.token,
+    },
+  })
+    .then((resp) => resp.json())
+    .then((result) => {
+      console.log(result);
+      if (result.status) {
+        setPmallUsers(result.data.user.referrals);
+      }
+     // setLoading(false)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+useEffect(() => {
+  getUsersDetails();
+}, []);
+
 
   useEffect(() => {
     let isLoggedIn = localStorage.getItem("authToken");
@@ -496,10 +528,13 @@ const Dashboard = () => {
                   .map((user) => (
                     <div className="flex">
                       <div className="user__avatar bg-success">
-                       <img src={user.photo} alt=""  />
+                            <h3 style={{ textTransform: "uppercase" }}>
+                              {getInitials(user?.fname)}
+                              {getInitials(user?.lname)}
+                            </h3>
                       </div>
                       <div>
-                        <h4 className="f-300">{user.lname} {user.fname} ({user.store_name})</h4>
+                        <h4 className="f-300 capitalze">{user.fname} {user.lname} ({user.store_name})</h4>
                         <p className="sub__title">{moment(user.created_at).format("MMM DD [at] hh:mm A")}</p>
                       </div>
                     </div>
@@ -516,10 +551,13 @@ const Dashboard = () => {
                     .map((user) => (
                       <div className="flex">
                         <div className="user__avatar bg-success">
-                        <img src={user.photo} alt=""  />
+                            <h3 style={{ textTransform: "uppercase" }}>
+                              {getInitials(user?.fname)}
+                              {getInitials(user?.lname)}
+                            </h3>
                         </div>
                         <div>
-                          <h4 className="f-300">{user.lname} {user.fname} ({user.store_name})</h4>
+                          <h4 className="f-300 capitalze">{user.fname} {user.lname} -{user.my_ref_id}</h4>
                           <p className="sub__title">{moment(user.created_at).format("MMM DD [at] hh:mm A")}</p>
                         </div>
                       </div>
