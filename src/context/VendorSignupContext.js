@@ -181,7 +181,6 @@ export const VendorSignupProvider = ({ children }) => {
           }));
         }
           }
-          console.log(inputValues)
       }
 
      
@@ -200,7 +199,7 @@ export const VendorSignupProvider = ({ children }) => {
             },
               body:JSON.stringify(inputValues)
           });
-          if (response.ok) {
+          if (response.status) {
             setToastMsg("Successful!");
             setToastType("success")
             setInterval(() => {

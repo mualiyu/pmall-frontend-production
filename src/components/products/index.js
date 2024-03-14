@@ -164,8 +164,9 @@ const ProductList = () => {
   const [newProduct, setNewProduct] = useState();
   const [value, setValue] = useState(0);
   const [pmallUsers, setPmallUsers] = useState([]);
+  const [moreImages, setMoreImages] = useState([]);
   const { user } = useUser();
-  const {inputValues, setState, onChangeHandler,loading} = useVendor();
+  const {inputValues, setState, onChangeHandler,loading, setLoading} = useVendor();
   const handleChange = (event, newValue) => {
     const selectedTitles = newValue.map((tag) => tag.title).join(', '); // Join titles with comma
     console.log(selectedTitles); // Update state with comma-separated string
@@ -196,26 +197,29 @@ const ProductList = () => {
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  // const handleCategoryChange = (e) => {
-  //     const newCategory = e.target.value;
-  //     setCategories(newCategory);
-
-  //     const matchingSubCategories = categories.find((sub_categories) => sub_categories.sub_categories === newCategory)?.sub_categories || [];
-  //     setSubCategories(matchingSubCategories);
-  //     if(!e?.persist){
-  //         setState(inputValues, ({...inputValues, [e?.target.name]: e?.target.value })); 
-  //     }else {
-  //         e?.persist();
-  //         const target = e?.target;
-  //   if (target?.name) {
-  //     setState((inputValues) => ({
-  //       ...inputValues,
-  //       [target.name]: target.value,
-  //     }));
-  //   }
-  //     }
-  // };
+  const handleCategoryChange = (e) => {
+      const newCategory = e.target.value;
+      setSelectedCategory(newCategory);
+    console.log(newCategory)
+      const matchingSubCategories = categories.find((category) => category.id == newCategory)?.sub_categories || [];
+      setSubCategories(matchingSubCategories);
+      console.log(matchingSubCategories)
+      console.log(categories)
+      if(!e?.persist){
+          setState(inputValues, ({...inputValues, [e?.target.name]: e?.target.value })); 
+      }else {
+          e?.persist();
+          const target = e?.target;
+    if (target?.name) {
+      setState((inputValues) => ({
+        ...inputValues,
+        [target.name]: target.value,
+      }));
+    }
+      }
+  };
 
   
 
@@ -223,7 +227,8 @@ const ProductList = () => {
   const VendorCreateProduct = async(e) => {
     if (e) {
       e.preventDefault(); 
-      //inputValues.image = "ihjsdjhbknmkl"
+      setLoading(true)
+      inputValues.more_images = moreImages?.join(", ")
     try {
       const response = await fetch('https://test.igeecloset.com/api/v1/products/create', {
         method: 'POST',
@@ -243,11 +248,13 @@ const ProductList = () => {
         setInterval(() => {
           setToastMsg("");
         }, 5000);
+        setLoading(false)
         setNewProduct(data)
         handleModalClose()
       } else {
         const error = await response.text();
         console.error('Error posting product:', error);
+        setLoading(false)
         setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
         setToastType("error")
         setInterval(() => {
@@ -758,10 +765,8 @@ const ProductList = () => {
 
   useEffect(() => {
     getProducts();
-    Toaster("Sucessful", "sucess-bg")
     getBrands()
     getCategories()
-    console.log(publishedCount)
   }, [newProduct]);
   return (
     <section>
@@ -815,7 +820,7 @@ const ProductList = () => {
               className="search__bar w-200"
               placeholder="Search by name or ID"
             />
-            <select className="search__bar w-200" defaultValue={"default"}>
+            <select className="search__bar w-200" defaultValue={"default"} >
               <option value="default"> Select Status</option>
               <option value="Status 1"> Status 1</option>
               <option value="Status 2"> Status 2</option>
@@ -835,43 +840,43 @@ const ProductList = () => {
           <Table sx={{ minWidth: 650 }} size="small" aria-label="Product Table">
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {columns?.map((column) => (
                   <TableCell>{column.label}</TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {user && products?.map((product, index) => (                   
-                <TableRow key={product.id} >
-                  <TableCell className="b-r" onClick={() => navigate(`/app/products/details/${product.id}`)}>
+              {products?.map((product, index) => (                   
+                <TableRow key={product?.id} className="capitalize">
+                  <TableCell className="b-r" onClick={() => navigate(`/app/products/details/${product?.id}`)}>
                     <div className="d-flex alc f-10 flex-start">
                         <img src={product.image} alt="" className="w50"/>
                     </div>
                   </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}>
                     <div className="lheight13">
-                      <h4 className="f-300">{product.name} </h4>
+                      <h4 className="f-300">{product?.name} </h4>
                     </div>
                   </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}>
-                    {categories.map(category =>(
-                    category.id == product.category_id && category.name 
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}>
+                    {categories?.map(category =>(
+                    category?.id == product?.category_id && category?.name 
                   ))}       
                   </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}>
-                    {brands.map(brand =>(
-                      brand.id == product.brand_id && brand.name 
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}>
+                    {brands?.map(brand =>(
+                      brand?.id == product?.brand_id && brand?.name 
                     ))}
                   </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}> &#x20A6;{addCommasToNumberString(product.cost_price)} </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}> &#x20A6;{addCommasToNumberString(product.selling_price)} </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}> {product.inStock} </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}> {moment(product.created_at).add(1, "years").calendar()} </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product.id}`)}>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> &#x20A6;{addCommasToNumberString(product?.cost_price)} </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> &#x20A6;{addCommasToNumberString(product?.selling_price)} </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> {product?.inStock} </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> {moment(product?.created_at).add(1, "years").calendar()} </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}>
                     {" "}
-                    {product.status == 1 ?
+                    {product?.status == 1 ?
                     <span className="badge">Published</span>
-                    : <span className="badge">unPublished</span>
+                    : <span className="badge">unpublished</span>
                     }
                   </TableCell>
                   <TableCell  onClick={() => editProduct(product)}>
@@ -909,7 +914,7 @@ const ProductList = () => {
             </TableHead>
             <TableBody>
               {categories && categories.map((category, index) => (                   
-                <TableRow key={category.id}>
+                <TableRow key={category.id} className="capitalize">
                 <TableCell className="b-r">
                   <div className="d-flex alc f-10 flex-start">
                       <img src={category.category_image} alt="" className="w50"/>
@@ -958,12 +963,10 @@ const ProductList = () => {
             </TableHead>
             <TableBody>
               {brands && brands.map((brand, index) => (                   
-                <TableRow key={brand.id}>
+                <TableRow key={brand.id} className="capitalize">
                 <TableCell className="b-r">
                   <div className="d-flex alc f-10 flex-start">
-                    <div className="product__avatar avatar__large bg-success">
-                      <img src={brand.brand_image} alt="" className="w50"/>
-                    </div>
+                    <img src={brand.brand_image} alt="" className="w50"/>
                   </div>
                 </TableCell>
                 <TableCell>
@@ -1115,7 +1118,7 @@ const ProductList = () => {
                     className="search__bar w-100"
                     value={inputValues.category_id || ""}
                     name="category_id"
-                    onChange={onChangeHandler}
+                    onChange={handleCategoryChange}
                     >
                     <option value="default"> Select Category</option>
                     {categories?.map((category) => (
@@ -1131,7 +1134,7 @@ const ProductList = () => {
                     name="sub_category"
                     onChange={onChangeHandler}
                     value={inputValues.sub_categories}
-                    disabled={!categories}
+                    disabled={!selectedCategory}
                     >
                     <option value="default"> Select Sub Category</option>
                     {subCategories?.map((category) => (
@@ -1227,7 +1230,7 @@ const ProductList = () => {
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
-                  <label>More Images</label>
+                  <label>More Images 1</label>
                   <input
                     type="file"
                     className="form-control-input no-border"
@@ -1252,11 +1255,82 @@ const ProductList = () => {
                         .then((data) => {
                           //setLoading(false);
                           console.log(data)
-                          setState((inputValues) => ({
-                            ...inputValues,
-                            more_images: data.url, 
-                          }))
-                          console.log(inputValues)
+                          setMoreImages([...moreImages, data.url])
+                          console.log(moreImages)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                    multiple
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label>More Images 2</label>
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="more_images"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setMoreImages([...moreImages, data.url])
+                          console.log(moreImages)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                    multiple
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label>More Images 3</label>
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="more_images"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setMoreImages([...moreImages, data.url])
+                          console.log(moreImages)
                         })
                         .catch((error) => {
                           //setLoading(false);
@@ -1550,7 +1624,7 @@ const ProductList = () => {
 
               <div className="flex__normal w-30 pull-right mt-35">
                 <button
-                  onClick={handleModalClose}
+                  onClick={handleEditProductModalClose}
                   className="btn btn-secondary p-25 pull-right mr-10">
                   Cancel
                 </button>
@@ -1651,10 +1725,15 @@ const ProductList = () => {
                     >
                   </textarea>
                 </div>
-                <div className="flex__normal mt-10 w-full ">
-                  <button className="btn btn-primary p-25 pull-right" onClick={addCategory} disabled={loading}
-                >
-                {loading ?<ButtonLoader /> : " Create Category"}
+                <div className="flex__normal w-full pull-right mt-35">
+                  <button
+                    onClick={handleCategoryModalClose}
+                    className="btn btn-secondary p-25 pull-right mr-10">
+                    Cancel
+                  </button>
+                    <button className="btn btn-primary p-25 pull-right" onClick={addCategory} disabled={loading}
+                  >
+                    {loading ?<ButtonLoader /> : " Create Category"}
                   </button>
                 </div>
               </form>
@@ -1750,7 +1829,12 @@ const ProductList = () => {
                     >
                   </textarea>
                 </div>
-                <div className="flex__normal mt-10 w-full ">
+                <div className="flex__normal w-30 pull-right mt-35">
+                <button
+                  onClick={handleEditCategoryModalClose}
+                  className="btn btn-secondary p-25 pull-right mr-10">
+                  Cancel
+                </button>
                   <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateCategory} disabled={loading}
                 >
                 {loading ?<ButtonLoader /> : "Update Category"}
@@ -1824,7 +1908,12 @@ const ProductList = () => {
                     ))}
                   </select>
                 </div>
-                <div className="flex__normal mt-10 w-full ">
+                <div className="flex__normal w-full pull-right mt-35">
+                <button
+                  onClick={handleSubCategoryModalClose}
+                  className="btn btn-secondary p-25 pull-right mr-10">
+                  Cancel
+                </button>
                   <button className="btn btn-primary p-25 pull-right" onClick={addSubCategory} disabled={loading}
                 >
                 {loading ?<ButtonLoader /> : " Update Sub Category"}
@@ -1923,7 +2012,12 @@ const ProductList = () => {
                     >
                   </textarea>
                 </div>
-                <div className="flex__normal mt-10 w-full ">
+                <div className="flex__normal w-30 pull-right mt-35">
+                <button
+                  onClick={handleBrandModalClose}
+                  className="btn btn-secondary p-25 pull-right mr-10">
+                  Cancel
+                </button>
                   <button className="btn btn-primary p-25 pull-right" onClick={addBrand} disabled={loading}
                 >
                 {loading ?<ButtonLoader /> : "Create Brand"}
@@ -2022,7 +2116,12 @@ const ProductList = () => {
                     >
                   </textarea>
                 </div>
-                <div className="flex__normal mt-10 w-full ">
+                <div className="flex__normal w-30 pull-right mt-35">
+                <button
+                  onClick={handleEditBrandModalClose}
+                  className="btn btn-secondary p-25 pull-right mr-10">
+                  Cancel
+                </button>
                   <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateBrand}  disabled={loading}
                 >
                 {loading ?<ButtonLoader /> : "Create Brand"}

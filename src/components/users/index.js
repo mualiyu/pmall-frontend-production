@@ -299,7 +299,7 @@ const Users = () => {
             <Doughnut data={chartData} options={config} className="w80" />
           </div>
           <h3 className="stat__value ml-10">
-            {pmallUsers.length}{assistantUsers?.length}
+          {user?.accountType === "Admin" ? pmallUsers?.length : assistantUsers?.length}
             <p className="sub__title">Total Users</p> &nbsp;
           </h3>
         </div>
@@ -358,7 +358,7 @@ const Users = () => {
               <Tab
                 label={`${
                   user?.accountType === "Admin" ? "System Users" : "Assistants"
-                } (${pmallUsers?.length}${assistantUsers?.length})`}
+                } (${user?.accountType === "Admin" ? pmallUsers?.length : assistantUsers?.length})`}
                 {...a11yProps(0)}
               />
               {user?.accountType === "Admin" && (

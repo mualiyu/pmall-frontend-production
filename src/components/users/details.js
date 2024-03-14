@@ -97,6 +97,7 @@ const UserDetails = () => {
     setProfileDetails,
     handleModalClose,
     loading,
+    setLoading,
     toastMsg,
     toastType
   } = useVendor();
@@ -111,6 +112,7 @@ const UserDetails = () => {
     const matchingLgas =
       nigeriaStateAndLgas.find((state) => state.state === newState)?.lgas || [];
     setLgas(matchingLgas);
+    console.log(matchingLgas)
     if (!e?.persist) {
       setState(inputValues, {
         ...inputValues,
@@ -129,6 +131,7 @@ const UserDetails = () => {
   };
 
   const getUsersDetails = () => {
+      setLoading(true)
     fetch("https://test.igeecloset.com/api/v1/profile", {
       method: "GET",
       headers: {
@@ -159,6 +162,7 @@ const UserDetails = () => {
           lga: result.data.user.lga,
           address: result.data.user.address,
         });
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err);
@@ -171,7 +175,7 @@ const UserDetails = () => {
 
   return (
     <section className="page__header w-full" style={{ display: "block" }}>
-        <Toaster text={toastMsg} className={toastType}/>
+    <Toaster text={toastMsg} className={toastType}/>
       <div className="user-details">
         <div className="page__header">
           <h1>User Details</h1>
@@ -217,14 +221,12 @@ const UserDetails = () => {
                   <p>Username</p>
                   <h4>{profileDetails?.username || "N/A"}</h4>
                 </div>
-                <div className="flex g-10">
-                  <p>Member Since</p>
-                  <h4> {moment(profileDetails?.created_at).format("ll")}</h4>
-                </div>
 
                 </div>
               </div>
             </div>
+            
+            {loading && <ButtonLoader /> }
             {profileDetails && (
               <div className="details w-full grid grid-3 gr-20 bl">
                
@@ -288,6 +290,10 @@ const UserDetails = () => {
                 <div className="flex g-10 grid-item">
                   <p>Last interaction</p>
                   <h4>40 mins ago</h4>
+                </div>
+                <div className="flex g-10 grid-item">
+                  <p>Member Since</p>
+                  <h4> {moment(profileDetails?.created_at).format("ll")}</h4>
                 </div>
               </div>
             )}
