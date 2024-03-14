@@ -3,8 +3,8 @@
   --secondary-color: ;
   /* --primary-color: #fff; */
   --color-chalk: #e3e3e3;
-  --primary-color-light : #c3d0f3;
-  --user-badge-light : rgba(var(--ct-link-color-rgb), var(--ct-link-opacity, 1));
+  --primary-color-light: #c3d0f3;
+  --user-badge-light: rgba(var(--ct-link-color-rgb), var(--ct-link-opacity, 1));
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -908,6 +908,10 @@ input:checked + .slider:before {
   font-weight: 300;
 }
 
+.user-details .details {
+  padding-left: 30px;
+}
+
 .user-details input,
 .gallery input {
   height: 40px;
@@ -988,6 +992,29 @@ input:checked + .slider:before {
 }
 .grid-3 {
   grid-template-columns: repeat(3, 1fr);
+}
+.grid-item {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  position: relative;
+  align-items: center;
+}
+
+.grid-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #eee;
+}
+
+.gr-20 {
+  row-gap: 20px;
+}
+.g-30 {
+  gap: 30px;
 }
 
 .bold {
@@ -1190,4 +1217,8 @@ input:checked + .slider:before {
 
 .mt-50 {
   margin-top: 50px;
+}
+
+.bl {
+  border-left: 2px solid #eee;
 }

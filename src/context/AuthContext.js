@@ -25,7 +25,6 @@ export const VendorSignupProvider = ({ children }) => {
         body: JSON.stringify(inputValues),
       })
         .then((res) => {
-          alert("successful");
           setLoading(false);
           console.log(res);
           if (res.ok) {
@@ -33,15 +32,18 @@ export const VendorSignupProvider = ({ children }) => {
             setToastType("success")
             setInterval(() => {
               setToastMsg("");
-            }, 5000);
+            }, 3000);
             setTimeout(() => {
               window.location.href = "/";
             }, 2000);
   
             setLoading(false);
           }else{
-            setToastMsg("Oops! there seems to be an error. Confirm Signupcredientials")
+            setToastMsg("Oops! there seems to be an error. Confirm signup credientials")
             setToastType("error")
+            setInterval(() => {
+              setToastMsg("");
+            }, 3000);
           }
         })
         .catch((err) => {
@@ -64,7 +66,7 @@ export const VendorSignupProvider = ({ children }) => {
         body: JSON.stringify(inputValues),
       })
         .then((res) => {
-          alert("successful");
+          
           console.log(res);
           if (res.ok) {
             setToastMsg("Awesome! Signup successful");
@@ -78,8 +80,11 @@ export const VendorSignupProvider = ({ children }) => {
   
             setLoading(false);
           }else{
-            setToastMsg("Oops! there seems to be an error. Confirm Signup credientials")
+            setToastMsg("Oops! there seems to be an error. Confirm signup credientials")
             setToastType("error")
+            setInterval(() => {
+              setToastMsg("");
+            }, 3000);
           }
         })
         .catch((err) => {
@@ -137,6 +142,9 @@ export const VendorSignupProvider = ({ children }) => {
           console.log(result.message);
           setToastMsg("Oops! there seems to be an error. Confirm login credientials")
           setToastType("error")
+          setInterval(() => {
+            setToastMsg("");
+          }, 3000);
         }
       })
       .catch((err) => {
@@ -173,6 +181,9 @@ export const VendorSignupProvider = ({ children }) => {
           else{
             setToastMsg("Oops! there seems to be an error. Confirm email")
             setToastType("error")
+            setInterval(() => {
+              setToastMsg("");
+            }, 3000);
           }
         })
         .catch((err) => {
@@ -211,6 +222,9 @@ export const VendorSignupProvider = ({ children }) => {
         else{
           setToastMsg("Oops! there seems to be an error. Retry")
           setToastType("error")
+          setInterval(() => {
+            setToastMsg("");
+          }, 3000);
         }
         
       })
@@ -237,7 +251,7 @@ export const VendorSignupProvider = ({ children }) => {
       body: JSON.stringify(inputValues),
     })
       .then((res) => {
-        alert("successful");
+        
         console.log(res);
         if (res.ok) {
           setToastMsg("Successful!");
@@ -253,6 +267,9 @@ export const VendorSignupProvider = ({ children }) => {
         else{
           setToastMsg("Incorrect token, please confirm in your email")
           setToastType("error")
+          setInterval(() => {
+            setToastMsg("");
+          }, 3000);
         }
       })
       .catch((err) => {

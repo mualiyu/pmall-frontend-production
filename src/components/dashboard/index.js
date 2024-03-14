@@ -16,6 +16,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Line } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
+import moment from 'moment';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -140,12 +141,33 @@ const Dashboard = () => {
   const handleModalClose = () => setNewVendorModal(false);
   const { user } = useUser();
   const navigate = useNavigate();
+  const [pmallUsers, setPmallUsers] = useState([]);
+
+  const getUsers = () => {
+    fetch("https://test.igeecloset.com/api/v1/get-all-users", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + user?.token,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result.data.users);
+        setPmallUsers(result.data.users);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     let isLoggedIn = localStorage.getItem("authToken");
     if (!isLoggedIn) {
       navigate("/");
     }
+    getUsers()
   }, []);
   console.log(user);
   const dashboard = () => {
@@ -276,7 +298,7 @@ const Dashboard = () => {
                 <div className="flex-container">
                   <span className="flex flex-col g-5">
                     <p style={{ color: "#80808091" }}>Sale Generated</p>
-                    <h1 style={{ fontSize: 20 }}>&#x20A6;24,800</h1>
+                    <h1 style={{ fontSize: 20 }}>&#x20A6;0.00</h1>
                   </span>
                   <button>View Report</button>
                 </div>
@@ -443,7 +465,7 @@ const Dashboard = () => {
           <div className="g-20 flex-col">
             <div className="total-profit g-5 flex-col">
               <p>Total Profit</p>
-              <h1 style={{ fontSize: 20 }}>&#x20A6;1482.50</h1>
+              <h1 style={{ fontSize: 20 }}>&#x20A6;0.00</h1>
               <div className="withdraw">
                 <div className="card">
                   <p>Pay With</p>
@@ -470,105 +492,39 @@ const Dashboard = () => {
                 Recently registerd vendors
               </h1>
               <div className="gap-10">
-                <div className="flex">
-                  <div className="user__avatar bg-success">
-                    <h3>AP</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Ahmed Peter (Hooli stores)</h4>
-                    <p className="sub__title">Dec 12 at 08:50 PM</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-error">
-                    <h3>PY</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Philip Yahaya (Stacey's Spa)</h4>
-                    <p className="sub__title">Feb 22 at 2:30 PM</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-success">
-                    <h3>DA</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">
-                      Dennis Abdulmalik (Dennis fitness)
-                    </h4>
-                    <p className="sub__title">Jun 12 at 08:10 AM</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-warning">
-                    <h3>OD</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Ogun Dunamis (OD Closets)</h4>
-                    <p className="sub__title">Aug 29 at 01:50 PM</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-success">
-                    <h3>AP</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Busayo Ifeoluwa(Trilz Market)</h4>
-                    <p className="sub__title">Sep 12 at 06:20 AM</p>
-                  </div>
-                </div>
+                {pmallUsers?.filter((user) => user.user_type === 'Vendor') 
+                  .map((user) => (
+                    <div className="flex">
+                      <div className="user__avatar bg-success">
+                       <img src={user.photo} alt=""  />
+                      </div>
+                      <div>
+                        <h4 className="f-300">{user.lname} {user.fname} ({user.store_name})</h4>
+                        <p className="sub__title">{moment(user.created_at).format("MMM DD [at] hh:mm A")}</p>
+                      </div>
+                    </div>
+                  ))
+                }
               </div>
             </div>
             <div className="recent-affilates">
               <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                Recently registerd affilates
+                Recently registerd affiliates
               </h1>
               <div className="gap-10">
-                <div className="flex">
-                  <div className="user__avatar bg-success">
-                    <h3>AP</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Ahmed Peter </h4>
-                    <p className="sub__title">Dec 12 at 08:50 PM</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-error">
-                    <h3>PY</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Philip Yahaya</h4>
-                    <p className="sub__title">Dec 12 at 08:50 PM</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-success">
-                    <h3>DA</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Dennis Abdulmalik</h4>
-                    <p className="sub__title">Dec 12 at 08:50 PM</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-warning">
-                    <h3>OD</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Ogun Dunamis</h4>
-                    <p className="sub__title">Dec 12 at 08:50 PM</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-success">
-                    <h3>AP</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Busayo Ifeoluwa</h4>
-                    <p className="sub__title">Dec 12 at 08:50 PM</p>
-                  </div>
-                </div>
+                {pmallUsers?.filter((user) => user.user_type === 'Affiliate') 
+                    .map((user) => (
+                      <div className="flex">
+                        <div className="user__avatar bg-success">
+                        <img src={user.photo} alt=""  />
+                        </div>
+                        <div>
+                          <h4 className="f-300">{user.lname} {user.fname} ({user.store_name})</h4>
+                          <p className="sub__title">{moment(user.created_at).format("MMM DD [at] hh:mm A")}</p>
+                        </div>
+                      </div>
+                    ))
+                  }
               </div>
             </div>
             <div className="recent-affilates">
