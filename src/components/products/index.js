@@ -250,6 +250,9 @@ const ProductList = () => {
         console.error('Error posting product:', error);
         setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
         setToastType("error")
+        setInterval(() => {
+          setToastMsg("");
+        }, 3000);
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -286,6 +289,9 @@ const ProductList = () => {
         console.error('Error posting product:', error);
         setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
         setToastType("error")
+        setInterval(() => {
+          setToastMsg("");
+        }, 3000);
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -321,6 +327,9 @@ const ProductList = () => {
         console.error('Error posting product:', error);
         setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
         setToastType("error")
+        setInterval(() => {
+          setToastMsg("");
+        }, 3000);
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -392,6 +401,9 @@ const ProductList = () => {
         console.error('Error posting product:', error);
         setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
         setToastType("error")
+        setInterval(() => {
+          setToastMsg("");
+        }, 3000);
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -479,6 +491,9 @@ const ProductList = () => {
         }else{
           setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
           setToastType("error")
+          setInterval(() => {
+            setToastMsg("");
+          }, 3000);
         }
       })
       .catch((err) => {
@@ -510,6 +525,9 @@ const ProductList = () => {
         }else{
           setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
           setToastType("error")
+          setInterval(() => {
+            setToastMsg("");
+          }, 3000);
         }
       })
       .catch((err) => {
@@ -541,6 +559,9 @@ const ProductList = () => {
         }else{
           setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
           setToastType("error")
+          setInterval(() => {
+            setToastMsg("");
+          }, 3000);
         }
         
       })
@@ -600,8 +621,21 @@ const ProductList = () => {
       })
         .then((resp) => resp.json())
         .then((result) => {
-          console.log(result);
-          setNewProduct(result)
+          if(result.status){
+            setToastMsg("Great! Product deleted successfully");
+            setToastType("success")
+            setInterval(() => {
+              setToastMsg("");
+            }, 5000);
+            console.log(result);
+            setNewProduct(result)
+          }else{
+            setToastMsg("Oops! there seems to be an error. Try again")
+            setToastType("error")
+            setInterval(() => {
+              setToastMsg("");
+            }, 3000);
+      }
         })
       .catch((err) => {
         console.log(err);
@@ -630,9 +664,15 @@ const ProductList = () => {
             }, 5000);
             console.log(result);
             setNewProduct(result)
+            setInterval(() => {
+              setToastMsg("");
+            }, 3000);
           }else{
             setToastMsg("Oops! there seems to be an error. Try again")
             setToastType("error")
+            setInterval(() => {
+              setToastMsg("");
+            }, 3000);
           }
           
         })
@@ -665,6 +705,9 @@ const ProductList = () => {
           }else{
             setToastMsg("Oops! there seems to be an error. Try again")
             setToastType("error")
+            setInterval(() => {
+              setToastMsg("");
+            }, 3000);
           }
         })
       .catch((err) => {
@@ -698,6 +741,9 @@ const ProductList = () => {
           }else{
             setToastMsg("Oops! there seems to be an error. Try again")
             setToastType("error")
+            setInterval(() => {
+              setToastMsg("");
+            }, 3000);
           }
         })
       .catch((err) => {

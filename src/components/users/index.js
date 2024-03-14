@@ -24,6 +24,8 @@ import { useUser } from "../../context/UserContext";
 import getInitials from "../../utils/getInitials";
 import { Link, useNavigate } from "react-router-dom";
 import { useVendor } from "../../context/VendorSignupContext";
+import ButtonLoader from "../../utils/buttonLoader";
+import Toaster from "../../utils/toaster";
 Chart.register(ArcElement);
 
 const style = {
@@ -98,18 +100,21 @@ const Users = () => {
   const [pmallUsers, setPmallUsers] = useState([]);
   const [vendors, setVendors] = useState([]);
   const [affiliates, setAffiliates] = useState([]);
+  const [assistantUsers, setAssistantUsers] = useState();
   const [admins, setAdmins] = useState([]);
   const { user } = useUser();
-  const { setProfileDetails } = useVendor();
+  const [newProduct, setNewProduct] = useState();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    console.log(user?.token);
-    getUsers();
-    // updateChartValue();
-  }, [user]);
+  const {
+    inputValues,
+    onChangeHandler,
+    setProfileDetails,
+    loading,toastMsg, setToastMsg,toastType, setToastType,setState
+  } = useVendor();
+
 
   console.log(user);
 
@@ -147,6 +152,61 @@ const Users = () => {
         console.log(err);
       });
   };
+
+  const getAssistants = () => {
+    fetch("https://test.igeecloset.com/api/v1/get-all-vendors", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + user?.token,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result.data.vendors);
+         setAssistantUsers(result.data.vendors);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addVendorAssistant = (e) => {
+    e.preventDefault()
+    fetch("https://test.igeecloset.com/api/v1/user/add-vendor", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      body:JSON.stringify(inputValues)
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        if(result.status){
+          setToastMsg("Great! Assistant added successfully");
+          setToastType("success")
+          setInterval(() => {
+            setToastMsg("");
+          }, 5000);
+        console.log(result);
+        setNewProduct(result)
+        handleModalClose()
+        }else{
+          setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+          setToastType("error")
+          setInterval(() => {
+            setToastMsg("");
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   // Update Chart Value
   // const updateChartValue = (arr) => {
@@ -207,8 +267,16 @@ const Users = () => {
     navigate("details")
     setProfileDetails(data)
   }
+
+  useEffect(() => {
+    console.log(user?.token);
+    getUsers();
+    getAssistants()
+    // updateChartValue();
+  }, [user]);
   return (
     <section>
+      <Toaster text={toastMsg} className={toastType}/>
       <section className="page__header">
         <div className="flex-container alc">
           <AccessibilityNewIcon />
@@ -231,7 +299,7 @@ const Users = () => {
             <Doughnut data={chartData} options={config} className="w80" />
           </div>
           <h3 className="stat__value ml-10">
-            {pmallUsers.length}
+            {pmallUsers.length}{assistantUsers?.length}
             <p className="sub__title">Total Users</p> &nbsp;
           </h3>
         </div>
@@ -290,7 +358,7 @@ const Users = () => {
               <Tab
                 label={`${
                   user?.accountType === "Admin" ? "System Users" : "Assistants"
-                } (${pmallUsers.length})`}
+                } (${pmallUsers?.length}${assistantUsers?.length})`}
                 {...a11yProps(0)}
               />
               {user?.accountType === "Admin" && (
@@ -315,7 +383,68 @@ const Users = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {pmallUsers.map((user, index) => (                   
+                  {pmallUsers?.map((user, index) => (                   
+                    <TableRow key={user.id} onClick={() => setUserDetail(user)}>
+                      <TableCell className="b-r">
+                        <div className="d-flex alc f-10 flex-start">
+                          <div className="user__avatar bg-success">
+                            <h3 style={{ textTransform: "uppercase" }}>
+                              {getInitials(user?.fname)}
+                              {getInitials(user?.lname)}
+                            </h3>
+                          </div>
+                          <div className="lheight13">
+                            <h4
+                              className="f-300"
+                              style={{ textTransform: "capitalize" }}>
+                              {user.fname} {user.lname}
+                            </h4>
+                            <p className="sub__title">{user.username}</p>
+                          </div>
+                        </div>
+                      </TableCell>
+
+                      <TableCell> {user.email}</TableCell>
+                      <TableCell> {user.phone}</TableCell>
+                      <TableCell>
+                        <div className="lheight13">
+                          <h4
+                            className="f-300"
+                            style={{ textTransform: "capitalize" }}>
+                            {user.store_name !== null
+                              ? user.store_name
+                              : user.user_type}
+                          </h4>
+                          <p className="sub__title">{user.my_ref_id}</p>
+                        </div>
+                      </TableCell>
+                      <TableCell> {user.user_type} </TableCell>
+                      <TableCell>
+                        {" "}
+                        <span
+                          className="badge bg-success"
+                          style={{
+                            color:
+                              user?.status === "2"
+                                ? "#aabf10"
+                                : user?.status === "3"
+                                ? "green"
+                                : user?.status === "1"
+                                ? "green"
+                                : "red",
+                          }}>
+                          {user.status === "1" || user.status === null
+                            ? "Active"
+                            : "InActive"}
+                        </span>{" "}
+                      </TableCell>
+                      {/* <TableCell>
+                        {" "}
+                        <MoreVertIcon />{" "}
+                      </TableCell> */}
+                    </TableRow>
+                  ))}
+                  {assistantUsers?.map((user, index) => (                   
                     <TableRow key={user.id} onClick={() => setUserDetail(user)}>
                       <TableCell className="b-r">
                         <div className="d-flex alc f-10 flex-start">
@@ -609,7 +738,7 @@ const Users = () => {
         <Box sx={style}>
           <div className="mb-35">
             <Typography id="modal-modal-title">
-              <h4 className="summary__title t-xl title-case">Add New User</h4>
+              <h4 className="summary__title t-xl title-case">Add New Assistant</h4>
             </Typography>
             <div className="s-divider"></div>
           </div>
@@ -617,9 +746,51 @@ const Users = () => {
             <div className="w-200">
               <div className="profile_pic_holder b-round">
                 <img src={profile} className="profile_pic b-round" />
-                <button className="btn btn-primary p-25 mt-15">
+                <div className="pos-rel w100-m10 ">
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="file"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      // if (selectedName == "") {
+                      //   setAlert("Please Select a file name");
+                      //   return;
+                      // }
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            photo: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                  />
+                </div>
+                {/* <button className="btn btn-primary p-25 mt-15">
                   Upload Photo
-                </button>
+                </button> */}
               </div>
             </div>
             <form style={{ width: "100%" }}>
@@ -629,8 +800,10 @@ const Users = () => {
                   <input
                     type="text"
                     className="form-control-input "
-                    name="username"
+                    name="fname"
                     placeholder="e.g Ahmed"
+                    onChange={onChangeHandler}
+                    value={inputValues.fname || ""}
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
@@ -638,8 +811,10 @@ const Users = () => {
                   <input
                     type="text"
                     className="form-control-input "
-                    name="username"
+                    name="lname"
                     placeholder="e.g Peter"
+                    onChange={onChangeHandler}
+                    value={inputValues.lname || ""}
                   />
                 </div>
               </section>
@@ -652,6 +827,8 @@ const Users = () => {
                     className="form-control-input "
                     name="username"
                     placeholder="hooli"
+                    onChange={onChangeHandler}
+                    value={inputValues.username || ""}
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
@@ -659,8 +836,10 @@ const Users = () => {
                   <input
                     type="number"
                     className="form-control-input "
-                    name="contact"
+                    name="phone"
                     placeholder="e.g. 0803 000 0000"
+                    onChange={onChangeHandler}
+                    value={inputValues.phone || ""}
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
@@ -668,8 +847,10 @@ const Users = () => {
                   <input
                     type="email"
                     className="form-control-input "
-                    name="username"
+                    name="email"
                     placeholder="email@domain.com"
+                    onChange={onChangeHandler}
+                    value={inputValues.email || ""}
                   />
                 </div>
               </section>
@@ -679,7 +860,11 @@ const Users = () => {
                   <label className="mb-7"> User Role</label>
                   <select
                     className="search__bar w-100"
-                    defaultValue={"default"}>
+                    defaultValue={"default"}
+                    name="role"
+                    onChange={onChangeHandler}
+                      value={inputValues.role || ""}
+                    >
                     <option value="default"> Select Role</option>
                     <option value="Role 1"> Role 1</option>
                     <option value="Role 2"> Role 2</option>
@@ -691,7 +876,11 @@ const Users = () => {
                   <label className="mb-7"> Assigned Store</label>
                   <select
                     className="search__bar w-100"
-                    defaultValue={"default"}>
+                    defaultValue={"default"}
+                    name="store_name"
+                    onChange={onChangeHandler}
+                    value={inputValues.store_name || ""}
+                    >
                     <option value="default"> Select Store</option>
                     <option value="Store 1"> Store 1</option>
                     <option value="Store 2"> Store 2</option>
@@ -703,7 +892,11 @@ const Users = () => {
                   <label className="mb-7"> Send user email about account</label>
                   <select
                     className="search__bar w-100"
-                    defaultValue={"default"}>
+                    defaultValue={"default"}
+                    name=""
+                    onChange={onChangeHandler}
+                    value={inputValues.acct_type || ""}
+                    >
                     <option value="default" selected>
                       {" "}
                       Yes, absolutely!
@@ -739,8 +932,8 @@ const Users = () => {
                   className="btn btn-secondary p-25 pull-right mr-10">
                   Cancel
                 </button>
-                <button className="btn btn-primary p-25 pull-right">
-                  Save
+                <button className="btn btn-primary p-25 pull-right" onClick={addVendorAssistant}disabled={loading}>
+                    {loading ? <ButtonLoader /> : "Save"}
                 </button>
               </div>
             </form>

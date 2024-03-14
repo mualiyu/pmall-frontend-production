@@ -12,6 +12,7 @@ import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import nigeriaStateAndLgas from "../nigeriaStateAndLgas.json";
 import ButtonLoader from "../../utils/buttonLoader";
+import Toaster from "../../utils/toaster";
 
 const style = {
   position: "absolute",
@@ -96,6 +97,8 @@ const UserDetails = () => {
     setProfileDetails,
     handleModalClose,
     loading,
+    toastMsg,
+    toastType
   } = useVendor();
 
   const [selectedState, setSelectedState] = useState("");
@@ -168,6 +171,7 @@ const UserDetails = () => {
 
   return (
     <section className="page__header w-full" style={{ display: "block" }}>
+        <Toaster text={toastMsg} className={toastType}/>
       <div className="user-details">
         <div className="page__header">
           <h1>User Details</h1>
@@ -181,8 +185,8 @@ const UserDetails = () => {
               Edit profile
             </button>
           </div>
-          <div className="left w-full flex g-20 items-center">
-            <div className="br">
+          <div className="left w-full flex g-20">
+            <div className="">
               <div className="top flex flex-col g-20 items-center">
                 <img src={profile} className="profile_pic b-round" />
                 <h1 style={{ textTransform: "capitalize" }}>
@@ -192,11 +196,9 @@ const UserDetails = () => {
                   <Rating name="read-only" value={value} readOnly />
                   <p>0 Rates</p>
                 </div>
-              </div>
-            </div>
-            {profileDetails && (
-              <div className="details w-full grid grid-3 g-40">
-                {profileDetails.user_type === "Vendor" && (
+                <div className="flex flex-col g-30 mt-10">
+                <h3 className="bold grid-item">Personal Information</h3>
+                {profileDetails?.user_type === "Vendor" && (
                   <div className="flex g-10">
                     <p>Store Name</p>
                     {<h4>{profileDetails?.store_name}</h4>}
@@ -212,52 +214,58 @@ const UserDetails = () => {
                   <h4>{profileDetails?.phone}</h4>
                 </div>
                 <div className="flex g-10">
-                  <p>Member Since</p>
-                  <h4> {moment(profileDetails?.created_at).format("ll")}</h4>
-                </div>
-
-                <div className="flex g-10">
                   <p>Username</p>
                   <h4>{profileDetails?.username || "N/A"}</h4>
                 </div>
                 <div className="flex g-10">
+                  <p>Member Since</p>
+                  <h4> {moment(profileDetails?.created_at).format("ll")}</h4>
+                </div>
+
+                </div>
+              </div>
+            </div>
+            {profileDetails && (
+              <div className="details w-full grid grid-3 gr-20 bl">
+               
+                <div className="flex g-10 grid-item">
                   <p>User Type</p>
                   <h4>{profileDetails?.user_type}</h4>
                 </div>
-                <div className="flex g-10">
+                <div className="flex g-10 grid-item">
                   <p>My Ref ID</p>
                   <h4>{profileDetails?.my_ref_id || "N/A"}</h4>
                 </div>
                 {profileDetails.user_type === "Vendor" && (
-                  <div className="flex g-10">
+                  <div className="flex g-10 grid-item">
                     <p>Store ID</p>
                     <h4>{profileDetails?.store_id || "N/A"}</h4>
                   </div>
                 )}
 
-                <div className="flex g-10">
+                <div className="flex g-10 grid-item">
                   <p>Bank Account Name</p>
                   <h4>{profileDetails?.acct_name || "N/A"}</h4>
                 </div>
-                <div className="flex g-10">
+                <div className="flex g-10 grid-item">
                   <p>Bank Account Number</p>
                   <h4>{profileDetails?.acct_number || "N/A"}</h4>
                 </div>
-                <div className="flex g-10">
+                <div className="flex g-10 grid-item">
                   <p>Bank Account Type</p>
                   <h4>{profileDetails?.acct_type || "N/A"}</h4>
                 </div>
-                <div className="flex g-10">
+                <div className="flex g-10 grid-item">
                   <p>Bank</p>
                   <h4>{profileDetails?.bank || "N/A"}</h4>
                 </div>
                 {profileDetails.user_type === "Vendor" && (
                   <>
-                    <div className="flex g-10">
+                    <div className="flex g-10 grid-item">
                       <p>State</p>
                       <h4>{profileDetails?.state || "N/A"}</h4>
                     </div>
-                    <div className="flex g-10">
+                    <div className="flex g-10 grid-item">
                       <p>LGA</p>
                       <h4>{profileDetails?.lga || "N/A"}</h4>
                     </div>
@@ -267,17 +275,17 @@ const UserDetails = () => {
                   <p>Role ID</p>
                   <h4>{profileDetails?.role_id || "N/A"}</h4>
                 </div> */}
-                <div className="flex g-10">
+                <div className="flex g-10 grid-item">
                   <p>Package ID</p>
                   <h4>{profileDetails?.package_id || "N/A"}</h4>
                 </div>
-                <div className="flex g-10">
+                <div className="flex g-10 grid-item">
                   <p>Account Status</p>
                   <h4>
                     {profileDetails?.status === "1" ? "Active" : "Not Active"}
                   </h4>
                 </div>
-                <div className="flex g-10">
+                <div className="flex g-10 grid-item">
                   <p>Last interaction</p>
                   <h4>40 mins ago</h4>
                 </div>

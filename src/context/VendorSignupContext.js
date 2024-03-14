@@ -9,6 +9,8 @@ export const VendorSignupProvider = ({ children }) => {
     //const navigate = useNavigate();
     const [inputValues, setState]  = useState({});
     const [loading, setLoading] = useState(false);
+    const [toastMsg, setToastMsg] = useState("");
+    const [toastType, setToastType] = useState("");
     const [submittedValues, setSubmittedValues]  = useState({});
     const [newVendorModal, setNewVendorModal] = useState(false);
     const handleModalClose = () => setNewVendorModal(false);
@@ -117,6 +119,7 @@ export const VendorSignupProvider = ({ children }) => {
       };
       const handleResetPassword = async(e) => {
         e.preventDefault(); // Prevent default form submission
+        setLoading(true);
         inputValues.email = "mualiyuoox@gmail.com";
       
         // Validate credentials 
@@ -131,6 +134,7 @@ export const VendorSignupProvider = ({ children }) => {
         }).then((res)=>{
           alert("successful")
           console.log(res)
+          setLoading(false);
         }).catch((err)=>{
           console.log(err)
         })
@@ -139,6 +143,7 @@ export const VendorSignupProvider = ({ children }) => {
 
       const handleVerifyToken = async(e) => {
         e.preventDefault(); // Prevent default form submission
+        setLoading(true);
         inputValues.email = "mualiyuoox@gmail.com";
       
         // Validate credentials 
@@ -154,6 +159,7 @@ export const VendorSignupProvider = ({ children }) => {
           alert("successful")
           console.log(res)
           if(res.ok){
+            setLoading(false);
             window.location.href ="/auth/app/Set-new-password"
           }
         }).catch((err)=>{
@@ -182,6 +188,7 @@ export const VendorSignupProvider = ({ children }) => {
       const VendorUpdateProfile = async(e) => {
         if (e) {
           e.preventDefault(); 
+          setLoading(true);
           const token = localStorage.getItem("authToken");
         try {
           const response = await fetch('https://test.igeecloset.com/api/v1/profile/update', {
@@ -194,13 +201,25 @@ export const VendorSignupProvider = ({ children }) => {
               body:JSON.stringify(inputValues)
           });
           if (response.ok) {
+            setToastMsg("Successful!");
+            setToastType("success")
+            setInterval(() => {
+              setToastMsg("");
+            }, 5000);
             const data = await response.json();
             console.log('vendor:', data);
             setSubmittedValues(data)
             handleModalClose()
-          } else {
+            setLoading(false);
+          }
+          else{
             const error = await response.text();
             console.error('Error editing vendor:', error);
+            setToastMsg("Incorrect token, please confirm in your email")
+            setToastType("error")
+            setInterval(() => {
+              setToastMsg("");
+            }, 3000);
           }
         } catch (error) {
           console.error('Network error:', error);
