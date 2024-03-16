@@ -449,8 +449,30 @@ const ProductList = () => {
   const id = "PMS-892040"
 
   const getProducts = () => {
-    if(user){
+    if(user?.accountType== "Vendor"){
       fetch("https://test.igeecloset.com/api/v1/products", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        },
+      })
+        .then((resp) => resp.json())
+        .then((result) => {
+          console.log(result);
+          setProducts(result.data);
+          for (const item of result) {
+            if (item.status === 0) {
+              publishedCount++;
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }else{
+      fetch("https://test.igeecloset.com/api/v1/products/?store_id=" + id, {
         method: "GET",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -767,6 +789,7 @@ const ProductList = () => {
     getProducts();
     getBrands()
     getCategories()
+console.log(user?.accountType)
   }, [newProduct]);
   return (
     <section>
