@@ -106,6 +106,8 @@ const Users = () => {
   const [admins, setAdmins] = useState([]);
   const { user } = useUser();
   const [newProduct, setNewProduct] = useState();
+  const [toastMsg, setToastMsg] = useState("");
+    const [toastType, setToastType] = useState("");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -114,7 +116,7 @@ const Users = () => {
     inputValues,
     onChangeHandler,
     setProfileDetails,
-    loading,toastMsg,setToastMsg,toastType, setToastType,setState,setLoading
+    loading,setState,setLoading
   } = useVendor();
 
 
