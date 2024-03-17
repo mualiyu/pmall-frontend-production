@@ -212,7 +212,6 @@ const Users = () => {
       });
   };
 
-<<<<<<< HEAD
   const addAdmin = (e) => {
     e.preventDefault()
     setLoading(true)
@@ -252,8 +251,6 @@ const Users = () => {
   };
 
 
-=======
->>>>>>> origin
   // Update Chart Value
   // const updateChartValue = (arr) => {
   //   let totalVendors = vendors.length;
