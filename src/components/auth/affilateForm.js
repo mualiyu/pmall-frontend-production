@@ -50,7 +50,7 @@ const AffilateForm = ({ inputValues, onChangeHandler }) => {
       </div>
       <span className="flex">
         <div className="pos-rel">
-          <label className="abs py-10"> Username *</label>
+          <label className="abs py-10">Choose a username *</label>
           <input
             type="text"
             name="username"
