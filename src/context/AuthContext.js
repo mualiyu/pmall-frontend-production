@@ -36,14 +36,14 @@ export const VendorSignupProvider = ({ children }) => {
             setTimeout(() => {
               window.location.href = "/";
             }, 2000);
-  
             setLoading(false);
           }else{
-            setToastMsg("Oops! there seems to be an error. Confirm signup credientials")
+            setToastMsg("All fields must be completed")
             setToastType("error")
             setInterval(() => {
               setToastMsg("");
             }, 3000);
+            setLoading(false);
           }
         })
         .catch((err) => {
@@ -80,11 +80,12 @@ export const VendorSignupProvider = ({ children }) => {
   
             setLoading(false);
           }else{
-            setToastMsg("Oops! there seems to be an error. Confirm signup credientials")
+            setToastMsg("All fields must be completed")
             setToastType("error")
             setInterval(() => {
               setToastMsg("");
             }, 3000);
+            setLoading(false);
           }
         })
         .catch((err) => {
@@ -145,6 +146,7 @@ export const VendorSignupProvider = ({ children }) => {
           setInterval(() => {
             setToastMsg("");
           }, 3000);
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -184,6 +186,7 @@ export const VendorSignupProvider = ({ children }) => {
             setInterval(() => {
               setToastMsg("");
             }, 3000);
+            setLoading(false);
           }
         })
         .catch((err) => {
@@ -225,6 +228,7 @@ export const VendorSignupProvider = ({ children }) => {
           setInterval(() => {
             setToastMsg("");
           }, 3000);
+        setLoading(false);
         }
         
       })
@@ -270,6 +274,7 @@ export const VendorSignupProvider = ({ children }) => {
           setInterval(() => {
             setToastMsg("");
           }, 3000);
+          setLoading(false);
         }
       })
       .catch((err) => {
