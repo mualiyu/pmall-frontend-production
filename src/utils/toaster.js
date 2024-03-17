@@ -13,7 +13,6 @@ export default function Toaster({ text, className }) {
       className={`alert ${className} ${text && "active"}`}
       style={{ backgroundColor }}>
       <span>{text}</span>
-         
     </div>
   );
 }

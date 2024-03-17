@@ -12,96 +12,101 @@ export const VendorSignupProvider = ({ children }) => {
   const [toastType, setToastType] = useState("");
   const { setUser } = useUser();
 
+  // Vendor Registration
   const onSubmitHandler = async (e) => {
-    if (e) {
-      e.preventDefault();
-      setLoading(true);
-      fetch("https://test.igeecloset.com/api/v1/register/vendor", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(inputValues),
-      })
-        .then((res) => {
-          setLoading(false);
-          console.log(res);
-          if (res.ok) {
-            setToastMsg("Awesome! Signup successful");
-            setToastType("success")
-            setInterval(() => {
-              setToastMsg("");
-            }, 3000);
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 2000);
-            setLoading(false);
-          }else{
-            setToastMsg("All fields must be completed")
-            setToastType("error")
-            setInterval(() => {
-              setToastMsg("");
-            }, 3000);
-            return res.text().then(text => { throw new Error(text) })
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setToastMsg(err.message)
-          setToastType("error")
-          setInterval(() => {
+    e.preventDefault(); // Prevent default form submission
+    setLoading(true);
+    inputValues.device_name = 1234;
+    fetch("https://test.igeecloset.com/api/v1/register/vendor", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(inputValues),
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        setLoading(false);
+        console.log(result);
+        if (result.status) {
+          setToastMsg("Awesome! Registration was successful");
+          setToastType("success");
+          setTimeout(() => {
             setToastMsg("");
-          }, 3000);
+            window.location.href = "/";
+          }, 2000);
+
           setLoading(false);
-        });
-    }
+        } else {
+          setToastMsg(result.message);
+          setToastType("error");
+          setLoading(false);
+          setTimeout(() => {
+            Toaster("");
+          }, 50000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setToastMsg(err.message);
+        setToastType("error");
+        setTimeout(() => {
+          setToastMsg("");
+        }, 3000);
+        setLoading(false);
+      });
   };
 
+  // Start Affiliate Registration
   const onAffilateSubmitHandler = async (e) => {
-    if (e) {
-      e.preventDefault();
-      setLoading(true);
-      fetch("https://test.igeecloset.com/api/v1/register/affiliate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(inputValues),
-      })
-        .then((res) => {
-          console.log(res);
-          if (res.ok) {
-            setToastMsg("Awesome! Signup successful");
-            setToastType("success")
-            setInterval(() => {
-              setToastMsg("");
-            }, 5000);
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 2000);
-  
-            setLoading(false);
-          }else{
-           
-            setLoading(false);
-            return res.text().then(text => { throw new Error(text) })
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setToastMsg(err.message)
-          setToastType("error")
-          setInterval(() => {
+    e.preventDefault(); // Prevent default form submission
+    setLoading(true);
+    inputValues.device_name = 1234;
+
+    fetch("https://test.igeecloset.com/api/v1/register/affiliate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(inputValues),
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        setLoading(false);
+        console.log(result);
+        if (result.status) {
+          setToastMsg("Awesome! Registration was successful");
+          setToastType("success");
+          setTimeout(() => {
             setToastMsg("");
-          }, 3000);
+            window.location.href = "/";
+          }, 2000);
+
           setLoading(false);
-        });
-    }
-    console.log(inputValues);
+        } else {
+          console.log(result.message);
+          setToastMsg(result.message);
+          setToastType("error");
+          setLoading(false);
+          setTimeout(() => {
+            setToastMsg("");
+          }, 5000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setToastMsg(err.message);
+        setToastType("error");
+        setTimeout(() => {
+          setToastMsg("");
+        }, 3000);
+        setLoading(false);
+      });
   };
+
+  // User Login function
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -137,10 +142,10 @@ export const VendorSignupProvider = ({ children }) => {
             refId: result.data.user.my_ref_id,
           });
           setToastMsg("Awesome! Login successful");
-          setToastType("success")
-          setInterval(() => {
+          setToastType("success");
+          setTimeout(() => {
             setToastMsg("");
-          }, 5000);
+          }, 5000);
           setTimeout(() => {
             window.location.href = "/app/dashboard";
           }, 2000);
@@ -148,11 +153,13 @@ export const VendorSignupProvider = ({ children }) => {
           setLoading(false);
         } else {
           console.log(result.message);
-          setToastMsg("Oops! there seems to be an error. Confirm login credientials")
-          setToastType("error")
-          setInterval(() => {
+          setToastMsg(
+            "Oops! there seems to be an error. Confirm login credientials"
+          );
+          setToastType("error");
+          setTimeout(() => {
             setToastMsg("");
-          }, 3000);
+          }, 3000);
           setLoading(false);
         }
       })
@@ -162,53 +169,58 @@ export const VendorSignupProvider = ({ children }) => {
       });
   };
 
+  // Start Forgot Password
   const onForgotPasswordHandler = async (e) => {
-    if (e) {
-      e.preventDefault();
-      setLoading(true);
-      fetch("https://test.igeecloset.com/api/v1/forgot-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(inputValues),
-      })
-        .then((res) => {
-          console.log(res);
-          if (res.ok) {
-            setToastMsg("Successful!");
-          setToastType("success")
-          setInterval(() => {
-            setToastMsg("");
-          }, 5000);
+    e.preventDefault(); // Prevent default form submission
+    setLoading(true);
+    inputValues.device_name = 1234;
+    fetch("https://test.igeecloset.com/api/v1/forgot-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(inputValues),
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        setLoading(false);
+        console.log(result);
+        if (result.status) {
+          setToastMsg("Request Sent Successful!");
+          setToastType("success");
           setTimeout(() => {
-            window.location.href = "/auth/app/verify-token";  
+            setToastMsg("");
+          }, 5000);
+          setTimeout(() => {
+            window.location.href = "/auth/app/verify-token";
           }, 2000);
-            setLoading(false);
-          }
-          else{
-            setToastMsg("Oops! there seems to be an error. Confirm email")
-            setToastType("error")
-            setInterval(() => {
-              setToastMsg("");
-            }, 3000);
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
           setLoading(false);
-        });
-    }
+        } else {
+          setToastMsg(result.message);
+          setToastType("error");
+          setTimeout(() => {
+            setToastMsg("");
+          }, 3000);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setToastMsg(err.message);
+        setToastType("error");
+        setTimeout(() => {
+          setToastMsg("");
+        }, 3000);
+        setLoading(false);
+      });
   };
+
+  // Reset New Password Function
   const handleResetPassword = async (e) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = "mualiyuoox@gmail.com";
-
-    // Validate credentials
-
     fetch("https://test.igeecloset.com/api/v1/reset-password", {
       method: "POST",
       headers: {
@@ -217,42 +229,44 @@ export const VendorSignupProvider = ({ children }) => {
       },
       body: JSON.stringify(inputValues),
     })
-      .then((res) => {
-        if (res.status) {
-          setToastMsg("Successful!");
-          setToastType("success")
-          setInterval(() => {
-            setToastMsg("");
-          }, 5000);
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 2000);
-            setLoading(false);
-        }
-        else{
-          setToastMsg("Oops! there seems to be an error. Retry")
-          setToastType("error")
-          setInterval(() => {
-            setToastMsg("");
-          }, 3000);
+      .then((resp) => resp.json())
+      .then((result) => {
         setLoading(false);
+        console.log(result);
+        if (result.status) {
+          setToastMsg("Looks good! New Password has been set... ");
+          setToastType("success");
+          setTimeout(() => {
+            setToastMsg("");
+            window.location.href = "/";
+          }, 5000);
+          setLoading(false);
+        } else {
+          setToastMsg(result.message);
+          setToastType("error");
+          setTimeout(() => {
+            setToastMsg("");
+          }, 3000);
+          setLoading(false);
         }
-        
       })
       .catch((err) => {
         console.log(err);
+        setToastMsg(err.message);
+        setToastType("error");
+        setTimeout(() => {
+          setToastMsg("");
+        }, 3000);
         setLoading(false);
       });
-    console.log(inputValues);
   };
+
+  // Verify token function
 
   const handleVerifyToken = async (e) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = "mualiyuoox@gmail.com";
-
-    // Validate credentials
-
     fetch("https://test.igeecloset.com/api/v1/verify-code", {
       method: "POST",
       headers: {
@@ -261,34 +275,36 @@ export const VendorSignupProvider = ({ children }) => {
       },
       body: JSON.stringify(inputValues),
     })
-      .then((res) => {
-        
-        console.log(res);
-        if (res.ok) {
-          setToastMsg("Successful!");
-        setToastType("success")
-        setInterval(() => {
-          setToastMsg("");
-        }, 5000);
-        setTimeout(() => {
-          window.location.href = "/auth/app/Set-new-password";
-        }, 2000);
-          setLoading(false);
-        }
-        else{
-          setToastMsg("Incorrect token, please confirm in your email")
-          setToastType("error")
-          setInterval(() => {
+      .then((resp) => resp.json())
+      .then((result) => {
+        setLoading(false);
+        console.log(result);
+        if (result.status) {
+          setToastMsg("That was right...");
+          setToastType("success");
+          setTimeout(() => {
             setToastMsg("");
-          }, 3000);
+            window.location.href = "/auth/app/Set-new-password";
+          }, 5000);
+          setLoading(false);
+        } else {
+          setToastMsg(result.message);
+          setToastType("error");
+          setTimeout(() => {
+            setToastMsg("");
+          }, 3000);
           setLoading(false);
         }
       })
       .catch((err) => {
         console.log(err);
+        setToastMsg(err.message);
+        setToastType("error");
+        setTimeout(() => {
+          setToastMsg("");
+        }, 3000);
         setLoading(false);
       });
-    console.log(inputValues);
   };
 
   const onChangeHandler = (e) => {
@@ -320,7 +336,7 @@ export const VendorSignupProvider = ({ children }) => {
         onForgotPasswordHandler,
         handleResetPassword,
         handleVerifyToken,
-        toastMsg, 
+        toastMsg,
         toastType,
         submittedValues,
         loading,
