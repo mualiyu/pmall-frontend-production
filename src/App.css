@@ -937,6 +937,7 @@ button:disabled {
 .alert.active {
   transform: translateX(0px);
   right: -5px;
+  min-width: 300px
 }
 .alert span {
   font-size: 12px;

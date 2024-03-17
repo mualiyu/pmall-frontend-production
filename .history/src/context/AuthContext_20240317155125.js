@@ -44,7 +44,7 @@ export const VendorSignupProvider = ({ children }) => {
           setLoading(false);
           setTimeout(() => {
             setToastMsg("");
-          }, 5000);
+          }, 50000);
         }
       })
       .catch((err) => {

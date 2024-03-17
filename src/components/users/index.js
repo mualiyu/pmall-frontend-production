@@ -119,7 +119,6 @@ const Users = () => {
     loading,setState,setLoading
   } = useVendor();
 
-
   console.log(user);
 
   const chartData = {
@@ -169,7 +168,7 @@ const Users = () => {
       .then((resp) => resp.json())
       .then((result) => {
         console.log(result.data.vendors);
-         setAssistantUsers(result.data.vendors);
+        setAssistantUsers(result.data.vendors);
       })
       .catch((err) => {
         console.log(err);
@@ -177,7 +176,7 @@ const Users = () => {
   };
 
   const addVendorAssistant = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     fetch("https://test.igeecloset.com/api/v1/user/add-vendor", {
       method: "POST",
       headers: {
@@ -185,25 +184,27 @@ const Users = () => {
         Accept: "application/json",
         Authorization: "Bearer " + localStorage.getItem("authToken"),
       },
-      body:JSON.stringify(inputValues)
+      body: JSON.stringify(inputValues),
     })
       .then((resp) => resp.json())
       .then((result) => {
-        if(result.status){
+        if (result.status) {
           setToastMsg("Great! Assistant added successfully");
-          setToastType("success")
+          setToastType("success");
           setInterval(() => {
             setToastMsg("");
-          }, 5000);
-        console.log(result);
-        setNewProduct(result)
-        handleModalClose()
-        }else{
-          setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
-          setToastType("error")
+          }, 5000);
+          console.log(result);
+          setNewProduct(result);
+          handleModalClose();
+        } else {
+          setToastMsg(
+            "Oops! there seems to be an error. Fill in correct credentials"
+          );
+          setToastType("error");
           setInterval(() => {
             setToastMsg("");
-          }, 3000);
+          }, 3000);
         }
       })
       .catch((err) => {
@@ -211,6 +212,7 @@ const Users = () => {
       });
   };
 
+<<<<<<< HEAD
   const addAdmin = (e) => {
     e.preventDefault()
     setLoading(true)
@@ -250,6 +252,8 @@ const Users = () => {
   };
 
 
+=======
+>>>>>>> origin
   // Update Chart Value
   // const updateChartValue = (arr) => {
   //   let totalVendors = vendors.length;
@@ -305,20 +309,20 @@ const Users = () => {
   const createUser = (e) => {
     e.preventDefault();
   };
-  function setUserDetail(data){
-    navigate("details")
-    setProfileDetails(data)
+  function setUserDetail(data) {
+    navigate("details");
+    setProfileDetails(data);
   }
 
   useEffect(() => {
     console.log(user?.token);
     getUsers();
-    getAssistants()
+    getAssistants();
     // updateChartValue();
   }, [user]);
   return (
     <section>
-      <Toaster text={toastMsg} className={toastType}/>
+      <Toaster text={toastMsg} className={toastType} />
       <section className="page__header">
         <div className="flex-container alc">
           <AccessibilityNewIcon />
@@ -344,7 +348,9 @@ const Users = () => {
             <Doughnut data={chartData} options={config} className="w80" />
           </div>
           <h3 className="stat__value ml-10">
-          {user?.accountType === "Admin" ? pmallUsers?.length : assistantUsers?.length}
+            {user?.accountType === "Admin"
+              ? pmallUsers?.length
+              : assistantUsers?.length}
             <p className="sub__title">Total Users</p> &nbsp;
           </h3>
         </div>
@@ -403,7 +409,11 @@ const Users = () => {
               <Tab
                 label={`${
                   user?.accountType === "Admin" ? "System Users" : "Assistants"
-                } (${user?.accountType === "Admin" ? pmallUsers?.length : assistantUsers?.length})`}
+                } (${
+                  user?.accountType === "Admin"
+                    ? pmallUsers?.length
+                    : assistantUsers?.length
+                })`}
                 {...a11yProps(0)}
               />
               {user?.accountType === "Admin" && (
@@ -428,7 +438,7 @@ const Users = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {pmallUsers?.map((user, index) => (                   
+                  {pmallUsers?.map((user, index) => (
                     <TableRow key={user.id} onClick={() => setUserDetail(user)}>
                       <TableCell className="b-r">
                         <div className="d-flex alc f-10 flex-start">
@@ -489,7 +499,7 @@ const Users = () => {
                       </TableCell> */}
                     </TableRow>
                   ))}
-                  {assistantUsers?.map((user, index) => (                   
+                  {assistantUsers?.map((user, index) => (
                     <TableRow key={user.id} onClick={() => setUserDetail(user)}>
                       <TableCell className="b-r">
                         <div className="d-flex alc f-10 flex-start">
@@ -783,7 +793,9 @@ const Users = () => {
         <Box sx={style}>
           <div className="mb-35">
             <Typography id="modal-modal-title">
-              <h4 className="summary__title t-xl title-case">Add New Assistant</h4>
+              <h4 className="summary__title t-xl title-case">
+                Add New Assistant
+              </h4>
             </Typography>
             <div className="s-divider"></div>
           </div>
@@ -812,23 +824,24 @@ const Users = () => {
                           method: "POST",
                           body: formData,
                           headers: {
-                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                            Authorization:
+                              "Bearer " + localStorage.getItem("authToken"),
                           },
                         }
                       )
                         .then((res) => res.json())
                         .then((data) => {
                           //setLoading(false);
-                          console.log(data)
+                          console.log(data);
                           setState((inputValues) => ({
                             ...inputValues,
-                            photo: data.url, 
-                          }))
-                          console.log(inputValues)
+                            photo: data.url,
+                          }));
+                          console.log(inputValues);
                         })
                         .catch((error) => {
                           //setLoading(false);
-                          console.log(error)
+                          console.log(error);
                         });
                     }}
                   />
@@ -908,8 +921,7 @@ const Users = () => {
                     defaultValue={"default"}
                     name="role"
                     onChange={onChangeHandler}
-                      value={inputValues.role || ""}
-                    >
+                    value={inputValues.role || ""}>
                     <option value="default"> Select Role</option>
                     <option value="Role 1"> Role 1</option>
                     <option value="Role 2"> Role 2</option>
@@ -924,8 +936,7 @@ const Users = () => {
                     defaultValue={"default"}
                     name="store_name"
                     onChange={onChangeHandler}
-                    value={inputValues.store_name || ""}
-                    >
+                    value={inputValues.store_name || ""}>
                     <option value="default"> Select Store</option>
                     <option value="Store 1"> Store 1</option>
                     <option value="Store 2"> Store 2</option>
@@ -940,8 +951,7 @@ const Users = () => {
                     defaultValue={"default"}
                     name=""
                     onChange={onChangeHandler}
-                    value={inputValues.acct_type || ""}
-                    >
+                    value={inputValues.acct_type || ""}>
                     <option value="default" selected>
                       {" "}
                       Yes, absolutely!
@@ -977,8 +987,11 @@ const Users = () => {
                   className="btn btn-secondary p-25 pull-right mr-10">
                   Cancel
                 </button>
-                <button className="btn btn-primary p-25 pull-right" onClick={addVendorAssistant}disabled={loading}>
-                    {loading ? <ButtonLoader /> : "Save"}
+                <button
+                  className="btn btn-primary p-25 pull-right"
+                  onClick={addVendorAssistant}
+                  disabled={loading}>
+                  {loading ? <ButtonLoader /> : "Save"}
                 </button>
               </div>
             </form>

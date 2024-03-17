@@ -43,8 +43,8 @@ export const VendorSignupProvider = ({ children }) => {
           setToastType("error");
           setLoading(false);
           setTimeout(() => {
-            setToastMsg("");
-          }, 5000);
+            Toaster("");
+          }, 50000);
         }
       })
       .catch((err) => {
