@@ -1,7 +1,6 @@
 // import * as React from "react";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import moment from "moment";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import profile from "../../assets/imgs/passport.png";
@@ -42,11 +41,11 @@ const style = {
 
 const columns = [
   { id: "user", label: "Account Holder" },
+
   { id: "email", label: "Email" },
   { id: "contact", label: "Phone Number" },
   { id: "store", label: "Assigned Store" },
   { id: "account_type", label: "User Type" },
-  { id: "created", label: "Created" },
   { id: "status", label: "Status" },
 ];
 
@@ -104,7 +103,11 @@ const Users = () => {
   const [assistantUsers, setAssistantUsers] = useState();
   const [admins, setAdmins] = useState([]);
   const { user } = useUser();
-  const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
+  const userBadge = [
+    "rgba(236, 112, 122, 1)",
+    "rgba(16, 172, 126, 1)",
+    "rgba(26, 62, 156, 1)",
+  ];
   const [newProduct, setNewProduct] = useState();
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -407,7 +410,6 @@ const Users = () => {
                                 userBadge[
                                   Math.floor(Math.random() * userBadge.length)
                                 ],
-                              color: "#1a3e9c",
                             }}>
                             <h3 style={{ textTransform: "uppercase" }}>
                               {getInitials(user?.fname)}
@@ -441,9 +443,66 @@ const Users = () => {
                       </TableCell>
                       <TableCell> {user.user_type} </TableCell>
                       <TableCell>
-                        {moment(user.created_at).format("ll")} @{" "}
-                        {moment(user.created_at).format("LT")}{" "}
+                        {" "}
+                        <span
+                          className="badge bg-success"
+                          style={{
+                            color:
+                              user?.status === "2"
+                                ? "#aabf10"
+                                : user?.status === "3"
+                                ? "green"
+                                : user?.status === "1"
+                                ? "green"
+                                : "red",
+                          }}>
+                          {user.status === "1" || user.status === null
+                            ? "Active"
+                            : "InActive"}
+                        </span>{" "}
                       </TableCell>
+                      {/* <TableCell>
+                        {" "}
+                        <MoreVertIcon />{" "}
+                      </TableCell> */}
+                    </TableRow>
+                  ))}
+                  {assistantUsers?.map((user, index) => (
+                    <TableRow key={user.id} onClick={() => setUserDetail(user)}>
+                      <TableCell className="b-r">
+                        <div className="d-flex alc f-10 flex-start">
+                          <div className="user__avatar bg-success">
+                            <h3 style={{ textTransform: "uppercase" }}>
+                              {getInitials(user?.fname)}
+                              {getInitials(user?.lname)}
+                            </h3>
+                          </div>
+                          <div className="lheight13">
+                            <h4
+                              className="f-300"
+                              style={{ textTransform: "capitalize" }}>
+                              {user.fname} {user.lname}
+                            </h4>
+                            <p className="sub__title">{user.username}</p>
+                          </div>
+                        </div>
+                      </TableCell>
+
+                      <TableCell> {user.email}</TableCell>
+                      <TableCell> {user.phone}</TableCell>
+                      <TableCell>
+                        <div className="lheight13">
+                          <h4
+                            className="f-300"
+                            style={{ textTransform: "capitalize" }}>
+                            {user.store_name !== null
+                              ? user.store_name
+                              : user.user_type}
+                          </h4>
+                          <p className="sub__title">{user.my_ref_id}</p>
+                        </div>
+                      </TableCell>
+                      <TableCell> {user.user_type} </TableCell>
                       <TableCell>
                         {" "}
                         <span
@@ -469,81 +528,6 @@ const Users = () => {
                       </TableCell> */}
                     </TableRow>
                   ))}
-                  {user?.accountType === "Affiliate" ||
-                    (user?.accountType === "Vendor" &&
-                      assistantUsers?.map((user, index) => (
-                        <TableRow
-                          key={user.id}
-                          onClick={() => setUserDetail(user)}>
-                          <TableCell className="b-r">
-                            <div className="d-flex alc f-10 flex-start">
-                              <div
-                                className="user__avatar"
-                                style={{
-                                  backgroundColor:
-                                    userBadge[
-                                      Math.floor(
-                                        Math.random() * userBadge.length
-                                      )
-                                    ],
-                                  color: "#1a3e9c",
-                                }}>
-                                <h3 style={{ textTransform: "uppercase" }}>
-                                  {getInitials(user?.fname)}
-                                  {getInitials(user?.lname)}
-                                </h3>
-                              </div>
-                              <div className="lheight13">
-                                <h4
-                                  className="f-300"
-                                  style={{ textTransform: "capitalize" }}>
-                                  {user.fname} {user.lname}
-                                </h4>
-                                <p className="sub__title">{user.username}</p>
-                              </div>
-                            </div>
-                          </TableCell>
-
-                          <TableCell> {user.email}</TableCell>
-                          <TableCell> {user.phone}</TableCell>
-                          <TableCell>
-                            <div className="lheight13">
-                              <h4
-                                className="f-300"
-                                style={{ textTransform: "capitalize" }}>
-                                {user.store_name !== null
-                                  ? user.store_name
-                                  : user.user_type}
-                              </h4>
-                              <p className="sub__title">{user.my_ref_id}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell> {user.user_type} </TableCell>
-                          <TableCell>
-                            {moment(user.created_at).format("ll")} @{" "}
-                            {moment(user.created_at).format("LT")}{" "}
-                          </TableCell>
-                          <TableCell>
-                            {" "}
-                            <span
-                              className="badge bg-success"
-                              style={{
-                                color:
-                                  user?.status === "2"
-                                    ? "#aabf10"
-                                    : user?.status === "3"
-                                    ? "green"
-                                    : user?.status === "1"
-                                    ? "green"
-                                    : "red",
-                              }}>
-                              {user.status === "1" || user.status === null
-                                ? "Active"
-                                : "InActive"}
-                            </span>{" "}
-                          </TableCell>
-                        </TableRow>
-                      )))}
                 </TableBody>
               </Table>
             </TableContainer>

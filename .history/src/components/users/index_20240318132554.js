@@ -469,81 +469,75 @@ const Users = () => {
                       </TableCell> */}
                     </TableRow>
                   ))}
-                  {user?.accountType === "Affiliate" ||
-                    (user?.accountType === "Vendor" &&
-                      assistantUsers?.map((user, index) => (
-                        <TableRow
-                          key={user.id}
-                          onClick={() => setUserDetail(user)}>
-                          <TableCell className="b-r">
-                            <div className="d-flex alc f-10 flex-start">
-                              <div
-                                className="user__avatar"
-                                style={{
-                                  backgroundColor:
-                                    userBadge[
-                                      Math.floor(
-                                        Math.random() * userBadge.length
-                                      )
-                                    ],
-                                  color: "#1a3e9c",
-                                }}>
-                                <h3 style={{ textTransform: "uppercase" }}>
-                                  {getInitials(user?.fname)}
-                                  {getInitials(user?.lname)}
-                                </h3>
-                              </div>
-                              <div className="lheight13">
-                                <h4
-                                  className="f-300"
-                                  style={{ textTransform: "capitalize" }}>
-                                  {user.fname} {user.lname}
-                                </h4>
-                                <p className="sub__title">{user.username}</p>
-                              </div>
-                            </div>
-                          </TableCell>
+                  {/* {assistantUsers?.map((user, index) => (
+                    <TableRow key={user.id} onClick={() => setUserDetail(user)}>
+                      <TableCell className="b-r">
+                        <div className="d-flex alc f-10 flex-start">
+                          <div
+                            className="user__avatar"
+                            style={{
+                              backgroundColor:
+                                userBadge[
+                                  Math.floor(Math.random() * userBadge.length)
+                                ],
+                              color: "#1a3e9c",
+                            }}>
+                            <h3 style={{ textTransform: "uppercase" }}>
+                              {getInitials(user?.fname)}
+                              {getInitials(user?.lname)}
+                            </h3>
+                          </div>
+                          <div className="lheight13">
+                            <h4
+                              className="f-300"
+                              style={{ textTransform: "capitalize" }}>
+                              {user.fname} {user.lname}
+                            </h4>
+                            <p className="sub__title">{user.username}</p>
+                          </div>
+                        </div>
+                      </TableCell>
 
-                          <TableCell> {user.email}</TableCell>
-                          <TableCell> {user.phone}</TableCell>
-                          <TableCell>
-                            <div className="lheight13">
-                              <h4
-                                className="f-300"
-                                style={{ textTransform: "capitalize" }}>
-                                {user.store_name !== null
-                                  ? user.store_name
-                                  : user.user_type}
-                              </h4>
-                              <p className="sub__title">{user.my_ref_id}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell> {user.user_type} </TableCell>
-                          <TableCell>
-                            {moment(user.created_at).format("ll")} @{" "}
-                            {moment(user.created_at).format("LT")}{" "}
-                          </TableCell>
-                          <TableCell>
-                            {" "}
-                            <span
-                              className="badge bg-success"
-                              style={{
-                                color:
-                                  user?.status === "2"
-                                    ? "#aabf10"
-                                    : user?.status === "3"
-                                    ? "green"
-                                    : user?.status === "1"
-                                    ? "green"
-                                    : "red",
-                              }}>
-                              {user.status === "1" || user.status === null
-                                ? "Active"
-                                : "InActive"}
-                            </span>{" "}
-                          </TableCell>
-                        </TableRow>
-                      )))}
+                      <TableCell> {user.email}</TableCell>
+                      <TableCell> {user.phone}</TableCell>
+                      <TableCell>
+                        <div className="lheight13">
+                          <h4
+                            className="f-300"
+                            style={{ textTransform: "capitalize" }}>
+                            {user.store_name !== null
+                              ? user.store_name
+                              : user.user_type}
+                          </h4>
+                          <p className="sub__title">{user.my_ref_id}</p>
+                        </div>
+                      </TableCell>
+                      <TableCell> {user.user_type} </TableCell>
+                      <TableCell>
+                        {moment(user.created_at).format("ll")} @{" "}
+                        {moment(user.created_at).format("LT")}{" "}
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        <span
+                          className="badge bg-success"
+                          style={{
+                            color:
+                              user?.status === "2"
+                                ? "#aabf10"
+                                : user?.status === "3"
+                                ? "green"
+                                : user?.status === "1"
+                                ? "green"
+                                : "red",
+                          }}>
+                          {user.status === "1" || user.status === null
+                            ? "Active"
+                            : "InActive"}
+                        </span>{" "}
+                      </TableCell>
+                    </TableRow>
+                  ))} */}
                 </TableBody>
               </Table>
             </TableContainer>
