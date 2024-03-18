@@ -177,6 +177,7 @@ const Users = () => {
 
   const addVendorAssistant = (e) => {
     e.preventDefault();
+    setLoading(true)
     fetch("https://test.igeecloset.com/api/v1/user/add-vendor", {
       method: "POST",
       headers: {
@@ -197,6 +198,7 @@ const Users = () => {
           console.log(result);
           setNewProduct(result);
           handleModalClose();
+          setLoading(false)
         } else {
           setToastMsg(
             "Oops! there seems to be an error. Fill in correct credentials"
@@ -205,6 +207,7 @@ const Users = () => {
           setInterval(() => {
             setToastMsg("");
           }, 3000);
+          setLoading(false)
         }
       })
       .catch((err) => {
@@ -235,7 +238,7 @@ const Users = () => {
           }, 5000);
         console.log(result);
         setNewProduct(result)
-        handleModalClose()
+        handleAdminModalClose()
         }else{
           setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
           setToastType("error")
@@ -316,7 +319,7 @@ const Users = () => {
     getUsers();
     getAssistants();
     // updateChartValue();
-  }, [user]);
+  }, [newProduct]);
   return (
     <section>
       <Toaster text={toastMsg} className={toastType} />
