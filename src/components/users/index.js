@@ -96,7 +96,9 @@ function createData(user, email, contact, store, account_type, status) {
 const Users = () => {
   const navigate = useNavigate();
   const [newUserModal, setnewUserModal] = useState(false);
+  const [newAdminModal, setnewAdminModal] = useState(false);
   const handleModalClose = () => setnewUserModal(false);
+  const handleAdminModalClose = () => setnewAdminModal(false);
   const [value, setValue] = useState(0);
   const [pmallUsers, setPmallUsers] = useState([]);
   const [vendors, setVendors] = useState([]);
@@ -106,6 +108,8 @@ const Users = () => {
   const { user } = useUser();
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
   const [newProduct, setNewProduct] = useState();
+  const [toastMsg, setToastMsg] = useState("");
+    const [toastType, setToastType] = useState("");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -114,12 +118,7 @@ const Users = () => {
     inputValues,
     onChangeHandler,
     setProfileDetails,
-    loading,
-    toastMsg,
-    setToastMsg,
-    toastType,
-    setToastType,
-    setState,
+    loading,setState,setLoading
   } = useVendor();
 
   console.log(user);
@@ -180,6 +179,7 @@ const Users = () => {
 
   const addVendorAssistant = (e) => {
     e.preventDefault();
+    setLoading(true)
     fetch("https://test.igeecloset.com/api/v1/user/add-vendor", {
       method: "POST",
       headers: {
@@ -200,6 +200,7 @@ const Users = () => {
           console.log(result);
           setNewProduct(result);
           handleModalClose();
+          setLoading(false)
         } else {
           setToastMsg(
             "Oops! there seems to be an error. Fill in correct credentials"
@@ -208,12 +209,52 @@ const Users = () => {
           setInterval(() => {
             setToastMsg("");
           }, 3000);
+          setLoading(false)
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const addAdmin = (e) => {
+    e.preventDefault()
+    setLoading(true)
+    fetch("https://test.igeecloset.com/api/v1/admin/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("authToken"),
+      },
+      body:JSON.stringify(inputValues)
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        if(result.status){
+          setLoading(false)
+          setToastMsg("Great! Admin added successfully");
+          setToastType("success")
+          setInterval(() => {
+            setToastMsg("");
+          }, 5000);
+        console.log(result);
+        setNewProduct(result)
+        handleAdminModalClose()
+        }else{
+          setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
+          setToastType("error")
+          setInterval(() => {
+            setToastMsg("");
+          }, 3000);
+          setLoading(false)
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   // Update Chart Value
   // const updateChartValue = (arr) => {
@@ -280,7 +321,7 @@ const Users = () => {
     getUsers();
     getAssistants();
     // updateChartValue();
-  }, [user]);
+  }, [newProduct]);
   return (
     <section>
       <Toaster text={toastMsg} className={toastType} />
@@ -290,13 +331,16 @@ const Users = () => {
           <h3>Manage Users</h3>
         </div>
         <div className="">
+        {user.accountType === "Admin" ? <button
+            className="btn btn-primary p-25"
+            onClick={() => setnewAdminModal(true)}>
+            Create Admin
+          </button> :
           <button
             className="btn btn-primary p-25"
             onClick={() => setnewUserModal(true)}>
-            {user.accountType === "Admin"
-              ? "Create Admin"
-              : "Add Vendor Assistant"}
-          </button>
+              Add Vendor Assistant
+          </button>}
         </div>
       </section>
       <div className="s-divider"></div>
@@ -976,6 +1020,170 @@ const Users = () => {
                   onClick={addVendorAssistant}
                   disabled={loading}>
                   {loading ? <ButtonLoader /> : "Save"}
+                </button>
+              </div>
+            </form>
+          </section>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={newAdminModal}
+        onClose={handleAdminModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <div className="mb-35">
+            <Typography id="modal-modal-title">
+              <h4 className="summary__title t-xl title-case">Add Admin</h4>
+            </Typography>
+            <div className="s-divider"></div>
+          </div>
+          <section className="flex__normal">
+            <div className="w-200">
+              <div className="profile_pic_holder b-round">
+                <img src={profile} className="profile_pic b-round" />
+                <div className="pos-rel w100-m10 ">
+                  <input
+                    type="file"
+                    className="form-control-input no-border"
+                    name="file"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={(e) => {
+                      // if (selectedName == "") {
+                      //   setAlert("Please Select a file name");
+                      //   return;
+                      // }
+                      const formData = new FormData();
+                      const files = e.target.files;
+                      files?.length && formData.append("file", files[0]);
+                      //setLoading(true);
+                      fetch(
+                        "https://test.igeecloset.com/api/v1/products/upload-file",
+                        {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                          },
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          //setLoading(false);
+                          console.log(data)
+                          setState((inputValues) => ({
+                            ...inputValues,
+                            photo: data.url, 
+                          }))
+                          console.log(inputValues)
+                        })
+                        .catch((error) => {
+                          //setLoading(false);
+                          console.log(error)
+                        });
+                    }}
+                  />
+                </div>
+                {/* <button className="btn btn-primary p-25 mt-15">
+                  Upload Photo
+                </button> */}
+              </div>
+            </div>
+            <form style={{ width: "100%" }}>
+              <section className="flex-container mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label> Firstname</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="fname"
+                    placeholder="e.g Ahmed"
+                    onChange={onChangeHandler}
+                    value={inputValues.fname || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label> Lastname</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="lname"
+                    placeholder="e.g Peter"
+                    onChange={onChangeHandler}
+                    value={inputValues.lname || ""}
+                  />
+                </div>
+              </section>
+
+              <section className="flex-container mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label> Username</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="username"
+                    placeholder="hooli"
+                    onChange={onChangeHandler}
+                    value={inputValues.username || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label> contact number</label>
+                  <input
+                    type="number"
+                    className="form-control-input "
+                    name="phone"
+                    placeholder="e.g. 0803 000 0000"
+                    onChange={onChangeHandler}
+                    value={inputValues.phone || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label> email address</label>
+                  <input
+                    type="email"
+                    className="form-control-input "
+                    name="email"
+                    placeholder="email@domain.com"
+                    onChange={onChangeHandler}
+                    value={inputValues.email || ""}
+                  />
+                </div>
+              </section>
+              <section className="flex-container mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label> Set Password</label>
+                  <input
+                    type="password"
+                    className="form-control-input "
+                    name="password"
+                    placeholder="******"
+                    onChange={onChangeHandler}
+                    value={inputValues.password || ""}
+                  />
+                </div>
+                <div className="pos-rel w100-m10 ">
+                  <label> Ref id</label>
+                  <input
+                    type="text"
+                    className="form-control-input "
+                    name="ref_id"
+                    placeholder="ref id"
+                    onChange={onChangeHandler}
+                    value={inputValues.ref_id || ""}
+                  />
+                </div>
+              </section>
+
+              <div className="flex__normal w-30 pull-right mt-w35">
+                <button
+                  onClick={handleAdminModalClose}
+                  className="btn btn-secondary p-25 pull-right mr-10">
+                  Cancel
+                </button>
+                <button className="btn btn-primary p-25 pull-right" onClick={addAdmin} disabled={loading}>
+                    {loading ? <ButtonLoader /> : "Save"}
                 </button>
               </div>
             </form>
