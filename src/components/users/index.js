@@ -41,6 +41,7 @@ const style = {
 };
 
 const columns = [
+  { id: "s/n", label: "S/N" },
   { id: "user", label: "Account Holder" },
   { id: "email", label: "Email" },
   { id: "contact", label: "Phone Number" },
@@ -109,7 +110,7 @@ const Users = () => {
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
   const [newProduct, setNewProduct] = useState();
   const [toastMsg, setToastMsg] = useState("");
-    const [toastType, setToastType] = useState("");
+  const [toastType, setToastType] = useState("");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -118,7 +119,9 @@ const Users = () => {
     inputValues,
     onChangeHandler,
     setProfileDetails,
-    loading,setState,setLoading
+    loading,
+    setState,
+    setLoading,
   } = useVendor();
 
   console.log(user);
@@ -179,7 +182,7 @@ const Users = () => {
 
   const addVendorAssistant = (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     fetch("https://test.igeecloset.com/api/v1/user/add-vendor", {
       method: "POST",
       headers: {
@@ -200,7 +203,7 @@ const Users = () => {
           console.log(result);
           setNewProduct(result);
           handleModalClose();
-          setLoading(false)
+          setLoading(false);
         } else {
           setToastMsg(
             "Oops! there seems to be an error. Fill in correct credentials"
@@ -209,7 +212,7 @@ const Users = () => {
           setInterval(() => {
             setToastMsg("");
           }, 3000);
-          setLoading(false)
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -218,8 +221,8 @@ const Users = () => {
   };
 
   const addAdmin = (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     fetch("https://test.igeecloset.com/api/v1/admin/register", {
       method: "POST",
       headers: {
@@ -227,34 +230,35 @@ const Users = () => {
         Accept: "application/json",
         Authorization: "Bearer " + localStorage.getItem("authToken"),
       },
-      body:JSON.stringify(inputValues)
+      body: JSON.stringify(inputValues),
     })
       .then((resp) => resp.json())
       .then((result) => {
-        if(result.status){
-          setLoading(false)
+        if (result.status) {
+          setLoading(false);
           setToastMsg("Great! Admin added successfully");
-          setToastType("success")
+          setToastType("success");
           setInterval(() => {
             setToastMsg("");
-          }, 5000);
-        console.log(result);
-        setNewProduct(result)
-        handleAdminModalClose()
-        }else{
-          setToastMsg("Oops! there seems to be an error. Fill in correct credentials")
-          setToastType("error")
+          }, 5000);
+          console.log(result);
+          setNewProduct(result);
+          handleAdminModalClose();
+        } else {
+          setToastMsg(
+            "Oops! there seems to be an error. Fill in correct credentials"
+          );
+          setToastType("error");
           setInterval(() => {
             setToastMsg("");
-          }, 3000);
-          setLoading(false)
+          }, 3000);
+          setLoading(false);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
 
   // Update Chart Value
   // const updateChartValue = (arr) => {
@@ -331,16 +335,19 @@ const Users = () => {
           <h3>Manage Users</h3>
         </div>
         <div className="">
-        {user.accountType === "Admin" ? <button
-            className="btn btn-primary p-25"
-            onClick={() => setnewAdminModal(true)}>
-            Create Admin
-          </button> :
-          <button
-            className="btn btn-primary p-25"
-            onClick={() => setnewUserModal(true)}>
+          {user.accountType === "Admin" ? (
+            <button
+              className="btn btn-primary p-25"
+              onClick={() => setnewAdminModal(true)}>
+              Create Admin
+            </button>
+          ) : (
+            <button
+              className="btn btn-primary p-25"
+              onClick={() => setnewUserModal(true)}>
               Add Vendor Assistant
-          </button>}
+            </button>
+          )}
         </div>
       </section>
       <div className="s-divider"></div>
@@ -442,6 +449,7 @@ const Users = () => {
                 <TableBody>
                   {pmallUsers?.map((user, index) => (
                     <TableRow key={user.id} onClick={() => setUserDetail(user)}>
+                      <TableCell> {index + 1}</TableCell>
                       <TableCell className="b-r">
                         <div className="d-flex alc f-10 flex-start">
                           <div
@@ -519,6 +527,7 @@ const Users = () => {
                         <TableRow
                           key={user.id}
                           onClick={() => setUserDetail(user)}>
+                          <TableCell> {index + 1}</TableCell>
                           <TableCell className="b-r">
                             <div className="d-flex alc f-10 flex-start">
                               <div
@@ -1064,23 +1073,24 @@ const Users = () => {
                           method: "POST",
                           body: formData,
                           headers: {
-                            Authorization: "Bearer " + localStorage.getItem("authToken"),
+                            Authorization:
+                              "Bearer " + localStorage.getItem("authToken"),
                           },
                         }
                       )
                         .then((res) => res.json())
                         .then((data) => {
                           //setLoading(false);
-                          console.log(data)
+                          console.log(data);
                           setState((inputValues) => ({
                             ...inputValues,
-                            photo: data.url, 
-                          }))
-                          console.log(inputValues)
+                            photo: data.url,
+                          }));
+                          console.log(inputValues);
                         })
                         .catch((error) => {
                           //setLoading(false);
-                          console.log(error)
+                          console.log(error);
                         });
                     }}
                   />
@@ -1182,8 +1192,11 @@ const Users = () => {
                   className="btn btn-secondary p-25 pull-right mr-10">
                   Cancel
                 </button>
-                <button className="btn btn-primary p-25 pull-right" onClick={addAdmin} disabled={loading}>
-                    {loading ? <ButtonLoader /> : "Save"}
+                <button
+                  className="btn btn-primary p-25 pull-right"
+                  onClick={addAdmin}
+                  disabled={loading}>
+                  {loading ? <ButtonLoader /> : "Save"}
                 </button>
               </div>
             </form>
