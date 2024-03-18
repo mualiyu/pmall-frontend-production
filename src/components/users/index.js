@@ -499,15 +499,17 @@ const Users = () => {
                       <TableCell>
                         {" "}
                         <span
-                          className="badge bg-success"
+                          className="badge"
                           style={{
-                            color:
+                            color: "white",
+                            fontWeight: 700,
+                            backgroundColor:
                               user?.status === "2"
-                                ? "#aabf10"
+                                ? "red"
                                 : user?.status === "3"
-                                ? "green"
+                                ? "#aabf10"
                                 : user?.status === "1"
-                                ? "green"
+                                ? "#10ac7e"
                                 : "red",
                           }}>
                           {user.status === "1" || user.status === null
