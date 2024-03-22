@@ -987,6 +987,10 @@ input:checked + .slider:before {
   display: grid;
 }
 
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .grid-4 {
   grid-template-columns: repeat(4, 1fr);
 }
@@ -1124,9 +1128,12 @@ input:checked + .slider:before {
 
 .border {
   border: 1px solid #eee;
-  padding: 20px;
+  padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .border input {
@@ -1224,4 +1231,57 @@ input:checked + .slider:before {
 
 .bl {
   border-left: 2px solid #eee;
+}
+
+.store-container {
+  font-size: 16px;
+}
+
+.store-container .px {
+  padding: 20px 120px;
+}
+
+.store-container p {
+  font-size: 14px;
+}
+
+.store-container .top {
+  padding: 20px 120px;
+  border-bottom: 1px solid #eee;
+}
+.store-container select {
+  border: none;
+  font-size: 14px;
+}
+
+.store-container .sb {
+  padding-left: 10px;
+  border-left: 1px solid #eee;
+}
+
+.store-container .search {
+  border: 1px solid #333;
+  flex: 1 1 0%;
+  height: 50px;
+  border-radius: 25px;
+  padding: 0 20px;
+}
+
+.store-container .search p {
+  font-size: 12px;
+}
+
+.store-container .icon {
+  font-size: 25px;
+}
+.store-container .search input {
+  border: none;
+  flex: 1 1 0%;
+}
+
+.search-container h3 {
+  font-size: 18px;
+}
+.border .icon {
+  padding-left: 5px;
 }
