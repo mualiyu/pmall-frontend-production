@@ -220,7 +220,7 @@ export const VendorSignupProvider = ({ children }) => {
   const handleResetPassword = async (e) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
-    inputValues.email = "mualiyuoox@gmail.com";
+    inputValues.device_name = 1234;
     fetch("https://test.igeecloset.com/api/v1/reset-password", {
       method: "POST",
       headers: {
@@ -266,7 +266,7 @@ export const VendorSignupProvider = ({ children }) => {
   const handleVerifyToken = async (e) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
-    inputValues.email = "mualiyuoox@gmail.com";
+    inputValues.device_name = 1234;
     fetch("https://test.igeecloset.com/api/v1/verify-code", {
       method: "POST",
       headers: {

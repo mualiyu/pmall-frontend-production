@@ -99,7 +99,7 @@ const UserDetails = () => {
     loading,
     setLoading,
     toastMsg,
-    toastType
+    toastType,
   } = useVendor();
 
   const [selectedState, setSelectedState] = useState("");
@@ -112,7 +112,7 @@ const UserDetails = () => {
     const matchingLgas =
       nigeriaStateAndLgas.find((state) => state.state === newState)?.lgas || [];
     setLgas(matchingLgas);
-    console.log(matchingLgas)
+    console.log(matchingLgas);
     if (!e?.persist) {
       setState(inputValues, {
         ...inputValues,
@@ -131,7 +131,7 @@ const UserDetails = () => {
   };
 
   const getUsersDetails = () => {
-      setLoading(true)
+    setLoading(true);
     fetch("https://test.igeecloset.com/api/v1/profile", {
       method: "GET",
       headers: {
@@ -162,7 +162,7 @@ const UserDetails = () => {
           lga: result.data.user.lga,
           address: result.data.user.address,
         });
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -175,7 +175,7 @@ const UserDetails = () => {
 
   return (
     <section className="page__header w-full" style={{ display: "block" }}>
-    <Toaster text={toastMsg} className={toastType}/>
+      <Toaster text={toastMsg} className={toastType} />
       <div className="user-details">
         <div className="page__header">
           <h1>User Details</h1>
@@ -201,35 +201,33 @@ const UserDetails = () => {
                   <p>0 Rates</p>
                 </div>
                 <div className="flex flex-col g-30 mt-10">
-                <h3 className="bold grid-item">Personal Information</h3>
-                {profileDetails?.user_type === "Vendor" && (
+                  <h3 className="bold grid-item">Personal Information</h3>
+                  {profileDetails?.user_type === "Vendor" && (
+                    <div className="flex g-10">
+                      <p>Store Name</p>
+                      {<h4>{profileDetails?.store_name}</h4>}
+                    </div>
+                  )}
                   <div className="flex g-10">
-                    <p>Store Name</p>
-                    {<h4>{profileDetails?.store_name}</h4>}
+                    <p>Email</p>
+                    <h4>{profileDetails?.email}</h4>
                   </div>
-                )}
-                <div className="flex g-10">
-                  <p>Email</p>
-                  <h4>{profileDetails?.email}</h4>
-                </div>
 
-                <div className="flex g-10">
-                  <p>Phone Number</p>
-                  <h4>{profileDetails?.phone}</h4>
-                </div>
-                <div className="flex g-10">
-                  <p>Username</p>
-                  <h4>{profileDetails?.username || "N/A"}</h4>
-                </div>
-
+                  <div className="flex g-10">
+                    <p>Phone Number</p>
+                    <h4>{profileDetails?.phone}</h4>
+                  </div>
+                  <div className="flex g-10">
+                    <p>Username</p>
+                    <h4>{profileDetails?.username || "N/A"}</h4>
+                  </div>
                 </div>
               </div>
             </div>
-            
-            {loading && <ButtonLoader /> }
+
+            {loading && <ButtonLoader />}
             {profileDetails && (
               <div className="details w-full grid grid-3 gr-20 bl">
-               
                 <div className="flex g-10 grid-item">
                   <p>User Type</p>
                   <h4>{profileDetails?.user_type}</h4>
@@ -362,7 +360,7 @@ const UserDetails = () => {
                       type="text"
                       className="form-control-input "
                       name="fname"
-                      placeholder="e.g Adamu"
+                      disabled
                       onChange={onChangeHandler}
                       value={inputValues.fname || profileDetails.fname}
                     />
@@ -373,7 +371,7 @@ const UserDetails = () => {
                       type="text"
                       className="form-control-input "
                       name="lname"
-                      placeholder="e.g Norris"
+                      disabled
                       onChange={onChangeHandler}
                       value={inputValues.lname || profileDetails.lname}
                     />
@@ -386,7 +384,7 @@ const UserDetails = () => {
                       type="email"
                       className="form-control-input "
                       name="email"
-                      placeholder="email@domain.com"
+                      disabled
                       onChange={onChangeHandler}
                       value={inputValues.email || profileDetails.email}
                     />
@@ -411,7 +409,7 @@ const UserDetails = () => {
                         type="text"
                         className="form-control-input "
                         name="store_name"
-                        placeholder="e.g Hooli Stores"
+                        disabled
                         onChange={onChangeHandler}
                         value={
                           inputValues.store_name || profileDetails.store_name
@@ -419,16 +417,17 @@ const UserDetails = () => {
                       />
                     </div>
                     <div className="pos-rel w100-m10 ">
-                      <label> Store ULR </label>
+                      <label> Store URL </label>
                       <input
                         type="text"
                         disabled
                         className="form-control-input "
                         name="store_url"
-                        placeholder="https://pmall.ng/hooli_stores"
                         onChange={onChangeHandler}
                         value={
-                          inputValues.store_url || profileDetails.store_url
+                          profileDetails?.store_url
+                            ? profileDetails?.store_url
+                            : "N/A"
                         }
                       />
                     </div>
