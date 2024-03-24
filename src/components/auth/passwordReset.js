@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import { useVendor } from "../../context/AuthContext";
 import useForm from "../../utils/useForm";
+import ButtonLoader from "../../utils/buttonLoader";
+import Toaster from "../../utils/toaster";
+
+
 
 const ResetPassword = () => {
   const onEnter = (e) => {
@@ -15,10 +19,11 @@ const ResetPassword = () => {
   };
 
   //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(resetHandler);
-  const { inputValues, onChangeHandler, onForgotPasswordHandler } = useVendor();
+  const { inputValues, onChangeHandler, onForgotPasswordHandler,loading, toastMsg, toastType  } = useVendor();
 
   return (
     <section>
+      <Toaster text={toastMsg} className={toastType} />
       <div className="reset-password">
         <div className="left">
           <p className="head">Admin Login</p>
@@ -50,12 +55,15 @@ const ResetPassword = () => {
                 <button
                   className="reset-btn"
                   type="submit"
-                  onClick={onForgotPasswordHandler}>
-                  Reset Password
+                  onClick={onForgotPasswordHandler}
+                  disabled={loading}>
+                  {loading ? <ButtonLoader /> : "Reset Password"}
                 </button>
                 <p className="center bold">Suddenly remember it?</p>
                 <Link to="/">
-                  <button className="back-to-login bold">Back to Login</button>
+                  <button className="back-to-login bold">
+                    Back to Login
+                  </button>
                 </Link>
               </span>
             </form>

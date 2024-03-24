@@ -1138,6 +1138,7 @@ const Users = () => {
                     placeholder="hooli"
                     onChange={onChangeHandler}
                     value={inputValues.username || ""}
+                    autocomplete="off"
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">

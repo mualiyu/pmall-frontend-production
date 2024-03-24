@@ -145,7 +145,8 @@ const Dashboard = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const [pmallUsers, setPmallUsers] = useState([]);
-  const {loading,setLoading} = useVendor
+  const {loading,setLoading, setProfileDetails} = useVendor()
+  const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
 
   const getUsers = () => {
     fetch("https://test.igeecloset.com/api/v1/get-all-users", {
@@ -188,6 +189,11 @@ const Dashboard = () => {
       console.log(err);
     });
 };
+
+function setUserDetail(data) {
+  navigate("/app/users/details/");
+  setProfileDetails(data);
+}
 
 useEffect(() => {
   getUsersDetails();
@@ -526,8 +532,16 @@ useEffect(() => {
               <div className="gap-10">
                 {pmallUsers?.filter((user) => user.user_type === 'Vendor') 
                   .map((user) => (
-                    <div className="flex">
-                      <div className="user__avatar bg-success">
+                    <div className="flex pointer" onClick={()=>setUserDetail(user)}>
+                        <div
+                            className="user__avatar"
+                            style={{
+                              backgroundColor:
+                                userBadge[
+                                  Math.floor(Math.random() * userBadge.length)
+                                ],
+                              color: "#1a3e9c",
+                            }}>
                             <h3 style={{ textTransform: "uppercase" }}>
                               {getInitials(user?.fname)}
                               {getInitials(user?.lname)}
@@ -550,7 +564,15 @@ useEffect(() => {
                 {pmallUsers?.filter((user) => user.user_type === 'Affiliate') 
                     .map((user) => (
                       <div className="flex">
-                        <div className="user__avatar bg-success">
+                          <div
+                            className="user__avatar"
+                            style={{
+                              backgroundColor:
+                                userBadge[
+                                  Math.floor(Math.random() * userBadge.length)
+                                ],
+                              color: "#1a3e9c",
+                            }}>
                             <h3 style={{ textTransform: "uppercase" }}>
                               {getInitials(user?.fname)}
                               {getInitials(user?.lname)}

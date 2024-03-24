@@ -193,7 +193,7 @@ export const VendorSignupProvider = ({ children }) => {
             setToastMsg("");
           }, 5000);
           setTimeout(() => {
-            window.location.href = "/auth/app/verify-token";
+            window.location.href = `/auth/app/verify-token/ ${inputValues.email}`;
           }, 2000);
           setLoading(false);
         } else {
@@ -217,10 +217,10 @@ export const VendorSignupProvider = ({ children }) => {
   };
 
   // Reset New Password Function
-  const handleResetPassword = async (e) => {
+  const handleResetPassword = async (e,email) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
-    inputValues.email = "mualiyuoox@gmail.com";
+    inputValues.email = email
     fetch("https://test.igeecloset.com/api/v1/reset-password", {
       method: "POST",
       headers: {
@@ -263,10 +263,10 @@ export const VendorSignupProvider = ({ children }) => {
 
   // Verify token function
 
-  const handleVerifyToken = async (e) => {
+  const handleVerifyToken = async (e,email) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
-    inputValues.email = "mualiyuoox@gmail.com";
+    inputValues.email = email
     fetch("https://test.igeecloset.com/api/v1/verify-code", {
       method: "POST",
       headers: {

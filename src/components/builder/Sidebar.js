@@ -79,6 +79,11 @@ function Sidebar() {
                 Icon={Person2Icon}
                 title="Account Management"
               />
+               <SidebarRow
+            path="/app/users"
+            Icon={AccessibilityNewIcon}
+            title="User Management"
+          />
             </>
           )}
           {(user?.accountType === "Admin" ||
@@ -96,11 +101,7 @@ function Sidebar() {
           />
           </>
           )}
-          <SidebarRow
-            path="/app/users"
-            Icon={AccessibilityNewIcon}
-            title="User Management"
-          />
+         
 
           <div className="s-divider"></div>
           {/* <SidebarRow path="/app/front-desk"  Icon={HomeWorkIcon} title="Front Desk"/> */}

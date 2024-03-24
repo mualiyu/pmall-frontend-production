@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useForm from "../../utils/useForm";
 import { useVendor } from "../../context/AuthContext";
+import ButtonLoader from "../../utils/buttonLoader";
+import Toaster from "../../utils/toaster";
 
 const VerifyToken = () => {
   const onEnter = (e) => {
@@ -15,9 +17,11 @@ const VerifyToken = () => {
   };
 
   //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(newPasswordHandler);
-  const { inputValues, onChangeHandler, handleVerifyToken } = useVendor();
+  const { inputValues, onChangeHandler, handleVerifyToken,loading, toastMsg, toastType  } = useVendor();
+  const {email} = useParams()
   return (
     <section className="new-password">
+      <Toaster text={toastMsg} className={toastType} />
       <div className="reset-password">
         <div className="left">
           <p className="head">Admin Login</p>
@@ -47,8 +51,9 @@ const VerifyToken = () => {
                 <button
                   className="reset-btn"
                   type="submit"
-                  onClick={handleVerifyToken}>
-                  Validate Token
+                  onClick={(e)=>handleVerifyToken(e,email)}
+                  disabled={loading}>
+                  {loading ? <ButtonLoader /> : "Validate Token"}
                 </button>
               </span>
             </form>

@@ -521,7 +521,7 @@ css-6od3lo-MuiChip-label {
   width: 100%;
 }
 .layout {
-  width: 100vw;
+  /* width: 100vw; */
   min-height: 100%;
   position: relative;
   font-family: "manrope";
@@ -937,7 +937,7 @@ button:disabled {
 .alert.active {
   transform: translateX(0px);
   right: -5px;
-  min-width: 300px
+  min-width: 300px;
 }
 .alert span {
   font-size: 12px;
