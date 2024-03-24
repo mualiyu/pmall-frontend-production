@@ -36,7 +36,7 @@ function Application() {
         <div>
         <Routes>
             <Route
-              path="/app/storefront"
+              path="/marketplace"
               element={<StoreFront />}
             />
           </Routes>
