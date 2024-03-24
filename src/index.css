@@ -1218,11 +1218,20 @@ input:checked + .slider:before {
   color: rgb(194, 35, 35);
 }
 
-.bg-blue {
+.bg-blue,
+.bg-yellow {
   padding: 3px 5px;
-  background-color: var(--primary-bg-color);
   color: #fff;
   border-radius: 3px;
+}
+
+.bg-blue {
+  background-color: var(--primary-bg-color);
+}
+
+.bg-yellow {
+  background-color: yellow;
+  padding: 25px;
 }
 
 .mt-50 {
@@ -1284,4 +1293,193 @@ input:checked + .slider:before {
 }
 .border .icon {
   padding-left: 5px;
+}
+
+.bg-white {
+  background-color: white;
+  color: #000;
+}
+
+.product-card {
+  position: relative;
+  border-radius: 5px;
+}
+
+.product-card .img-div img {
+  z-index: 50;
+  border-radius: 5px;
+}
+
+.product-card .desc {
+  z-index: 100;
+}
+
+.red-rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-left: 6.3%;
+  bottom: 127px;
+  padding: 7px;
+  z-index: 100;
+  position: absolute;
+}
+
+.red-rating {
+  background: rgb(230, 7, 7);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+}
+.product-card .desc .main-desc {
+  padding: 40px 20px 20px 20px;
+}
+
+.product-card .desc .main-desc h3 {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.product-card .bt {
+  border-top: 1px solid #eee;
+  padding-top: 5px;
+}
+
+.bg-yellow h1 {
+  font-size: 24px;
+  color: red;
+  font-weight: bold;
+}
+
+.section-tabs h1,
+.bg-white-container h1 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.section-tabs l1 {
+  font-size: 14px;
+}
+
+.bg-white-container {
+  background-color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+}
+.h-320 {
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.h-320 img {
+  width: 200px;
+}
+
+.h-320 img.long {
+  width: 100px;
+}
+
+.news h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.news h4 {
+  font-size: 14px;
+}
+
+.news p {
+  font-size: 12px;
+}
+.deals h3,
+.partners h3 {
+  font-size: 16px;
+  font-weight: bold;
+}
+.partners h3 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+.partners img {
+  width: 140px;
+  padding: 20px;
+}
+.news img,
+.deals img {
+  max-width: 290px;
+}
+
+.news,
+.deals,
+.partners {
+  border-radius: 10px;
+}
+
+.download-app .logo {
+  width: 200px;
+}
+
+.download-app {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.download-app h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.download-app p {
+  font-size: 16px;
+  color: rgb(204, 200, 200);
+  line-height: 30px;
+}
+.p-10 {
+  padding: 10px;
+  height: 100%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.store-footer h3 {
+  font-size: 16px;
+}
+.store-footer p {
+  font-size: 14px;
+}
+
+.p-method img {
+  width: 70px;
+  border-radius: 5px;
+}
+
+.newsletter input {
+  width: 300px;
+  height: 50px;
+}
+
+.newsletter button {
+  width: 100px;
+  height: 50px;
+  background-color: var(--primary-bg-color);
+  border: none;
+  border-radius: 0;
+  color: #fff;
+}
+.lh {
+  line-height: 30px;
+}
+.rights {
+  background: #000;
+  color: #fff;
+  height: 50px;
 }

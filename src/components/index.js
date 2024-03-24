@@ -56,12 +56,12 @@ function Application() {
 
           {user.token && (
             <div className="flex-container">
-              <div className="sidenav">
+              {/* <div className="sidenav">
                 <Sidebar />
                 <Routes>
                   <Route path="/store" element={<Store />} />
                 </Routes>
-              </div>
+              </div> */}
 
               <div className="main__content">
                 <Routes>
