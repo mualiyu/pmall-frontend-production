@@ -588,7 +588,15 @@ const Dashboard = () => {
                       ?.filter((user) => user.user_type === "Vendor")
                       .map((user) => (
                         <div className="flex">
-                          <div className="user__avatar bg-success">
+                          <div
+                            className="user__avatar"
+                            style={{
+                              backgroundColor:
+                                userBadge[
+                                  Math.floor(Math.random() * userBadge.length)
+                                ],
+                              color: "#1a3e9c",
+                            }}>
                             <h3 style={{ textTransform: "uppercase" }}>
                               {getInitials(user?.fname)}
                               {getInitials(user?.lname)}
@@ -624,7 +632,15 @@ const Dashboard = () => {
                       ?.filter((user) => user.user_type === "Affiliate")
                       .map((user) => (
                         <div className="flex">
-                          <div className="user__avatar bg-success">
+                          <div
+                            className="user__avatar"
+                            style={{
+                              backgroundColor:
+                                userBadge[
+                                  Math.floor(Math.random() * userBadge.length)
+                                ],
+                              color: "#1a3e9c",
+                            }}>
                             <h3 style={{ textTransform: "uppercase" }}>
                               {getInitials(user?.fname)}
                               {getInitials(user?.lname)}
