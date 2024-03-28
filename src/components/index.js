@@ -23,6 +23,7 @@ import OrderDetails from "./orderManagement/details";
 import SiteSettings from "./siteSettings";
 import VerifyToken from "./auth/verifyToken";
 import { useUser } from "../context/UserContext";
+import StoreFront from "./storefront";
 
 function Application() {
   const { user } = useUser();
@@ -33,6 +34,12 @@ function Application() {
       <React.Fragment>
         {/* <UserProvider> */}
         <div>
+        <Routes>
+            <Route
+              path="/app/storefront"
+              element={<StoreFront />}
+            />
+          </Routes>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/auth/app/Signup" element={<SignUp />} />
@@ -41,20 +48,20 @@ function Application() {
               element={<ResetPassword />}
             />
             <Route
-              path="/auth/app/Set-new-password"
+              path="/auth/app/Set-new-password/:email"
               element={<NewPasswordPage />}
             />
-            <Route path="/auth/app/verify-token" element={<VerifyToken />} />
+            <Route path="/auth/app/verify-token/:email" element={<VerifyToken />} />
           </Routes>
 
           {user.token && (
             <div className="flex-container">
-              <div className="sidenav">
+              {/* <div className="sidenav">
                 <Sidebar />
                 <Routes>
                   <Route path="/store" element={<Store />} />
                 </Routes>
-              </div>
+              </div> */}
 
               <div className="main__content">
                 <Routes>

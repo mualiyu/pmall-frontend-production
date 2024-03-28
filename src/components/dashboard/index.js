@@ -145,6 +145,9 @@ const Dashboard = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const [pmallUsers, setPmallUsers] = useState([]);
+  const { loading, setLoading, setProfileDetails } = useVendor();
+  const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
+
   const { loading, setLoading } = useVendor;
   console.log(user);
   const getUsers = () => {
@@ -517,7 +520,9 @@ const Dashboard = () => {
               {" "}
               {user.accountType === "Vendor"
                 ? "Become an affiliate"
-                : "Become a vendor"}{" "}
+                : user.accountType === "Affiliate"
+                ? "Become a vendor"
+                : "Create a New Vendor"}
             </button>
 
             <div className="total-profit g-5 flex-col">

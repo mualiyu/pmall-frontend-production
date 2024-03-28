@@ -24,7 +24,7 @@ const Login = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const { inputValues, onChangeHandler, handleLogin, loading, toastMsg } =
+  const { inputValues, onChangeHandler, handleLogin, loading, toastMsg, toastType } =
     useVendor();
   return (
     <section>
@@ -38,7 +38,7 @@ const Login = () => {
         </div>
         <div className="right">
           <div className="container">
-            <Toaster text={toastMsg} className="success" />
+            <Toaster text={toastMsg} className={toastType} />
             <h1>Hello again!</h1>
             <p className="bold">Welcome back, you've been missed!</p>
             <form action="">
