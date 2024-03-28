@@ -159,7 +159,7 @@ export const VendorSignupProvider = ({ children }) => {
           setToastType("error");
           setTimeout(() => {
             setToastMsg("");
-          }, 3000);
+          }, 4000);
           setLoading(false);
         }
       })
@@ -217,10 +217,10 @@ export const VendorSignupProvider = ({ children }) => {
   };
 
   // Reset New Password Function
-  const handleResetPassword = async (e,email) => {
+  const handleResetPassword = async (e, email) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
-    inputValues.email = email
+    inputValues.email = email;
     fetch("https://test.igeecloset.com/api/v1/reset-password", {
       method: "POST",
       headers: {
@@ -263,10 +263,10 @@ export const VendorSignupProvider = ({ children }) => {
 
   // Verify token function
 
-  const handleVerifyToken = async (e,email) => {
+  const handleVerifyToken = async (e, email) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
-    inputValues.email = email
+    inputValues.email = email;
     fetch("https://test.igeecloset.com/api/v1/verify-code", {
       method: "POST",
       headers: {

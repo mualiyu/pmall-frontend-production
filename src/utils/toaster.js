@@ -3,9 +3,9 @@ import React from "react";
 export default function Toaster({ text, className }) {
   let backgroundColor = "";
   if (className === "error") {
-    backgroundColor = "red";
+    backgroundColor = "#df0d1e";
   } else if (className === "success") {
-    backgroundColor = "#1348af";
+    backgroundColor = "#10ac7e47";
   }
 
   return (

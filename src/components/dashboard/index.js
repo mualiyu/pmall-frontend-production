@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
+import HubIcon from "@mui/icons-material/Hub";
+import SavingsIcon from "@mui/icons-material/Savings";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Box from "@mui/material/Box";
@@ -147,8 +152,6 @@ const Dashboard = () => {
   const [pmallUsers, setPmallUsers] = useState([]);
   const { loading, setLoading, setProfileDetails } = useVendor();
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
-
-  const { loading, setLoading } = useVendor;
   console.log(user);
   const getUsers = () => {
     fetch("https://test.igeecloset.com/api/v1/get-all-users", {
@@ -275,7 +278,11 @@ const Dashboard = () => {
                 <div className="left_top_dashboard">
                   <div className="balance">
                     <span className="balance-icon-container">
-                      <CurrencyExchangeOutlinedIcon />
+                      {user.accountType === "Vendor" ? (
+                        <ShoppingBasketIcon />
+                      ) : (
+                        <StorefrontIcon />
+                      )}
                     </span>
                     <span className="balance-text">
                       <h1 className="flex">000 </h1>
@@ -288,7 +295,11 @@ const Dashboard = () => {
                   </div>
                   <div className="balance">
                     <span className="balance-icon-container">
-                      <AccountBalanceOutlinedIcon />
+                      {user.accountType === "Vendor" ? (
+                        <ShoppingBasketIcon />
+                      ) : (
+                        <HubIcon />
+                      )}
                     </span>
                     <span className="balance-text">
                       <h1 className="flex">123 </h1>
@@ -303,7 +314,11 @@ const Dashboard = () => {
                 <div className="left_top_dashboard">
                   <div className="balance">
                     <span className="balance-icon-container">
-                      <AccountBalanceOutlinedIcon />
+                      {user.accountType !== "Admin" ? (
+                        <CurrencyBitcoinIcon />
+                      ) : (
+                        <StorefrontIcon />
+                      )}
                     </span>
                     <span className="balance-text">
                       <h1 className="flex">
@@ -319,7 +334,11 @@ const Dashboard = () => {
                   </div>
                   <div className="balance">
                     <span className="balance-icon-container">
-                      <AccountBalanceOutlinedIcon />
+                      {user.accountType !== "Admin" ? (
+                        <SavingsIcon />
+                      ) : (
+                        <HubIcon />
+                      )}
                     </span>
                     <span className="balance-text">
                       <h1 className="flex">&#x20A6;000.00 </h1>
@@ -556,7 +575,14 @@ const Dashboard = () => {
                   <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
                     Recently registerd vendors
                   </h1>
-                  <p> Oops! You haven't registered any vendor</p>
+                  {pmallUsers?.length === 0 && (
+                    <p>
+                      {" "}
+                      Oops! No worries. Register a Vendor to start earning
+                      endless commissions
+                    </p>
+                  )}
+
                   <div className="gap-10">
                     {pmallUsers
                       ?.filter((user) => user.user_type === "Vendor")
@@ -586,6 +612,13 @@ const Dashboard = () => {
                   <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
                     Recently registerd affiliates
                   </h1>
+                  {pmallUsers?.length === 0 && (
+                    <p>
+                      {" "}
+                      Oops! No worries. Register an Affiliate to start earning
+                      endless commissions
+                    </p>
+                  )}
                   <div className="gap-10">
                     {pmallUsers
                       ?.filter((user) => user.user_type === "Affiliate")

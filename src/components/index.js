@@ -34,11 +34,8 @@ function Application() {
       <React.Fragment>
         {/* <UserProvider> */}
         <div>
-        <Routes>
-            <Route
-              path="/app/storefront"
-              element={<StoreFront />}
-            />
+          <Routes>
+            <Route path="/app/storefront" element={<StoreFront />} />
           </Routes>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -51,17 +48,17 @@ function Application() {
               path="/auth/app/Set-new-password/:email"
               element={<NewPasswordPage />}
             />
-            <Route path="/auth/app/verify-token/:email" element={<VerifyToken />} />
+            <Route
+              path="/auth/app/verify-token/:email"
+              element={<VerifyToken />}
+            />
           </Routes>
 
           {user.token && (
             <div className="flex-container">
-              {/* <div className="sidenav">
+              <div className="sidenav">
                 <Sidebar />
-                <Routes>
-                  <Route path="/store" element={<Store />} />
-                </Routes>
-              </div> */}
+              </div>
 
               <div className="main__content">
                 <Routes>

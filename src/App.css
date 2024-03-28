@@ -931,10 +931,17 @@ button:disabled {
   border-radius: 7px;
 }
 .error {
-  background-color: #ff4949;
+  background-color: #df0d1e;
+  color: #eaeaea;
+  position: absolute;
+  z-index: 99999;
+  font-weight: 700
 }
 .success {
-  background-color: var(--primary-bg-color);
+  background-color: #10ac7e47;
+  color: #097756;
+  z-index: 99999;
+  font-weight: 700
 }
 .warning {
   background-color: #ffc35a;

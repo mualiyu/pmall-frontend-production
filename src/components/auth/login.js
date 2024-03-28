@@ -24,8 +24,14 @@ const Login = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const { inputValues, onChangeHandler, handleLogin, loading, toastMsg, toastType } =
-    useVendor();
+  const {
+    inputValues,
+    onChangeHandler,
+    handleLogin,
+    loading,
+    toastMsg,
+    toastType,
+  } = useVendor();
   return (
     <section>
       <div className="login-screen">
@@ -43,7 +49,7 @@ const Login = () => {
             <p className="bold">Welcome back, you've been missed!</p>
             <form action="">
               <div className="pos-rel">
-                <label className="abs"> Username </label>
+                <label className="abs"> Username / Email </label>
                 <input
                   type="text"
                   className="form-control"
@@ -55,7 +61,7 @@ const Login = () => {
               </div>
 
               <div className="pos-rel">
-                <label className="abs"> Password</label>
+                <label className="abs"> Your Password</label>
                 <div
                   style={{ display: "flex", alignItems: "center" }}
                   className="pos-rel">
