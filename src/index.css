@@ -1,7 +1,9 @@
 :root {
   --primary-bg-color: #1a3e9c;
   --secondary-color: ;
+  --primary-warning: #ffb31f;
   /* --primary-color: #fff; */
+  --primary-dark: #121212;
   --color-chalk: #e3e3e3;
   --primary-color-light: #c3d0f3;
   --user-badge-light: rgba(var(--ct-link-color-rgb), var(--ct-link-opacity, 1));
@@ -661,6 +663,7 @@ button {
 }
 .prod-details .right .prod-name {
   font-size: 25px;
+  line-height: 1.3em;
 }
 .prod-details .right .prod-price {
   font-size: 25px;

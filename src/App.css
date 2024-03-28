@@ -319,7 +319,7 @@ tbody {
   text-align: right;
   margin-top: -20px;
   margin-bottom: 15px;
-  color: #4475f3;
+  color: var(--primary-bg-color);
 }
 .mt-35 {
   margin-top: 35px;
@@ -399,16 +399,21 @@ tr:nth-child(even) {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .btn-primary {
-  background-color: #4475f3;
+  background-color: var(--primary-bg-color);
   color: white;
+}
+.btn-warning {
+  background-color: var(--primary-warning);
+  color: var(--primary-dark);
+  font-size: 11px
 }
 .btn-dark {
   background-color: #2b2b2b;
   color: #bebebe;
 }
 .btn-secondary {
-  border: thin solid #4475f3;
-  color: #4475f3;
+  border: thin solid var(--primary-bg-color);
+  color: var(--primary-bg-color);
   background-color: white;
 }
 .m-auto {
@@ -500,7 +505,7 @@ css-6od3lo-MuiChip-label {
   font-weight: 300;
 }
 .main__content {
-  width: 78%;
+  width: 100%;
   margin: 0 20px;
   height: 100vh;
 }
@@ -521,7 +526,7 @@ css-6od3lo-MuiChip-label {
   width: 100%;
 }
 .layout {
-  width: 100vw;
+  /* width: 100vw; */
   min-height: 100%;
   position: relative;
   font-family: "manrope";

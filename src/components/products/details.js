@@ -1,27 +1,32 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
 import { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 
 const ProductDetails = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const { user } = useUser();
+  const [moreImages, setMoreImages] = useState([]);
   const [value, setValue] = useState(4);
   const [detail, setDetails] = useState([]);
   const getProductDetails = () => {
-    fetch("https://test.igeecloset.com/api/v1/products/get-single?product_id=" + id, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        Accept: "application/json",
-        Authorization: "Bearer " + user?.token,
-      },
-    })
+    fetch(
+      "https://test.igeecloset.com/api/v1/products/get-single?product_id=" + id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + user?.token,
+        },
+      }
+    )
       .then((resp) => resp.json())
       .then((result) => {
         console.log(result.data.product);
         setDetails(result.data.product);
+        setMoreImages(result?.data?.product?.more_images.split(","));
       })
       .catch((err) => {
         console.log(err);
@@ -32,25 +37,23 @@ const ProductDetails = () => {
     getProductDetails();
   }, []);
 
-  const addCommasToNumberString = (numberString) =>{
-    return  numberString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
-  }
+  const addCommasToNumberString = (numberString) => {
+    return numberString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   return (
     <div className="prod-details mt-50">
       <div className="left">
-       
+        <div>
           <div>
-            <div>
-              <img src={detail.image} alt="" className="main-image" />
-            </div>
-            <div className="other-images">
-              <img src={detail?.more_images} alt="" className="image" />
-              <img src={detail?.more_images} alt="" className="image" />
-              <img src={detail?.more_images} alt="" className="image" />
-            </div>
+            <img src={detail.image} alt="" className="main-image" />
           </div>
-      
+          <div className="other-images">
+            <img src={moreImages[0]} alt="" className="image" />
+            <img src={moreImages[1]} alt="" className="image" />
+            <img src={moreImages[2]} alt="" className="image" />
+          </div>
+        </div>
       </div>
       <div className="right">
         <h3 className="prod-name">{detail.name}</h3>
@@ -63,12 +66,15 @@ const ProductDetails = () => {
           }}
           readOnly
         />
-        {detail.selling_price && <h4 className="prod-price">
-        &#x20A6;{addCommasToNumberString(detail?.selling_price)} <span className="former-price"> &#x20A6;{addCommasToNumberString(detail?.cost_price)}</span>
-        </h4>}
-        <p className="prod-desc">
-          {detail.description}
-        </p>
+        {detail.selling_price && (
+          <h4 className="prod-price">
+            &#x20A6;{addCommasToNumberString(detail?.selling_price)}{" "}
+            <sup className="former-price">
+              &#x20A6;{addCommasToNumberString(detail?.cost_price)}
+            </sup>
+          </h4>
+        )}
+        <p className="prod-desc">{detail.description}</p>
         <h3 className="f18">Available Options</h3>
         <div className="variations">
           <div>
@@ -104,11 +110,12 @@ const ProductDetails = () => {
             <span className="f-bold f-13">Brand :</span> {detail.brand_id}
           </p>
           <p className="f-13">
-            <span className="f-bold f-13">Availability :</span> {detail.quantity} products in
-            stock
+            <span className="f-bold f-13">Availability :</span>{" "}
+            {detail.quantity} products in stock
           </p>
           <p className="f-13">
-            <span className="f-bold f-13">Vendor :</span> {detail.store_id} (Halal Lab)
+            <span className="f-bold f-13">Vendor :</span> {detail.store_id}{" "}
+            (Halal Lab)
           </p>
           <p className="f-13">
             <span className="f-bold f-13">Amt Sold : </span> {detail.inStock}

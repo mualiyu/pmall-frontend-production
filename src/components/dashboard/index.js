@@ -16,8 +16,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Line } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
-import moment from 'moment';
-
+import moment from "moment";
+// import { FaBook } from "react-icons/fa6";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -145,8 +145,8 @@ const Dashboard = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const [pmallUsers, setPmallUsers] = useState([]);
-  const {loading,setLoading} = useVendor
-
+  const { loading, setLoading } = useVendor;
+  console.log(user);
   const getUsers = () => {
     fetch("https://test.igeecloset.com/api/v1/get-all-users", {
       method: "GET",
@@ -168,38 +168,37 @@ const Dashboard = () => {
 
   const getUsersDetails = () => {
     //setLoading(true)
-  fetch("https://test.igeecloset.com/api/v1/profile", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json;charset=UTF-8",
-      Accept: "application/json",
-      Authorization: "Bearer " + user?.token,
-    },
-  })
-    .then((resp) => resp.json())
-    .then((result) => {
-      console.log(result);
-      if (result.status) {
-        setPmallUsers(result.data.user.referrals);
-      }
-     // setLoading(false)
+    fetch("https://test.igeecloset.com/api/v1/profile", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + user?.token,
+      },
     })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result);
+        if (result.status) {
+          setPmallUsers(result.data.user.referrals);
+        }
+        // setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-useEffect(() => {
-  getUsersDetails();
-}, []);
-
+  useEffect(() => {
+    getUsersDetails();
+  }, []);
 
   useEffect(() => {
     let isLoggedIn = localStorage.getItem("authToken");
     if (!isLoggedIn) {
       navigate("/");
     }
-    getUsers()
+    getUsers();
   }, []);
   console.log(user);
   const dashboard = () => {
@@ -276,8 +275,12 @@ useEffect(() => {
                       <CurrencyExchangeOutlinedIcon />
                     </span>
                     <span className="balance-text">
-                      <h1 className="flex">&#x20A6;000.00 </h1>
-                      <h4 className="color-grey">Sales Today</h4>
+                      <h1 className="flex">000 </h1>
+                      <h4 className="color-grey">
+                        {user.accountType === "Vendor"
+                          ? "Products Sold"
+                          : "Total Vendors"}
+                      </h4>
                     </span>
                   </div>
                   <div className="balance">
@@ -285,8 +288,12 @@ useEffect(() => {
                       <AccountBalanceOutlinedIcon />
                     </span>
                     <span className="balance-text">
-                      <h1 className="flex">000 </h1>
-                      <h4 className="color-grey">Total Products</h4>
+                      <h1 className="flex">123 </h1>
+                      <h4 className="color-grey">
+                        {user.accountType === "Vendor"
+                          ? "Total Products"
+                          : "Total Affiliates"}
+                      </h4>
                     </span>
                   </div>
                 </div>
@@ -296,8 +303,15 @@ useEffect(() => {
                       <AccountBalanceOutlinedIcon />
                     </span>
                     <span className="balance-text">
-                      <h1 className="flex">000 </h1>
-                      <h4 className="color-grey">Total Affiliate</h4>
+                      <h1 className="flex">
+                        2000 <sup> PMT</sup>
+                      </h1>
+                      <h4 className="color-grey">
+                        {" "}
+                        {user.accountType !== "Admin"
+                          ? "PMT Wallet"
+                          : "Total Stores"}
+                      </h4>
                     </span>
                   </div>
                   <div className="balance">
@@ -305,8 +319,12 @@ useEffect(() => {
                       <AccountBalanceOutlinedIcon />
                     </span>
                     <span className="balance-text">
-                      <h1 className="flex">000 </h1>
-                      <h4 className="color-grey">Total Stores</h4>
+                      <h1 className="flex">&#x20A6;000.00 </h1>
+                      <h4 className="color-grey">
+                        {user.accountType !== "Admin"
+                          ? "Sales Wallet"
+                          : "Total Affiliates"}
+                      </h4>
                     </span>
                   </div>
                 </div>
@@ -495,6 +513,13 @@ useEffect(() => {
             </TableContainer>
           </div>
           <div className="g-20 flex-col">
+            <button class="btn btn-warning">
+              {" "}
+              {user.accountType === "Vendor"
+                ? "Become an affiliate"
+                : "Become a vendor"}{" "}
+            </button>
+
             <div className="total-profit g-5 flex-col">
               <p>Total Profit</p>
               <h1 style={{ fontSize: 20 }}>&#x20A6;0.00</h1>
@@ -519,95 +544,115 @@ useEffect(() => {
                 <button>Withdraw Money</button>
               </div>
             </div>
-            <div className="recent-vendors">
-              <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                Recently registerd vendors
-              </h1>
-              <div className="gap-10">
-                {pmallUsers?.filter((user) => user.user_type === 'Vendor') 
-                  .map((user) => (
+
+            {user.accountType !== "Vendor" && (
+              <>
+                <div className="recent-vendors">
+                  <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
+                    Recently registerd vendors
+                  </h1>
+                  <p> Oops! You haven't registered any vendor</p>
+                  <div className="gap-10">
+                    {pmallUsers
+                      ?.filter((user) => user.user_type === "Vendor")
+                      .map((user) => (
+                        <div className="flex">
+                          <div className="user__avatar bg-success">
+                            <h3 style={{ textTransform: "uppercase" }}>
+                              {getInitials(user?.fname)}
+                              {getInitials(user?.lname)}
+                            </h3>
+                          </div>
+                          <div>
+                            <h4 className="f-300 capitalze">
+                              {user.fname} {user.lname} ({user.store_name})
+                            </h4>
+                            <p className="sub__title">
+                              {moment(user.created_at).format(
+                                "MMM DD [at] hh:mm A"
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                <div className="recent-affilates">
+                  <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
+                    Recently registerd affiliates
+                  </h1>
+                  <div className="gap-10">
+                    {pmallUsers
+                      ?.filter((user) => user.user_type === "Affiliate")
+                      .map((user) => (
+                        <div className="flex">
+                          <div className="user__avatar bg-success">
+                            <h3 style={{ textTransform: "uppercase" }}>
+                              {getInitials(user?.fname)}
+                              {getInitials(user?.lname)}
+                            </h3>
+                          </div>
+                          <div>
+                            <h4 className="f-300 capitalze">
+                              {user.fname} {user.lname} -{user.my_ref_id}
+                            </h4>
+                            <p className="sub__title">
+                              {moment(user.created_at).format(
+                                "MMM DD [at] hh:mm A"
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                <div className="recent-affilates">
+                  <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
+                    HIGHEST PAYOUT AFFILIATES
+                  </h1>
+                  <div className="gap-10">
                     <div className="flex">
                       <div className="user__avatar bg-success">
-                            <h3 style={{ textTransform: "uppercase" }}>
-                              {getInitials(user?.fname)}
-                              {getInitials(user?.lname)}
-                            </h3>
+                        <h3>AP</h3>
                       </div>
                       <div>
-                        <h4 className="f-300 capitalze">{user.fname} {user.lname} ({user.store_name})</h4>
-                        <p className="sub__title">{moment(user.created_at).format("MMM DD [at] hh:mm A")}</p>
+                        <h4 className="f-300">Ahmed Peter (84 Downlines)</h4>
+                        <p className="sub__title">&#x20A6; 812,935</p>
                       </div>
                     </div>
-                  ))
-                }
-              </div>
-            </div>
-            <div className="recent-affilates">
-              <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                Recently registerd affiliates
-              </h1>
-              <div className="gap-10">
-                {pmallUsers?.filter((user) => user.user_type === 'Affiliate') 
-                    .map((user) => (
-                      <div className="flex">
-                        <div className="user__avatar bg-success">
-                            <h3 style={{ textTransform: "uppercase" }}>
-                              {getInitials(user?.fname)}
-                              {getInitials(user?.lname)}
-                            </h3>
-                        </div>
-                        <div>
-                          <h4 className="f-300 capitalze">{user.fname} {user.lname} -{user.my_ref_id}</h4>
-                          <p className="sub__title">{moment(user.created_at).format("MMM DD [at] hh:mm A")}</p>
-                        </div>
+                    <div className="flex">
+                      <div className="user__avatar bg-error">
+                        <h3>PY</h3>
                       </div>
-                    ))
-                  }
-              </div>
-            </div>
-            <div className="recent-affilates">
-              <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                HIGHEST PAYOUT AFFILIATES
-              </h1>
-              <div className="gap-10">
-                <div className="flex">
-                  <div className="user__avatar bg-success">
-                    <h3>AP</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Ahmed Peter (84 Downlines)</h4>
-                    <p className="sub__title">&#x20A6; 812,935</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-error">
-                    <h3>PY</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Philip Yahaya (200 Downlines)</h4>
-                    <p className="sub__title">&#x20A6; 812,935</p>
-                  </div>
-                </div>
-                <div className="flex">
-                  <div className="user__avatar bg-success">
-                    <h3>DA</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Dennis Abdulmalik (78 Downlines)</h4>
-                    <p className="sub__title">&#x20A6; 812,935</p>
+                      <div>
+                        <h4 className="f-300">Philip Yahaya (200 Downlines)</h4>
+                        <p className="sub__title">&#x20A6; 812,935</p>
+                      </div>
+                    </div>
+                    <div className="flex">
+                      <div className="user__avatar bg-success">
+                        <h3>DA</h3>
+                      </div>
+                      <div>
+                        <h4 className="f-300">
+                          Dennis Abdulmalik (78 Downlines)
+                        </h4>
+                        <p className="sub__title">&#x20A6; 812,935</p>
+                      </div>
+                    </div>
+                    <div className="flex">
+                      <div className="user__avatar bg-warning">
+                        <h3>OD</h3>
+                      </div>
+                      <div>
+                        <h4 className="f-300">Ogun Dunamis (66 Downlines)</h4>
+                        <p className="sub__title">&#x20A6; 812,935</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex">
-                  <div className="user__avatar bg-warning">
-                    <h3>OD</h3>
-                  </div>
-                  <div>
-                    <h4 className="f-300">Ogun Dunamis (66 Downlines)</h4>
-                    <p className="sub__title">&#x20A6; 812,935</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
       )}
@@ -631,7 +676,7 @@ useEffect(() => {
           <section className="flex__normal">
             <div className="w-200">
               <div className="profile_pic_holder">
-                <img src={profile} className="profile_pic" />
+                <img src={profile} className="profile_pic" alt="profile" />
                 <button className="btn btn-primary p-25 mt-15">
                   Upload Photo
                 </button>
