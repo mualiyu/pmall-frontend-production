@@ -190,7 +190,7 @@ export const VendorSignupProvider = ({ children }) => {
           setLoading(true);
           const token = localStorage.getItem("authToken");
         try {
-          const response = await fetch('https://test.igeecloset.com/api/v1/profile/update', {
+          const response = await fetch('https://pmall-api.arc.sch.ng/api/v1/profile/update', {
             method: 'POST',
             headers:{ 
               'Content-Type': 'application/json;charset=UTF-8', 
