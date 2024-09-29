@@ -5,13 +5,16 @@ import Application from "./components";
 // import { UserProvider } from "../context/UserContext";
 import { UserProvider } from "./context/UserContext";
 import { VendorSignupProvider } from "./context/VendorSignupContext";
+import { CartProvider } from "./context/cartContext";
 
 function App() {
   return (
     <div className="layout">
       <VendorSignupProvider>
         <UserProvider>
-          <Application />
+          <CartProvider>
+            <Application />
+          </CartProvider>
         </UserProvider>
       </VendorSignupProvider>
     </div>

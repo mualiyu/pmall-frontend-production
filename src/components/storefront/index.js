@@ -1,5 +1,5 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -20,6 +20,8 @@ import MovieCreationOutlinedIcon from '@mui/icons-material/MovieCreationOutlined
 import MusicNoteOutlinedIcon from '@mui/icons-material/MusicNoteOutlined';
 import CardTravelOutlinedIcon from '@mui/icons-material/CardTravelOutlined';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
+import { Link } from 'react-router-dom';
+import { useCart } from "../../context/cartContext"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -47,10 +49,99 @@ function TabPanel(props) {
   }
 
 const StoreFront = () => {
+    const {cartLength} = useCart();
     const [value, setValue] = useState(0);
+    const [products, setProducts] = useState([]);
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
+      const productts = [
+        {
+          id: 1,
+          name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          price: 4000.00,
+          img:"/Screenshot 2024-03-19 154643.png",
+          rating:4.0,
+          desc: 'amet consectetur adipisicing elit'
+        },
+        {
+          id: 2,
+          name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          price: 4000.00,
+          img:"/Screenshot 2024-03-19 154643.png",
+          rating:4.0,
+          desc: 'amet consectetur adipisicing elit'
+        },
+        {
+          id: 3,
+          name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          price: 4000.00,
+          img:"/Screenshot 2024-03-19 154643.png",
+          rating:4.0,
+          desc: 'amet consectetur adipisicing elit'
+        },
+        {
+          id: 4,
+          name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          price: 4000.00,
+          img:"/Screenshot 2024-03-19 154643.png",
+          rating:4.0,
+          desc: 'amet consectetur adipisicing elit'
+        },
+      ];
+      
+    const getProducts = () => {
+        fetch("https://pmall-api.arc.sch.ng/api/v1/public/products/list-all", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("authToken"),
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setProducts(result.data);
+            // for (const item of result) {
+            //     if (item.status === 0) {
+            //     publishedCount++;
+            //     }
+            // }
+            })
+            .catch((err) => {
+            console.log(err);
+            });
+    };
+
+    const getProduct = () => {
+        fetch("https://pmall-api.arc.sch.ng/api/v1/public/products/list-all-by-category?category_id=1", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result,"edibles");
+            // setProducts(result.data);
+            // for (const item of result) {
+            //     if (item.status === 0) {
+            //     publishedCount++;
+            //     }
+            // }
+            })
+            .catch((err) => {
+            console.log(err);
+            });
+    };
+
+
+    useEffect(()=>{
+        getProducts()
+        getProduct()
+    },[])
     return ( 
         <div className="store-container">
             <div className="flex justsb alc top">
@@ -88,7 +179,12 @@ const StoreFront = () => {
                     </form>
                     <div className='flex alc g-10'>
                         <FavoriteBorderIcon className='icon'/>
-                        <ShoppingCartOutlinedIcon className='icon'/>
+                        <Link to="/app/cart">
+                            <div className='cart-box pointer'>
+                                <ShoppingCartOutlinedIcon className='icon'/>
+                                <p className='cart-items-count'>{cartLength}</p>
+                            </div>
+                        </Link>
                         <h3>My cart</h3>
                     </div>
                 </div>
@@ -219,75 +315,25 @@ const StoreFront = () => {
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
-                        <div className='flex justsb g-10'>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
+                        <div className='flex  g-20'>
+                            {products?.map(product => (
+                                <Link to={"/app/products/details/"+product.id } className='no-underline'>
+                                <div className='bg-white product-card'>
+                                    <div className='img-div'>
+                                        <img src={product.image} alt="" className='w-ful' width={300} height={300} />
                                     </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
+                                    <div className='desc'>
+                                        <div className='main-desc flex flex-col g-5'>
+                                            <h3>{product.name}</h3>
+                                            <h3 className='red bold'>N{product.selling_price}</h3>
+                                            <div className="mt-5 bt">
+                                                <p>{product.description}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                </Link>
+                            ))}
                         </div>
                     </TabPanel>
                     <TabPanel value={value} index={1}>

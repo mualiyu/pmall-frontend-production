@@ -1074,7 +1074,7 @@ console.log(user?.accountType)
           <section className="flex__normal">
             <div className="w-200">
               <div className="profile_pic_holder">
-                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <img src={profile} className="profile_pic" name="image" value={inputValues.image || ""} />
                 <div className="pos-rel w100-m10 ">
                   <input
                     type="file"
