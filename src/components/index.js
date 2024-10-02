@@ -24,6 +24,9 @@ import SiteSettings from "./siteSettings";
 import VerifyToken from "./auth/verifyToken";
 import { useUser } from "../context/UserContext";
 import StoreFront from "./storefront";
+import Cart from "./cart";
+import CheckoutPage from "./checkout";
+import TransactionHistory from "./transactionhistory";
 
 function Application() {
   const { user } = useUser();
@@ -34,8 +37,11 @@ function Application() {
       <React.Fragment>
         {/* <UserProvider> */}
         <div>
-          <Routes>
-            <Route path="/app/storefront" element={<StoreFront />} />
+        <Routes>
+            <Route
+              path="/marketplace"
+              element={<StoreFront />}
+            />
           </Routes>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -78,6 +84,18 @@ function Application() {
                   <Route
                     path="/app/products/details/:id"
                     element={<ProductDetails />}
+                  />
+                   <Route
+                    path="/app/cart"
+                    element={<Cart />}
+                  />
+                   <Route
+                    path="/app/checkout"
+                    element={<CheckoutPage />}
+                  />
+                    <Route
+                    path="/app/transaction-history"
+                    element={<TransactionHistory />}
                   />
                   <Route path="/app/products/list" element={<ProductList />} />
                   <Route path="/app/affilates" element={<Affilates />} />
