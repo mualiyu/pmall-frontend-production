@@ -40,7 +40,7 @@ const ProductDetails = () => {
 
   const getProductDetails = () => {
     fetch(
-      "https://test.igeecloset.com/api/v1/products/get-single?product_id=" + id,
+      "https://api.pmall.com.ng/api/v1/products/get-single?product_id=" + id,
       {
         method: "GET",
         headers: {
