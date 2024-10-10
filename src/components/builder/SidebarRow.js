@@ -1,17 +1,21 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
-import './Builder.css'
+import "./Builder.css";
 
-function SidebarRow({Icon, title, path}) {
-    return (
-        <Link to={path} style={{ textDecoration: 'none' }}>
-            <div className="sidebarRow">
-                {Icon && <Icon className="sidebar__icon" />}
-                <p className="sidebar__title"> {title} </p>
-            </div>
-        </Link>
-        
-    )
+function SidebarRow({ Icon, title, path, onClick }) {
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+  return (
+    <Link to={path} style={{ textDecoration: "none" }}>
+      <div className="sidebarRow alc" onClick={handleClick}>
+        {Icon && <Icon className="sidebar__icon" />}
+        <p className="sidebar__title"> {title} </p>
+      </div>
+    </Link>
+  );
 }
 
-export default SidebarRow
+export default SidebarRow;
