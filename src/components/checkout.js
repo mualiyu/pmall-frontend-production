@@ -165,7 +165,7 @@ const CheckoutPage = () => {
     //         }
         
     
-    //         fetch("https://test.igeecloset.com/api/v1/customer/checkout/initiate", {
+    //         fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
     //             method: "POST",
     //             headers: {
     //             "Content-Type": "application/json;charset=UTF-8",

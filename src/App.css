@@ -257,6 +257,8 @@ tbody {
   align-items: center;
   padding: 30px 10px;
   justify-content: space-between;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+    margin-bottom: 33px;
 }
 .flex__normal {
   display: flex;

@@ -58,11 +58,6 @@ var config = {
   options: {},
 };
 
-<<<<<<< HEAD
-
-function createData(vendor, location, email, phone, plan, product_qty, status, registered, action) {
-  return { vendor, location, email, phone, plan, product_qty, status, registered, action };
-=======
 function createData(
   vendor,
   location,
@@ -85,7 +80,6 @@ function createData(
     registered,
     action,
   };
->>>>>>> 1397e171941f92415d26531c7a23f38533de46a2
 }
 
 const Vendors = () => {
