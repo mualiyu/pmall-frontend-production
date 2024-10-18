@@ -149,7 +149,7 @@ const StoreFront = () => {
                 <div className="flex justsb alc g-10">
                 
                 <div className='flex alc sb'>
-                <Link to="/auth/sign-in" className="forgotten bold">
+                <Link to="/auth/sign-in" className="forgotten bold flex alc sb">
                         <LockIcon />
                         <p>Login</p>
                         </Link>
