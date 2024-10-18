@@ -147,10 +147,15 @@ const StoreFront = () => {
             <div className="flex justsb alc top">
                 <p>Default welcome message! Join free or signin</p>
                 <div className="flex justsb alc g-10">
-                    <div className='flex alc sb'>
+                
+                <div className='flex alc sb'>
+                <Link to="/auth/sign-in" className="forgotten bold">
                         <LockIcon />
                         <p>Login</p>
+                        </Link>
                     </div>
+            
+                   
                     <div className='flex alc sb'>
                         <Person2Icon />
                         <p>My Account</p>
