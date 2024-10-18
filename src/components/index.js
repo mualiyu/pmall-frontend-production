@@ -39,12 +39,12 @@ function Application() {
         <div>
         <Routes>
             <Route
-              path="/marketplace"
+              path="/"
               element={<StoreFront />}
             />
           </Routes>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/auth/sign-in" element={<Login />} />
             <Route path="/auth/app/Signup" element={<SignUp />} />
             <Route
               path="/auth/app/Reset-password"
