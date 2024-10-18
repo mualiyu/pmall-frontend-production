@@ -91,7 +91,7 @@ const StoreFront = () => {
       ];
       
     const getProducts = () => {
-        fetch("https://api.pmall.com.ng/api/v1/public/products/list-all", {
+        fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/public/products/list-all", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -115,7 +115,7 @@ const StoreFront = () => {
     };
 
     const getProduct = () => {
-        fetch("https://api.pmall.com.ng/api/v1/public/products/list-all-by-category?category_id=1", {
+        fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/public/products/list-all-by-category?category_id=1", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",

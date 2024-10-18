@@ -17,7 +17,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://api.pmall.com.ng/api/v1/register/vendor", {
+    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/register/vendor", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -64,7 +64,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://api.pmall.com.ng/api/v1/register/affiliate", {
+    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/register/affiliate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -74,6 +74,7 @@ export const VendorSignupProvider = ({ children }) => {
     })
       .then((resp) => resp.json())
       .then((result) => {
+        console.log(result);
         setLoading(false);
         console.log(result);
         if (result.status) {
@@ -113,7 +114,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://api.pmall.com.ng/api/v1/login", {
+    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -174,7 +175,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://api.pmall.com.ng/api/v1/forgot-password", {
+    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -221,7 +222,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://api.pmall.com.ng/api/v1/reset-password", {
+    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/reset-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -267,7 +268,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://api.pmall.com.ng/api/v1/verify-code", {
+    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/verify-code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

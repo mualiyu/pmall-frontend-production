@@ -154,7 +154,7 @@ const Dashboard = () => {
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
   console.log(user);
   const getUsers = () => {
-    fetch("https://api.pmall.com.ng/api/v1/get-all-users", {
+    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/get-all-users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -174,7 +174,7 @@ const Dashboard = () => {
 
   const getUsersDetails = () => {
     //setLoading(true)
-    fetch("https://api.pmall.com.ng/api/v1/profile", {
+    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/profile", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
