@@ -154,7 +154,7 @@ const Dashboard = () => {
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
   console.log(user);
   const getUsers = () => {
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/get-all-users", {
+    fetch("https://api.pmall.mukeey.com.ng/get-all-users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -174,7 +174,7 @@ const Dashboard = () => {
 
   const getUsersDetails = () => {
     //setLoading(true)
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/profile", {
+    fetch("https://api.pmall.mukeey.com.ng/profile", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

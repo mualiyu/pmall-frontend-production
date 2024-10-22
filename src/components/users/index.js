@@ -142,7 +142,7 @@ const Users = () => {
 
   // Get all Users from Server
   const getUsers = () => {
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/get-all-users", {
+    fetch("https://api.pmall.mukeey.com.ng/get-all-users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -162,7 +162,7 @@ const Users = () => {
   };
 
   const getAssistants = () => {
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/get-all-vendors", {
+    fetch("https://api.pmall.mukeey.com.ng/get-all-vendors", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -183,7 +183,7 @@ const Users = () => {
   const addVendorAssistant = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/user/add-vendor", {
+    fetch("https://api.pmall.mukeey.com.ng/user/add-vendor", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -223,7 +223,7 @@ const Users = () => {
   const addAdmin = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/admin/register", {
+    fetch("https://api.pmall.mukeey.com.ng/admin/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -858,7 +858,7 @@ const Users = () => {
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1070,7 +1070,7 @@ const Users = () => {
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,

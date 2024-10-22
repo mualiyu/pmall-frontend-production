@@ -17,7 +17,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/register/vendor", {
+    fetch("https://api.pmall.mukeey.com.ng/register/vendor", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -64,7 +64,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/register/affiliate", {
+    fetch("https://api.pmall.mukeey.com.ng/register/affiliate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -114,7 +114,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/login", {
+    fetch("https://api.pmall.mukeey.com.ng/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -175,7 +175,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/forgot-password", {
+    fetch("https://api.pmall.mukeey.com.ng/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -222,7 +222,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/reset-password", {
+    fetch("https://api.pmall.mukeey.com.ng/reset-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -268,7 +268,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/verify-code", {
+    fetch("https://api.pmall.mukeey.com.ng/verify-code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

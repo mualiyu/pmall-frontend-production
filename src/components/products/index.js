@@ -230,7 +230,7 @@ const ProductList = () => {
       setLoading(true)
       inputValues.more_images = moreImages?.join(", ")
     try {
-      const response = await fetch('https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/create', {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/products/create', {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -271,7 +271,7 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/update/1', {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/products/update/1', {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -310,7 +310,7 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/product-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -349,7 +349,7 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-sub-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/product-sub-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -384,7 +384,7 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-brand/update?brand_id=' + inputValues.id + '&brand_image=' + inputValues.brand_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/product-brand/update?brand_id=' + inputValues.id + '&brand_image=' + inputValues.brand_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -450,7 +450,7 @@ const ProductList = () => {
 
   const getProducts = () => {
     if(user?.accountType== "Vendor"){
-      fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products", {
+      fetch("https://api.pmall.mukeey.com.ng/products", {
         method: "GET",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -472,7 +472,7 @@ const ProductList = () => {
           console.log(err);
         });
     }else{
-      fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/?store_id=" + id, {
+      fetch("https://api.pmall.mukeey.com.ng/products/?store_id=" + id, {
         method: "GET",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -498,7 +498,7 @@ const ProductList = () => {
 
   const addCategory = (e) => {
     e.preventDefault()
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-category/create?category_image="+ inputValues.category_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch("https://api.pmall.mukeey.com.ng/product-category/create?category_image="+ inputValues.category_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -532,7 +532,7 @@ const ProductList = () => {
 
   const addSubCategory = (e) => {
     e.preventDefault()
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-sub-category/create?category_id=" + inputValues.category_id  + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch("https://api.pmall.mukeey.com.ng/product-sub-category/create?category_id=" + inputValues.category_id  + "&name=" + inputValues.name + "&description=" + inputValues.description, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -566,7 +566,7 @@ const ProductList = () => {
 
   const addBrand = (e) => {
     e.preventDefault()
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-brand/create?brand_image="+inputValues.brand_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch("https://api.pmall.mukeey.com.ng/product-brand/create?brand_image="+inputValues.brand_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -600,7 +600,7 @@ const ProductList = () => {
   };
 
   const getCategories = () => {
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-category/get-all",{
+    fetch("https://api.pmall.mukeey.com.ng/product-category/get-all",{
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -619,7 +619,7 @@ const ProductList = () => {
   };
   
   const getBrands = () => {
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-brand/get-all?store_id=" +id, {
+    fetch("https://api.pmall.mukeey.com.ng/product-brand/get-all?store_id=" +id, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -640,7 +640,7 @@ const ProductList = () => {
   const deleteProduct = (productId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this item?');
     if (isConfirmed) {
-      fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/delete-account?product_id=" + productId, {
+      fetch("https://api.pmall.mukeey.com.ng/products/delete-account?product_id=" + productId, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -675,7 +675,7 @@ const ProductList = () => {
   const deleteCategory = (categoryId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this category?');
     if (isConfirmed) {
-      fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-category/delete?category_id=" + categoryId, {
+      fetch("https://api.pmall.mukeey.com.ng/product-category/delete?category_id=" + categoryId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -713,7 +713,7 @@ const ProductList = () => {
   const deleteSubCategory = (categoryId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this category?');
     if (isConfirmed) {
-      fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-sub-category/delete?sub_category_id=" + categoryId, {
+      fetch("https://api.pmall.mukeey.com.ng/product-sub-category/delete?sub_category_id=" + categoryId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -749,7 +749,7 @@ const ProductList = () => {
   const deleteBrand = (brandId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this brand?');
     if (isConfirmed) {
-      fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/product-brand/delete?brand_id=" + brandId, {
+      fetch("https://api.pmall.mukeey.com.ng/product-brand/delete?brand_id=" + brandId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -1091,7 +1091,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1265,7 +1265,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1302,7 +1302,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1339,7 +1339,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1429,7 +1429,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1602,7 +1602,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1693,7 +1693,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1797,7 +1797,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1980,7 +1980,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -2084,7 +2084,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/products/upload-file",
                         {
                           method: "POST",
                           body: formData,

@@ -165,7 +165,7 @@ const CheckoutPage = () => {
     //         }
         
     
-    //         fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/customer/checkout/initiate", {
+    //         fetch("https://api.pmall.mukeey.com.ng/customer/checkout/initiate", {
     //             method: "POST",
     //             headers: {
     //             "Content-Type": "application/json;charset=UTF-8",

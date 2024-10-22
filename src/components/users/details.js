@@ -132,7 +132,7 @@ const UserDetails = () => {
 
   const getUsersDetails = () => {
     setLoading(true);
-    fetch("https://osaolt31a8.execute-api.us-east-2.amazonaws.com/profile", {
+    fetch("https://api.pmall.mukeey.com.ng/profile", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

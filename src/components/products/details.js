@@ -40,7 +40,7 @@ const ProductDetails = () => {
 
   const getProductDetails = () => {
     fetch(
-      "https://osaolt31a8.execute-api.us-east-2.amazonaws.com/products/get-single?product_id=" + id,
+      "https://api.pmall.mukeey.com.ng/products/get-single?product_id=" + id,
       {
         method: "GET",
         headers: {
