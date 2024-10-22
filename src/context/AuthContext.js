@@ -17,7 +17,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://api.pmall.mukeey.com.ng/register/vendor", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/register/vendor", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -64,7 +64,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://api.pmall.mukeey.com.ng/register/affiliate", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/register/affiliate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -114,7 +114,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://api.pmall.mukeey.com.ng/login", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -175,7 +175,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://api.pmall.mukeey.com.ng/forgot-password", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -222,7 +222,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://api.pmall.mukeey.com.ng/reset-password", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/reset-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -268,7 +268,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://api.pmall.mukeey.com.ng/verify-code", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/verify-code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
