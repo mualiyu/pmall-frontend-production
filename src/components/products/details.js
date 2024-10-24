@@ -96,9 +96,9 @@ const ProductDetails = () => {
               <img src={detail?.image ? detail?.image : "https://th.bing.com/th/id/OIP.608kpIxTz9H4RyDpKCimXQHaHa?rs=1&pid=ImgDetMain"} alt="" className="main-image" />
             </div>
             <div className="other-images">
-            <img src={moreImages !== null ? moreImages[0] : ""} alt="" className="image" />
-            <img src={moreImages !== null ? moreImages[1] : ""} alt="" className="image" />
-            <img src={moreImages !== null ? moreImages[2] : ""} alt="" className="image" />
+            <img src={detail?.more_images[0]} alt="" className="image" />
+            <img src={detail?.more_images[1]} alt="" className="image" />
+            <img src={detail?.more_images[2]} alt="" className="image" />
             </div>
           </div>
           {/* <div className="other-images">
