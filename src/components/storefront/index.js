@@ -1,24 +1,13 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useEffect, useState } from 'react';
+import LimitWord from '../../utils/limitWord';
+import currency from '../../utils/formatCurrency';
+import Loading from "../../utils/loading";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import LockIcon from '@mui/icons-material/Lock';
-import Person2Icon from '@mui/icons-material/Person2';
-import SearchIcon from '@mui/icons-material/Search';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
-import LunchDiningOutlinedIcon from '@mui/icons-material/LunchDiningOutlined';
-import SportsEsportsOutlinedIcon from '@mui/icons-material/SportsEsportsOutlined';
-import FitnessCenterOutlinedIcon from '@mui/icons-material/FitnessCenterOutlined';
-import MedicationLiquidOutlinedIcon from '@mui/icons-material/MedicationLiquidOutlined';
-import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
-import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
-import MovieCreationOutlinedIcon from '@mui/icons-material/MovieCreationOutlined';
-import MusicNoteOutlinedIcon from '@mui/icons-material/MusicNoteOutlined';
-import CardTravelOutlinedIcon from '@mui/icons-material/CardTravelOutlined';
+import Header from "../builder/header";
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Link } from 'react-router-dom';
 import { useCart } from "../../context/cartContext"
@@ -51,7 +40,9 @@ function TabPanel(props) {
 const StoreFront = () => {
     const {cartLength} = useCart();
     const [value, setValue] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
+    const [categories, setProductCategories] = useState(null)
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
@@ -91,26 +82,44 @@ const StoreFront = () => {
       ];
       
     const getProducts = () => {
+        setLoading(true);
+        getProductsCategories();
         fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
             Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("authToken"),
             },
         })
             .then((resp) => resp.json())
             .then((result) => {
             console.log(result);
             setProducts(result.data);
-            // for (const item of result) {
-            //     if (item.status === 0) {
-            //     publishedCount++;
-            //     }
-            // }
+            setLoading(false);
             })
             .catch((err) => {
             console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCategories = () => {
+        setLoading(true);
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setProductCategories(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
             });
     };
 
@@ -135,87 +144,19 @@ const StoreFront = () => {
             .catch((err) => {
             console.log(err);
             });
+
+            getProduct()
     };
 
 
     useEffect(()=>{
         getProducts()
-        getProduct()
     },[])
     return ( 
         <div className="store-container">
-            <div className="flex justsb alc top">
-                <p>Default welcome message! Join free or signin</p>
-                <div className="flex justsb alc g-10">
-                
-                <div className='flex alc sb'>
-                <Link to="/auth/sign-in" className="forgotten bold flex alc sb">
-                        <LockIcon />
-                        <p>Login</p>
-                        </Link>
-                    </div>
-            
-                   
-                    <div className='flex alc sb'>
-                        <Person2Icon />
-                        <p>My Account</p>
-                    </div>
-                    <div className='sb'>
-                        <select name="" id="">
-                            <option value="1">English</option>
-                        </select>
-                    </div>
-                    <div className='sb'>
-                        <select name="" id="">
-                            <option value="1">USD</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div className='px flex flex-col g-40 search-container'>
-                <div className="flex justsb alc g-40">
-                    <img src="/pmall-logo 1.png" alt="" />
-                    <form action="" className="flex alc search">
-                        <input type="text" placeholder='Search item...' />
-                        <div className='flex alc g-20'>
-                            <p className=''>All Category</p>
-                            <SearchIcon />
-                        </div>
-                    </form>
-                    <div className='flex alc g-10'>
-                        <FavoriteBorderIcon className='icon'/>
-                        <Link to="/app/cart">
-                            <div className='cart-box pointer'>
-                                <ShoppingCartOutlinedIcon className='icon'/>
-                                <p className='cart-items-count'>{cartLength}</p>
-                            </div>
-                        </Link>
-                        <h3>My cart</h3>
-                    </div>
-                </div>
-                <div className="flex g-40 alc">
-                    <select name="" id="">
-                        <option value="1">All Departments</option>
-                    </select>
-                    <div className="flex alc g-20">
-                    <select name="" id="">
-                        <option value="1">HOME</option>
-                    </select>
-                    <select name="" id="">
-                        <option value="1">SHOP</option>
-                    </select>
-                    <select name="" id="">
-                        <option value="1">PROMOTIONS</option>
-                    </select>
-                    <select name="" id="">
-                        <option value="1">BLOGS</option>
-                    </select>
-                    <select name="" id="">
-                        <option value="1">PAGES</option>
-                    </select>
-                 </div>
-                </div>
-                <div className="flex g-20">
+            <Loading loading={loading} />
+            <Header/>
+                <div className="flex g-20 px">
                     <div className='flex flex-col g-20'>
                         <img src="/Screenshot 2024-03-21 214441.png" alt="" className="w-full" />
                         <img src="/Screenshot 2024-03-21 214722.png" alt="" className="w-full" />
@@ -231,69 +172,17 @@ const StoreFront = () => {
                         <img src="/Screenshot 2024-03-21 220017.png" alt="" className="w-full" />
                     </div>
                 </div>
-                <div className="flex justsb ">
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <SchoolOutlinedIcon className='icon' />
+                <div className="flex justsb row">
+                {categories?.map(category => (
+                           <div className='flex flex-col g-10 alc brand_stores'>
+                            <div className='border b-image'>
+                                <img src="/MultiStream.png" className='icon' width="128px" />
+                            </div>
+                            <p className="cat_title">{category.name}</p>
                         </div>
-                        <p>Education</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <LunchDiningOutlinedIcon className='icon' />
-                        </div>
-                        <p>Food & Restaurant</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <SportsEsportsOutlinedIcon className='icon' />
-                        </div>
-                        <p>Game & Software</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <FitnessCenterOutlinedIcon className='icon' />
-                        </div>
-                        <p>Gym & Sport</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <MedicationLiquidOutlinedIcon className='icon' />
-                        </div>
-                        <p>Health & Beauty</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <HomeWorkOutlinedIcon className='icon'/>
-                        </div>
-                        <p>Hotel & Resort</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <LocalMallOutlinedIcon className='icon' />
-                        </div>
-                        <p>Mall & Store</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <MovieCreationOutlinedIcon className='icon' />
-                        </div>
-                        <p>Movie &  Entertainment</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <MusicNoteOutlinedIcon className='icon' />
-                        </div>
-                        <p>Music & Festival</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <CardTravelOutlinedIcon className='icon' />
-                        </div>
-                        <p>Travel Tour</p>
-                    </div>
+                        ))}
                 </div>
-            </div>
+           
             <div className='px flex flex-col g-40'>
                 <div className='flex flex-col g-40'>
                     <img src="/Screenshot 2024-03-19 150113.png" alt="" />
@@ -320,9 +209,10 @@ const StoreFront = () => {
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
+                    
                         <div className='flex  g-20'>
                             {products?.map(product => (
-                                <Link to={"/app/products/details/"+product.id } className='no-underline'>
+                                <Link to={`/${product.name}/${product.id}` } className='no-underline'>
                                 <div className='bg-white product-card'>
                                     <div className='img-div'>
                                         <img src={product.image} alt="" className='w-ful' width={300} height={300} />
@@ -330,9 +220,9 @@ const StoreFront = () => {
                                     <div className='desc'>
                                         <div className='main-desc flex flex-col g-5'>
                                             <h3>{product.name}</h3>
-                                            <h3 className='red bold'>N{product.selling_price}</h3>
+                                            <h3 className='red bold'>{currency(product.selling_price)}</h3>
                                             <div className="mt-5 bt">
-                                                <p>{product.description}</p>
+                                                <p>{LimitWord(product.description, 10)}</p>
                                             </div>
                                         </div>
                                     </div>

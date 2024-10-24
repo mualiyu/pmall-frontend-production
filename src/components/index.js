@@ -47,28 +47,30 @@ function Application() {
             <Route path="/auth/sign-in" element={<Login />} />
             <Route path="/auth/app/Signup" element={<SignUp />} />
             <Route
-              path="/auth/app/Reset-password"
+              path="/auth/app/reset-account"
               element={<ResetPassword />}
             />
             <Route
-              path="/auth/app/Set-new-password/:email"
+              path="/auth/app/reset/:email"
               element={<NewPasswordPage />}
             />
             <Route
-              path="/auth/app/verify-token/:email"
+              path="/auth/app/verify/:email"
               element={<VerifyToken />}
             />
           </Routes>
 
-          {user.token && (
+          {/* {user.token && ( */}
             <div className="flex-container">
+              {user.token && (
               <div className="sidenav">
                 <Sidebar />
               </div>
-
+              )}
+              
               <div className="main__content">
                 <Routes>
-                  <Route path="/app/dashboard" element={<Dashboard />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/app/users" element={<Users />} />
                   <Route path="/app/users/details" element={<UserDetails />} />
                   <Route path="/app/vendors" element={<Vendors />} />
@@ -82,9 +84,10 @@ function Application() {
                     element={<VendorDetails />}
                   />
                   <Route
-                    path="/app/products/details/:id"
+                    path="/:product_name/:id"
                     element={<ProductDetails />}
                   />
+                  
                    <Route
                     path="/app/cart"
                     element={<Cart />}
@@ -111,7 +114,6 @@ function Application() {
                 </Routes>
               </div>
             </div>
-          )}
         </div>
       </React.Fragment>
     </Router>

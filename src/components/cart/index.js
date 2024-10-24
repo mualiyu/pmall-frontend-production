@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import Header from "../builder/header";
 import { useCart } from "../../context/cartContext"
 
 
@@ -57,6 +58,8 @@ const Cart = () => {
     };
     
     return ( 
+        <div className="store-container">
+        <Header/>
         <div className='cart flex flex-col g-20'>
             <div className='head'>
                 <img src="/pmall-logo 1.png" alt="test" />
@@ -122,6 +125,7 @@ const Cart = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
      );
 }

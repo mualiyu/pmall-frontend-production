@@ -194,7 +194,7 @@ export const VendorSignupProvider = ({ children }) => {
             setToastMsg("");
           }, 5000);
           setTimeout(() => {
-            window.location.href = `/auth/app/verify-token/ ${inputValues.email}`;
+            window.location.href = `/auth/app/verify/ ${inputValues.email}`;
           }, 2000);
           setLoading(false);
         } else {
@@ -285,7 +285,7 @@ export const VendorSignupProvider = ({ children }) => {
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
-            window.location.href = "/auth/app/Set-new-password";
+            window.location.href = "/auth/app/reset";
           }, 5000);
           setLoading(false);
         } else {

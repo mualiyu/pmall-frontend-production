@@ -110,7 +110,7 @@ export const VendorSignupProvider = ({ children }) => {
             alert("successful")
             console.log(res)
             if(res.ok){
-            window.location.href ="/auth/app/verify-token"
+            window.location.href ="/auth/app/verify"
             }
           }).catch((err)=>{
             console.log(err)
@@ -160,7 +160,7 @@ export const VendorSignupProvider = ({ children }) => {
           console.log(res)
           if(res.ok){
             setLoading(false);
-            window.location.href ="/auth/app/Set-new-password"
+            window.location.href ="/auth/app/reset"
           }
         }).catch((err)=>{
           console.log(err)

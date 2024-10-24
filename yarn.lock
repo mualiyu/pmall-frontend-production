@@ -8856,6 +8856,11 @@
   optionalDependencies:
     "fsevents" "^2.3.2"
 
+"react-spinners@^0.14.1":
+  "integrity" "sha512-2Izq+qgQ08HTofCVEdcAQCXFEYfqTDdfeDQJeo/HHQiQJD4imOicNLhkfN2eh1NYEWVOX4D9ok2lhuDB0z3Aag=="
+  "resolved" "https://registry.npmjs.org/react-spinners/-/react-spinners-0.14.1.tgz"
+  "version" "0.14.1"
+
 "react-transition-group@^4.4.0", "react-transition-group@^4.4.5":
   "integrity" "sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g=="
   "resolved" "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz"
