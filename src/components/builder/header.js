@@ -1,111 +1,87 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useCart } from "../../context/cartContext"
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Person4Icon from '@mui/icons-material/Person4';
-import LockIcon from '@mui/icons-material/Lock';
-import Person2Icon from '@mui/icons-material/Person2';
+import { useCategories } from "../../context/CategoryContext";
+import { useCart } from "../../context/CartContext";
 import SearchIcon from '@mui/icons-material/Search';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useUser } from "../../context/UserContext";
+import Person4Icon from '@mui/icons-material/Person4';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import Badge from '@mui/material/Badge';
 
-function Header() {
-    const [categories, setProductCategories] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const getProductsCategories = () => {
-        setLoading(true);
-        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories", {
-            method: "GET",
-            headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            Accept: "application/json",
-            },
-        })
-            .then((resp) => resp.json())
-            .then((result) => {
-            console.log(result);
-            setProductCategories(result.data);
-            setLoading(false);
-            })
-            .catch((err) => {
-            console.log(err);
-            setLoading(false);
-            });
-    };
+function Header({ showCart = true, showAccount = true, showCategories = true, extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'] }) {
+    const { categories, loading, error } = useCategories();
+    const { cartCount } = useCart();
+    const { user } = useUser();
+
     useEffect(()=>{
-        getProductsCategories()
+        console.log(cartCount)
     },[])
 
-return (
-    // {}
-    <>
-    
-<div className="flex justsb alc">
-            <img src="/top_banner.gif" style={{width: '100%'}} />
+    return (
+       
+        
+        
+            <>
+            {!user?.token && (
+            <div>
+            <div className="flex justsb alc mb-lg">
+                <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" />
             </div>
-            <div className='px flex flex-col g-40 search-container'>
+            <div className='px flex flex-col g-40 search-container w-90'>
                 <div className="flex justsb alc g-40">
-                    <img src="/pmall-logo 1.png" alt="" />
-                    <form action="" className="flex alc search">
-                        <input type="text" placeholder='Search for Products, Brands or Categories' />
-                        <div className='flex alc g-20 shfhegwer'>
+                    <img src="/pmall-logo 1.png" alt="PMall Logo" />
+                    <form className="flex alc search" aria-label="Search form">
+                        <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
+                        <button type="button" className='flex alc g-20 shfhegwer' aria-label="Search button">
                             <SearchIcon />
-                        </div>
+                        </button>
                     </form>
-
                     <div className='flex alc'>
-                <Link to="/auth/sign-in" className="bold flex alc sb">
-                        <Person4Icon />
-                        <p>Login</p>
-                        </Link>
-                <Link to="/app/cart" className="bold flex alc">
-                        <ShoppingCartOutlinedIcon />
-                        <p>Cart</p>
-                        </Link>
+                        {showAccount && (
+                            <Link to="/auth/sign-in" className="bold flex alc sb">
+                                <Person4Icon />
+                                <p>Login</p>
+                            </Link>
+                        )}
+                        {showCart && (
+                            <Link to="/app/cart" className="bold flex alc">
+                                <Badge badgeContent={cartCount} color="secondary">
+                                    <ShoppingCartOutlinedIcon />
+                                </Badge>
+                                <p>Cart</p>
+                            </Link>
+                        )}
                     </div>
                 </div>
-                <div className="flex g-20 alc">
-                    <select style={{
-                        border: '2px solid #c27465',
-                        padding: 12,
-                        borderRadius: 15,
-                        fontWeight: 600,
-                    }}>
-                        <option value="1">All Categories</option>
-                        {categories?.map(category => (
-                            <option value={category.name} key={category.id}>        {category.name}
-                            </option>
-                        ))}
-                    </select>
-                    <div className="w-100 justsb alc pointer">
-                            <div className="f-bold f-13">
-                                Male
-                            </div>
-                            <div className="f-bold f-13">
-                            Female
-                            </div>
-                            <div className="f-bold f-13">
-                            Fitness
-                            </div>
-                            <div className="f-bold f-13">
-                            General
-                            </div>
-                            <div className="f-bold f-13">
-                                Combo  Products
-                            </div>
-                        <div className="f-bold f-13">
-                            Sell on PMall
-                        </div>
-                        <div className="f-bold f-13 ml-10 action_primary">
-                            Become an Affiliate
+                <div className="flex alc mb-lg">
+                {showCategories && (
+                    <div className="flex g-20 alc mr-lg">
+                        {loading ? (
+                            <p>Loading categories...</p>
+                        ) : error ? (
+                            <p>{error}</p>
+                        ) : (
+                            <select style={{ border: '2px solid #c27465', padding: 12, borderRadius: 15, fontWeight: 600 }}>
+                                <option value="1">All Categories</option>
+                                {categories.map(category => (
+                                    <option value={category.name} key={category.id}>{category.name}</option>
+                                ))}
+                            </select>
+                        )}
                     </div>
-                 </div>
+                )}
+                <div className="w-100 justsb alc pointer">
+                    {extraLinks.map((text, idx) => (
+                        <div key={idx} className="f-bold f-13">{text}</div>
+                    ))}
                 </div>
                 </div>
-
-                </>
-)
-                        }
+            </div>
+            </div>
+            )}
+            </>
+        
+    );
+}
 
 export default Header;

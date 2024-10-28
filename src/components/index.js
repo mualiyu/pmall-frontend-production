@@ -27,6 +27,7 @@ import StoreFront from "./storefront";
 import Cart from "./cart";
 import CheckoutPage from "./checkout";
 import TransactionHistory from "./transactionhistory";
+import Header from "./builder/header";
 
 function Application() {
   const { user } = useUser();
@@ -69,6 +70,8 @@ function Application() {
               )}
               
               <div className="main__content">
+                  <div className="store-container">
+        <Header/>
                 <Routes>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/app/users" element={<Users />} />
@@ -113,6 +116,7 @@ function Application() {
                   <Route path="/app/settings" element={<SiteSettings />} />
                 </Routes>
               </div>
+            </div>
             </div>
         </div>
       </React.Fragment>

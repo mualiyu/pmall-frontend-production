@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { useCart } from "../context/cartContext";
+import { useCart } from "../context/CartContext";
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import { useNavigate } from 'react-router-dom';
 import ButtonLoader from "../utils/buttonLoader";
@@ -44,7 +44,7 @@ const CheckoutPage = () => {
         // Prevent default form submission
         var token;
         setLoading(true);
-        fetch("https://pmall-api.arc.sch.ng/api/v1/customer/register", {
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -57,19 +57,20 @@ const CheckoutPage = () => {
             setLoading(false);
             console.log(result);
             if (result.status) {
-
                setLoading(false);
+               console.log(JSON.parse(localStorage.getItem('pmallCart')));
+               const checkingOutProducts = JSON.parse(localStorage.getItem('pmallCart'))
                token = result.token
                const requestBody = {
                 customer_id: result.customer.id,
                 products: [
                 {
-                    product_id: 1,
-                    quantity: 2
+                    product_id: checkingOutProducts?.id,
+                    quantity: cart?.length,
                 }
                 ]
             }
-            fetch("https://pmall-api.arc.sch.ng/api/v1/customer/checkout/initiate", {
+            fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/checkout/initiate", {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json;charset=UTF-8",
@@ -87,7 +88,7 @@ const CheckoutPage = () => {
                         sale_id: result.sale.id,
                         amount:result.sale.total_amount
                     }
-                    fetch("https://pmall-api.arc.sch.ng/api/v1/customer/checkout/paystack/initiate", {
+                    fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/checkout/paystack/initiate", {
                         method: "POST",
                         headers: {
                         "Content-Type": "application/json;charset=UTF-8",
@@ -348,7 +349,7 @@ const CheckoutPage = () => {
                 <div className="g-20 flex flex-col">
                     <div className="w-full maincart">
                         <div className="cart-items">
-                            {cartLength>0 && cart.map(item => (
+                            {cart?.length>0 && cart.map(item => (
                                 <div className="cart-item">
                                     <div className="flex items-center g-10">
                                         <img src={item.image} alt="" />
@@ -369,22 +370,26 @@ const CheckoutPage = () => {
                     </div>
                     <div>
                         <div className="promo-code">
-                            <div className="flex flex-col g-20 calculation">
-                                <div className="flex justsb">
-                                    <p className="f-12">Subtotal</p>
-                                    <p className="f-12">&#x20A6;{totalPrice}.00</p>
-                                </div>
-                                <div className="flex justsb">
-                                    <p className="f-12">Discount</p>
-                                    <p className="f-12">-&#x20A6;0.00</p>
-                                </div>
-                                <div className="flex justsb total">
-                                    <p className="">Total</p>
-                                    <p className="bold">&#x20A6;{totalPrice}.00</p>
-                                </div>
+                        <div className="flex flex-col g-20">
+                            <div className="flex justsb bold b-b">
+                                <p className="f-12">Subtotal</p>
+                                <p className="f-12">&#x20A6;{totalPrice}.00</p>
                             </div>
-                            <div className="checkout-btn pointer" onClick={onSubmit}>
-                                {loading ? "loading..." : "Checkout"}
+                            <div className="flex justsb bold b-b">
+                                <p className="f-12">Discount</p>
+                                <p className="f-12">-&#x20A6;0.00</p>
+                            </div>
+                            <div className="flex justsb bold b-b">
+                                <p className="f-12">VAT</p>
+                                <p className="f-12">&#x20A6;{totalPrice * 0.075}</p>
+                            </div>
+                            <div className="flex justsb total bold b-b">
+                                <p className="">Total</p>
+                                <p className="bold">&#x20A6;{totalPrice + (totalPrice * 0.075)}.00</p>
+                            </div>
+                        </div>
+                            <div className="btn bg-accent p-25 text-center uppercase" style={{marginTop: 25}} onClick={onSubmit}>
+                                {loading ? "loading..." : "Make Payment"}
                             </div>
                             {/* <FlutterWaveButton {...fwConfig} className="checkout-btn pointer"/> */}
                         </div>

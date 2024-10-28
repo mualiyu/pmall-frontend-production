@@ -2,7 +2,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../builder/header";
 import { useUser } from "../../context/UserContext";
 
 const ProductDetails = () => {
@@ -85,8 +84,7 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="store-container">
-    <Header/>
+    
     <div className="prod-details mt-50">
       
       <div className="left">
@@ -95,11 +93,13 @@ const ProductDetails = () => {
             <div>
               <img src={detail?.image ? detail?.image : "https://th.bing.com/th/id/OIP.608kpIxTz9H4RyDpKCimXQHaHa?rs=1&pid=ImgDetMain"} alt="" className="main-image" />
             </div>
-            <div className="other-images">
-            <img src={detail?.more_images[0]} alt="" className="image" />
-            <img src={detail?.more_images[1]} alt="" className="image" />
-            <img src={detail?.more_images[2]} alt="" className="image" />
-            </div>
+            {moreImages && (
+              <div className="other-images">
+                <img src={moreImages[0]} alt="" className="image" />
+                <img src={moreImages[1]} alt="" className="image" />
+                <img src={moreImages[2]} alt="" className="image" />
+              </div>
+            )}
           </div>
           {/* <div className="other-images">
             <img src={moreImages !== null ? moreImages[0] : ""} alt="" className="main-image" />
@@ -177,7 +177,6 @@ const ProductDetails = () => {
           </p>
         </div>
       </div>
-    </div>
     </div>
   );
 };

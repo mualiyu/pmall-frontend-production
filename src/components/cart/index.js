@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import Header from "../builder/header";
-import { useCart } from "../../context/cartContext"
+import { useCart } from "../../context/CartContext"
 
 
 const Cart = () => {
@@ -9,6 +9,7 @@ const Cart = () => {
     const {cartLength} = useCart();
     const totalPrice = cart.map(item => item.selling_price * item.amtItems).reduce((acc, curr) => acc + curr, 0);
     const getCart = () => {
+        console.log((JSON.parse(localStorage.getItem('pmallCart'))));
         if(typeof localStorage !== "undefined") {
              setCart(JSON.parse(localStorage.getItem('pmallCart')) || [])
         }
@@ -18,7 +19,7 @@ const Cart = () => {
     useEffect(()=>{ 
         getCart()
         return;
-    },[cart])
+    },[])
 
     const incrementItemAmt = (id) => {
         const updatedCart = cart.map(item => {
@@ -58,26 +59,21 @@ const Cart = () => {
     };
     
     return ( 
-        <div className="store-container">
-        <Header/>
-        <div className='cart flex flex-col g-20'>
-            <div className='head'>
-                <img src="/pmall-logo 1.png" alt="test" />
-            </div>
+        <div className='cart flex g-20 mt-lg'>
             <div className="w-full flex g-20 cart-container">
                 <div className="w-full maincart">
                     <div className="flex justsb">
                         <div className="flex g-10">
                             <h3 className="cart-head">Cart</h3>
-                            <p className="f-12">({cartLength} items)</p>
+                            <p className="f-12">({cart?.length} items)</p>
                         </div>
                         <div>
                             <p className="f-12 red bold pointer" onClick={clearCart}>x Clear cart</p>
                         </div>
                     </div>
                     <div className="cart-items">
-                        {cartLength>0 && cart.map(item => (
-                            <div className="cart-item">
+                        {cart && cart.map(item => (
+                            <div className="cart-item" key={item.id}>
                                 <div className="flex g-20  testtt">
                                     <img src={item.image} alt="" />
                                     <div>
@@ -108,23 +104,28 @@ const Cart = () => {
                             </form>
                         </div>
                         <div className="flex flex-col g-20 calculation">
-                            <div className="flex justsb">
+                            <div className="flex justsb bold b-b">
                                 <p className="f-12">Subtotal</p>
                                 <p className="f-12">&#x20A6;{totalPrice}.00</p>
                             </div>
-                            <div className="flex justsb">
+                            <div className="flex justsb bold b-b">
                                 <p className="f-12">Discount</p>
                                 <p className="f-12">-&#x20A6;0.00</p>
                             </div>
-                            <div className="flex justsb total">
+                            <div className="flex justsb bold b-b">
+                                <p className="f-12">VAT</p>
+                                <p className="f-12">&#x20A6;{totalPrice * 0.075}</p>
+                            </div>
+                            <div className="flex justsb total bold b-b">
                                 <p className="">Total</p>
-                                <p className="bold">&#x20A6;{totalPrice}.00</p>
+                                <p className="bold">&#x20A6;{totalPrice + (totalPrice * 0.075)}.00</p>
                             </div>
                         </div>
-                        <Link to="/app/checkout"><p className="checkout-btn">continue to checkout</p></Link> 
+                        <Link to="/app/checkout" className="mt-lg" style={{marginTop: 25}}>
+                        <p className="btn bg-accent p-25 text-center uppercase">Checkout</p>
+                        </Link> 
                     </div>
                 </div>
-            </div>
         </div>
         </div>
      );

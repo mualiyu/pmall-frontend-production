@@ -6,11 +6,12 @@ import Loading from "../../utils/loading";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import ProductCarousel from "../../utils/productCarousel";
 import Typography from "@mui/material/Typography";
 import Header from "../builder/header";
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Link } from 'react-router-dom';
-import { useCart } from "../../context/cartContext"
+import { useCart } from "../../context/CartContext"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -134,12 +135,6 @@ const StoreFront = () => {
             .then((resp) => resp.json())
             .then((result) => {
             console.log(result,"edibles");
-            // setProducts(result.data);
-            // for (const item of result) {
-            //     if (item.status === 0) {
-            //     publishedCount++;
-            //     }
-            // }
             })
             .catch((err) => {
             console.log(err);
@@ -156,7 +151,7 @@ const StoreFront = () => {
         <div className="store-container">
             <Loading loading={loading} />
             <Header/>
-                <div className="flex g-20 px">
+                <div className="flex g-20 px w-90">
                     <div className='flex flex-col g-20'>
                         <img src="/Screenshot 2024-03-21 214441.png" alt="" className="w-full" />
                         <img src="/Screenshot 2024-03-21 214722.png" alt="" className="w-full" />
@@ -167,23 +162,27 @@ const StoreFront = () => {
                         <img src="/Screenshot 2024-03-21 215417.png" alt="" className="w-full" />
                     </div>
                     <div className='flex flex-col g-20'>
+                    {/* <ProductCarousel products={products} /> */}
                         <img src="/Screenshot 2024-03-21 215854.png" alt="" className="w-full" />
                         <img src="/Screenshot 2024-03-21 215944.png" alt="" className="w-full" />
                         <img src="/Screenshot 2024-03-21 220017.png" alt="" className="w-full" />
                     </div>
                 </div>
-                <div className="flex justsb row">
+                <div className="row  w-90" style={{margin: '20px auto'}}>
                 {categories?.map(category => (
-                           <div className='flex flex-col g-10 alc brand_stores'>
+                           <div className='flex flex-col g-10 alc brand_stores m-5 mt-15 w-125p'>
                             <div className='border b-image'>
-                                <img src="/MultiStream.png" className='icon' width="128px" />
+                                <img src={category.category_image} className='icon' width="60px" />
                             </div>
                             <p className="cat_title">{category.name}</p>
                         </div>
                         ))}
                 </div>
+
+
+                
            
-            <div className='px flex flex-col g-40'>
+            <div className='px flex flex-col g-40 w-90'>
                 <div className='flex flex-col g-40'>
                     <img src="/Screenshot 2024-03-19 150113.png" alt="" />
                     <div className='flex g-20'>
@@ -209,99 +208,60 @@ const StoreFront = () => {
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
-                    
-                        <div className='flex  g-20'>
-                            {products?.map(product => (
-                                <Link to={`/${product.name}/${product.id}` } className='no-underline'>
-                                <div className='bg-white product-card'>
-                                    <div className='img-div'>
-                                        <img src={product.image} alt="" className='w-ful' width={300} height={300} />
-                                    </div>
-                                    <div className='desc'>
-                                        <div className='main-desc flex flex-col g-5'>
-                                            <h3>{product.name}</h3>
-                                            <h3 className='red bold'>{currency(product.selling_price)}</h3>
-                                            <div className="mt-5 bt">
+                    <div class="row">
+                {products?.map(product => (
+												<div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+													<div class="product-info default-cover card">
+                                                    <Link to={`/${product.name}/${product.id}` }  className="img-bg">
+														
+															<img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+														</Link>
+                                                        <Link to={`/${product.name}/${product.id}` } className="no__underline"  >
+                                                        <div className='product_desc'>
+                                        <div className='flex-col g-5'>
+                                            <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                            <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                            <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                            {/* <div className="mt-5 bt">
                                                 <p>{LimitWord(product.description, 10)}</p>
-                                            </div>
+                                            </div> */}
                                         </div>
+                                       
                                     </div>
-                                </div>
-                                </Link>
-                            ))}
-                        </div>
+                                    </Link>
+													</div>
+												</div>
+												  ))}
+
+											</div>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                    <div className='flex justsb g-10'>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
+                    <div class="row">
+                {products?.map(product => (
+												<div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+													<div class="product-info default-cover card">
+                                                    <Link to={`/${product.name}/${product.id}` }  className="img-bg">
+														
+															<img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+														</Link>
+                                                        <Link to={`/${product.name}/${product.id}` } className="no__underline"  >
+                                                        <div className='product_desc'>
+                                        <div className='flex-col g-5'>
+                                            <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                            <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                            <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                            {/* <div className="mt-5 bt">
+                                                <p>{LimitWord(product.description, 10)}</p>
+                                            </div> */}
                                         </div>
+                                       
                                     </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    </Link>
+													</div>
+												</div>
+												  ))}
+
+											</div>
                     </TabPanel>
                     <TabPanel value={value} index={2}>
                         <h3>test3</h3>
@@ -818,7 +778,7 @@ const StoreFront = () => {
                         </div>
                     </div>
                 </div>
-                <div className='store-footer flex flex-col g-40'>
+                <div className='store-footer flex flex-col g-40 w-90'>
                     <div className='flex justsb'>
                         <div className='flex flex-col g-20'>
                             <h3>Our Mission</h3>
