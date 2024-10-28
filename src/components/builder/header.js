@@ -14,7 +14,7 @@ function Header({ showCart = true, showAccount = true, showCategories = true, ex
     const { user } = useUser();
 
     useEffect(()=>{
-        console.log(cartCount)
+        // console.log(cartCount)
     },[])
 
     return (
