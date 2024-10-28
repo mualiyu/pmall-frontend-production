@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useCategories } from "../../context/CategoryContext";
-import { useCart } from "../../context/CartContext";
+// import { useCart } from "../../context/CartContext";
 import SearchIcon from '@mui/icons-material/Search';
 import { useUser } from "../../context/UserContext";
 import Person4Icon from '@mui/icons-material/Person4';
@@ -10,7 +10,7 @@ import Badge from '@mui/material/Badge';
 
 function Header({ showCart = true, showAccount = true, showCategories = true, extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'] }) {
     const { categories, loading, error } = useCategories();
-    const { cartCount } = useCart();
+    // const { cartCount } = useCart();
     const { user } = useUser();
 
     useEffect(()=>{
@@ -45,7 +45,8 @@ function Header({ showCart = true, showAccount = true, showCategories = true, ex
                         )}
                         {showCart && (
                             <Link to="/app/cart" className="bold flex alc">
-                                <Badge badgeContent={cartCount} color="secondary">
+                                {/* <Badge badgeContent={cartCount} color="secondary"> */}
+                                <Badge color="secondary">
                                     <ShoppingCartOutlinedIcon />
                                 </Badge>
                                 <p>Cart</p>

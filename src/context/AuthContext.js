@@ -34,7 +34,7 @@ export const VendorSignupProvider = ({ children }) => {
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
-            window.location.href = "/";
+            window.location.href = "/auth/sign-in";
           }, 2000);
 
           setLoading(false);
@@ -82,7 +82,7 @@ export const VendorSignupProvider = ({ children }) => {
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
-            window.location.href = "/";
+            window.location.href = "/auth/sign-in";
           }, 2000);
 
           setLoading(false);
