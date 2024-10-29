@@ -14,7 +14,7 @@ function Header({ showCart = true, showAccount = true, showCategories = true, ex
     const { user } = useUser();
 
     useEffect(()=>{
-        // console.log(cartCount)
+        console.log(cartCount)
     },[])
 
     return (
@@ -45,9 +45,9 @@ function Header({ showCart = true, showAccount = true, showCategories = true, ex
                         )}
                         {showCart && (
                             <Link to="/app/cart" className="bold flex alc">
-                                <Badge badgeContent={cartCount} color="secondary">
+                                {/* <Badge badgeContent={cartCount} color="secondary"> */}
                                     <ShoppingCartOutlinedIcon />
-                                </Badge>
+                                {/* </Badge> */}
                                 <p>Cart</p>
                             </Link>
                         )}
