@@ -204,6 +204,7 @@
   border-radius: 0.25rem;
   text-align: center;
   line-height: 1;
+  font-size: 10px;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -276,7 +277,7 @@ tbody {
 .page__header {
   display: flex;
   align-items: center;
-  padding: 30px 10px;
+  padding: 21px 10px;
   justify-content: space-between;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
     margin-bottom: 33px;
@@ -500,12 +501,12 @@ css-6od3lo-MuiChip-label {
   border-bottom: thin dashed #f4f4f4;
 }
 .sidenav {
-  width: 18%;
+  /* width: 18%; */
   background: var(--primary-bg-color);
   color: var(--primary-color);
   z-index: 5;
   position: relative;
-  height: 100vw;
+  height: 100%;
 }
 .css-38raov-MuiButtonBase-root-MuiChip-root .MuiChip-deleteIcon {
   -webkit-tap-highlight-color: transparent;
@@ -529,7 +530,7 @@ css-6od3lo-MuiChip-label {
 }
 .main__content {
   width: 100%;
-  /* margin: 0 20px; */
+  margin: 0 20px;
   height: 100vh;
 }
 .css-1t4lqmc-MuiButtonBase-root-MuiTab-root {
@@ -814,7 +815,7 @@ thead {
 }
 
 .debit_card_name {
-  font-size: 22px;
+  font-size: 12px;
   margin-top: 40px;
 }
 
@@ -1053,6 +1054,13 @@ tbody > tr.MuiTableRow-root.css-1q1u3t4-MuiTableRow-root:hover {
   border-bottom: thin dashed #dddddd;
     padding-bottom: 10px;
 }
+.user__avatar > h3 {
+  font-size: 10px;
+}
+h1 {
+ font-size: 13px;
+}
+ 
 .accent {
   background-color : #4511a1;
 }

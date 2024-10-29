@@ -5,9 +5,22 @@ import SpeedIcon from "@material-ui/icons/Speed";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import GroupsIcon from "@mui/icons-material/Groups";
+import EuroIcon from '@mui/icons-material/Euro';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import MoneyIcon from '@mui/icons-material/Money';
+import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
+import FlutterDashIcon from '@mui/icons-material/FlutterDash';
+import FortIcon from '@mui/icons-material/Fort';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+import ReduceCapacityIcon from '@mui/icons-material/ReduceCapacity';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import Groups2Icon from '@mui/icons-material/Groups2';
 import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import EmailIcon from "@mui/icons-material/Email";
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import BuildIcon from "@mui/icons-material/Build";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -62,6 +75,11 @@ function Sidebar() {
             Icon={SpeedIcon}
             title="Dashboard"
           />
+           <SidebarRow
+                path=""
+                Icon={EuroIcon}
+                title="Wallet"
+              />
           {(user?.accountType === "Vendor" ||
             user?.accountType === "Admin") && (
             <>
@@ -75,6 +93,7 @@ function Sidebar() {
                 Icon={ShoppingCartIcon}
                 title="Order Management"
               />
+              
                <SidebarRow
                 path="/app/users/details/"
                 Icon={Person2Icon}
@@ -82,8 +101,8 @@ function Sidebar() {
               />
                <SidebarRow
             path="/app/users"
-            Icon={AccessibilityNewIcon}
-            title="User Management"
+            Icon={FlutterDashIcon}
+            title="Store Manager"
           />
             </>
           )}
@@ -108,19 +127,86 @@ function Sidebar() {
           {/* <SidebarRow path="/app/front-desk"  Icon={HomeWorkIcon} title="Front Desk"/> */}
           {(user?.accountType === "Affiliate" ||
             user?.accountType === "Admin") && (
+              <>
             <SidebarRow
               path="/app/affilates"
               Icon={HubIcon}
               title="Affiliate Management"
             />
+            <SidebarRow
+                path=""
+                Icon={Groups2Icon}
+                title="My Network"
+              />
+              <SidebarRow
+                path=""
+                Icon={CardGiftcardIcon}
+                title="Promotions"
+              />
+              <SidebarRow
+                path=""
+                Icon={ReduceCapacityIcon}
+                title="Geneology"
+              />
+              <SidebarRow
+                path=""
+                Icon={FortIcon}
+                title="Leadership Rank"
+              />
+              <SidebarRow
+                path=""
+                Icon={DisplaySettingsIcon}
+                title="Marketing"
+              />
+              <SidebarRow
+                path=""
+                Icon={MoneyIcon}
+                title="Sales"
+              />
+           
+              <SidebarRow
+                path=""
+                Icon={ShoppingBasketIcon}
+                title="Market Place"
+              />
+              <SidebarRow
+                path=""
+                Icon={ShoppingCartIcon}
+                title="Transaction Reports"
+              />
+              </>
           )}
           {(user?.accountType === "Vendor" ||
             user?.accountType === "Admin") && (
+              <>
             <SidebarRow
               path="/app/products"
               Icon={ShoppingCartIcon}
               title="Product Management"
             />
+           {/* <SidebarRow
+                path=""
+                Icon={ShoppingCartIcon}
+                title="My Store"
+              /> */}
+           <SidebarRow
+                path=""
+                Icon={CardGiftcardIcon}
+                title="Promotions"
+              />
+              
+              <SidebarRow
+                path=""
+                Icon={LocalOfferIcon}
+                title="Coupons"
+              />
+              
+              <SidebarRow
+                path=""
+                Icon={LocalShippingIcon}
+                title="Locate a Stockiest"
+              />
+              </>
           )}
           {(user?.accountType === "Stockiest" ||
             user?.accountType === "Admin") && (

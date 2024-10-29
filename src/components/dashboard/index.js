@@ -573,7 +573,7 @@ const Dashboard = () => {
               <>
                 <div className="recent-vendors">
                   <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                    Recently registerd vendors
+                    My Vendors
                   </h1>
                   {pmallUsers?.length === 0 && (
                     <p>
@@ -618,7 +618,7 @@ const Dashboard = () => {
                 </div>
                 <div className="recent-affilates">
                   <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                    Recently registerd affiliates
+                    My Affiliates
                   </h1>
                   {pmallUsers?.length === 0 && (
                     <p>
