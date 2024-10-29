@@ -830,8 +830,12 @@ console.log(user?.accountType)
               onChange={handleTabChange}
               aria-label="basic tabs example">
                   <Tab label="Products list" {...a11yProps(0)} />
-                  <Tab label="Categories" {...a11yProps(1)} />
-                  <Tab label="Brands" {...a11yProps(2)} />
+                  {user?.role === 'Admin' && (
+                    <>
+                    <Tab label="Categories" {...a11yProps(1)} />
+                    <Tab label="Brands" {...a11yProps(2)} />
+                    </>
+                  )}
                   <Tab label="Sub Categories" {...a11yProps(2)} />
             </Tabs>
       </Box>
@@ -916,6 +920,8 @@ console.log(user?.accountType)
           </Table>
         </TableContainer>
       </TabPanel>
+      {user.role === 'Admin' && (
+        <>
       <TabPanel value={value} index={1}>
         <section className="flex-container alc p-y my-40">
           <div className="w-full">
@@ -1014,6 +1020,8 @@ console.log(user?.accountType)
           </Table>
         </TableContainer>
       </TabPanel>
+      </>
+      )}
       <TabPanel value={value} index={3}>
         <section className="flex-container alc p-y my-40">
           <div className="w-full">
@@ -1123,9 +1131,6 @@ console.log(user?.accountType)
                     }}
                   />
                 </div>
-                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
-                  Upload Photo
-                </button> */}
               </div>
             </div>
             <form style={{ width: "100%" }}>
@@ -1675,7 +1680,7 @@ console.log(user?.accountType)
         <Box sx={style}>
           <div className="mb-35">
             <Typography id="modal-modal-title">
-              <h4 className="summary__title t-xl title-case">Add Product</h4>
+              <h4 className="summary__title t-xl title-case">Add Category</h4>
             </Typography>
             <div className="s-divider"></div>
           </div>
@@ -1829,9 +1834,6 @@ console.log(user?.accountType)
                     }}
                   />
                 </div>
-                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
-                  Upload Photo
-                </button> */}
               </div>
             </div>
             <section className="flex-container flex-col g-20 mb-lg w-full">

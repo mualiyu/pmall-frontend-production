@@ -604,7 +604,7 @@ const Dashboard = () => {
                           </div>
                           <div>
                             <h4 className="f-300 capitalze">
-                              {user.fname} {user.lname} ({user.store_name})
+                              {user.fname} {user.lname} ({user.store_id})
                             </h4>
                             <p className="sub__title">
                               {moment(user.created_at).format(

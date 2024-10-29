@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import Header from "../builder/header";
 import { useCart } from "../../context/CartContext"
 
-
 const Cart = () => {
     const [cart,setCart] =  useState([])
     const {cartLength} = useCart();

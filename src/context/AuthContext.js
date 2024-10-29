@@ -142,13 +142,13 @@ export const VendorSignupProvider = ({ children }) => {
             regDate: result.data.user.created_at,
             refId: result.data.user.my_ref_id,
           });
-          setToastMsg("Awesome! Login successful");
+          setToastMsg("Boom! Login successful");
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
           }, 5000);
           setTimeout(() => {
-            window.location.href = "/app/dashboard";
+            window.location.href = "/dashboard";
           }, 2000);
 
           setLoading(false);

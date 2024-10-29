@@ -58,7 +58,7 @@ function Sidebar() {
           <div className="s-divider"></div>
           {/* <h3 className="ml-20p"> Administrators </h3> */}
           <SidebarRow
-            path="/app/dashboard"
+            path="/dashboard"
             Icon={SpeedIcon}
             title="Dashboard"
           />

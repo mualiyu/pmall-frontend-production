@@ -52,7 +52,7 @@ function Application() {
               element={<ResetPassword />}
             />
             <Route
-              path="/auth/app/reset/:email"
+              path="/auth/app/reset/"
               element={<NewPasswordPage />}
             />
             <Route
