@@ -31,84 +31,33 @@ import Header from "./builder/header";
 
 function Application() {
   const { user } = useUser();
-  const isLoggedIn = localStorage.getItem("authToken");
-  console.log(isLoggedIn);
+  const isLoggedIn = Boolean(localStorage.getItem("authToken"));
+
   return (
     <Router>
-      <React.Fragment>
-        {/* <UserProvider> */}
-        <div>
-        <Routes>
-            <Route
-              path="/"
-              element={<StoreFront />}
-            />
-          </Routes>
-          <Routes>
-            <Route path="/auth/sign-in" element={<Login />} />
-            <Route path="/auth/app/Signup" element={<SignUp />} />
-            <Route
-              path="/auth/app/reset-account"
-              element={<ResetPassword />}
-            />
-            <Route
-              path="/auth/app/reset/"
-              element={<NewPasswordPage />}
-            />
-            <Route
-              path="/auth/app/verify/:email"
-              element={<VerifyToken />}
-            />
-          </Routes>
-
-          {/* {user.token && ( */}
+      <div className="app-container">
+        
+        {/* Show Header and Sidebar only if the user is logged in */}
+        {isLoggedIn && (
+          <>
+            <Header />
             <div className="flex-container">
-              {user.token && (
-              <div className="sidenav">
-                <Sidebar />
-              </div>
-              )}
-              
+              <Sidebar className="sidenav" />
               <div className="main__content">
-                  <div className="store-container">
-        <Header/>
                 <Routes>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/app/users" element={<Users />} />
                   <Route path="/app/users/details" element={<UserDetails />} />
                   <Route path="/app/vendors" element={<Vendors />} />
-
-                  <Route
-                    path="/app/order-management"
-                    element={<OrderManagement />}
-                  />
-                  <Route
-                    path="/app/vendors/details"
-                    element={<VendorDetails />}
-                  />
-                  <Route
-                    path="/:product_name/:id"
-                    element={<ProductDetails />}
-                  />
-                  
-                   <Route
-                    path="/app/cart"
-                    element={<Cart />}
-                  />
-                   <Route
-                    path="/app/checkout"
-                    element={<CheckoutPage />}
-                  />
-                    <Route
-                    path="/app/transaction-history"
-                    element={<TransactionHistory />}
-                  />
+                  <Route path="/app/order-management" element={<OrderManagement />} />
+                  <Route path="/app/vendors/details" element={<VendorDetails />} />
+                  <Route path="/:product_name/:id" element={<ProductDetails />} />
+                  <Route path="/app/cart" element={<Cart />} />
+                  <Route path="/app/checkout" element={<CheckoutPage />} />
+                  <Route path="/app/transaction-history" element={<TransactionHistory />} />
                   <Route path="/app/products/list" element={<ProductList />} />
                   <Route path="/app/affilates" element={<Affilates />} />
-                  <Route
-                    path="/app/affilates/details"
-                    element={<AffilateDetails />}
-                  />
+                  <Route path="/app/affilates/details" element={<AffilateDetails />} />
                   <Route path="/app/products" element={<Products />} />
                   <Route path="/app/categories" element={<Categories />} />
                   <Route path="/app/gallery" element={<Gallery />} />
@@ -117,9 +66,22 @@ function Application() {
                 </Routes>
               </div>
             </div>
-            </div>
-        </div>
-      </React.Fragment>
+          </>
+        )}
+
+        {/* Public Routes */}
+        {!isLoggedIn && (
+          <Routes>
+            <Route path="/" element={<StoreFront />} />
+            <Route path="/auth/sign-in" element={<Login />} />
+            <Route path="/auth/app/Signup" element={<SignUp />} />
+            <Route path="/auth/app/reset-account" element={<ResetPassword />} />
+            <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
+            <Route path="/auth/app/verify/:email" element={<VerifyToken />} />
+          </Routes>
+        )}
+        
+      </div>
     </Router>
   );
 }

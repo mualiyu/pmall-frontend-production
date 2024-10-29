@@ -1220,8 +1220,9 @@ h1 {
 .product_desc {
   padding: 10px;
 }
-.product__image:hover {
-  transform: scale(1.05)
+
+.product__image {
+  width: 100%!important;
 }
 .cost__price {
   font-size: 10px;
