@@ -1,9 +1,10 @@
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import Rating from "@mui/material/Rating";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Header from "../builder/Header";
 import { useParams, Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Rating from "@mui/material/Rating";
 import SearchIcon from '@mui/icons-material/Search';
 import Person4Icon from '@mui/icons-material/Person4';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';

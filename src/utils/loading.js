@@ -12,16 +12,6 @@ export default function Loading({ loading }) {
         speedMultiplier={1}
         loading={loading}
       />
-{/* 
-
-
-      <MoonLoader
-        color='#1DCF9F'
-        loading={loading}
-        size={35}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      /> */}
     </div>
   );
 }

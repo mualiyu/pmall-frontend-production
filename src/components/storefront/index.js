@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 
 import ProductCarousel from "../../utils/productCarousel";
 import Typography from "@mui/material/Typography";
-// import Header from "../builder/header";
+import Header from "../builder/Header";
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Link } from 'react-router-dom';
 import { useUser } from "../../context/UserContext";
