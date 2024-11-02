@@ -91,7 +91,7 @@ export const VendorSignupProvider = ({ children }) => {
         console.log("Login successful:", data); 
         Toaster("Sucessful","sucess")
       setTimeout(()=>{
-        window.location.href = "/app/dashboard";
+        window.location.href = "/dashboard";
       },500000);
       
       };
@@ -145,7 +145,6 @@ export const VendorSignupProvider = ({ children }) => {
         e.preventDefault(); // Prevent default form submission
         setLoading(true);
         inputValues.email = "mualiyuoox@gmail.com";
-      
         // Validate credentials 
       
         fetch("http://18.119.84.184/api/v1/verify-code",{
@@ -160,7 +159,7 @@ export const VendorSignupProvider = ({ children }) => {
           console.log(res)
           if(res.ok){
             setLoading(false);
-            window.location.href ="/auth/app/reset"
+            window.location.href =`/auth/app/reset/`
           }
         }).catch((err)=>{
           console.log(err)

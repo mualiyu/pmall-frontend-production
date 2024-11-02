@@ -27,9 +27,9 @@ export default function DebitCard(props) {
                 width="45px"
                 alt="Pmall"
               />
-              <div>
+              <div style={{padding:10}}>
                 <h1 style={{ fontSize: 20 }}>&#x20A6;0.00</h1>
-                <p style={{ color: "rgb(227 227 227 / 70%)" }}>
+                <p style={{ color: "rgb(227 227 227 / 70%)", fontSize: 10 }}>
                   Balance on wallet
                 </p>
               </div>

@@ -573,7 +573,7 @@ const Dashboard = () => {
               <>
                 <div className="recent-vendors">
                   <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                    Recently registerd vendors
+                    My Vendors
                   </h1>
                   {pmallUsers?.length === 0 && (
                     <p>
@@ -604,7 +604,7 @@ const Dashboard = () => {
                           </div>
                           <div>
                             <h4 className="f-300 capitalze">
-                              {user.fname} {user.lname} ({user.store_name})
+                              {user.fname} {user.lname} ({user.store_id})
                             </h4>
                             <p className="sub__title">
                               {moment(user.created_at).format(
@@ -618,7 +618,7 @@ const Dashboard = () => {
                 </div>
                 <div className="recent-affilates">
                   <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                    Recently registerd affiliates
+                    My Affiliates
                   </h1>
                   {pmallUsers?.length === 0 && (
                     <p>
