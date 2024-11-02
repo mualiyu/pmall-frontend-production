@@ -17,7 +17,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Person4Icon from '@mui/icons-material/Person4';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge from '@mui/material/Badge';
-import { useCart } from "../../context/CartContext"
+// import { useCart } from "../../context/CartContext"
 import { useCategories } from "../../context/CategoryContext"
 
 function TabPanel(props) {
@@ -49,7 +49,7 @@ function TabPanel(props) {
   }
 
 const StoreFront = () => {
-    const {cartLength} = useCart();
+    // const {cartLength} = useCart();
     const [value, setValue] = useState(0);
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
@@ -155,7 +155,7 @@ const StoreFront = () => {
 
 
 const { storeCategories, error } = useCategories();
-    const { cartCount } = useCart();
+    // const { cartCount } = useCart();
     const { user } = useUser();
 
     const extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'];

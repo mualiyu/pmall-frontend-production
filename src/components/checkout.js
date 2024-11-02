@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { useCart } from "../context/CartContext";
+// import { useCart } from "../context/CartContext";
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import { useNavigate } from 'react-router-dom';
 import ButtonLoader from "../utils/buttonLoader";
@@ -31,7 +31,7 @@ const CheckoutPage = () => {
         });
       };
     const [cart,setCart] =  useState([])
-    const {cartLength} = useCart();
+    // const {cartLength} = useCart();
     const totalPrice = cart.map(item => item.selling_price * item.amtItems).reduce((acc, curr) => acc + curr, 0);
     const getCart = () => {
         if(typeof localStorage !== "undefined") {

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useCart } from "../../context/CartContext"
+// import { useCart } from "../../context/CartContext"
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Person4Icon from '@mui/icons-material/Person4';
@@ -102,5 +102,5 @@ return (
                 </div>
                 </>
 )
-                        }
+}
 export default Header;

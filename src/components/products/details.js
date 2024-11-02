@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Person4Icon from '@mui/icons-material/Person4';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge from '@mui/material/Badge';
-import { useCart } from "../../context/CartContext"
+// import { useCart } from "../../context/CartContext"
 import { useCategories } from "../../context/CategoryContext"
 
 const ProductDetails = () => {
@@ -23,7 +23,7 @@ const ProductDetails = () => {
   const [numOfItems, setNumOfItems] = useState(1)
   const { storeCategories, error } = useCategories();
   const [categories, setProductCategories] = useState(null)
-    const { cartCount } = useCart();
+    // const { cartCount } = useCart();
 
     const extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'];
   
@@ -127,7 +127,8 @@ const ProductDetails = () => {
                             </Link>
                             {/* {showCart && ( */}
                             <Link to="/app/cart" className="bold flex alc">
-                                <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
+                                {/* <Badge badgeContent={cartCount} color="secondary" overlap="rectangular"> */}
+                                <Badge color="secondary" overlap="rectangular">
                                     <ShoppingCartOutlinedIcon />
                                 </Badge>
                                 <p>Cart</p>
