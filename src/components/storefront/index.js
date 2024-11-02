@@ -7,7 +7,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Header from "../builder/header";
+import Header from "../builder/Header";
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Link } from 'react-router-dom';
 import { useCart } from "../../context/cartContext"
@@ -172,11 +172,11 @@ const StoreFront = () => {
                         <img src="/Screenshot 2024-03-21 220017.png" alt="" className="w-full" />
                     </div>
                 </div>
-                <div className="flex justsb row">
+               <div className="row  w-90" style={{margin: '20px auto'}}>
                 {categories?.map(category => (
-                           <div className='flex flex-col g-10 alc brand_stores'>
+                           <div className='flex flex-col g-10 alc brand_stores m-5 mt-15 w-125p'>
                             <div className='border b-image'>
-                                <img src="/MultiStream.png" className='icon' width="128px" />
+                                <img src={category.category_image} className='icon' width="60px" />
                             </div>
                             <p className="cat_title">{category.name}</p>
                         </div>
@@ -210,26 +210,32 @@ const StoreFront = () => {
                     </Box>
                     <TabPanel value={value} index={0}>
                     
-                        <div className='flex  g-20'>
-                            {products?.map(product => (
-                                <Link to={`/${product.name}/${product.id}` } className='no-underline'>
-                                <div className='bg-white product-card'>
-                                    <div className='img-div'>
-                                        <img src={product.image} alt="" className='w-ful' width={300} height={300} />
-                                    </div>
-                                    <div className='desc'>
-                                        <div className='main-desc flex flex-col g-5'>
-                                            <h3>{product.name}</h3>
-                                            <h3 className='red bold'>{currency(product.selling_price)}</h3>
-                                            <div className="mt-5 bt">
+                        <div class="row">
+                {products?.map(product => (
+												<div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+													<div class="product-info default-cover card">
+                                                    <Link to={`/product/${product.id}`}   className="img-bg">
+														
+															<img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+														</Link>
+                                                        <Link to={`/product/${product.id}`}  className="no__underline"  >
+                                                        <div className='product_desc'>
+                                        <div className='flex-col g-5'>
+                                            <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                            <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                            <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                            {/* <div className="mt-5 bt">
                                                 <p>{LimitWord(product.description, 10)}</p>
-                                            </div>
+                                            </div> */}
                                         </div>
+                                       
                                     </div>
-                                </div>
-                                </Link>
-                            ))}
-                        </div>
+                                    </Link>
+													</div>
+												</div>
+												  ))}
+
+											</div>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                     <div className='flex justsb g-10'>

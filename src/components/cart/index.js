@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import Header from "../builder/header";
+import Header from "../builder/Header";
 import { useCart } from "../../context/cartContext"
 
 

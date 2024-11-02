@@ -2,7 +2,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../builder/header";
+import Header from "../builder/Header";
 import { useUser } from "../../context/UserContext";
 
 const ProductDetails = () => {
