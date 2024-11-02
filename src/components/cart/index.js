@@ -11,8 +11,8 @@ import Badge from '@mui/material/Badge';
 
 const Cart = () => {
     const [cart,setCart] =  useState([])
-    // const {cartLength} = useCart();
-    // const { cartCount } = useCart();
+    const {cartLength} = useCart();
+    const { cartCount } = useCart();
     const { user } = useUser();
     const [loading, setLoading] = useState(false);
 const [categories, setProductCategories] = useState(null)
@@ -119,8 +119,7 @@ const getProductsCategories = () => {
                             </Link>
                             {/* {showCart && ( */}
                             <Link to="/app/cart" className="bold flex alc">
-                                {/* <Badge badgeContent={cartCount} color="secondary" overlap="rectangular"> */}
-                                <Badge color="secondary" overlap="rectangular">
+                                <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
                                     <ShoppingCartOutlinedIcon />
                                 </Badge>
                                 <p>Cart</p>
