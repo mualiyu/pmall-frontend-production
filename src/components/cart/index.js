@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import Header from "../builder/Header";
-import { useCart } from "../../context/cartContext"
+import { useCart } from "../../context/CartContext"
 import { useUser } from "../../context/UserContext";
 import { useCategories } from "../../context/CategoryContext"
 import SearchIcon from '@mui/icons-material/Search';
