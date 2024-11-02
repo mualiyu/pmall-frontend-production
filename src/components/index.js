@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Affilates from "./affilates";
 import Login from "./auth/login";
 import NewPasswordPage from "./auth/newPasswordPage";
@@ -27,7 +27,33 @@ import StoreFront from "./storefront";
 import Cart from "./cart";
 import CheckoutPage from "./checkout";
 import TransactionHistory from "./transactionhistory";
-import Header from "./builder/header";
+
+// Component to normalize path casing
+function CaseInsensitiveWrapper() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+const toKebabCase = (str) => {
+  return str
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/_/g, '-')   // Replace underscores with hyphens
+    .toLowerCase();       // Convert to lowercase
+};
+
+
+  useEffect(() => {
+    const normalizedPath = location.pathname
+      .split('/')
+      .map(segment => segment.toLowerCase().replace(/ /g, '-')) // Replace spaces with hyphens
+      .join('/');
+
+    if (location.pathname !== normalizedPath) {
+      navigate(normalizedPath, { replace: true });
+    }
+  }, [location, navigate]);
+
+  return null;
+}
 
 function Application() {
   const { user } = useUser();
@@ -35,12 +61,21 @@ function Application() {
 
   return (
     <Router>
+      <CaseInsensitiveWrapper />
       <div className="app-container">
-        
-        {/* Show Header and Sidebar only if the user is logged in */}
-        {isLoggedIn && (
+        {/* {!isLoggedIn && ( */}
+          <Routes>
+            <Route path="/" element={<StoreFront />} />
+            <Route path="/auth/sign-in" element={<Login />} />
+            <Route path="/auth/app/signup" element={<SignUp />} />
+            <Route path="/auth/app/reset-account" element={<ResetPassword />} />
+            <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
+            <Route path="/auth/app/verify/:email" element={<VerifyToken />} />
+            {/* <Route path="/product/:id" element={<ProductDetails />} /> */}
+          </Routes>
+
+        {/* {isLoggedIn && ( */}
           <>
-            <Header />
             <div className="flex-container">
               <Sidebar className="sidenav" />
               <div className="main__content">
@@ -51,7 +86,7 @@ function Application() {
                   <Route path="/app/vendors" element={<Vendors />} />
                   <Route path="/app/order-management" element={<OrderManagement />} />
                   <Route path="/app/vendors/details" element={<VendorDetails />} />
-                  <Route path="/:product_name/:id" element={<ProductDetails />} />
+                  <Route path="/product/:id" element={<ProductDetails />} />
                   <Route path="/app/cart" element={<Cart />} />
                   <Route path="/app/checkout" element={<CheckoutPage />} />
                   <Route path="/app/transaction-history" element={<TransactionHistory />} />
@@ -67,19 +102,6 @@ function Application() {
               </div>
             </div>
           </>
-        )}
-
-        {/* Public Routes */}
-        {!isLoggedIn && (
-          <Routes>
-            <Route path="/" element={<StoreFront />} />
-            <Route path="/auth/sign-in" element={<Login />} />
-            <Route path="/auth/app/Signup" element={<SignUp />} />
-            <Route path="/auth/app/reset-account" element={<ResetPassword />} />
-            <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
-            <Route path="/auth/app/verify/:email" element={<VerifyToken />} />
-          </Routes>
-        )}
         
       </div>
     </Router>

@@ -6,15 +6,25 @@ import Loading from "../../utils/loading";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+
 import ProductCarousel from "../../utils/productCarousel";
 import Typography from "@mui/material/Typography";
-import Header from "../builder/header";
+// import Header from "../builder/header";
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Link } from 'react-router-dom';
+import { useUser } from "../../context/UserContext";
+import SearchIcon from '@mui/icons-material/Search';
+import Person4Icon from '@mui/icons-material/Person4';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import Badge from '@mui/material/Badge';
 import { useCart } from "../../context/CartContext"
+import { useCategories } from "../../context/CategoryContext"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
+    const [showCart, setShowCart] = useState(true);
+    const [showAccount, setShowAccount] = useState(true);
+    const [showCategories, setShowCategories] = useState(true);
   
     return (
       <div
@@ -144,13 +154,80 @@ const StoreFront = () => {
     };
 
 
+const { storeCategories, error } = useCategories();
+    const { cartCount } = useCart();
+    const { user } = useUser();
+
+    const extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'];
+
     useEffect(()=>{
         getProducts()
     },[])
     return ( 
         <div className="store-container">
             <Loading loading={loading} />
-            <Header/>
+            {/* Header Component */}
+        <>
+            {!user?.token && (
+                <div>
+                    <div className="flex justsb alc mb-lg">
+                        <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" />
+                    </div>
+                    <div className='px flex flex-col g-40 search-container w-90'>
+                        <div className="flex justsb alc g-40">
+                            <img src="/pmall-logo 1.png" alt="PMall Logo" />
+                            <form className="flex alc search" aria-label="Search form">
+                                <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
+                                <button type="button" className='flex alc g-20 shfhegwer' aria-label="Search button">
+                                    <SearchIcon />
+                                </button>
+                            </form>
+                            <div className='flex alc'>
+                                {/* {showAccount && ( */}
+                                    <Link to="/auth/sign-in" className="bold flex alc sb">
+                                        <Person4Icon />
+                                        <p>Login</p>
+                                    </Link>
+                               
+                                {/* {showCart && ( */}
+                                    <Link to="/app/cart" className="bold flex alc">
+                                        <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
+                                            <ShoppingCartOutlinedIcon />
+                                        </Badge>
+                                        <p>Cart</p>
+                                    </Link>
+                         
+                            </div>
+                        </div>
+                        <div className="flex alc mb-lg">
+                            {/* {showCategories && ( */}
+                                <div className="flex g-20 alc mr-lg">
+                                    {loading ? (
+                                        <p>Loading categories...</p>
+                                    ) : error ? (
+                                        <p>{error}</p>
+                                    ) : (
+                                        <select style={{ border: '2px solid #c27465', padding: 12, borderRadius: 15, fontWeight: 600 }}>
+                                            <option value="1">All Categories</option>
+                                            {categories?.map(category => (
+                                                <option value={category.name} key={category.id}>{category.name}</option>
+                                            ))}
+                                        </select>
+                                    )}
+                                </div>
+                          
+                            <div className="w-100 justsb alc pointer">
+                                {extraLinks.map((text, idx) => (
+                                    <div key={idx} className="f-bold f-13">{text}</div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+
+            {/* Ends Header Component */}
                 <div className="flex g-20 px w-90">
                     <div className='flex flex-col g-20'>
                         <img src="/Screenshot 2024-03-21 214441.png" alt="" className="w-full" />
@@ -212,11 +289,11 @@ const StoreFront = () => {
                 {products?.map(product => (
 												<div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
 													<div class="product-info default-cover card">
-                                                    <Link to={`/${product.name}/${product.id}` }  className="img-bg">
+                                                    <Link to={`/product/${product.id}`}   className="img-bg">
 														
 															<img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
 														</Link>
-                                                        <Link to={`/${product.name}/${product.id}` } className="no__underline"  >
+                                                        <Link to={`/product/${product.id}`}  className="no__underline"  >
                                                         <div className='product_desc'>
                                         <div className='flex-col g-5'>
                                             <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
@@ -238,28 +315,24 @@ const StoreFront = () => {
                     <TabPanel value={value} index={1}>
                     <div class="row">
                 {products?.map(product => (
-												<div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
-													<div class="product-info default-cover card">
-                                                    <Link to={`/${product.name}/${product.id}` }  className="img-bg">
-														
-															<img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
-														</Link>
-                                                        <Link to={`/${product.name}/${product.id}` } className="no__underline"  >
-                                                        <div className='product_desc'>
-                                        <div className='flex-col g-5'>
-                                            <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
-                                            <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                                            <h3 className='cost__price'>{currency(product.cost_price)}</h3>
-                                            {/* <div className="mt-5 bt">
-                                                <p>{LimitWord(product.description, 10)}</p>
-                                            </div> */}
-                                        </div>
-                                       
-                                    </div>
-                                    </Link>
-													</div>
-												</div>
-												  ))}
+    <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }}>
+        <div className="product-info default-cover card">
+            <Link to={`/product/${product.id}`} className="img-bg">
+                <img src={product.image} alt={product.name} className="product__image" style={{ width: 150 }} />
+            </Link>
+            <Link to={`/product/${product.id}`} className="no__underline">
+                <div className='product_desc'>
+                    <div className='flex-col g-5'>
+                        <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                    </div>
+                </div>
+            </Link>
+        </div>
+    </div>
+))}
+
 
 											</div>
                     </TabPanel>

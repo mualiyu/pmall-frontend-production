@@ -5,7 +5,7 @@ const CategoryContext = createContext();
 export const useCategories = () => useContext(CategoryContext);
 
 export const CategoryProvider = ({ children }) => {
-    const [categories, setCategories] = useState([]);
+    const [storeCategories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -29,7 +29,7 @@ export const CategoryProvider = ({ children }) => {
     }, []);
 
     return (
-        <CategoryContext.Provider value={{ categories, loading, error }}>
+        <CategoryContext.Provider value={{ storeCategories, error }}>
             {children}
         </CategoryContext.Provider>
     );
