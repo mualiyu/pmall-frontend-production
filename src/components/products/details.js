@@ -95,11 +95,6 @@ const ProductDetails = () => {
               <img src={detail.more_images ? detail.more_images : "https://th.bing.com/th/id/OIP.608kpIxTz9H4RyDpKCimXQHaHa?rs=1&pid=ImgDetMain"} alt="" className="image" />
             </div>
           </div>
-          <div className="other-images">
-            <img src={moreImages[0]} alt="" className="image" />
-            <img src={moreImages[1]} alt="" className="image" />
-            <img src={moreImages[2]} alt="" className="image" />
-          </div>
         </div>
       </div>
       <div className="right">
