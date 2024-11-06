@@ -1,0 +1,28 @@
+.product-card {
+    padding: 16px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px; /* Restrict card width to prevent overflow */
+    margin: auto;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 100%; /* Ensure image doesn't exceed the container */
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover; /* Ensures the image keeps its aspect ratio */
+}
+
+.product-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.product-category, .product-price, .product-tag {
+    font-size: 0.9rem;
+    margin-top: 4px;
+}

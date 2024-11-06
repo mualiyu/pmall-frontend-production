@@ -154,7 +154,7 @@ const Dashboard = () => {
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
   console.log(user);
   const getUsers = () => {
-    fetch("https://api.pmall.com.ng/api/v1/get-all-users", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/get-all-users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -174,7 +174,7 @@ const Dashboard = () => {
 
   const getUsersDetails = () => {
     //setLoading(true)
-    fetch("https://api.pmall.com.ng/api/v1/profile", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/profile", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -573,7 +573,7 @@ const Dashboard = () => {
               <>
                 <div className="recent-vendors">
                   <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                    Recently registerd vendors
+                    My Vendors
                   </h1>
                   {pmallUsers?.length === 0 && (
                     <p>
@@ -604,7 +604,7 @@ const Dashboard = () => {
                           </div>
                           <div>
                             <h4 className="f-300 capitalze">
-                              {user.fname} {user.lname} ({user.store_name})
+                              {user.fname} {user.lname} ({user.store_id})
                             </h4>
                             <p className="sub__title">
                               {moment(user.created_at).format(
@@ -618,7 +618,7 @@ const Dashboard = () => {
                 </div>
                 <div className="recent-affilates">
                   <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                    Recently registerd affiliates
+                    My Affiliates
                   </h1>
                   {pmallUsers?.length === 0 && (
                     <p>

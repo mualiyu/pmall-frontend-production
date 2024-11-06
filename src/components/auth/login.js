@@ -79,7 +79,7 @@ const Login = () => {
                 </div>
               </div>
 
-              <Link to="/auth/app/Reset-password" className="forgotten bold">
+              <Link to="/auth/app/reset-account" className="forgotten bold">
                 <p className="bold">Forgotten?</p>
               </Link>
               <span className="remember-me">

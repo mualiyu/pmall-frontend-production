@@ -17,7 +17,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://api.pmall.com.ng/api/v1/register/vendor", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/register/vendor", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -34,7 +34,7 @@ export const VendorSignupProvider = ({ children }) => {
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
-            window.location.href = "/";
+            window.location.href = "/auth/sign-in";
           }, 2000);
 
           setLoading(false);
@@ -64,7 +64,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://api.pmall.com.ng/api/v1/register/affiliate", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/register/affiliate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -74,6 +74,7 @@ export const VendorSignupProvider = ({ children }) => {
     })
       .then((resp) => resp.json())
       .then((result) => {
+        console.log(result);
         setLoading(false);
         console.log(result);
         if (result.status) {
@@ -81,7 +82,7 @@ export const VendorSignupProvider = ({ children }) => {
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
-            window.location.href = "/";
+            window.location.href = "/auth/sign-in";
           }, 2000);
 
           setLoading(false);
@@ -113,7 +114,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://api.pmall.com.ng/api/v1/login", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -141,13 +142,13 @@ export const VendorSignupProvider = ({ children }) => {
             regDate: result.data.user.created_at,
             refId: result.data.user.my_ref_id,
           });
-          setToastMsg("Awesome! Login successful");
+          setToastMsg("Boom! Login successful");
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
           }, 5000);
           setTimeout(() => {
-            window.location.href = "/app/dashboard";
+            window.location.href = "/dashboard";
           }, 2000);
 
           setLoading(false);
@@ -174,7 +175,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://api.pmall.com.ng/api/v1/forgot-password", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -193,7 +194,7 @@ export const VendorSignupProvider = ({ children }) => {
             setToastMsg("");
           }, 5000);
           setTimeout(() => {
-            window.location.href = `/auth/app/verify-token/ ${inputValues.email}`;
+            window.location.href = `/auth/app/verify/ ${inputValues.email}`;
           }, 2000);
           setLoading(false);
         } else {
@@ -221,7 +222,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://api.pmall.com.ng/api/v1/reset-password", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/reset-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -267,7 +268,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://api.pmall.com.ng/api/v1/verify-code", {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/verify-code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -284,7 +285,7 @@ export const VendorSignupProvider = ({ children }) => {
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
-            window.location.href = "/auth/app/Set-new-password";
+            window.location.href = "/auth/app/reset";
           }, 5000);
           setLoading(false);
         } else {

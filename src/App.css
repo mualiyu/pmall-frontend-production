@@ -2,7 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 10px;
   font-family: "manrope-light", "Open Sans", "sans-serif" !important;
 }
 
@@ -171,8 +170,8 @@
 }
 
 .MuiSvgIcon-root {
-  width: 1.3em !important;
-  height: 1.3em !important;
+  width: 0.7em !important;
+  height: 0.7em !important;
 }
 
 .m45 {
@@ -205,6 +204,7 @@
   border-radius: 0.25rem;
   text-align: center;
   line-height: 1;
+  font-size: 10px;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -252,10 +252,32 @@ tbody {
 .mb-35 {
   margin-bottom: 35px;
 }
+
+.loading{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color:rgba(0, 0, 0, 0.5);
+    z-index:99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s;
+    }
+    .loading.active{
+        opacity: 1;
+        pointer-events: all;
+    }
+
+
 .page__header {
   display: flex;
   align-items: center;
-  padding: 30px 10px;
+  padding: 21px 10px;
   justify-content: space-between;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
     margin-bottom: 33px;
@@ -479,12 +501,12 @@ css-6od3lo-MuiChip-label {
   border-bottom: thin dashed #f4f4f4;
 }
 .sidenav {
-  width: 18%;
+  /* width: 18%; */
   background: var(--primary-bg-color);
   color: var(--primary-color);
   z-index: 5;
   position: relative;
-  height: 100vw;
+  height: 100%;
 }
 .css-38raov-MuiButtonBase-root-MuiChip-root .MuiChip-deleteIcon {
   -webkit-tap-highlight-color: transparent;
@@ -757,9 +779,13 @@ thead {
 }
 
 .row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1* var(--bs-gutter-y));
+    margin-right: calc(-.5* var(--bs-gutter-x));
+    margin-left: calc(-.5* var(--bs-gutter-x));
 }
 
 .map-img {
@@ -789,7 +815,7 @@ thead {
 }
 
 .debit_card_name {
-  font-size: 22px;
+  font-size: 12px;
   margin-top: 40px;
 }
 
@@ -1016,6 +1042,89 @@ tbody > tr.MuiTableRow-root.css-1q1u3t4-MuiTableRow-root:hover {
 .mb-7 {
   margin-bottom: 7px;
 }
+.empty__record {
+  text-align: center;
+    font-size: 13px;
+}
+.bg-accent {
+  background-color : #4511a1;
+  color: #ffffff;
+}
+.b-b {
+  border-bottom: thin dashed #dddddd;
+    padding-bottom: 10px;
+}
+.user__avatar > h3 {
+  font-size: 10px;
+}
+h1 {
+ font-size: 13px;
+}
+ 
+.accent {
+  background-color : #4511a1;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.text-center {
+  text-align: center;
+}
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  margin: 0;
+  border-radius: 0;
+  padding: 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  font-size: 0.7rem!important;
+  line-height: 1.25;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  max-width: 360px;
+  min-width: 90px;
+  position: relative;
+  min-height: 48px;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  padding: 12px 16px;
+  overflow: hidden;
+  white-space: normal;
+  text-align: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  color: rgba(0, 0, 0, 0.6);
+}
 .search__bar {
   padding: 9px;
   /* width: 200px; */
@@ -1023,13 +1132,136 @@ tbody > tr.MuiTableRow-root.css-1q1u3t4-MuiTableRow-root:hover {
   outline: 0;
   border: thin solid #8c8c8c30;
   margin-right: 15px;
-  color: #8c8c8cd6;
+  color: #1e1e1ed6;
 }
 .w-200 {
   width: 200px;
 }
+.w-125p {
+  width: 15.5%
+}
+.pos-products .product-info {
+  padding: 15px;
+  color: #B8BCC9;
+  -webkit-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.pos-products .product-info .img-bg img {
+  -webkit-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  max-width: 100%;
+    height: auto;
+    vertical-align: inherit;
+}
+.card {
+  margin-bottom: 1.5rem;
+  background-color: #ffffff;
+  transition: all 0.5s ease-in-out;
+  position: relative;
+  border-radius: 4px;
+  border: 1px solid #dbe0e6;
+  box-shadow: none;
+}
+.pos-products .product-info .img-bg {
+  height: 117px;
+  /* background-color: #f3f6f9; */
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+.card {
+  --bs-card-spacer-y: 1rem;
+  --bs-card-spacer-x: 1rem;
+  --bs-card-title-spacer-y: 0.5rem;
+  --bs-card-title-color: ;
+  --bs-card-subtitle-color: ;
+  --bs-card-border-width: var(1px);
+  --bs-card-border-color: rgba(0,0,0,0.175);
+  --bs-card-border-radius: var(0.375);
+  --bs-card-box-shadow: ;
+  --bs-card-inner-border-radius: calc(var(0.375) -(var(1px)));
+  --bs-card-cap-padding-y: 0.5rem;
+  --bs-card-cap-padding-x: 1rem;
+  --bs-card-cap-bg: rgba(var(0,0,0,0.175), 0.03);
+  --bs-card-cap-color: ;
+  --bs-card-height: ;
+  --bs-card-color: ;
+  --bs-card-bg: var(--bs-body-bg);
+  --bs-card-img-overlay-padding: 1rem;
+  --bs-card-group-margin: 0.75rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: var(--bs-card-height);
+  color: var(--bs-body-color);
+  word-wrap: break-word;
+  background-color: white;
+  background-clip: border-box;
+  border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  border-radius: var(--bs-card-border-radius);
+}
+.product__name {
+  font-size: 11px;
+  color: #111111;
+  text-transform: capitalize;
+}
+.product_desc {
+  padding: 10px;
+}
+
+.product__image {
+  width: 100%!important;
+}
+.cost__price {
+  font-size: 10px;
+  font-weight: 300;
+  color: black;
+  text-decoration: line-through;
+  margin-top: -6px;
+
+}
+
+
+.css-i4bv87-MuiSvgIcon-root .MuiSvgIcon-root {
+  font-size: 0.9!important;
+}
+
+.no__underline {
+  text-decoration: unset;
+}
 ::placeholder {
   color: #8c8c8cd6;
+}
+@media (min-width: 992px) {
+  .col-lg-3 {
+      flex: 0 0 auto;
+      width: 25%;
+  }
+}
+
+@media (min-width: 768px) {
+  .col-md-6 {
+      flex: 0 0 auto;
+      width: 50%;
+  }
+}
+@media (min-width: 576px) {
+  .col-sm-2 {
+      flex: 0 0 auto;
+      width: 16.66666667%;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

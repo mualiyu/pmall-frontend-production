@@ -78,7 +78,7 @@ const categoryColumns = [
   { id: "name", label: "Name" },
   { id: "description", label: "Description" },
   { id: "sub_categories", label: "Sub Categories" },
-  { id: "created_at,", label: "Created At" },
+  // { id: "created_at,", label: "Created At" },
   { id: "edit", label: "Edit" },
   { id: "delete", label: "Delete" },
 ];
@@ -87,7 +87,7 @@ const brandColumns = [
   { id: "brand_image", label: "Brand Image" },
   { id: "name", label: "Name" },
   { id: "description", label: "Description" },
-  { id: "created_at,", label: "Created At" },
+  // { id: "created_at,", label: "Created At" },
   { id: "edit", label: "Edit" },
   { id: "delete", label: "Delete" },
 ];
@@ -203,7 +203,7 @@ const ProductList = () => {
       const newCategory = e.target.value;
       setSelectedCategory(newCategory);
     console.log(newCategory)
-      const matchingSubCategories = categories.find((category) => category.id == newCategory)?.sub_categories || [];
+      const matchingSubCategories = categories.find((category) => category.id == newCategory?.sub_categories) || [];
       setSubCategories(matchingSubCategories);
       console.log(matchingSubCategories)
       console.log(categories)
@@ -230,7 +230,7 @@ const ProductList = () => {
       setLoading(true)
       inputValues.more_images = moreImages?.join(", ")
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/products/create', {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/api/v1/products/create', {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -271,7 +271,7 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/products/update/1', {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/api/v1/products/update/1', {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -310,7 +310,7 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/product-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/api/v1/product-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -349,7 +349,7 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/product-sub-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/api/v1/product-sub-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -384,7 +384,7 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/product-brand/update?brand_id=' + inputValues.id + '&brand_image=' + inputValues.brand_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+      const response = await fetch('https://api.pmall.mukeey.com.ng/api/v1/product-brand/update?brand_id=' + inputValues.id + '&brand_image=' + inputValues.brand_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -450,7 +450,7 @@ const ProductList = () => {
 
   const getProducts = () => {
     if(user?.accountType== "Vendor"){
-      fetch("https://api.pmall.com.ng/api/v1/products", {
+      fetch("https://api.pmall.mukeey.com.ng/api/v1/products", {
         method: "GET",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -472,7 +472,7 @@ const ProductList = () => {
           console.log(err);
         });
     }else{
-      fetch("https://api.pmall.com.ng/api/v1/products/?store_id=" + id, {
+      fetch("https://api.pmall.mukeey.com.ng/api/v1/products/?store_id=" + id, {
         method: "GET",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -498,7 +498,7 @@ const ProductList = () => {
 
   const addCategory = (e) => {
     e.preventDefault()
-    fetch("https://api.pmall.com.ng/api/v1/product-category/create?category_image="+ inputValues.category_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/product-category/create?category_image="+ inputValues.category_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -532,7 +532,7 @@ const ProductList = () => {
 
   const addSubCategory = (e) => {
     e.preventDefault()
-    fetch("https://api.pmall.com.ng/api/v1/product-sub-category/create?category_id=" + inputValues.category_id  + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/product-sub-category/create?category_id=" + inputValues.category_id  + "&name=" + inputValues.name + "&description=" + inputValues.description, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -566,7 +566,7 @@ const ProductList = () => {
 
   const addBrand = (e) => {
     e.preventDefault()
-    fetch("https://api.pmall.com.ng/api/v1/product-brand/create?brand_image="+inputValues.brand_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/product-brand/create?brand_image="+inputValues.brand_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -600,7 +600,7 @@ const ProductList = () => {
   };
 
   const getCategories = () => {
-    fetch("https://api.pmall.com.ng/api/v1/product-category/get-all",{
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/product-category/get-all",{
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -619,7 +619,7 @@ const ProductList = () => {
   };
   
   const getBrands = () => {
-    fetch("https://api.pmall.com.ng/api/v1/product-brand/get-all?store_id=" +id, {
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/product-brand/get-all?store_id=" +id, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -640,7 +640,7 @@ const ProductList = () => {
   const deleteProduct = (productId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this item?');
     if (isConfirmed) {
-      fetch("https://api.pmall.com.ng/api/v1/products/delete-account?product_id=" + productId, {
+      fetch("https://api.pmall.mukeey.com.ng/api/v1/products/delete-account?product_id=" + productId, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -675,7 +675,7 @@ const ProductList = () => {
   const deleteCategory = (categoryId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this category?');
     if (isConfirmed) {
-      fetch("https://api.pmall.com.ng/api/v1/product-category/delete?category_id=" + categoryId, {
+      fetch("https://api.pmall.mukeey.com.ng/api/v1/product-category/delete?category_id=" + categoryId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -713,7 +713,7 @@ const ProductList = () => {
   const deleteSubCategory = (categoryId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this category?');
     if (isConfirmed) {
-      fetch("https://api.pmall.com.ng/api/v1/product-sub-category/delete?sub_category_id=" + categoryId, {
+      fetch("https://api.pmall.mukeey.com.ng/api/v1/product-sub-category/delete?sub_category_id=" + categoryId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -749,7 +749,7 @@ const ProductList = () => {
   const deleteBrand = (brandId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this brand?');
     if (isConfirmed) {
-      fetch("https://api.pmall.com.ng/api/v1/product-brand/delete?brand_id=" + brandId, {
+      fetch("https://api.pmall.mukeey.com.ng/api/v1/product-brand/delete?brand_id=" + brandId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -830,8 +830,12 @@ console.log(user?.accountType)
               onChange={handleTabChange}
               aria-label="basic tabs example">
                   <Tab label="Products list" {...a11yProps(0)} />
-                  <Tab label="Categories" {...a11yProps(1)} />
-                  <Tab label="Brands" {...a11yProps(2)} />
+                  {user?.role === 'Admin' && (
+                    <>
+                    <Tab label="Categories" {...a11yProps(1)} />
+                    <Tab label="Brands" {...a11yProps(2)} />
+                    </>
+                  )}
                   <Tab label="Sub Categories" {...a11yProps(2)} />
             </Tabs>
       </Box>
@@ -916,6 +920,8 @@ console.log(user?.accountType)
           </Table>
         </TableContainer>
       </TabPanel>
+      {user.role === 'Admin' && (
+        <>
       <TabPanel value={value} index={1}>
         <section className="flex-container alc p-y my-40">
           <div className="w-full">
@@ -926,6 +932,7 @@ console.log(user?.accountType)
             </button>
           </div>
         </section>
+        {categories && (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="Porduct Table">
             <TableHead>
@@ -950,7 +957,7 @@ console.log(user?.accountType)
                 <TableCell>
                     <h4 className="f-300">{category.sub_categories.map((item) => item.name).join(', ')} </h4>
                 </TableCell>
-                <TableCell> {moment(category.created_at).add(1, "years").calendar()} </TableCell>
+                {/* <TableCell> {moment(category.created_at).add(1, "years").calendar()} </TableCell> */}
                 <TableCell onClick={()=>editCategory(category)}> 
                   {" "}
                   <EditIcon />{" "}
@@ -964,6 +971,8 @@ console.log(user?.accountType)
             </TableBody>
           </Table>
         </TableContainer>
+        )}
+        {!categories && ( <p className="empty__record"> Seems you are new here... No Category has been added </p>) }
       </TabPanel>
       <TabPanel value={value} index={2}>
       <section className="flex-container alc p-y my-40">
@@ -996,7 +1005,7 @@ console.log(user?.accountType)
                     <h4 className="f-300">{brand.name}</h4>
                 </TableCell>
                 <TableCell>{brand.description}</TableCell>
-                <TableCell> {moment(brand.created_at).add(1, "years").calendar()} </TableCell>
+                {/* <TableCell> {moment(brand.created_at).add(1, "years").calendar()} </TableCell> */}
                 <TableCell onClick={()=>editBrand(brand)}>
                   {" "}
                   <EditIcon />{" "}
@@ -1011,6 +1020,8 @@ console.log(user?.accountType)
           </Table>
         </TableContainer>
       </TabPanel>
+      </>
+      )}
       <TabPanel value={value} index={3}>
         <section className="flex-container alc p-y my-40">
           <div className="w-full">
@@ -1021,6 +1032,7 @@ console.log(user?.accountType)
             </button>
           </div>
         </section>
+        {subCategories && (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="Porduct Table">
             <TableHead>
@@ -1042,7 +1054,7 @@ console.log(user?.accountType)
                     <h4 className="f-300">{category.name} </h4>
                 </TableCell>
                 <TableCell>{category.description}</TableCell>
-                <TableCell> {moment(category.created_at).add(1, "years").calendar()} </TableCell>
+                {/* <TableCell> {moment(category.created_at).add(1, "years").calendar()} </TableCell> */}
                 <TableCell onClick={()=>editSubCategory(category)}> 
                   {" "}
                   <EditIcon />{" "}
@@ -1056,6 +1068,8 @@ console.log(user?.accountType)
             </TableBody>
           </Table>
         </TableContainer>
+        )}
+        {!subCategories && ( <p className="empty__record"> Seems you are new here... No Sub Categories has been added yet </p>) }
       </TabPanel>
       {/* Modal for vendors */}
 
@@ -1091,7 +1105,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1117,9 +1131,6 @@ console.log(user?.accountType)
                     }}
                   />
                 </div>
-                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
-                  Upload Photo
-                </button> */}
               </div>
             </div>
             <form style={{ width: "100%" }}>
@@ -1265,7 +1276,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1302,7 +1313,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1339,7 +1350,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1429,7 +1440,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1602,7 +1613,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1669,7 +1680,7 @@ console.log(user?.accountType)
         <Box sx={style}>
           <div className="mb-35">
             <Typography id="modal-modal-title">
-              <h4 className="summary__title t-xl title-case">Add Product</h4>
+              <h4 className="summary__title t-xl title-case">Add Category</h4>
             </Typography>
             <div className="s-divider"></div>
           </div>
@@ -1693,7 +1704,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1780,7 +1791,7 @@ console.log(user?.accountType)
           <section className="flex__normal">
             <div className="w-200">
               <div className="profile_pic_holder">
-                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <img src={inputValues.category_image} className="profile_pic" name="image" value={inputValues.image|| ""} />
                 <div className="pos-rel w100-m10 ">
                   <input
                     type="file"
@@ -1797,7 +1808,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -1823,9 +1834,6 @@ console.log(user?.accountType)
                     }}
                   />
                 </div>
-                {/* <button className="btn btn-primary p-25 mt-15" onClick={uploadFile}>
-                  Upload Photo
-                </button> */}
               </div>
             </div>
             <section className="flex-container flex-col g-20 mb-lg w-full">
@@ -1860,7 +1868,7 @@ console.log(user?.accountType)
                 </button>
                   <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateCategory} disabled={loading}
                 >
-                {loading ?<ButtonLoader /> : "Update Category"}
+                {loading ?<ButtonLoader /> : "Update"}
                   </button>
                 </div>
               </form>
@@ -1980,7 +1988,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -2067,7 +2075,7 @@ console.log(user?.accountType)
           <section className="flex__normal">
             <div className="w-200">
               <div className="profile_pic_holder">
-                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+                <img src={inputValues?.brand_image} className="profile_pic" name="image" value={inputValues.image|| ""} />
                 <div className="pos-rel w100-m10 ">
                   <input
                     type="file"
@@ -2084,7 +2092,7 @@ console.log(user?.accountType)
                       files?.length && formData.append("file", files[0]);
                       //setLoading(true);
                       fetch(
-                        "https://api.pmall.com.ng/api/v1/products/upload-file",
+                        "https://api.pmall.mukeey.com.ng/api/v1/products/upload-file",
                         {
                           method: "POST",
                           body: formData,
@@ -2147,7 +2155,7 @@ console.log(user?.accountType)
                 </button>
                   <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateBrand}  disabled={loading}
                 >
-                {loading ?<ButtonLoader /> : "Create Brand"}
+                {loading ?<ButtonLoader /> : "Create"}
                   </button>
                 </div>
               </form>

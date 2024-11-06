@@ -20,12 +20,12 @@ export default async function query({ method, url, bodyData,token='' }: QueryPar
 
   try {
     if (method=='GET') {
-    var response = await fetch(`https://api.pmall.com.ng/api/v1${url}`,{
+    var response = await fetch(`https://api.pmall.mukeey.com.ng/api/v1${url}`,{
      headers:conditionalHeader,
      method
     })
     }else{
-      var response = await fetch(`https://api.pmall.com.ng/api/v1${url}`, {
+      var response = await fetch(`https://api.pmall.mukeey.com.ng/api/v1${url}`, {
         method,
         headers:conditionalHeader,
         body: JSON.stringify(bodyData),

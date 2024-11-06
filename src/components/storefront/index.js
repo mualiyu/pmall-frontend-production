@@ -1,30 +1,30 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useEffect, useState } from 'react';
+import LimitWord from '../../utils/limitWord';
+import currency from '../../utils/formatCurrency';
+import Loading from "../../utils/loading";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+
+import ProductCarousel from "../../utils/productCarousel";
 import Typography from "@mui/material/Typography";
-import LockIcon from '@mui/icons-material/Lock';
-import Person2Icon from '@mui/icons-material/Person2';
-import SearchIcon from '@mui/icons-material/Search';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
-import LunchDiningOutlinedIcon from '@mui/icons-material/LunchDiningOutlined';
-import SportsEsportsOutlinedIcon from '@mui/icons-material/SportsEsportsOutlined';
-import FitnessCenterOutlinedIcon from '@mui/icons-material/FitnessCenterOutlined';
-import MedicationLiquidOutlinedIcon from '@mui/icons-material/MedicationLiquidOutlined';
-import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
-import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
-import MovieCreationOutlinedIcon from '@mui/icons-material/MovieCreationOutlined';
-import MusicNoteOutlinedIcon from '@mui/icons-material/MusicNoteOutlined';
-import CardTravelOutlinedIcon from '@mui/icons-material/CardTravelOutlined';
+import Header from "../builder/Header";
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Link } from 'react-router-dom';
-import { useCart } from "../../context/cartContext"
+import { useUser } from "../../context/UserContext";
+import SearchIcon from '@mui/icons-material/Search';
+import Person4Icon from '@mui/icons-material/Person4';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import Badge from '@mui/material/Badge';
+import { useCart } from "../../context/CartContext"
+import { useCategories } from "../../context/CategoryContext"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
+    const [showCart, setShowCart] = useState(true);
+    const [showAccount, setShowAccount] = useState(true);
+    const [showCategories, setShowCategories] = useState(true);
   
     return (
       <div
@@ -51,7 +51,9 @@ function TabPanel(props) {
 const StoreFront = () => {
     const {cartLength} = useCart();
     const [value, setValue] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
+    const [categories, setProductCategories] = useState(null)
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
@@ -91,31 +93,49 @@ const StoreFront = () => {
       ];
       
     const getProducts = () => {
-        fetch("https://api.pmall.com.ng/api/v1/public/products/list-all", {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
             Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("authToken"),
             },
         })
             .then((resp) => resp.json())
             .then((result) => {
             console.log(result);
             setProducts(result.data);
-            // for (const item of result) {
-            //     if (item.status === 0) {
-            //     publishedCount++;
-            //     }
-            // }
+            setLoading(false);
             })
             .catch((err) => {
             console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCategories = () => {
+        setLoading(true);
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setProductCategories(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
             });
     };
 
     const getProduct = () => {
-        fetch("https://api.pmall.com.ng/api/v1/public/products/list-all-by-category?category_id=1", {
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=1", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -125,92 +145,90 @@ const StoreFront = () => {
             .then((resp) => resp.json())
             .then((result) => {
             console.log(result,"edibles");
-            // setProducts(result.data);
-            // for (const item of result) {
-            //     if (item.status === 0) {
-            //     publishedCount++;
-            //     }
-            // }
             })
             .catch((err) => {
             console.log(err);
             });
+
+            getProduct()
     };
 
 
+const { storeCategories, error } = useCategories();
+    const { cartCount } = useCart();
+    const { user } = useUser();
+
+    const extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'];
+
     useEffect(()=>{
         getProducts()
-        getProduct()
     },[])
     return ( 
         <div className="store-container">
-            <div className="flex justsb alc top">
-                <p>Default welcome message! Join free or signin</p>
-                <div className="flex justsb alc g-10">
-                    <div className='flex alc sb'>
-                        <LockIcon />
-                        <p>Login</p>
+            <Loading loading={loading} />
+            {/* Header Component */}
+        <>
+            {!user?.token && (
+                <div>
+                    <div className="flex justsb alc mb-lg">
+                        <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" />
                     </div>
-                    <div className='flex alc sb'>
-                        <Person2Icon />
-                        <p>My Account</p>
-                    </div>
-                    <div className='sb'>
-                        <select name="" id="">
-                            <option value="1">English</option>
-                        </select>
-                    </div>
-                    <div className='sb'>
-                        <select name="" id="">
-                            <option value="1">USD</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div className='px flex flex-col g-40 search-container'>
-                <div className="flex justsb alc g-40">
-                    <img src="/pmall-logo 1.png" alt="" />
-                    <form action="" className="flex alc search">
-                        <input type="text" placeholder='Search item...' />
-                        <div className='flex alc g-20'>
-                            <p className=''>All Category</p>
-                            <SearchIcon />
-                        </div>
-                    </form>
-                    <div className='flex alc g-10'>
-                        <FavoriteBorderIcon className='icon'/>
-                        <Link to="/app/cart">
-                            <div className='cart-box pointer'>
-                                <ShoppingCartOutlinedIcon className='icon'/>
-                                <p className='cart-items-count'>{cartLength}</p>
+                    <div className='px flex flex-col g-40 search-container w-90'>
+                        <div className="flex justsb alc g-40">
+                            <img src="/pmall-logo 1.png" alt="PMall Logo" />
+                            <form className="flex alc search" aria-label="Search form">
+                                <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
+                                <button type="button" className='flex alc g-20 shfhegwer' aria-label="Search button">
+                                    <SearchIcon />
+                                </button>
+                            </form>
+                            <div className='flex alc'>
+                                {/* {showAccount && ( */}
+                                    <Link to="/auth/sign-in" className="bold flex alc sb">
+                                        <Person4Icon />
+                                        <p>Login</p>
+                                    </Link>
+                               
+                                {/* {showCart && ( */}
+                                    <Link to="/app/cart" className="bold flex alc">
+                                        <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
+                                            <ShoppingCartOutlinedIcon />
+                                        </Badge>
+                                        <p>Cart</p>
+                                    </Link>
+                         
                             </div>
-                        </Link>
-                        <h3>My cart</h3>
+                        </div>
+                        <div className="flex alc mb-lg">
+                            {/* {showCategories && ( */}
+                                <div className="flex g-20 alc mr-lg">
+                                    {loading ? (
+                                        <p>Loading categories...</p>
+                                    ) : error ? (
+                                        <p>{error}</p>
+                                    ) : (
+                                        <select style={{ border: '2px solid #c27465', padding: 12, borderRadius: 15, fontWeight: 600 }}>
+                                            <option value="1">All Categories</option>
+                                            {categories?.map(category => (
+                                                <option value={category.name} key={category.id}>{category.name}</option>
+                                            ))}
+                                        </select>
+                                    )}
+                                </div>
+                          
+                            <div className="w-100 justsb alc pointer">
+                                {extraLinks.map((text, idx) => (
+                                    <div key={idx} className="f-bold f-13">{text}</div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="flex g-40 alc">
-                    <select name="" id="">
-                        <option value="1">All Departments</option>
-                    </select>
-                    <div className="flex alc g-20">
-                    <select name="" id="">
-                        <option value="1">HOME</option>
-                    </select>
-                    <select name="" id="">
-                        <option value="1">SHOP</option>
-                    </select>
-                    <select name="" id="">
-                        <option value="1">PROMOTIONS</option>
-                    </select>
-                    <select name="" id="">
-                        <option value="1">BLOGS</option>
-                    </select>
-                    <select name="" id="">
-                        <option value="1">PAGES</option>
-                    </select>
-                 </div>
-                </div>
-                <div className="flex g-20">
+            )}
+        </>
+
+            {/* Ends Header Component */}
+                <div className="flex g-20 px w-90">
                     <div className='flex flex-col g-20'>
                         <img src="/Screenshot 2024-03-21 214441.png" alt="" className="w-full" />
                         <img src="/Screenshot 2024-03-21 214722.png" alt="" className="w-full" />
@@ -221,75 +239,27 @@ const StoreFront = () => {
                         <img src="/Screenshot 2024-03-21 215417.png" alt="" className="w-full" />
                     </div>
                     <div className='flex flex-col g-20'>
+                    {/* <ProductCarousel products={products} /> */}
                         <img src="/Screenshot 2024-03-21 215854.png" alt="" className="w-full" />
                         <img src="/Screenshot 2024-03-21 215944.png" alt="" className="w-full" />
                         <img src="/Screenshot 2024-03-21 220017.png" alt="" className="w-full" />
                     </div>
                 </div>
-                <div className="flex justsb ">
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <SchoolOutlinedIcon className='icon' />
+                <div className="row  w-90" style={{margin: '20px auto'}}>
+                {categories?.map(category => (
+                           <div className='flex flex-col g-10 alc brand_stores m-5 mt-15 w-125p'>
+                            <div className='border b-image'>
+                                <img src={category.category_image} className='icon' width="60px" />
+                            </div>
+                            <p className="cat_title">{category.name}</p>
                         </div>
-                        <p>Education</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <LunchDiningOutlinedIcon className='icon' />
-                        </div>
-                        <p>Food & Restaurant</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <SportsEsportsOutlinedIcon className='icon' />
-                        </div>
-                        <p>Game & Software</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <FitnessCenterOutlinedIcon className='icon' />
-                        </div>
-                        <p>Gym & Sport</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <MedicationLiquidOutlinedIcon className='icon' />
-                        </div>
-                        <p>Health & Beauty</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <HomeWorkOutlinedIcon className='icon'/>
-                        </div>
-                        <p>Hotel & Resort</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <LocalMallOutlinedIcon className='icon' />
-                        </div>
-                        <p>Mall & Store</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <MovieCreationOutlinedIcon className='icon' />
-                        </div>
-                        <p>Movie &  Entertainment</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <MusicNoteOutlinedIcon className='icon' />
-                        </div>
-                        <p>Music & Festival</p>
-                    </div>
-                    <div className='flex flex-col g-10 alc'>
-                        <div className='border'>
-                            <CardTravelOutlinedIcon className='icon' />
-                        </div>
-                        <p>Travel Tour</p>
-                    </div>
+                        ))}
                 </div>
-            </div>
-            <div className='px flex flex-col g-40'>
+
+
+                
+           
+            <div className='px flex flex-col g-40 w-90'>
                 <div className='flex flex-col g-40'>
                     <img src="/Screenshot 2024-03-19 150113.png" alt="" />
                     <div className='flex g-20'>
@@ -315,98 +285,56 @@ const StoreFront = () => {
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
-                        <div className='flex  g-20'>
-                            {products?.map(product => (
-                                <Link to={"/app/products/details/"+product.id } className='no-underline'>
-                                <div className='bg-white product-card'>
-                                    <div className='img-div'>
-                                        <img src={product.image} alt="" className='w-ful' width={300} height={300} />
-                                    </div>
-                                    <div className='desc'>
-                                        <div className='main-desc flex flex-col g-5'>
-                                            <h3>{product.name}</h3>
-                                            <h3 className='red bold'>N{product.selling_price}</h3>
-                                            <div className="mt-5 bt">
-                                                <p>{product.description}</p>
-                                            </div>
+                    <div class="row">
+                {products?.map(product => (
+												<div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+													<div class="product-info default-cover card">
+                                                    <Link to={`/product/${product.id}`}   className="img-bg">
+														
+															<img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+														</Link>
+                                                        <Link to={`/product/${product.id}`}  className="no__underline"  >
+                                                        <div className='product_desc'>
+                                        <div className='flex-col g-5'>
+                                            <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                            <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                            <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                            {/* <div className="mt-5 bt">
+                                                <p>{LimitWord(product.description, 10)}</p>
+                                            </div> */}
                                         </div>
+                                       
                                     </div>
-                                </div>
-                                </Link>
-                            ))}
-                        </div>
+                                    </Link>
+													</div>
+												</div>
+												  ))}
+
+											</div>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                    <div className='flex justsb g-10'>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row">
+                {products?.map(product => (
+    <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }}>
+        <div className="product-info default-cover card">
+            <Link to={`/product/${product.id}`} className="img-bg">
+                <img src={product.image} alt={product.name} className="product__image" style={{ width: 150 }} />
+            </Link>
+            <Link to={`/product/${product.id}`} className="no__underline">
+                <div className='product_desc'>
+                    <div className='flex-col g-5'>
+                        <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                    </div>
+                </div>
+            </Link>
+        </div>
+    </div>
+))}
+
+
+											</div>
                     </TabPanel>
                     <TabPanel value={value} index={2}>
                         <h3>test3</h3>
@@ -414,7 +342,7 @@ const StoreFront = () => {
                 </Box>
                 </div>
                 <div className='flex flex-col alc g-20 bg-yellow'>
-                    <h1>Hello Summer 2024</h1>
+                    <h1>Hello Summer 2025</h1>
                     <div className='flex justsb g-10'>
                             <div className='bg-white product-card'>
                                 <div className='img-div'>
@@ -923,7 +851,7 @@ const StoreFront = () => {
                         </div>
                     </div>
                 </div>
-                <div className='store-footer flex flex-col g-40'>
+                <div className='store-footer flex flex-col g-40 w-90'>
                     <div className='flex justsb'>
                         <div className='flex flex-col g-20'>
                             <h3>Our Mission</h3>
