@@ -53,6 +53,17 @@ const StoreFront = () => {
     const [value, setValue] = useState(0);
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
+    const [cat2, setCat2] = useState([]);
+    const [cat3, setCat3] = useState([]);
+    const [cat4, setCat4] = useState([]);
+    const [cat5, setCat5] = useState([]);
+    const [cat6, setCat6] = useState([]);
+    const [cat8, setCat8] = useState([]);
+    const [cat9, setCat9] = useState([]);
+    const [cat10, setCat10] = useState([]);
+    const [cat11, setCat11] = useState([]);
+    const [cat12, setCat12] = useState([]);
+    const [cat13, setCat13] = useState([]);
     const [categories, setProductCategories] = useState(null)
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -95,7 +106,7 @@ const StoreFront = () => {
     const getProducts = () => {
         setLoading(true);
         getProductsCategories();
-        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all", {
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=2", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -106,6 +117,216 @@ const StoreFront = () => {
             .then((result) => {
             console.log(result);
             setProducts(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat3 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=3", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat3(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat4 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=4", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat4(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+     const getProductsCat5 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=5", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat5(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+     const getProductsCat6 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=6", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat6(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+     const getProductsCat8 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=8", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat8(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat9 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=9", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat9(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat10 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=10", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat10(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat11 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=11", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat11(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat12 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=12", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat12(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat13 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=13", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat13(result.data);
             setLoading(false);
             })
             .catch((err) => {
@@ -162,6 +383,16 @@ const { storeCategories, error } = useCategories();
 
     useEffect(()=>{
         getProducts()
+        getProductsCat3()
+        getProductsCat4()
+        getProductsCat5()
+        getProductsCat6()
+        getProductsCat8()
+        getProductsCat9()
+        getProductsCat10()
+        getProductsCat11()
+        getProductsCat12()
+        getProductsCat13()
     },[])
     return ( 
         <div className="store-container">
@@ -279,38 +510,38 @@ const { storeCategories, error } = useCategories();
                         value={value}
                         onChange={handleChange}
                         aria-label="basic tabs example">
-                            <Tab label="Latest Deals" {...a11yProps(0)} />
+                            <Tab label="Men's health care" {...a11yProps(0)} />
                             <Tab label="Trending Deals" {...a11yProps(1)} />
                             <Tab label="Featured Deals" {...a11yProps(2)} />
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
-                    <div class="row">
-                {products?.map(product => (
-												<div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
-													<div class="product-info default-cover card">
-                                                    <Link to={`/product/${product.id}`}   className="img-bg">
-														
-															<img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
-														</Link>
-                                                        <Link to={`/product/${product.id}`}  className="no__underline"  >
-                                                        <div className='product_desc'>
-                                        <div className='flex-col g-5'>
-                                            <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
-                                            <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                                            <h3 className='cost__price'>{currency(product.cost_price)}</h3>
-                                            {/* <div className="mt-5 bt">
-                                                <p>{LimitWord(product.description, 10)}</p>
-                                            </div> */}
-                                        </div>
-                                       
+                        <div class="row">
+                            {products?.map(product => (
+                                <div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+                                    <div class="product-info default-cover card">
+                                    <Link to={`/product/${product.id}`}   className="img-bg">
+                                        
+                                            <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+                                        </Link>
+                                        <Link to={`/product/${product.id}`}  className="no__underline"  >
+                                        <div className='product_desc'>
+                                    <div className='flex-col g-5'>
+                                        <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                        {/* <div className="mt-5 bt">
+                                            <p>{LimitWord(product.description, 10)}</p>
+                                        </div> */}
+                                    </div>
+                                
                                     </div>
                                     </Link>
-													</div>
-												</div>
-												  ))}
+                                </div>
+                                </div>
+                            ))}
 
-											</div>
+                        </div>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                     <div class="row">
@@ -342,83 +573,40 @@ const { storeCategories, error } = useCategories();
                 </Box>
                 </div>
                 <div className='flex flex-col alc g-20 bg-yellow'>
-                    <h1>Hello  2025</h1>
-                    <div className='flex justsb g-10'>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
+                    <h1>Female's health care</h1>
+                    <div className='w-full'>
+                        <div class="row">
+                            {cat3?.map(product => (
+                                <div  style={{    margin: '0 5px'}}>
+                                    <div class="product-info default-cover card">
+                                    <Link to={`/product/${product.id}`}   className="img-bg">
+                                        
+                                            <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+                                        </Link>
+                                        <Link to={`/product/${product.id}`}  className="no__underline"  >
+                                        <div className='product_desc'>
+                                    <div className='flex-col g-5'>
+                                        <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                        {/* <div className="mt-5 bt">
+                                            <p>{LimitWord(product.description, 10)}</p>
+                                        </div> */}
                                     </div>
-                                    <div className='main-desc flex flex-col g-10'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
+                                
                                     </div>
+                                    </Link>
                                 </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
                                 </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
                 <div className='flex flex-col alc g-20 bg-white-container'>
                     <div className='w-full flex justsb'>
                         <div className='flex alc g-40 section-tabs'>
-                            <h1>Health & Beauty</h1>
+                            <h1>General health care</h1>
                             <ul className='flex g-20'>
                                 <l1>Lip Treatment</l1>
                                 <l1 className="bl">Make Up</l1>
@@ -428,82 +616,39 @@ const { storeCategories, error } = useCategories();
                         </div>
                         <p>View All</p>
                     </div>
-                    <div className='flex justsb g-10'>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
+                    <div className='w-full'>
+                        <div class="row">
+                            {cat5?.map(product => (
+                                <div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+                                <div class="product-info default-cover card">
+                                <Link to={`/product/${product.id}`}   className="img-bg">
+                                    
+                                        <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+                                    </Link>
+                                    <Link to={`/product/${product.id}`}  className="no__underline"  >
+                                    <div className='product_desc'>
+                                <div className='flex-col g-5'>
+                                    <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                    <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                    <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                    {/* <div className="mt-5 bt">
+                                        <p>{LimitWord(product.description, 10)}</p>
+                                    </div> */}
                                 </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-10'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
+                            
                                 </div>
+                                </Link>
                             </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
                 <img src="/Screenshot 2024-03-19 163035.png" alt="img" />
                 <div className='flex flex-col alc g-20 bg-white-container'>
                     <div className='w-full flex justsb'>
                         <div className='flex alc g-40 section-tabs'>
-                            <h1>Travel Tour</h1>
+                            <h1>Body and skincare</h1>
                             <ul className='flex g-20'>
                                 <l1>Nigeria</l1>
                                 <l1>South Africa</l1>
@@ -513,156 +658,70 @@ const { storeCategories, error } = useCategories();
                         </div>
                         <p>View All</p>
                     </div>
-                    <div className='flex justsb g-10'>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
+                    <div className='w-full'>
+                        <div class="row">
+                            {cat6?.map(product => (
+                                <div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+                                <div class="product-info default-cover card">
+                                <Link to={`/product/${product.id}`}   className="img-bg">
+                                    
+                                        <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+                                    </Link>
+                                    <Link to={`/product/${product.id}`}  className="no__underline"  >
+                                    <div className='product_desc'>
+                                <div className='flex-col g-5'>
+                                    <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                    <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                    <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                    {/* <div className="mt-5 bt">
+                                        <p>{LimitWord(product.description, 10)}</p>
+                                    </div> */}
                                 </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-10'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
+                            
                                 </div>
+                                </Link>
                             </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
                 <img src="/Screenshot 2024-03-19 163145.png" alt="" />
                 <div className='flex flex-col g-20 bg-white-container'>
-                    <h1>Hello Summer 2024</h1>
-                    <div className='flex justsb g-10'>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
+                    <h1>Sexual Wellness</h1>
+                    <div className='w-full'>
+                        <div class="row">
+                            {cat8?.map(product => (
+                                <div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+                                <div class="product-info default-cover card">
+                                <Link to={`/product/${product.id}`}   className="img-bg">
+                                    
+                                        <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+                                    </Link>
+                                    <Link to={`/product/${product.id}`}  className="no__underline"  >
+                                    <div className='product_desc'>
+                                <div className='flex-col g-5'>
+                                    <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                    <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                    <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                    {/* <div className="mt-5 bt">
+                                        <p>{LimitWord(product.description, 10)}</p>
+                                    </div> */}
                                 </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-10'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
+                            
                                 </div>
+                                </Link>
                             </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div'>
-                                    <img src="/Screenshot 2024-03-19 154643.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
                 <img src="/Screenshot 2024-03-19 164641.png" alt="" />
                 <div className='flex flex-col alc g-20 bg-white-container'>
                     <div className='w-full flex justsb'>
                         <div className='flex alc g-40 section-tabs'>
-                            <h1>Mall & Store</h1>
+                            <h1>Fitness Kits</h1>
                             <ul className='flex g-20'>
                                 <l1>Resort</l1>
                                 <l1>Software</l1>
@@ -672,75 +731,32 @@ const { storeCategories, error } = useCategories();
                         </div>
                         <p>View All</p>
                     </div>
-                    <div className='flex justsb g-10'>
-                            <div className='bg-white product-card'>
-                                <div className='img-div h-320'>
-                                    <img src="/Screenshot 2024-03-23 144908.png" alt="" className='w-full' />
+                    <div className='w-full'>
+                        <div class="row">
+                            {cat10?.map(product => (
+                                <div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+                                <div class="product-info default-cover card">
+                                <Link to={`/product/${product.id}`}   className="img-bg">
+                                    
+                                        <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
+                                    </Link>
+                                    <Link to={`/product/${product.id}`}  className="no__underline"  >
+                                    <div className='product_desc'>
+                                <div className='flex-col g-5'>
+                                    <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                    <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                    <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                    {/* <div className="mt-5 bt">
+                                        <p>{LimitWord(product.description, 10)}</p>
+                                    </div> */}
                                 </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-10'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
+                            
                                 </div>
+                                </Link>
                             </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div h-320'>
-                                    <img src="/Screenshot 2024-03-23 145254.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div h-320'>
-                                    <img src="/Screenshot 2024-03-23 145419.png" alt="" className='w-full' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='bg-white product-card'>
-                                <div className='img-div h-320'>
-                                    <img src="/Screenshot 2024-03-23 145605.png" alt="" className='w-full long' />
-                                </div>
-                                <div className='desc'>
-                                    <div className='red-rating-container'>
-                                        <p className='red-rating'>4.0</p>
-                                    </div>
-                                    <div className='main-desc flex flex-col g-5'>
-                                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
-                                        <h3 className='red bold'>N4000.00</h3>
-                                        <div className="mt-5 bt">
-                                            <p> amet consectetur adipisicing elit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
