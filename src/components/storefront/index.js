@@ -342,7 +342,7 @@ const { storeCategories, error } = useCategories();
                 </Box>
                 </div>
                 <div className='flex flex-col alc g-20 bg-yellow'>
-                    <h1>Hello Summer 2024</h1>
+                    <h1>Hello  2025</h1>
                     <div className='flex justsb g-10'>
                             <div className='bg-white product-card'>
                                 <div className='img-div'>
