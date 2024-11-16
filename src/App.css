@@ -29,6 +29,14 @@
   position: absolute !important;
   bottom: 0 !important;
 }
+.mt-lg {
+  margin-top: 25px
+}
+.g-15 {
+  gap: 20px;
+  text-transform: lowercaseπ!important;
+  font-size: 14px;
+}
 .user__avatar {
   width: 30px;
   height: 30px;
@@ -532,6 +540,7 @@ css-6od3lo-MuiChip-label {
   width: 100%;
   margin: 0 20px;
   height: 100vh;
+  overflow-x: scroll;
 }
 .css-1t4lqmc-MuiButtonBase-root-MuiTab-root {
   min-width: 0 !important;
@@ -830,7 +839,9 @@ thead {
 .card-cvv {
   margin-top: 20px;
 }
-
+.uppercase {
+  text-transform: uppercase!important;;
+}
 .card-cvv div {
   flex: 1;
 }
@@ -1223,6 +1234,8 @@ h1 {
 
 .product__image {
   width: 100%!important;
+  max-height: 145px;
+  height: 145px;
 }
 .cost__price {
   font-size: 10px;
@@ -1261,6 +1274,12 @@ h1 {
   .col-sm-2 {
       flex: 0 0 auto;
       width: 16.66666667%;
+  }
+}
+@media (min-width: 576px) {
+  .col-sssm-2 {
+      flex: 0 0 auto;
+      width: 15.5%;
   }
 }
 

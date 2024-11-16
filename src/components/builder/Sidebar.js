@@ -231,13 +231,13 @@ function Sidebar() {
             />
           )}
           <SidebarRow
-            path="/"
+            path="/auth/sign-in"
             Icon={PowerSettingsNewIcon}
             title="Log Out"
             onClick={handleLogOut}
           />
 
-          <div className="w-100 abs f-bottom">
+          <div className="w-100 f-bottom">
             <div className="s-divider"></div>
             <SidebarRow
               path="/app/config"
@@ -254,7 +254,7 @@ function Sidebar() {
               Icon={NotificationsActiveIcon}
               title="Notification"
             />
-            <div className="header__info">
+            <div className="header__info abs" style={{bottom: 20}}>
               <div className="user__avatar bg-warning">
                 <h3>
                   {getInitials(user?.fname)}

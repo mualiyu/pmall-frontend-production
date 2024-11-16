@@ -106,6 +106,7 @@ const StoreFront = () => {
             .then((result) => {
             console.log(result);
             setProducts(result.data);
+            getProductsBySubCategories(3);
             setLoading(false);
             })
             .catch((err) => {
@@ -113,6 +114,28 @@ const StoreFront = () => {
             setLoading(false);
             });
     };
+
+
+    const getProductsBySubCategories = (sub_cat_id) => {
+setLoading(true);
+        fetch(`https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-sub-category?sub_category_id=${sub_cat_id}`, {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            // setProductSubCategories(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    }
     const getProductsCategories = () => {
         setLoading(true);
         fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories", {
@@ -230,8 +253,8 @@ const { storeCategories, error } = useCategories();
             {/* Ends Header Component */}
                 <div className="flex g-20 px w-90">
                     <div className='flex flex-col g-20'>
-                        <img src="/Screenshot 2024-03-21 214441.png" alt="" className="w-full" />
-                        <img src="/Screenshot 2024-03-21 214722.png" alt="" className="w-full" />
+                        <img src="/pmall/3.png" alt="" className="w-full" />
+                        <img src="/pmall/11.png" alt="" className="w-full" />
                         <img src="/Screenshot 2024-03-21 215058.png" alt="" className="w-full" />
                     </div>
                     <div className='flex flex-col g-20'>
@@ -241,8 +264,8 @@ const { storeCategories, error } = useCategories();
                     <div className='flex flex-col g-20'>
                     {/* <ProductCarousel products={products} /> */}
                         <img src="/Screenshot 2024-03-21 215854.png" alt="" className="w-full" />
-                        <img src="/Screenshot 2024-03-21 215944.png" alt="" className="w-full" />
-                        <img src="/Screenshot 2024-03-21 220017.png" alt="" className="w-full" />
+                        <img src="/pmall/17.png" alt="" className="w-full" />
+                        <img src="/pmall/19.png" alt="" className="w-full" />
                     </div>
                 </div>
                 <div className="row  w-90" style={{margin: '20px auto'}}>
@@ -287,7 +310,7 @@ const { storeCategories, error } = useCategories();
                     <TabPanel value={value} index={0}>
                     <div class="row">
                 {products?.map(product => (
-												<div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+												<div class="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
 													<div class="product-info default-cover card">
                                                     <Link to={`/product/${product.id}`}   className="img-bg">
 														
@@ -296,7 +319,7 @@ const { storeCategories, error } = useCategories();
                                                         <Link to={`/product/${product.id}`}  className="no__underline"  >
                                                         <div className='product_desc'>
                                         <div className='flex-col g-5'>
-                                            <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                            <p className="product__name bold uppercase">{LimitWord(product.name, 3)}</p>
                                             <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
                                             <h3 className='cost__price'>{currency(product.cost_price)}</h3>
                                             {/* <div className="mt-5 bt">
@@ -415,15 +438,16 @@ const { storeCategories, error } = useCategories();
                     </div>
                 </div>
 
+
+            {categories?.map(category => (
                 <div className='flex flex-col alc g-20 bg-white-container'>
                     <div className='w-full flex justsb'>
-                        <div className='flex alc g-40 section-tabs'>
-                            <h1>Health & Beauty</h1>
-                            <ul className='flex g-20'>
-                                <l1>Lip Treatment</l1>
-                                <l1 className="bl">Make Up</l1>
-                                <l1>Skin Care</l1>
-                                <l1>Hair Care</l1>
+                        <div className='g-40 section-tabs'>
+                            <h1 className="">{category.name}</h1>
+                            <ul className='mt-lg flex g-15'>
+                            {category.sub_categories?.slice(0, 7).map(sub => (
+                                <l1 >{sub.name}</l1>
+                            ))}
                             </ul>
                         </div>
                         <p>View All</p>
@@ -499,6 +523,9 @@ const { storeCategories, error } = useCategories();
                             </div>
                     </div>
                 </div>
+
+            ))}
+
                 <img src="/Screenshot 2024-03-19 163035.png" alt="img" />
                 <div className='flex flex-col alc g-20 bg-white-container'>
                     <div className='w-full flex justsb'>

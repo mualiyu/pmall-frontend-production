@@ -47,7 +47,7 @@ const ResetPassword = () => {
                   className="form-control"
                   name="email"
                   onChange={onChangeHandler}
-                  placeholder="talk2ahmedpeter@gmail.com"
+                  placeholder="Enter your Email or Username"
                   value={inputValues.email || ""}
                 />
               </div>

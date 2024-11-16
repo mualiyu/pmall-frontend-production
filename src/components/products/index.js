@@ -201,8 +201,8 @@ const ProductList = () => {
 
   const handleCategoryChange = (e) => {
       const newCategory = e.target.value;
+      console.log(e);
       setSelectedCategory(newCategory);
-    console.log(newCategory)
       const matchingSubCategories = categories.find((category) => category.id == newCategory?.sub_categories) || [];
       setSubCategories(matchingSubCategories);
       console.log(matchingSubCategories)
@@ -830,13 +830,15 @@ console.log(user?.accountType)
               onChange={handleTabChange}
               aria-label="basic tabs example">
                   <Tab label="Products list" {...a11yProps(0)} />
-                  {user?.role === 'Admin' && (
-                    <>
+                  
+                  {user?.role !== 'Admin' && (
+                    <div>
                     <Tab label="Categories" {...a11yProps(1)} />
+                   
                     <Tab label="Brands" {...a11yProps(2)} />
-                    </>
+                    </div>
                   )}
-                  <Tab label="Sub Categories" {...a11yProps(2)} />
+                 <Tab label="Sub Categories" {...a11yProps(3)} />
             </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -920,7 +922,7 @@ console.log(user?.accountType)
           </Table>
         </TableContainer>
       </TabPanel>
-      {user.role === 'Admin' && (
+      {user.role !== 'Admin' && (
         <>
       <TabPanel value={value} index={1}>
         <section className="flex-container alc p-y my-40">
@@ -1507,10 +1509,9 @@ console.log(user?.accountType)
                     onChange={onChangeHandler}
                     >
                     <option value="default"> Select Sub Category</option>
-                    <option value="1"> Category 1</option>
-                    <option value="2"> Category 2</option>
-                    <option value="3"> Category 3</option>
-                    <option value="4"> Category 4</option>
+                    {subCategories?.map((sub) => (
+                      <option value={sub.id}>{sub.name}</option>
+                    ))}
                   </select>
                 </div>
               </section>
