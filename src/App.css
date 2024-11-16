@@ -830,7 +830,9 @@ thead {
 .card-cvv {
   margin-top: 20px;
 }
-
+.uppercase {
+  text-transform: uppercase!important;;
+}
 .card-cvv div {
   flex: 1;
 }
@@ -1223,6 +1225,8 @@ h1 {
 
 .product__image {
   width: 100%!important;
+  max-height: 145px;
+  height: 145px;
 }
 .cost__price {
   font-size: 10px;
@@ -1261,6 +1265,12 @@ h1 {
   .col-sm-2 {
       flex: 0 0 auto;
       width: 16.66666667%;
+  }
+}
+@media (min-width: 576px) {
+  .col-sssm-2 {
+      flex: 0 0 auto;
+      width: 15.5%;
   }
 }
 

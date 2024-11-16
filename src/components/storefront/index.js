@@ -287,7 +287,7 @@ const { storeCategories, error } = useCategories();
                     <TabPanel value={value} index={0}>
                     <div class="row">
                 {products?.map(product => (
-												<div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
+												<div class="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
 													<div class="product-info default-cover card">
                                                     <Link to={`/product/${product.id}`}   className="img-bg">
 														
@@ -296,7 +296,7 @@ const { storeCategories, error } = useCategories();
                                                         <Link to={`/product/${product.id}`}  className="no__underline"  >
                                                         <div className='product_desc'>
                                         <div className='flex-col g-5'>
-                                            <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                            <p className="product__name bold uppercase">{LimitWord(product.name, 3)}</p>
                                             <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
                                             <h3 className='cost__price'>{currency(product.cost_price)}</h3>
                                             {/* <div className="mt-5 bt">
