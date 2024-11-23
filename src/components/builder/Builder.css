@@ -108,15 +108,14 @@
 .c-chalk {
   color: var(--color-chalk);
 }
-/* .sidebar{
-    width: 6%;
-    height: 100vh;
+.sidebar{
+    width: 20%;
+    height: 100vw;
     background-color: var(--primary-color);
     z-index: 5;
-    position: fixed;
     top: 10%;
 
-} */
+}
 .sidebar__title {
   font-size: 9px;
   text-align: center;

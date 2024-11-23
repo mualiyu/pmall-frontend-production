@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
@@ -149,6 +149,9 @@ const Dashboard = () => {
   const handleModalClose = () => setNewVendorModal(false);
   const { user } = useUser();
   const navigate = useNavigate();
+  const [countAffiliates, setCountAffiliates] = useState(0);
+  const [productList, setProductList] = useState(null);
+  const [countVendors, setCountVendors] = useState(0);
   const [pmallUsers, setPmallUsers] = useState([]);
   const { loading, setLoading, setProfileDetails } = useVendor();
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
@@ -166,12 +169,41 @@ const Dashboard = () => {
       .then((result) => {
         console.log(result.data.users);
         setPmallUsers(result.data.users);
+       
+
       })
       .catch((err) => {
         console.log(err);
       });
+     
+      console.log(pmallUsers);
   };
 
+const getVendorProducts = (ref)=> {
+  console.log(ref);
+  fetch("https://api.pmall.mukeey.com.ng/api/v1/products", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        },
+      })
+      .then((resp) => resp.json())
+      .then((result) => {
+        console.log(result);
+        if (result.status) {
+          setProductList(result.data);
+        }
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      // setCountAffiliates(pmallUsers.reduce((count, item) => item.user_type === "Affiliate" ? count + 1 : count, 0));
+      // setCountVendors(pmallUsers.reduce((count, item) => item.user_type === "Vendor" ? count + 1 : count, 0));
+}
+  
   const getUsersDetails = () => {
     //setLoading(true)
     fetch("https://api.pmall.mukeey.com.ng/api/v1/profile", {
@@ -187,12 +219,19 @@ const Dashboard = () => {
         console.log(result);
         if (result.status) {
           setPmallUsers(result.data.user.referrals);
+          // if(result?.data?.user.user_type === 'Vendor') {
+            console.log(result?.data?.user.store_id);
+            getVendorProducts(result?.data?.user.store_id);
+          // }
         }
         // setLoading(false)
       })
       .catch((err) => {
         console.log(err);
       });
+      console.log(pmallUsers);
+      setCountAffiliates(pmallUsers.reduce((count, item) => item.user_type === "Affiliate" ? count + 1 : count, 0));
+      setCountVendors(pmallUsers.reduce((count, item) => item.user_type === "Vendor" ? count + 1 : count, 0));
   };
 
   useEffect(() => {
@@ -206,7 +245,6 @@ const Dashboard = () => {
     }
     getUsers();
   }, []);
-  console.log(user);
   const dashboard = () => {
     setAffilateTab(false);
     setProductTab(false);
@@ -263,9 +301,16 @@ const Dashboard = () => {
               )}
             </ul>
           </div>
+          {user?.accountType === "Admin" && (
           <h3 className="pointer" onClick={() => setNewVendorModal(true)}>
             Manage
           </h3>
+          )}
+           {user?.accountType !== "Admin" && (
+          <Link to="/" className="pointer h3 bold" style={{fontSize: 14}}>
+            Visit Mall
+          </Link>
+           )}
         </div>
       </section>
       {dashboardTab && (
@@ -285,7 +330,7 @@ const Dashboard = () => {
                       )}
                     </span>
                     <span className="balance-text">
-                      <h1 className="flex">000 </h1>
+                      <h1 className="flex">{countVendors} </h1>
                       <h4 className="color-grey">
                         {user.accountType === "Vendor"
                           ? "Products Sold"
@@ -302,7 +347,12 @@ const Dashboard = () => {
                       )}
                     </span>
                     <span className="balance-text">
-                      <h1 className="flex">123 </h1>
+                    {user.accountType === "Affiliate" && (
+                      <h1 className="flex">{countAffiliates} </h1>
+                    )}
+                      {user.accountType === "Vendor" && (
+                      <h1 className="flex">{productList?.length} </h1>
+                      )}
                       <h4 className="color-grey">
                         {user.accountType === "Vendor"
                           ? "Total Products"
