@@ -125,6 +125,28 @@ const StoreFront = () => {
             setLoading(false);
             });
     };
+    const getProductsCat3 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=3", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat3(result.data);
+            // setProductSubCategories(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
 
 
     const getProductsBySubCategories = (sub_cat_id) => {
@@ -139,6 +161,7 @@ setLoading(true);
             .then((resp) => resp.json())
             .then((result) => {
             console.log(result);
+            setCat3(result.data);
             // setProductSubCategories(result.data);
             setLoading(false);
             })
@@ -146,7 +169,196 @@ setLoading(true);
             console.log(err);
             setLoading(false);
             });
-    }
+    };
+    const getProductsCat4 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=4", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat4(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+     const getProductsCat5 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=5", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat5(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+     const getProductsCat6 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=6", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat6(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+     const getProductsCat8 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=8", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat8(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat9 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=9", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat9(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat10 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=10", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat10(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat11 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=11", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat11(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat12 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=12", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat12(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
+    const getProductsCat13 = () => {
+        setLoading(true);
+        getProductsCategories();
+        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=13", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+            console.log(result);
+            setCat13(result.data);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            });
+    };
     const getProductsCategories = () => {
         setLoading(true);
         fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories", {

@@ -222,7 +222,9 @@ const CheckoutPage = () => {
     //     },
     // };
     return (
-        <div className="checkout-container flex g-20">
+        <div>
+            <Link to="/"><p className="back">Back to marketplace</p></Link>
+            <div className="checkout-container flex g-20">
             <div className="checkout">
                 <h1>Checkout</h1>
                 <div className="checkout-sections">
@@ -397,6 +399,7 @@ const CheckoutPage = () => {
                 </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 };
