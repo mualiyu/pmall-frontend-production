@@ -976,7 +976,7 @@ console.log(user?.accountType)
         )}
         {!categories && ( <p className="empty__record"> Seems you are new here... No Category has been added </p>) }
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={3}>
       <section className="flex-container alc p-y my-40">
           <div className="w-full">
             <button
@@ -1024,7 +1024,7 @@ console.log(user?.accountType)
       </TabPanel>
       </>
       )}
-      <TabPanel value={value} index={3}>
+      <TabPanel value={value} index={2}>
         <section className="flex-container alc p-y my-40">
           <div className="w-full">
             <button

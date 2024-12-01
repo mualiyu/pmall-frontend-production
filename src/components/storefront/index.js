@@ -424,7 +424,7 @@ const { storeCategories, error } = useCategories();
             <Loading loading={loading} />
             {/* Header Component */}
         <>
-            {!user?.token && (
+            {!user?.token || user?.token  && (
                 <div>
                     <div className="flex justsb alc mb-lg">
                         <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" />
@@ -440,11 +440,17 @@ const { storeCategories, error } = useCategories();
                             </form>
                             <div className='flex alc'>
                                 {/* {showAccount && ( */}
+                                    {!user?.token ? 
                                     <Link to="/auth/sign-in" className="bold flex alc sb">
                                         <Person4Icon />
                                         <p>Login</p>
                                     </Link>
-                               
+                                     :
+                                    <Link to="/dashboard" className="bold flex alc sb">
+                                        <Person4Icon />
+                                        <p>Dashboard</p>
+                                    </Link> 
+                                    }
                                 {/* {showCart && ( */}
                                     <Link to="/app/cart" className="bold flex alc">
                                         <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
@@ -528,7 +534,7 @@ const { storeCategories, error } = useCategories();
                        
                     </div>
                 </div>
-                <div className='bg-blue w-full'>
+                <div className='bg-blue w-full' id="Male">
                 <Box sx={{ width: "100%" }}>
                     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                         <Tabs
@@ -541,8 +547,8 @@ const { storeCategories, error } = useCategories();
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
-                    <div class="row">
-                {products?.map(product => (
+                    <div class="row" >
+                            {products?.map(product => (
 												<div class="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
 													<div class="product-info default-cover card">
                                                     <Link to={`/product/${product.id}`}   className="img-bg">
@@ -571,22 +577,22 @@ const { storeCategories, error } = useCategories();
                     <TabPanel value={value} index={1}>
                     <div class="row">
                 {products?.map(product => (
-    <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }}>
-        <div className="product-info default-cover card">
-            <Link to={`/product/${product.id}`} className="img-bg">
-                <img src={product.image} alt={product.name} className="product__image" style={{ width: 150 }} />
-            </Link>
-            <Link to={`/product/${product.id}`} className="no__underline">
-                <div className='product_desc'>
-                    <div className='flex-col g-5'>
-                        <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
-                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                    <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }}>
+                        <div className="product-info default-cover card">
+                            <Link to={`/product/${product.id}`} className="img-bg">
+                                <img src={product.image} alt={product.name} className="product__image" style={{ width: 150 }} />
+                            </Link>
+                            <Link to={`/product/${product.id}`} className="no__underline">
+                                <div className='product_desc'>
+                                    <div className='flex-col g-5'>
+                                        <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
+                                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
                     </div>
-                </div>
-            </Link>
-        </div>
-    </div>
 ))}
 
 
@@ -597,7 +603,7 @@ const { storeCategories, error } = useCategories();
                     </TabPanel>
                 </Box>
                 </div>
-                <div className='flex flex-col alc g-20 bg-yellow'>
+                <div className='flex flex-col alc g-20 bg-yellow' id="Female">
                     <h1>Female's health care</h1>
                     <div className='w-full'>
                         <div class="row">
@@ -630,7 +636,7 @@ const { storeCategories, error } = useCategories();
 
 
             {categories?.map(category => (
-                <div className='flex flex-col alc g-20 bg-white-container'>
+                <div className='flex flex-col alc g-20 bg-white-container' id="General">
                     <div className='w-full flex justsb'>
                         <div className='g-40 section-tabs'>
                             <h1 className="">{category.name}</h1>
@@ -747,7 +753,7 @@ const { storeCategories, error } = useCategories();
                     </div>
                 </div>
                 <img src="/Screenshot 2024-03-19 164641.png" alt="" />
-                <div className='flex flex-col alc g-20 bg-white-container'>
+                <div className='flex flex-col alc g-20 bg-white-container' id="Fitness">
                     <div className='w-full flex justsb'>
                         <div className='flex alc g-40 section-tabs'>
                             <h1>Fitness Kits</h1>
