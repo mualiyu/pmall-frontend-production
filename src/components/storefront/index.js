@@ -6,7 +6,7 @@ import Loading from "../../utils/loading";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
+import ProductGrid from "../products/ProductGrid";
 import ProductCarousel from "../../utils/productCarousel";
 import Typography from "@mui/material/Typography";
 import Header from "../builder/Header";
@@ -19,6 +19,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge from '@mui/material/Badge';
 import { useCart } from "../../context/CartContext"
 import { useCategories } from "../../context/CategoryContext"
+import CategoriesWithProducts from "../productList/categoriesWithProducts"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -380,8 +381,26 @@ setLoading(true);
             });
     };
 
-    const getProduct = () => {
-        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=1", {
+    // const getProduct = () => {
+    //     fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all", {
+    //         method: "GET",
+    //         headers: {
+    //         "Content-Type": "application/json;charset=UTF-8",
+    //         Accept: "application/json",
+    //         },
+    //     })
+    //         .then((resp) => resp.json())
+    //         .then((result) => {
+    //         console.log(result,"edibles");
+    //         })
+    //         .catch((err) => {
+    //         console.log(err);
+    //         });
+
+    //         getProduct()
+    // };
+    const getProductByCategory = (product_id) => {
+        fetch(`https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=${product_id}`, {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -390,13 +409,11 @@ setLoading(true);
         })
             .then((resp) => resp.json())
             .then((result) => {
-            console.log(result,"edibles");
+            console.log(result);
             })
             .catch((err) => {
             console.log(err);
             });
-
-            getProduct()
     };
 
 
@@ -547,6 +564,7 @@ const { storeCategories, error } = useCategories();
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
+<<<<<<< HEAD
                     <div class="row" >
                             {products?.map(product => (
 												<div class="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
@@ -573,10 +591,47 @@ const { storeCategories, error } = useCategories();
                             ))}
 
                         </div>
+=======
+                    <div className="row">
+  {products?.map((product) => (
+    <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }} key={product.id}>
+      <div className="product-info default-cover card">
+        <Link to={`/product/${product.id}`} className="img-bg">
+          <img
+            src={product.image || '/default-image.jpg'} 
+            alt={product.name || 'Product Image'} 
+            className="product__image" 
+            style={{ width: 150 }}
+          />
+        </Link>
+        <Link to={`/product/${product.id}`} className="no__underline">
+          <div className="product_desc">
+            <div className="flex-col g-5">
+              <p className="product__name bold uppercase">
+                {LimitWord(product.name || 'Unnamed Product', 3)}
+              </p>
+              <h3 className="red bold product__cost">
+                {currency(product.selling_price || 0)}
+              </h3>
+              {product.cost_price && (
+                <h3 className="cost__price">
+                  {currency(product.cost_price)}
+                </h3>
+              )}
+            </div>
+          </div>
+        </Link>
+      </div>
+    </div>
+  ))}
+</div>
+
+>>>>>>> origin/develop
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                     <div class="row">
                 {products?.map(product => (
+<<<<<<< HEAD
                     <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }}>
                         <div className="product-info default-cover card">
                             <Link to={`/product/${product.id}`} className="img-bg">
@@ -592,6 +647,19 @@ const { storeCategories, error } = useCategories();
                                 </div>
                             </Link>
                         </div>
+=======
+    <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }}>
+        <div className="product-info default-cover card">
+            <Link to={`/product/${product.id}`} className="img-bg">
+                <img src={product.image} alt={product.name} className="product__image" style={{ width: 150 }} />
+            </Link>
+            <Link to={`/product/${product.id}`} className="no__underline">
+                <div className='product_desc'>
+                    <div className='flex-col g-5'>
+                        <p className="product__name capitalize bold">{LimitWord(product.name, 3)}</p>
+                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+>>>>>>> origin/develop
                     </div>
 ))}
 
@@ -599,10 +667,12 @@ const { storeCategories, error } = useCategories();
 											</div>
                     </TabPanel>
                     <TabPanel value={value} index={2}>
-                        <h3>test3</h3>
+                        hello mannannaa
+                    
                     </TabPanel>
                 </Box>
                 </div>
+<<<<<<< HEAD
                 <div className='flex flex-col alc g-20 bg-yellow' id="Female">
                     <h1>Female's health care</h1>
                     <div className='w-full'>
@@ -637,17 +707,25 @@ const { storeCategories, error } = useCategories();
 
             {categories?.map(category => (
                 <div className='flex flex-col alc g-20 bg-white-container' id="General">
+=======
+                
+                {/* <CategoriesWithProducts categories={categories} /> */}
+
+            {categories?.map(category => (
+                <div className='flex flex-col alc g-20 bg-white-container' key={category.id}>
+>>>>>>> origin/develop
                     <div className='w-full flex justsb'>
                         <div className='g-40 section-tabs'>
                             <h1 className="">{category.name}</h1>
                             <ul className='mt-lg flex g-15'>
                             {category.sub_categories?.slice(0, 7).map(sub => (
-                                <l1 >{sub.name}</l1>
+                                <l1 key={sub.id}>{sub.name}</l1>
                             ))}
                             </ul>
                         </div>
                         <p>View All</p>
                     </div>
+<<<<<<< HEAD
                     <div className='w-full'>
                         <div class="row">
                             {cat5?.map(product => (
@@ -674,11 +752,16 @@ const { storeCategories, error } = useCategories();
                             </div>
                             ))}
                         </div>
+=======
+                    <div className='flex justsb g-10'>
+                    <ProductGrid categoryName={category.name} />
+>>>>>>> origin/develop
                     </div>
                 </div>
 
             ))}
 
+<<<<<<< HEAD
                 <img src="/Screenshot 2024-03-19 163035.png" alt="img" />
                 <div className='flex flex-col alc g-20 bg-white-container'>
                     <div className='w-full flex justsb'>
@@ -798,6 +881,10 @@ const { storeCategories, error } = useCategories();
                 <img src="/Screenshot 2024-03-20 162550.png" alt="" />
 
                 <div className='flex justsb alc g-10'>
+=======
+                <img src="/Screenshot 2024-03-19 163145.png" alt="" />
+            <div className='flex justsb alc g-10'>
+>>>>>>> origin/develop
                     <div className='bg-white-container news flex flex-col gap-10'>
                         <div className='flex justsb'>
                             <h3>LATEST NEWS</h3>

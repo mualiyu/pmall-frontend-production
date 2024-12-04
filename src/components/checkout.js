@@ -4,6 +4,41 @@ import { useCart } from "../context/CartContext";
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import { useNavigate } from 'react-router-dom';
 import ButtonLoader from "../utils/buttonLoader";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Toaster from "../utils/toaster";
+import { useVendor } from "../context/AuthContext";
+
+
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}>
+        {value === index && (
+          <Box sx={{ p: 3 }}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  }
 
 
 const CheckoutPage = () => {
@@ -22,6 +57,29 @@ const CheckoutPage = () => {
     });
     const [customer, setCustomer] = useState()
     const [loading, setLoading] = useState(false)
+    const [value, setValue] = useState(0);
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+      };
+
+      
+  const loginHandler = () => {
+    console.log(inputValues);
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
+  const {
+    inputValues,
+    onChangeHandler,
+    handleLogin,
+    toastMsg,
+    toastType,
+  } = useVendor();
 
       const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -227,123 +285,198 @@ const CheckoutPage = () => {
             <div className="checkout-container flex g-20">
             <div className="checkout">
                 <h1>Checkout</h1>
-                <div className="checkout-sections">
-                    <div className="checkout-section">
-                        <h2>Shipping Details</h2>
-                        <form>
-                            <div className="flex g-10">
-                                <div className="form-group w-full">
-                                    <label>First Name</label>
-                                    <input
-                                        type="text" 
-                                        placeholder="Enter your full name"  
-                                        id="fname"
-                                        name="fname"
-                                        value={formDetails.fname}
-                                        onChange={handleInputChange} 
-                                        className="w-full"
-                                    />
-                                </div>
-                                <div className="form-group w-full">
-                                    <label>Last Name</label>
-                                    <input
-                                        type="text" 
-                                        placeholder="Enter your full name"  
-                                        id="lname"
-                                        name="lname"
-                                        value={formDetails.lname}
-                                        onChange={handleInputChange} 
-                                        className="w-full"
-                                    />
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                    <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="basic tabs example">
+                     
+                        <Tab label="Returning Customer" {...a11yProps(0)} />
+                        <Tab label="New Customer" {...a11yProps(1)} />
+                      
+                    </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                    <div className="checkout-login">
+                        <div className="">
+                            <Toaster text={toastMsg} className={toastType} />
+                            <p className="bold">Welcome back, you've been missed!</p>
+                            <form action="">
+                            <div className="pos-rel">
+                                <label className="abs"> Username / Email </label>
+                                <input
+                                type="text"
+                                className="form-control"
+                                name="username"
+                                onChange={onChangeHandler}
+                                placeholder="username or email"
+                                value={inputValues.username || ""}
+                                />
+                            </div>
+
+                            <div className="pos-rel">
+                                <label className="abs"> Your Password</label>
+                                <div
+                                style={{ display: "flex", alignItems: "center" }}
+                                className="pos-rel">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    className="form-control"
+                                    name="password"
+                                    onChange={onChangeHandler}
+                                    value={inputValues.password || ""}
+                                    placeholder="********"
+                                />
+                                <span onClick={togglePassword} className="cnwjien">
+                                    {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                </span>
                                 </div>
                             </div>
-                            <div className="flex g-10">
-                                <div className="form-group w-full">
-                                    <label>Username</label>
-                                    <input
-                                        type="text" 
-                                        placeholder="Enter your full name"  
-                                        id="username"
-                                        name="username"
-                                        value={formDetails.username}
-                                        onChange={handleInputChange} 
-                                        className="w-full"
-                                    />
+
+                            <Link to="/auth/app/reset-account" className="forgotten bold">
+                                <p className="bold">Forgotten?</p>
+                            </Link>
+                            <span className="remember-me">
+                                <input type="checkbox" name="remember-me" />
+                                <p>Remember me</p>
+                            </span>
+                            <button
+                                className="login-btn bold"
+                                disabled={loading}
+                                type="submit"
+                                onClick={handleLogin}>
+                                {loading ? <ButtonLoader /> : "Login"}
+                            </button>
+                            <p className="center">Don't have an account yet?</p>
+                            <Link to="/auth/app/Signup">
+                                <button className="create-account bold">Create account</button>
+                            </Link>
+                            </form>
+                        </div>
+                        <div className="form-logo">
+                            <img src="/pmall-logo 1.png" alt="" />
+                        </div>
+                    </div>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <div className="checkout-sections">
+                        <div className="checkout-section">
+                            <h2>Shipping Details</h2>
+                            <form>
+                                <div className="flex g-10">
+                                    <div className="form-group w-full">
+                                        <label>First Name</label>
+                                        <input
+                                            type="text" 
+                                            placeholder="Enter your full name"  
+                                            id="fname"
+                                            name="fname"
+                                            value={formDetails.fname}
+                                            onChange={handleInputChange} 
+                                            className="w-full"
+                                        />
+                                    </div>
+                                    <div className="form-group w-full">
+                                        <label>Last Name</label>
+                                        <input
+                                            type="text" 
+                                            placeholder="Enter your full name"  
+                                            id="lname"
+                                            name="lname"
+                                            value={formDetails.lname}
+                                            onChange={handleInputChange} 
+                                            className="w-full"
+                                        />
+                                    </div>
                                 </div>
-                                <div className="form-group w-full">
-                                    <label>Email</label>
+                                <div className="flex g-10">
+                                    <div className="form-group w-full">
+                                        <label>Username</label>
+                                        <input
+                                            type="text" 
+                                            placeholder="Enter your full name"  
+                                            id="username"
+                                            name="username"
+                                            value={formDetails.username}
+                                            onChange={handleInputChange} 
+                                            className="w-full"
+                                        />
+                                    </div>
+                                    <div className="form-group w-full">
+                                        <label>Email</label>
+                                        <input
+                                        type="email" 
+                                        placeholder="Enter your email" 
+                                        id="email"
+                                        name="email"
+                                        value={formDetails.email}
+                                        onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>Phone</label>
                                     <input
-                                    type="email" 
-                                    placeholder="Enter your email" 
-                                    id="email"
-                                    name="email"
-                                    value={formDetails.email}
+                                    type="number"
+                                    placeholder="Enter your phone numberik"
+                                    id="phone"
+                                    name="phone"
+                                    value={formDetails.phone}
                                     onChange={handleInputChange}
                                     />
                                 </div>
-                            </div>
-                            <div className="form-group">
-                                <label>Phone</label>
-                                <input
-                                 type="number"
-                                  placeholder="Enter your phone numberik"
-                                  id="phone"
-                                  name="phone"
-                                  value={formDetails.phone}
-                                  onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Address</label>
-                                <input type="text" placeholder="Enter your address"  id="adddress"
-                                        name="address"
-                                        value={formDetails.address}
-                                        onChange={handleInputChange} />
-                            </div>
-                            <div className="form-group">
-                                <label>State</label>
-                                <input type="text" placeholder="Enter your city" id="state"
-                                        name="state"
-                                        value={formDetails.state}
-                                        onChange={handleInputChange}  />
-                            </div>
-                            <div className="form-group">
-                                <label>LGA</label>
-                                <input type="text" placeholder="Enter your LGA" id="lga"
-                                        name="lga"
-                                        value={formDetails.lga}
-                                        onChange={handleInputChange}  />
-                            </div>
-                            <div className="flex g-10">
-                                <div className="form-group w-full">
-                                    <label>Password</label>
-                                    <input
-                                        type="password" 
-                                        placeholder="Enter your Password"  
-                                        id="password"
-                                        name="password"
-                                        value={formDetails.password}
-                                        onChange={handleInputChange} 
-                                        className="w-full"
-                                    />
+                                <div className="form-group">
+                                    <label>Address</label>
+                                    <input type="text" placeholder="Enter your address"  id="adddress"
+                                            name="address"
+                                            value={formDetails.address}
+                                            onChange={handleInputChange} />
                                 </div>
-                                <div className="form-group w-full">
-                                    <label>Confirm Password</label>
-                                    <input
-                                        type="password" 
-                                        placeholder="Confirm your Password"  
-                                        id="password_confirmation"
-                                        name="password_confirmation"
-                                        value={formDetails.password_confirmation}
-                                        onChange={handleInputChange} 
-                                        className="w-full"
-                                    />
+                                <div className="form-group">
+                                    <label>State</label>
+                                    <input type="text" placeholder="Enter your city" id="state"
+                                            name="state"
+                                            value={formDetails.state}
+                                            onChange={handleInputChange}  />
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                                <div className="form-group">
+                                    <label>LGA</label>
+                                    <input type="text" placeholder="Enter your LGA" id="lga"
+                                            name="lga"
+                                            value={formDetails.lga}
+                                            onChange={handleInputChange}  />
+                                </div>
+                                <div className="flex g-10">
+                                    <div className="form-group w-full">
+                                        <label>Password</label>
+                                        <input
+                                            type="password" 
+                                            placeholder="Enter your Password"  
+                                            id="password"
+                                            name="password"
+                                            value={formDetails.password}
+                                            onChange={handleInputChange} 
+                                            className="w-full"
+                                        />
+                                    </div>
+                                    <div className="form-group w-full">
+                                        <label>Confirm Password</label>
+                                        <input
+                                            type="password" 
+                                            placeholder="Confirm your Password"  
+                                            id="password_confirmation"
+                                            name="password_confirmation"
+                                            value={formDetails.password_confirmation}
+                                            onChange={handleInputChange} 
+                                            className="w-full"
+                                        />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
-                </div>
+                    </div>
+                </TabPanel>
             </div>
             <div className="checkout-right">
                 <h1>Order summary</h1>

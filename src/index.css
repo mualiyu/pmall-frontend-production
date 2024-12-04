@@ -387,7 +387,8 @@ ul {
 }
 .login-screen .right .container form button,
 .signup-screen .right .main form button,
-.reset-password .right .container form button {
+.reset-password .right .container form button,
+.checkout-login form button.login-btn,.checkout-login form button.create-account  {
   height: 50px;
 }
 button {
@@ -396,7 +397,8 @@ button {
   font-size: 12px;
 }
 .login-screen .right .container form button.login-btn,
-.reset-password .right .container form button.reset-btn {
+.reset-password .right .container form button.reset-btn,
+.checkout-login form button.login-btn {
   color: #fff;
   background-color: var(--primary-bg-color);
   border: none;
@@ -412,7 +414,8 @@ button {
   margin-bottom: 0;
 }
 .login-screen .right .container form button.create-account,
-.reset-password .right .container form button.back-to-login {
+.reset-password .right .container form button.back-to-login,
+.checkout-login form button.create-account {
   border: 1px solid var(--primary-bg-color);
   color: var(--primary-bg-color);
   background-color: #fff;
@@ -1895,7 +1898,7 @@ input:checked + .slider:before {
   color: #333;
   cursor: pointer;
 }
-
+ 
 .relative {
   position: relative;
 }

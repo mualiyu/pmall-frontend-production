@@ -539,7 +539,7 @@ css-6od3lo-MuiChip-label {
 .main__content {
   width: 100%;
   margin: 0 20px;
-  height: 100vh;
+  /* height: 100vh; */
   overflow-x: scroll;
 }
 .css-1t4lqmc-MuiButtonBase-root-MuiTab-root {
@@ -1234,8 +1234,8 @@ h1 {
 
 .product__image {
   width: 100%!important;
-  max-height: 145px;
-  height: 145px;
+  height: 231.5px;
+  max-height: 301.5px;
 }
 .cost__price {
   font-size: 10px;
