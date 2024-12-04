@@ -98,10 +98,9 @@ const AffilateForm = ({ inputValues, onChangeHandler }) => {
             name="package_id"
             className="last-name form-control"
             onChange={onChangeHandler}>
-            <option value="1">Basic - 70,000 </option>
-            <option value="2">Standard - 165,000</option>
-            <option value="3">Silver - 214,000</option>
-            <option value="4">Gold - 280,000</option>
+            <option value="2">Standard - 10,000</option>
+            <option value="3">Silver - 25,000</option>
+            <option value="4">Gold - 50,000</option>
           </select>
           {/* <input
                         type="number" 

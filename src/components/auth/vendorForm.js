@@ -82,9 +82,9 @@ const VendorForm = ({ inputValues, onChangeHandler }) => {
             name="package_id"
             className="last-name form-control"
             onChange={onChangeHandler}>
-            <option value="1">Silver Package - N10,000 </option>
-            <option value="2">Gold Package - N15,000</option>
-            <option value="3">Diamond Package - N20,000</option>
+            <option value="1">Lite Package - N10,000 </option>
+            <option value="2">Beta Package - N15,000</option>
+            <option value="3">Premium Package - N20,000</option>
           </select>
           {/* <input
             type="number"
