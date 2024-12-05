@@ -564,34 +564,6 @@ const { storeCategories, error } = useCategories();
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
-<<<<<<< HEAD
-                    <div class="row" >
-                            {products?.map(product => (
-												<div class="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
-													<div class="product-info default-cover card">
-                                                    <Link to={`/product/${product.id}`}   className="img-bg">
-														
-															<img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
-														</Link>
-                                                        <Link to={`/product/${product.id}`}  className="no__underline"  >
-                                                        <div className='product_desc'>
-                                        <div className='flex-col g-5'>
-                                            <p className="product__name bold uppercase">{LimitWord(product.name, 3)}</p>
-                                            <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                                            <h3 className='cost__price'>{currency(product.cost_price)}</h3>
-                                            {/* <div className="mt-5 bt">
-                                                <p>{LimitWord(product.description, 10)}</p>
-                                            </div> */}
-                                        </div>
-                                       
-                                    </div>
-                                    </Link>
-                                </div>
-                                </div>
-                            ))}
-
-                        </div>
-=======
                     <div className="row">
   {products?.map((product) => (
     <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }} key={product.id}>
@@ -626,40 +598,25 @@ const { storeCategories, error } = useCategories();
   ))}
 </div>
 
->>>>>>> origin/develop
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                     <div class="row">
                 {products?.map(product => (
-<<<<<<< HEAD
-                    <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }}>
-                        <div className="product-info default-cover card">
-                            <Link to={`/product/${product.id}`} className="img-bg">
-                                <img src={product.image} alt={product.name} className="product__image" style={{ width: 150 }} />
-                            </Link>
-                            <Link to={`/product/${product.id}`} className="no__underline">
-                                <div className='product_desc'>
-                                    <div className='flex-col g-5'>
-                                        <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
-                                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
+<div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }}>
+<div className="product-info default-cover card">
+    <Link to={`/product/${product.id}`} className="img-bg">
+        <img src={product.image} alt={product.name} className="product__image" style={{ width: 150 }} />
+    </Link>
+    <Link to={`/product/${product.id}`} className="no__underline">
+        <div className='product_desc'>
+            <div className='flex-col g-5'>
+                <p className="product__name capitalize bold">{LimitWord(product.name, 3)}</p>
+                <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
+                <h3 className='cost__price'>{currency(product.cost_price)}</h3>
                                     </div>
                                 </div>
                             </Link>
                         </div>
-=======
-    <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3" style={{ margin: '0 5px' }}>
-        <div className="product-info default-cover card">
-            <Link to={`/product/${product.id}`} className="img-bg">
-                <img src={product.image} alt={product.name} className="product__image" style={{ width: 150 }} />
-            </Link>
-            <Link to={`/product/${product.id}`} className="no__underline">
-                <div className='product_desc'>
-                    <div className='flex-col g-5'>
-                        <p className="product__name capitalize bold">{LimitWord(product.name, 3)}</p>
-                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
->>>>>>> origin/develop
                     </div>
 ))}
 
@@ -672,48 +629,11 @@ const { storeCategories, error } = useCategories();
                     </TabPanel>
                 </Box>
                 </div>
-<<<<<<< HEAD
-                <div className='flex flex-col alc g-20 bg-yellow' id="Female">
-                    <h1>Female's health care</h1>
-                    <div className='w-full'>
-                        <div class="row">
-                            {cat3?.map(product => (
-                                <div  style={{    margin: '0 5px'}}>
-                                    <div class="product-info default-cover card">
-                                    <Link to={`/product/${product.id}`}   className="img-bg">
-                                        
-                                            <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
-                                        </Link>
-                                        <Link to={`/product/${product.id}`}  className="no__underline"  >
-                                        <div className='product_desc'>
-                                    <div className='flex-col g-5'>
-                                        <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
-                                        <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                                        <h3 className='cost__price'>{currency(product.cost_price)}</h3>
-                                        {/* <div className="mt-5 bt">
-                                            <p>{LimitWord(product.description, 10)}</p>
-                                        </div> */}
-                                    </div>
-                                
-                                    </div>
-                                    </Link>
-                                </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-
-            {categories?.map(category => (
-                <div className='flex flex-col alc g-20 bg-white-container' id="General">
-=======
                 
                 {/* <CategoriesWithProducts categories={categories} /> */}
 
             {categories?.map(category => (
                 <div className='flex flex-col alc g-20 bg-white-container' key={category.id}>
->>>>>>> origin/develop
                     <div className='w-full flex justsb'>
                         <div className='g-40 section-tabs'>
                             <h1 className="">{category.name}</h1>
@@ -725,166 +645,15 @@ const { storeCategories, error } = useCategories();
                         </div>
                         <p>View All</p>
                     </div>
-<<<<<<< HEAD
-                    <div className='w-full'>
-                        <div class="row">
-                            {cat5?.map(product => (
-                                <div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
-                                <div class="product-info default-cover card">
-                                <Link to={`/product/${product.id}`}   className="img-bg">
-                                    
-                                        <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
-                                    </Link>
-                                    <Link to={`/product/${product.id}`}  className="no__underline"  >
-                                    <div className='product_desc'>
-                                <div className='flex-col g-5'>
-                                    <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
-                                    <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                                    <h3 className='cost__price'>{currency(product.cost_price)}</h3>
-                                    {/* <div className="mt-5 bt">
-                                        <p>{LimitWord(product.description, 10)}</p>
-                                    </div> */}
-                                </div>
-                            
-                                </div>
-                                </Link>
-                            </div>
-                            </div>
-                            ))}
-                        </div>
-=======
                     <div className='flex justsb g-10'>
                     <ProductGrid categoryName={category.name} />
->>>>>>> origin/develop
                     </div>
                 </div>
 
             ))}
 
-<<<<<<< HEAD
-                <img src="/Screenshot 2024-03-19 163035.png" alt="img" />
-                <div className='flex flex-col alc g-20 bg-white-container'>
-                    <div className='w-full flex justsb'>
-                        <div className='flex alc g-40 section-tabs'>
-                            <h1>Body and skincare</h1>
-                            <ul className='flex g-20'>
-                                <l1>Nigeria</l1>
-                                <l1>South Africa</l1>
-                                <l1>Zambia</l1>
-                                <l1>Ghana</l1>
-                            </ul>
-                        </div>
-                        <p>View All</p>
-                    </div>
-                    <div className='w-full'>
-                        <div class="row">
-                            {cat6?.map(product => (
-                                <div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
-                                <div class="product-info default-cover card">
-                                <Link to={`/product/${product.id}`}   className="img-bg">
-                                    
-                                        <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
-                                    </Link>
-                                    <Link to={`/product/${product.id}`}  className="no__underline"  >
-                                    <div className='product_desc'>
-                                <div className='flex-col g-5'>
-                                    <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
-                                    <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                                    <h3 className='cost__price'>{currency(product.cost_price)}</h3>
-                                    {/* <div className="mt-5 bt">
-                                        <p>{LimitWord(product.description, 10)}</p>
-                                    </div> */}
-                                </div>
-                            
-                                </div>
-                                </Link>
-                            </div>
-                            </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-                <img src="/Screenshot 2024-03-19 163145.png" alt="" />
-                <div className='flex flex-col g-20 bg-white-container'>
-                    <h1>Sexual Wellness</h1>
-                    <div className='w-full'>
-                        <div class="row">
-                            {cat8?.map(product => (
-                                <div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
-                                <div class="product-info default-cover card">
-                                <Link to={`/product/${product.id}`}   className="img-bg">
-                                    
-                                        <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
-                                    </Link>
-                                    <Link to={`/product/${product.id}`}  className="no__underline"  >
-                                    <div className='product_desc'>
-                                <div className='flex-col g-5'>
-                                    <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
-                                    <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                                    <h3 className='cost__price'>{currency(product.cost_price)}</h3>
-                                    {/* <div className="mt-5 bt">
-                                        <p>{LimitWord(product.description, 10)}</p>
-                                    </div> */}
-                                </div>
-                            
-                                </div>
-                                </Link>
-                            </div>
-                            </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-                <img src="/Screenshot 2024-03-19 164641.png" alt="" />
-                <div className='flex flex-col alc g-20 bg-white-container' id="Fitness">
-                    <div className='w-full flex justsb'>
-                        <div className='flex alc g-40 section-tabs'>
-                            <h1>Fitness Kits</h1>
-                            <ul className='flex g-20'>
-                                <l1>Resort</l1>
-                                <l1>Software</l1>
-                                <l1>Sports</l1>
-                                <l1>Entertainment</l1>
-                            </ul>
-                        </div>
-                        <p>View All</p>
-                    </div>
-                    <div className='w-full'>
-                        <div class="row">
-                            {cat10?.map(product => (
-                                <div class="col-sm-2 col-md-6 col-lg-3 col-xl-3" style={{    margin: '0 5px'}}>
-                                <div class="product-info default-cover card">
-                                <Link to={`/product/${product.id}`}   className="img-bg">
-                                    
-                                        <img src={product.image} alt={product.name} className="product__image" style={{width: 150}}/>
-                                    </Link>
-                                    <Link to={`/product/${product.id}`}  className="no__underline"  >
-                                    <div className='product_desc'>
-                                <div className='flex-col g-5'>
-                                    <p className="product__name capitalize">{LimitWord(product.name, 10)}</p>
-                                    <h3 className='red bold product__cost'>{currency(product.selling_price)}</h3>
-                                    <h3 className='cost__price'>{currency(product.cost_price)}</h3>
-                                    {/* <div className="mt-5 bt">
-                                        <p>{LimitWord(product.description, 10)}</p>
-                                    </div> */}
-                                </div>
-                            
-                                </div>
-                                </Link>
-                            </div>
-                            </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                <img src="/Screenshot 2024-03-20 162550.png" alt="" />
-
-                <div className='flex justsb alc g-10'>
-=======
                 <img src="/Screenshot 2024-03-19 163145.png" alt="" />
             <div className='flex justsb alc g-10'>
->>>>>>> origin/develop
                     <div className='bg-white-container news flex flex-col gap-10'>
                         <div className='flex justsb'>
                             <h3>LATEST NEWS</h3>
