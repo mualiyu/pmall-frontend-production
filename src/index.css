@@ -701,8 +701,10 @@ button {
   color: #4e4e4e;
 }
 .prod-details .right .variations .size {
-  border: 1px solid #4e4e4e;
-  padding: 5px 10px;
+  border: 2px solid #4e4e4e;
+  padding: 11px 30px;
+  border-radius: 10px;
+  font-size: 13px;
 }
 .prod-details .right button,
 .prod-details .right .favourite {
@@ -1047,7 +1049,7 @@ input:checked + .slider:before {
   outline: none;
 }
 .g-40 {
-  gap: 40px;
+  gap: 18px;
 }
 
 .w-full {
@@ -1337,6 +1339,7 @@ input:checked + .slider:before {
 
 .store-container {
   font-size: 11px;
+  background-color: #f1f1f2;
 }
 
 .store-container {
@@ -1518,6 +1521,7 @@ input:checked + .slider:before {
   background-color: white;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   padding: 25px;
+  border-radius: 10px;
 }
 .h-320 {
   height: 320px;

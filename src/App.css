@@ -2,7 +2,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "manrope-light", "Open Sans", "sans-serif" !important;
+  font-family: "Open Sans", "sans-serif" !important;
+  font-weight: 600;
 }
 
 .App {
@@ -1234,8 +1235,8 @@ h1 {
 
 .product__image {
   width: 100%!important;
-  height: 231.5px;
-  max-height: 301.5px;
+  /* height: 231.5px;
+  max-height: 301.5px; */
 }
 .cost__price {
   font-size: 10px;

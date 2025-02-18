@@ -14,6 +14,7 @@ import OrderManagement from "./orderManagement";
 import VendorDetails from "./vendors/details";
 import ProductDetails from "./products/details";
 import AffilateDetails from "./affilates/details";
+// import MyNetwork from "./affilates/myNetwork";
 import Dashboard from "./dashboard";
 import UserDetails from "./users/details";
 import ProductList from "./productList";
@@ -93,6 +94,7 @@ function Application() {
                   <Route path="/app/products/list" element={<ProductList />} />
                   <Route path="/app/affilates" element={<Affilates />} />
                   <Route path="/app/affilates/details" element={<AffilateDetails />} />
+                  {/* <Route path="/app/affilate/my-network" element={<MyNetwork />} /> */}
                   <Route path="/app/products" element={<Products />} />
                   <Route path="/app/categories" element={<Categories />} />
                   <Route path="/app/gallery" element={<Gallery />} />

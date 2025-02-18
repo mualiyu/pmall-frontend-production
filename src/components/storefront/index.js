@@ -399,8 +399,9 @@ setLoading(true);
 
     //         getProduct()
     // };
-    const getProductByCategory = (product_id) => {
-        fetch(`https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=${product_id}`, {
+
+    const getProductByCategory = (cat_id) => {
+        fetch(`https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=${cat_id}`, {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -424,17 +425,8 @@ const { storeCategories, error } = useCategories();
     const extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'];
 
     useEffect(()=>{
-        getProducts()
-        getProductsCat3()
-        getProductsCat4()
-        getProductsCat5()
-        getProductsCat6()
-        getProductsCat8()
-        getProductsCat9()
-        getProductsCat10()
-        getProductsCat11()
-        getProductsCat12()
-        getProductsCat13()
+        getProducts();
+        getProductByCategory(2);
     },[])
     return ( 
         <div className="store-container">
@@ -514,8 +506,8 @@ const { storeCategories, error } = useCategories();
                         <img src="/Screenshot 2024-03-21 215058.png" alt="" className="w-full" />
                     </div>
                     <div className='flex flex-col g-20'>
-                        <img src="/Screenshot 2024-03-21 215316.png" alt="" className="w-full" />
-                        <img src="/Screenshot 2024-03-21 215417.png" alt="" className="w-full" />
+                        <img src="/Health.png" alt="" className="w-full" />
+                        {/* <img src="/Screenshot 2024-03-21 215417.png" alt="" className="w-full" /> */}
                     </div>
                     <div className='flex flex-col g-20'>
                     {/* <ProductCarousel products={products} /> */}
@@ -552,6 +544,7 @@ const { storeCategories, error } = useCategories();
                     </div>
                 </div>
                 <div className='bg-blue w-full' id="Male">
+                {/* <div className='bg-blue w-full'>
                 <Box sx={{ width: "100%" }}>
                     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                         <Tabs
@@ -628,7 +621,7 @@ const { storeCategories, error } = useCategories();
                     
                     </TabPanel>
                 </Box>
-                </div>
+                </div> */}
                 
                 {/* <CategoriesWithProducts categories={categories} /> */}
 
@@ -646,7 +639,8 @@ const { storeCategories, error } = useCategories();
                         <p>View All</p>
                     </div>
                     <div className='flex justsb g-10'>
-                    <ProductGrid categoryName={category.name} />
+                    <ProductGrid 
+                    categoryId={category.id} />
                     </div>
                 </div>
 
@@ -846,6 +840,7 @@ const { storeCategories, error } = useCategories();
             <div className='w-full flex all-center rights'>
                 <p>Pmall 2024</p>
             </div>
+        </div>
         </div>
      );
 }

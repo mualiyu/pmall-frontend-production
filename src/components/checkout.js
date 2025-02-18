@@ -121,13 +121,13 @@ const CheckoutPage = () => {
                token = result.token
                const requestBody = {
                 customer_id: result.customer.id,
-                products: [
-                {
-                    product_id: checkingOutProducts?.id,
-                    quantity: cart?.length,
-                }
-                ]
+                products: checkingOutProducts.map(product => ({
+                    product_id: product.id,
+                    quantity: product.quantity
+                  }))
+                
             }
+            console.log(requestBody);
             fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/checkout/initiate", {
                 method: "POST",
                 headers: {

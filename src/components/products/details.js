@@ -6,6 +6,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
 import SearchIcon from '@mui/icons-material/Search';
 import Person4Icon from '@mui/icons-material/Person4';
+import Loading from "../../utils/loading";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -41,6 +42,7 @@ const ProductDetails = () => {
 
 
   const getProductDetails = () => {
+    setLoading(true);
     getProductsCategories();
     fetch(
       `https://api.pmall.mukeey.com.ng/api/v1/public/products/single-product?product_id=${id}`,
@@ -58,13 +60,17 @@ const ProductDetails = () => {
         console.log(result);
         setDetails(result?.data);
         setMoreImages(result?.data?.more_images?.split(","));
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
       console.log(detail);
   };
 
+
+  
  const getProductsCategories = () => {
         setLoading(true);
         fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories", {
@@ -76,7 +82,7 @@ const ProductDetails = () => {
         })
             .then((resp) => resp.json())
             .then((result) => {
-            console.log(result);
+            // console.log(result);
             setProductCategories(result.data);
             setLoading(false);
             })
@@ -159,114 +165,179 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>
-        </div>
-      <div className="prod-details mt-50">
-        
-        <div className="left">
-          <div>
+        <div className="prod-details mt-50">
+          
+          <div className="left">
+          <Loading loading={loading} />
             <div>
               <div>
-                <img src={detail?.image ? detail?.image : "https://th.bing.com/th/id/OIP.608kpIxTz9H4RyDpKCimXQHaHa?rs=1&pid=ImgDetMain"} alt="" className="main-image" />
-              </div>
-              {moreImages && (
-                <div className="other-images">
-                  <img src={moreImages[0]} alt="" className="image" />
-                  <img src={moreImages[1]} alt="" className="image" />
-                  <img src={moreImages[2]} alt="" className="image" />
-                </div>
-              )}
-            </div>
-            {/* <div className="other-images">
-              <img src={moreImages !== null ? moreImages[0] : ""} alt="" className="main-image" />
-              <img src={moreImages !== null ? moreImages[1] : ""} alt="" className="main-image" />
-              <img src={moreImages !== null ? moreImages[2] : ""} alt="" className="main-image" />
-            </div> */}
-          </div>
-        </div>
-        <div className="right">
-          <h3 className="prod-name">{detail?.name ? detail?.name : "Fire design T-shirt"}</h3>
-          <Rating
-            name="read-only"
-            value={value}
-            className="rating"
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-            readOnly
-          />
-          {detail?.selling_price ? <h4 className="prod-price">
-          &#x20A6;{addCommasToNumberString(detail?.selling_price)} <span className="former-price"> &#x20A6;{addCommasToNumberString(detail?.cost_price)}</span>
-          </h4> : <h4 className="prod-price">N15,000</h4> }
-          <p className="prod-desc">
-            {detail?.description ? detail?.description : "A dummy t shirt template for a brand called on-fire, available in not so different colors"}
-          </p>
-          <h3 className="f18">Available Options</h3>
-          <div className="variations">
-            {/* <div>
-              <p className="f-13  mb-10">Size</p>
-              <div className="flex g-10">
-                <p className="size">S</p>
-                <p className="size">M</p>
-                <p className="size">L</p>
-                <p className="size">XL</p>
-                <p className="size">XXL</p>
-              </div>
-            </div> */}
-            <div>
-              <p className="f-13  mb-10">Quantity</p>
-              <div className="flex g-20 size">
-                <p className="pointer" onClick={decAmt}>-</p>
-                <p>{numOfItems}</p>
-                <p className="pointer" onClick={incAmt}>+</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex g-10">
-            <button className="f-13" onClick={addToCart}>Add to Cart</button>
-            <button className="f-13" onClick={addToCart}>Buy Now!</button>
-            {/* <div className="favourite flex all-center">
-              <FavoriteIcon />
-            </div> */}
-          </div>
-          <div className="flex gap-10">
-            <p className="f-13">
-              <span className="f-bold f-13">Category : </span> {detail?.category?.name}
-            </p>
-            <p className="f-13">
-              <span className="f-bold f-13">Brand : </span> {detail?.brand?.name}
-            </p>
-            <p className="f-13">
-              <span className="f-bold f-13">Availability : </span> {detail?.quantity} products in
-              stock
-            </p>
+                <div>
 
-            {/* <p className="f-13">
-              <span className="f-bold f-13">Vendor :</span> {detail?.store_id}{" "}
-              (Halal Lab)
-            </p> */}
-            <p className="f-13">
-              <span className="f-bold f-13">Amt Sold : </span> {detail?.inStock}
-            </p>
-            <p className="f-13">
-              <span className="f-bold f-13">Tags : </span> {detail?.tags}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className={`cart-modal-container ${cartModalActive && "active"}`}>
-         <div className="cart-modal">
-           <CheckCircleIcon className="check"/>
-            <h3>Item successfully added to cart  </h3>
-            <div className="modal-btns">
-              <div  className="modal-btn btn-1">
-                <Link to="/app/cart"><p>Proceed to cart</p></Link>
-              </div>
-              <div  className="modal-btn btn-2">
-                <Link to="/"><p>Continue shopping</p></Link>
+                {detail?.image ? (
+      <img className="main-image" src={detail.image} alt="" className="main-image" />
+    ) : (
+      <Loading loading={loading} />
+    )}
+                </div>
+                {moreImages && (
+                  <div className="other-images">
+                    <img src={moreImages[0]} alt="" className="image" />
+                    <img src={moreImages[1]} alt="" className="image" />
+                    <img src={moreImages[2]} alt="" className="image" />
+                  </div>
+                )}
               </div>
             </div>
-         </div>
-      </div>
+          </div>
+          <div className="right">
+            <h3 className="prod-name">{detail?.name ? detail?.name : "..."}</h3>
+            <Rating
+              name="read-only"
+              value={value}
+              className="rating"
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              readOnly
+            />
+            {detail?.selling_price ? <h4 className="prod-price">
+            &#x20A6;{addCommasToNumberString(detail?.selling_price)} <span className="former-price"> &#x20A6;{addCommasToNumberString(detail?.cost_price)}</span>
+            </h4> : <h4 className="prod-price">No Price Tag</h4> }
+            <p className="prod-desc">
+              {detail?.description ? detail?.description : "A dummy t shirt template for a brand called on-fire, available in not so different colors"}
+            </p>
+            {/* <h3 className="f18">Quantity</h3> */}
+            <div className="variations" style={{margin: '20px 0'}}>
+              {/* <div>
+                <p className="f-13  mb-10">Size</p>
+                <div className="flex g-10">
+                  <p className="size">S</p>
+                  <p className="size">M</p>
+                  <p className="size">L</p>
+                  <p className="size">XL</p>
+                  <p className="size">XXL</p>
+                </div>
+              </div> */}
+              <div>
+                {/* <p className="f-13  mb-10">Quantity</p> */}
+                <h3 className="f18" style={{margin: '7px 0'}}>Select quantity</h3>
+                <div className="flex g-20 size">
+                  <p className="pointer" onClick={decAmt}>-</p>
+                  <p>{numOfItems}</p>
+                  <p className="pointer" onClick={incAmt}>+</p>
+                </div>
+                {/* <div className="other-images">
+                  <img src={moreImages !== null ? moreImages[0] : ""} alt="" className="main-image" />
+                  <img src={moreImages !== null ? moreImages[1] : ""} alt="" className="main-image" />
+                  <img src={moreImages !== null ? moreImages[2] : ""} alt="" className="main-image" />
+                </div> */}
+              </div>
+            </div>
+            <div className="right">
+              <h3 className="prod-name">{detail?.name ? detail?.name : "Fire design T-shirt"}</h3>
+              <Rating
+                name="read-only"
+                value={value}
+                className="rating"
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                }}
+                readOnly
+              />
+              {detail?.selling_price ? <h4 className="prod-price">
+              &#x20A6;{addCommasToNumberString(detail?.selling_price)} <span className="former-price"> &#x20A6;{addCommasToNumberString(detail?.cost_price)}</span>
+              </h4> : <h4 className="prod-price">N15,000</h4> }
+              <p className="prod-desc">
+                {detail?.description ? detail?.description : "A dummy t shirt template for a brand called on-fire, available in not so different colors"}
+              </p>
+            <div className="flex g-10">
+              <button className="f-13" onClick={addToCart}>Add to Cart</button>
+              <button className="f-13" onClick={addToCart}>Continue Shopping</button>
+              {/* <div className="favourite flex all-center">
+                <FavoriteIcon />
+              </div> */}
+            </div>
+            <div className="flex gap-10">
+              <p className="f-13">
+                <span className="f-bold f-13">Category : </span> {detail?.category?.name}
+              </p>
+              <p className="f-13">
+                <span className="f-bold f-13">Brand : </span> {detail?.brand?.name}
+              </p>
+              <p className="f-13">
+                <span className="f-bold f-13">Availability : </span> {detail?.quantity} products in
+                stock
+              </p>
+              <h3 className="f18">Available Options</h3>
+              <div className="variations">
+                {/* <div>
+                  <p className="f-13  mb-10">Size</p>
+                  <div className="flex g-10">
+                    <p className="size">S</p>
+                    <p className="size">M</p>
+                    <p className="size">L</p>
+                    <p className="size">XL</p>
+                    <p className="size">XXL</p>
+                  </div>
+                </div> */}
+                <div>
+                  <p className="f-13  mb-10">Quantity</p>
+                  <div className="flex g-20 size">
+                    <p className="pointer" onClick={decAmt}>-</p>
+                    <p>{numOfItems}</p>
+                    <p className="pointer" onClick={incAmt}>+</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex g-10">
+                <button className="f-13" onClick={addToCart}>Add to Cart</button>
+                <button className="f-13" onClick={addToCart}>Buy Now!</button>
+                {/* <div className="favourite flex all-center">
+                  <FavoriteIcon />
+                </div> */}
+              </div>
+              <div className="flex gap-10">
+                <p className="f-13">
+                  <span className="f-bold f-13">Category : </span> {detail?.category?.name}
+                </p>
+                <p className="f-13">
+                  <span className="f-bold f-13">Brand : </span> {detail?.brand?.name}
+                </p>
+                <p className="f-13">
+                  <span className="f-bold f-13">Availability : </span> {detail?.quantity} products in
+                  stock
+                </p>
+
+                {/* <p className="f-13">
+                  <span className="f-bold f-13">Vendor :</span> {detail?.store_id}{" "}
+                  (Halal Lab)
+                </p> */}
+                <p className="f-13">
+                  <span className="f-bold f-13">Amt Sold : </span> {detail?.inStock}
+                </p>
+                <p className="f-13">
+                  <span className="f-bold f-13">Tags : </span> {detail?.tags}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className={`cart-modal-container ${cartModalActive && "active"}`}>
+            <div className="cart-modal">
+              <CheckCircleIcon className="check"/>
+                <h3>Item successfully added to cart  </h3>
+                <div className="modal-btns">
+                  <div  className="modal-btn btn-1">
+                    <Link to="/app/cart"><p>Proceed to cart</p></Link>
+                  </div>
+                  <div  className="modal-btn btn-2">
+                    <Link to="/"><p>Continue shopping</p></Link>
+                  </div>
+                </div>
+            </div>
+          </div>
+          </div>
+        </div>  
+      </div>  
     </>
   );
 };
