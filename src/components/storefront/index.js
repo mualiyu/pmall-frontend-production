@@ -277,8 +277,8 @@ const { storeCategories, error } = useCategories();
                         <img src="/Screenshot 2024-03-21 215058.png" alt="" className="w-full" />
                     </div>
                     <div className='flex flex-col g-20'>
-                        <img src="/Screenshot 2024-03-21 215316.png" alt="" className="w-full" />
-                        <img src="/Screenshot 2024-03-21 215417.png" alt="" className="w-full" />
+                        <img src="/Health.png" alt="" className="w-full" />
+                        {/* <img src="/Screenshot 2024-03-21 215417.png" alt="" className="w-full" /> */}
                     </div>
                     <div className='flex flex-col g-20'>
                     {/* <ProductCarousel products={products} /> */}
