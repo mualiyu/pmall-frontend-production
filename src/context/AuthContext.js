@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import Toaster from "../utils/toaster";
 import { useUser } from "./UserContext";
 
@@ -10,6 +10,7 @@ export const VendorSignupProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
   const [toastType, setToastType] = useState("");
+  const [packages, setPackages] = useState({});
   const { setUser } = useUser();
 
   // Vendor Registration
@@ -325,6 +326,35 @@ export const VendorSignupProvider = ({ children }) => {
       }
     }
   };
+
+  const getPackages = async (e) => {
+    setLoading(true);
+
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/account-packages/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        if (result.status) {
+          console.log(result);
+          setPackages(result.data);
+        } else {
+          console.log(result.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    getPackages();
+  }, []);
 
   return (
     <AuthContext.Provider

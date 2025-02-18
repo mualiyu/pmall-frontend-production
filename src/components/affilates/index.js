@@ -80,8 +80,8 @@ function createData(
 }
 
 const Affilates = () => {
-  const [newVendorModal, setNewVendorModal] = useState(false);
-  const handleModalClose = () => setNewVendorModal(false);
+  const [newAffilateModal, setNewAffilateModal] = useState(false);
+  const handleModalClose = () => setNewAffilateModal(false);
   const navigate = useNavigate();
 
   return (
@@ -135,7 +135,7 @@ const Affilates = () => {
         <div className="">
           <button
             className="btn btn-primary p-25"
-            onClick={() => setNewVendorModal(true)}>
+            onClick={() => setNewAffilateModal(true)}>
             Add Affilate
           </button>
         </div>
@@ -289,14 +289,14 @@ const Affilates = () => {
       {/* Modal for vendors */}
 
       <Modal
-        open={newVendorModal}
+        open={newAffilateModal}
         onClose={handleModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
           <div className="mb-35">
             <Typography id="modal-modal-title">
-              <h4 className="summary__title t-xl title-case">Add Vendor</h4>
+              <h4 className="summary__title t-xl title-case">Add Affilate</h4>
             </Typography>
             <div className="s-divider"></div>
           </div>
