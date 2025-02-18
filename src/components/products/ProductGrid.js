@@ -57,7 +57,7 @@ console.log(url);  // Log to inspect the URL
       {products.map((product) => (
         <div
           className="col-sssm-2 col-md-6 col-lg-3 col-xl-3"
-          style={{ margin: "0 5px" }}
+          style={{ margin: "0 5px"}}
           key={product.id}
         >
           <div className="product-info default-cover card">

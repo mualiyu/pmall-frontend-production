@@ -53,45 +53,18 @@ const StoreFront = () => {
     const {cartLength} = useCart();
     const [value, setValue] = useState(0);
     const [loading, setLoading] = useState(false);
+    const backgroundColors = ['#191970', '#36454F',  '#005f5f',  '#556B2F',  '#6A5ACD',  '#2E8B57',  '#4682B4',  '#9370DB',  '#D2691E',  '#4169E1',  '#008080',  '#CC5500',  '#800020',  '#4B0082'];
     const [products, setProducts] = useState([]);
     const [categories, setProductCategories] = useState(null)
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
-      const productts = [
-        {
-          id: 1,
-          name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          price: 4000.00,
-          img:"/Screenshot 2024-03-19 154643.png",
-          rating:4.0,
-          desc: 'amet consectetur adipisicing elit'
-        },
-        {
-          id: 2,
-          name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          price: 4000.00,
-          img:"/Screenshot 2024-03-19 154643.png",
-          rating:4.0,
-          desc: 'amet consectetur adipisicing elit'
-        },
-        {
-          id: 3,
-          name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          price: 4000.00,
-          img:"/Screenshot 2024-03-19 154643.png",
-          rating:4.0,
-          desc: 'amet consectetur adipisicing elit'
-        },
-        {
-          id: 4,
-          name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-          price: 4000.00,
-          img:"/Screenshot 2024-03-19 154643.png",
-          rating:4.0,
-          desc: 'amet consectetur adipisicing elit'
-        },
-      ];
+     
+
+      const getRandomColor = (colorArray) => {
+        const randomIndex = Math.floor(Math.random() * colorArray.length);
+        return colorArray[randomIndex];
+      };
       
     const getProducts = () => {
         setLoading(true);
@@ -396,8 +369,8 @@ const { storeCategories, error } = useCategories();
                 {/* <CategoriesWithProducts categories={categories} /> */}
 
             {categories?.map(category => (
-                <div className='flex flex-col alc g-20 bg-white-container' key={category.id}>
-                    <div className='w-full flex justsb'>
+                <div className='flex flex-col alc g-20 bg-white-contain' key={category.id}>
+                    <div className='w-full flex justsb style-header' style={{backgroundColor: getRandomColor(backgroundColors)}}>
                         <div className='g-40 section-tabs'>
                             <h1 className="">{category.name}</h1>
                             <ul className='mt-lg flex g-15'>
@@ -408,7 +381,7 @@ const { storeCategories, error } = useCategories();
                         </div>
                         <p>View All</p>
                     </div>
-                    <div className='flex justsb g-10'>
+                    <div className='flex justsb g-10' style={{padding: '25px'}}>
                     <ProductGrid 
                     categoryId={category.id} />
                     </div>

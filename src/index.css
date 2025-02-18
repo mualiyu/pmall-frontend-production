@@ -1335,7 +1335,7 @@ input:checked + .slider:before {
 }
 
 .store-container {
-  font-size: 11px;
+  /* font-size: 11px; */
   background-color: #f1f1f2;
 }
 
@@ -1519,6 +1519,15 @@ opacity: 1;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   padding: 25px;
   border-radius: 10px;
+}
+.bg-white-contain {
+  background-color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.style-header {
+    padding: 25px;
+    color: white;
 }
 .h-320 {
   height: 320px;
