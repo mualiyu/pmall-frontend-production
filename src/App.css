@@ -1234,8 +1234,8 @@ h1 {
 
 .product__image {
   width: 100%!important;
-  height: 231.5px;
-  max-height: 301.5px;
+  /* height: 231.5px;
+  max-height: 301.5px; */
 }
 .cost__price {
   font-size: 10px;

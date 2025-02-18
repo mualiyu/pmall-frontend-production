@@ -11,6 +11,7 @@ const CategoriesWithProducts = ({ categories }) => {
         await Promise.all(
             categories.map(async (category) => {
                 const products = await fetchProductsByCategory(category.id);
+                console.log(products);
                 fetchedProducts[category.id] = products; // Map products to their category
             })
         );
