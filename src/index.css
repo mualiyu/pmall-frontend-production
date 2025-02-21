@@ -1412,7 +1412,7 @@ input:checked + .slider:before {
 .bannerContain {
     max-width: 100%;
     padding: 15px;
-    height: 360px;
+    height: 440px;
     overflow: hidden;
 }
 .collection-banners {
