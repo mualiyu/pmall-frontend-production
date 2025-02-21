@@ -290,16 +290,6 @@ const { storeCategories, error } = useCategories();
                 <div className="row  w-90" style={{margin: '20px auto'}}>
 
 <CategorySlider categories={categories} />
-   
-
-                {/* {categories?.map(category => (
-                           <div className='flex flex-col g-10 alc brand_stores m-5 mt-15 w-125p'>
-                            <div className='border b-image'>
-                                <img src={category.category_image} className='icon' width="60px" />
-                            </div>
-                            <p className="cat_title">{category.name}</p>
-                        </div>
-                        ))} */}
                 </div>
 
 
@@ -485,29 +475,7 @@ const { storeCategories, error } = useCategories();
                             </div>
                         </div>
                     </div>
-                    <div className='partners bg-white-container'>
-                        <h3>OUR PARTNERS</h3>
-                        <div className='grid grid-2'>
-                            <div>
-                                <img src="/brand1.png" alt="" />
-                            </div>
-                            <div>
-                                <img src="/brand2.png" alt="" />
-                            </div>
-                            <div>
-                                <img src="/brand3.png" alt="" />
-                            </div>
-                            <div>
-                                <img src="/brand4.png" alt="" />
-                            </div>
-                            <div>
-                                <img src="/brand5.png" alt="" />
-                            </div>
-                            <div>
-                                <img src="/brand6.png" alt="" />
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div className='flex justsb'>
                     <img src="/phone.png" alt="" />
