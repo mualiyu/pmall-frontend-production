@@ -237,7 +237,7 @@ const ProductDetails = () => {
              
             <div className="flex g-10">
               <button className="f-13" onClick={addToCart}>Add to Cart</button>
-              <button className="f-13" onClick={addToCart}>Continue Shopping</button>
+              <button className="f-13 btn-sec" onClick={addToCart}>Continue Shopping</button>
               {/* <div className="favourite flex all-center">
                 <FavoriteIcon />
               </div> */}

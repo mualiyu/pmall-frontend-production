@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { addToCart, getCart } from "../../utils/cartUtils";
 import LimitWord from '../../utils/limitWord';
 import currency from '../../utils/formatCurrency';
 
@@ -10,6 +11,7 @@ const ProductGrid = ({ categoryId }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cartMessage, setCartMessage] = useState("");
 
   // Fetch products based on the categoryId
   useEffect(() => {
@@ -22,9 +24,7 @@ const ProductGrid = ({ categoryId }) => {
           `${PRODUCTS_ENDPOINT}?category_id=${categoryId}`
         );
         const url = `${PRODUCTS_ENDPOINT}?category_id=${categoryId}`;
-console.log(url); 
- console.log(productsResponse);
-        
+
         // If products are found, set them; otherwise, show an error
         if (productsResponse.data.data) {
           setProducts(productsResponse.data.data);
@@ -43,6 +43,21 @@ console.log(url);
     }else{console.log('hi')}
   }, [categoryId]);
 
+  const handleAddToCart = (product) => {
+    const numOfItems = 1;
+    const cart = getCart();
+    // Check if the product already exists in the cart
+    const isProductInCart = cart.some((item) => item.id === product.id);
+
+    if (isProductInCart) {
+      setCartMessage(`${product.name} is already in your cart!`);
+    } else {
+      addToCart(product, numOfItems, () => {
+        setCartMessage(`${product.name} added to cart!`);
+      });
+    }
+  };
+
   if (loading) return <p>Loading products...</p>;
   if (error) return <p className="error">{error}</p>;
   if (products.length === 0) return <p>No products found for this category.</p>;
@@ -51,10 +66,13 @@ console.log(url);
     <div className="row">
       {products.map((product) => (
         <div
-          className="col-sssm-2 col-md-6 col-lg-3 col-xl-3"
-          style={{ margin: "0 5px"}}
+          className="col-sssm-2 col-md-6 col-lg-3 col-xl-3 product-cart-wrap"
+          style={{ margin: "20px 9px"}}
           key={product.id}
         >
+          <div class="product-badges product-badges-position product-badges-mrg">
+                                    <span class="hot">NEW</span>
+                                </div>
           <div className="product-info default-cover card">
             <Link to={`/product/${product.id}`} className="img-bg">
               <img
@@ -72,18 +90,27 @@ console.log(url);
                   </p>
                   <h3 className="red bold product__cost">
                     {currency(product.selling_price || 0)}
-                  </h3>
-                  {product.cost_price && (
-                    <h3 className="cost__price">
+                    &nbsp; {product.cost_price && (
+                    <span className="cost__price">
                       {currency(product.cost_price)}
-                    </h3>
+                    </span>
                   )}
+                  </h3>
+                  
                 </div>
               </div>
             </Link>
+            <div class="add-cart">
+                  <button
+                      className="add"
+                      onClick={() => handleAddToCart(product)}>
+                      <i className="fi-rs-shopping-cart mr-5"></i> Add to Cart
+                    </button>
+                                            </div>
           </div>
         </div>
       ))}
+      {cartMessage && <p className="cart-message">{cartMessage}</p>}
     </div>
   );
 };

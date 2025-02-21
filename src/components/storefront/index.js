@@ -53,7 +53,8 @@ const StoreFront = () => {
     const {cartLength} = useCart();
     const [value, setValue] = useState(0);
     const [loading, setLoading] = useState(false);
-    const backgroundColors = ['#191970', '#36454F',  '#005f5f',  '#556B2F',  '#6A5ACD',  '#2E8B57',  '#4682B4',  '#9370DB',  '#D2691E',  '#4169E1',  '#008080',  '#CC5500',  '#800020',  '#4B0082'];
+    // const backgroundColors = ['#191970', '#36454F',  '#005f5f',  '#556B2F',  '#6A5ACD',  '#2E8B57',  '#4682B4',  '#9370DB',  '#D2691E',  '#4169E1',  '#008080',  '#CC5500',  '#800020',  '#4B0082'];
+    const backgroundColors = ['#191970',   '#6A5ACD',  '#4169E1',  '#008080'];
     const [products, setProducts] = useState([]);
     const [categories, setProductCategories] = useState(null)
     const handleChange = (event, newValue) => {
@@ -205,7 +206,7 @@ const { storeCategories, error } = useCategories();
                                         <p>{error}</p>
                                     ) : (
                                         <select style={{ border: '2px solid #c27465', padding: 12, borderRadius: 15, fontWeight: 600 }}>
-                                            <option value="1">All Categories</option>
+                                            <option value="1">Browse All Categories</option>
                                             {categories?.map(category => (
                                                 <option value={category.name} key={category.id}>{category.name}</option>
                                             ))}
@@ -224,8 +225,73 @@ const { storeCategories, error } = useCategories();
             )}
         </>
 
+
+        <div class="section imgBanners style6 no-pt-section">
+            <div class="bannerContain">
+                <div class="collection-banners">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 img-banner-item">
+                        <div class="imgBanner-grid-item">
+                            <div class="inner topleft">
+                                <a href="#">
+                                    <span class="img">
+                                        <img class="blur-up lazyloaded" data-src="/top-natural-health-products-2021-large.webp" src="/top-natural-health-products-2021-large.webp" alt="WELLNESS PRODUCTS" title=" "/>
+                                    </span>
+                                    <span class="ttl"><span class="tt-small">WELLNESS PRODUCTS</span></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 img-banner-item">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 img-banner-item">
+                                <div class="imgBanner-grid-item">
+                                    <div class="inner topleft">
+                                        <a href="#">
+                                            <span class="img">
+                                                <img class="blur-up lazyloaded" data-src="/fish-oil-vs-omega-3-large.webp" src="/fish-oil-vs-omega-3-large.webp" alt="SKIN CARE " title=" "/>
+                                            </span>
+                                            <span class="ttl"><span class="tt-small">SKIN CARE </span></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 img-banner-item">
+                                <div class="imgBanner-grid-item">
+                                    <div class="inner topright">
+                                        <a href="#">
+                                            <span class="img">
+                                                <img class="blur-up lazyloaded" data-src="/ceramides-skincare-benefits-large.webp" src="/ceramides-skincare-benefits-large.webp" alt="FITNESS PRODUCTS" title=" "/>
+                                            </span>
+                                            <span class="ttl"><span class="tt-small">FITNESS PRODUCTS</span></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style={{marginTop: '15px'}}>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 img-banner-item last">
+                                <div class="imgBanner-grid-item">
+                                    <div class="inner topleft">
+                                        <a href="#">
+                                            <span class="img">
+                                                <img class="blur-up lazyloaded" data-src="/best-intermittent-fasting-foods-large.jpg" src="/best-intermittent-fasting-foods-large.jpg" alt="GENERAL PRODUCTS" title=" "/>
+                                            </span>
+                                            <span class="ttl"><span class="tt-small">GENERAL PRODUCTS</span></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
             {/* Ends Header Component */}
-                <div className="flex g-20 px w-90">
+                {/* <div className="flex g-20 px w-90">
                     <div className='flex flex-col g-20'>
                         <img src="/pmall/3.png" alt="" className="w-full" />
                         <img src="/pmall/11.png" alt="" className="w-full" />
@@ -233,15 +299,14 @@ const { storeCategories, error } = useCategories();
                     </div>
                     <div className='flex flex-col g-20'>
                         <img src="/Health.png" alt="" className="w-full" />
-                        {/* <img src="/Screenshot 2024-03-21 215417.png" alt="" className="w-full" /> */}
+                        <img src="/Screenshot 2024-03-21 215417.png" alt="" className="w-full" />
                     </div>
                     <div className='flex flex-col g-20'>
-                    {/* <ProductCarousel products={products} /> */}
                         <img src="/Screenshot 2024-03-21 215854.png" alt="" className="w-full" />
                         <img src="/pmall/17.png" alt="" className="w-full" />
                         <img src="/pmall/19.png" alt="" className="w-full" />
                     </div>
-                </div>
+                </div> */}
                 <div className="row  w-90" style={{margin: '20px auto'}}>
                 {categories?.map(category => (
                            <div className='flex flex-col g-10 alc brand_stores m-5 mt-15 w-125p'>

@@ -69,7 +69,7 @@ return (
                         borderRadius: 15,
                         fontWeight: 600,
                     }}>
-                        <option value="1">All Categories</option>
+                        <option value="1">Browse All Categories</option>
                         {categories?.map(category => (
                             <option value={category.name} key={category.id}>        {category.name}
                             </option>

@@ -1,0 +1,26 @@
+export const getCart = () => {
+    if (typeof localStorage !== "undefined") {
+      const cart = localStorage.getItem("pmallCart");
+      return cart ? JSON.parse(cart) : [];
+    }
+    return [];
+  };
+  
+  export const addToCart = (detail, numOfItems, setCartModalActive) => {
+    let cart = getCart(); // Retrieve current cart
+  
+    // Check if the product is already in the cart
+    const isProductInCart = cart.some((item) => item.id === detail.id);
+  
+    if (isProductInCart) {
+      alert(`${detail.name} is already in your cart!`); 
+    } else {
+      cart.push({ ...detail, amtItems: numOfItems });
+      localStorage.setItem("pmallCart", JSON.stringify(cart));
+  
+      if (setCartModalActive) {
+        setCartModalActive(true);
+    }
+    }
+  };
+  
