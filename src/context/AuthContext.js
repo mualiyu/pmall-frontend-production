@@ -211,6 +211,7 @@ export const VendorSignupProvider = ({ children }) => {
           setToastMsg("Boom! Login successful");
           setToastType("success");
           setLoading(false);
+          window.location.reload();
         } else {
           console.log(result.message);
           setToastMsg(
