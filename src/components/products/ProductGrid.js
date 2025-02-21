@@ -16,19 +16,14 @@ const ProductGrid = ({ categoryId }) => {
     const fetchProductsByCategory = async () => {
       setLoading(true);
       setError(null);
-
       try {
         // Fetch products for the provided categoryId
         const productsResponse = await axios.get(
           `${PRODUCTS_ENDPOINT}?category_id=${categoryId}`
         );
         const url = `${PRODUCTS_ENDPOINT}?category_id=${categoryId}`;
-console.log(url);  // Log to inspect the URL
-// const productsResponse = await axios.get(url);
-
-
-
-        console.log(productsResponse);
+console.log(url); 
+ console.log(productsResponse);
         
         // If products are found, set them; otherwise, show an error
         if (productsResponse.data.data) {
@@ -37,7 +32,7 @@ console.log(url);  // Log to inspect the URL
           setError("No products found for this category.");
         }
       } catch (err) {
-        setError(err.message || "Failed to load products.");
+        setError("No products found for this category.");
       } finally {
         setLoading(false);
       }
@@ -45,7 +40,7 @@ console.log(url);  // Log to inspect the URL
 
     if (categoryId) {
       fetchProductsByCategory();
-    }
+    }else{console.log('hi')}
   }, [categoryId]);
 
   if (loading) return <p>Loading products...</p>;

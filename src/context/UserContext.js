@@ -9,6 +9,7 @@ const UserProvider = ({ children }) => {
     return storedUser
       ? JSON.parse(storedUser)
       : {
+          id: "",
           username: "",
           email: "",
           token: "",

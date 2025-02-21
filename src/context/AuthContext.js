@@ -11,6 +11,8 @@ export const VendorSignupProvider = ({ children }) => {
   const [toastMsg, setToastMsg] = useState("");
   const [toastType, setToastType] = useState("");
   const [packages, setPackages] = useState({});
+  const [customer, setCustomer] = useState(null); // Store user data
+
   const { setUser } = useUser();
 
   // Vendor Registration
@@ -126,10 +128,12 @@ export const VendorSignupProvider = ({ children }) => {
       .then((resp) => resp.json())
       .then((result) => {
         setLoading(false);
+        console.log(result);
         if (result.status) {
           console.log(result.data);
           localStorage.setItem("authToken", result.data.token);
           setUser({
+            id: result.data.user.id,
             username: result.data.user.username,
             email: result.data.user.email,
             token: result.data.token,
@@ -152,6 +156,60 @@ export const VendorSignupProvider = ({ children }) => {
             window.location.href = "/dashboard";
           }, 2000);
 
+          setLoading(false);
+        } else {
+          console.log(result.message);
+          setToastMsg(
+            "Oops! there seems to be an error. Confirm login credientials"
+          );
+          setToastType("error");
+          setTimeout(() => {
+            setToastMsg("");
+          }, 4000);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+  const customerLogin = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    setLoading(true);
+    inputValues.device_name = 1234;
+
+    fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(inputValues),
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        setLoading(false);
+        console.log(result);
+        if (result.status) {
+          localStorage.setItem("authToken", result?.token);
+          // dispatch(
+          setUser({
+            id: result.customer.id,
+            username: result.customer.username,
+            email: result.customer.email,
+            token: result.token,
+            accountType: result.customer.user_type,
+            loggedIn: true,
+            fname: result.customer.fname,
+            lname: result.customer.lname,
+            regDate: result.customer.created_at,
+            refId: result.customer.my_ref_id,
+          });
+          // );
+          setToastMsg("Boom! Login successful");
+          setToastType("success");
           setLoading(false);
         } else {
           console.log(result.message);
@@ -363,6 +421,7 @@ export const VendorSignupProvider = ({ children }) => {
         onChangeHandler,
         onSubmitHandler,
         handleLogin,
+        customerLogin,
         onAffilateSubmitHandler,
         onForgotPasswordHandler,
         handleResetPassword,

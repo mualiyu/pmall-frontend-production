@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux";
 import { useCart } from "../context/CartContext";
+import { useUser } from "../context/UserContext";
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import { useNavigate } from 'react-router-dom';
 import ButtonLoader from "../utils/buttonLoader";
@@ -17,6 +19,7 @@ import { useVendor } from "../context/AuthContext";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
+    
   
     return (
       <div
@@ -43,6 +46,8 @@ function TabPanel(props) {
 
 const CheckoutPage = () => {
     const navigate = useNavigate();
+    const { user } = useUser();
+    const [userToken, setUserToken] = useState(null)
     const [formDetails, setFormDetails] = useState({
         fname: '',
         lname: '',
@@ -77,6 +82,7 @@ const CheckoutPage = () => {
     inputValues,
     onChangeHandler,
     handleLogin,
+    customerLogin,
     toastMsg,
     toastType,
   } = useVendor();
@@ -93,16 +99,24 @@ const CheckoutPage = () => {
     const totalPrice = cart.map(item => item.selling_price * item.amtItems).reduce((acc, curr) => acc + curr, 0);
     const getCart = () => {
         if(typeof localStorage !== "undefined") {
-             setCart(JSON.parse(localStorage.getItem('pmallCart')) || [])
+             setCart(JSON.parse(localStorage.getItem('pmallCart')) || []);
+             console.log("Response text:", localStorage.getItem('authToken'));
+            //  setUserToken(JSON.parse(localStorage.getItem('authToken')) || {})
         }
         return;
     }
 
     const onSubmit = async () => {
         // Prevent default form submission
-        var token;
-        setLoading(true);
-        fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/register", {
+            setLoading(true);
+        // confirm user is logged in
+        let loggedInUser = localStorage.getItem('authToken');
+        
+        const checkingOutProducts = JSON.parse(localStorage.getItem('pmallCart'))
+
+        if(!loggedInUser) {
+            // Register new User
+            fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -115,25 +129,32 @@ const CheckoutPage = () => {
             setLoading(false);
             console.log(result);
             if (result.status) {
-               setLoading(false);
-               console.log(JSON.parse(localStorage.getItem('pmallCart')));
-               const checkingOutProducts = JSON.parse(localStorage.getItem('pmallCart'))
-               token = result.token
-               const requestBody = {
-                customer_id: result.customer.id,
-                products: checkingOutProducts.map(product => ({
-                    product_id: product.id,
-                    quantity: product.quantity
-                  }))
+                // user is registered, get their token and save
+                setCustomer(result)
+            }else {
                 
             }
-            console.log(requestBody);
+        })
+            .catch((err) => {
+                console.log(err);
+                });
+           
+        }
+        const tokenToUse = loggedInUser ? user.token : customer.token;
+        const requestBody = {
+         customer_id: loggedInUser ? user.id : customer.id,
+         products: checkingOutProducts.map(product => ({
+             product_id: product.id,
+             quantity: product.quantity
+           }))
+
+    }
             fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/checkout/initiate", {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json;charset=UTF-8",
                 Accept: "application/json",
-                Authorization: "Bearer " + result.token,
+                Authorization: "Bearer " + tokenToUse,
                 },
                 body: JSON.stringify(requestBody), 
             })
@@ -151,7 +172,7 @@ const CheckoutPage = () => {
                         headers: {
                         "Content-Type": "application/json;charset=UTF-8",
                         Accept: "application/json",
-                        Authorization: "Bearer " + token,
+                        Authorization: "Bearer " + tokenToUse,
                         },
                         body: JSON.stringify(saleData), 
                     })
@@ -171,17 +192,13 @@ const CheckoutPage = () => {
                     .catch((err) => {
                     console.log(err);
                     });
-                }
-          })
-          .catch((err) => {
-            console.log(err);
-            setLoading(false);
-          });
+               
           setLoading(false);
       };
 
     useEffect(()=>{ 
         getCart()
+        console.log(user);
         return;
     },[])
 
@@ -300,9 +317,11 @@ const CheckoutPage = () => {
                     <div className="checkout-login">
                         <div className="">
                             <Toaster text={toastMsg} className={toastType} />
-                            <p className="bold">Welcome back, you've been missed!</p>
+                            
+                            {!user.loggedIn ? (
                             <form action="">
-                            <div className="pos-rel">
+                                <p className="bold">Already have an account?</p>
+                            <div cInfolassName="pos-rel">
                                 <label className="abs"> Username / Email </label>
                                 <input
                                 type="text"
@@ -333,29 +352,42 @@ const CheckoutPage = () => {
                                 </div>
                             </div>
 
-                            <Link to="/auth/app/reset-account" className="forgotten bold">
-                                <p className="bold">Forgotten?</p>
-                            </Link>
-                            <span className="remember-me">
-                                <input type="checkbox" name="remember-me" />
-                                <p>Remember me</p>
-                            </span>
+                           
                             <button
                                 className="login-btn bold"
                                 disabled={loading}
                                 type="submit"
-                                onClick={handleLogin}>
+                                onClick={customerLogin}>
                                 {loading ? <ButtonLoader /> : "Login"}
                             </button>
-                            <p className="center">Don't have an account yet?</p>
-                            <Link to="/auth/app/Signup">
-                                <button className="create-account bold">Create account</button>
-                            </Link>
+                           
                             </form>
+
+                            ) : (
+                <div className="profile-container">
+                    <div>
+                        <div className="promo-code">
+                        <div className="flex flex-col g-20">
+                            <div className="flex justsb bold b-b">
+                                <p className="f-12">Customer </p>
+                                <p className="f-12">{user.fname} {user.lname}</p>
+                            </div>
+                            <div className="flex justsb bold b-b">
+                                <p className="f-12">Email</p>
+                                <p className="f-12">{user.email}</p>
+                            </div>
+                            <div className="flex justsb bold b-b">
+                                <p className="f-12">Member Since</p>
+                                <p className="f-12">{new Date(user.regDate).toLocaleDateString()}</p>
+                            </div>
+                            
                         </div>
-                        <div className="form-logo">
-                            <img src="/pmall-logo 1.png" alt="" />
                         </div>
+                    </div>
+                    </div>
+                    
+      )}
+ </div>
                     </div>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
