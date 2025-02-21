@@ -1403,6 +1403,9 @@ input:checked + .slider:before {
   width: 90%;
   margin: auto;
 }
+.slider-container{
+  width: 100%;
+}
 .bannerContain {
     max-width: 1200px;
     padding: 15px;

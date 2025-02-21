@@ -7,7 +7,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import ProductGrid from "../products/ProductGrid";
-import ProductCarousel from "../../utils/productCarousel";
 import Typography from "@mui/material/Typography";
 import Header from "../builder/Header";
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
@@ -20,6 +19,7 @@ import Badge from '@mui/material/Badge';
 import { useCart } from "../../context/CartContext"
 import { useCategories } from "../../context/CategoryContext"
 import CategoriesWithProducts from "../productList/categoriesWithProducts"
+import CategorySlider from '../../utils/categoryCarousel';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -61,7 +61,6 @@ const StoreFront = () => {
         setValue(newValue);
       };
      
-
       const getRandomColor = (colorArray) => {
         const randomIndex = Math.floor(Math.random() * colorArray.length);
         return colorArray[randomIndex];
@@ -288,34 +287,19 @@ const { storeCategories, error } = useCategories();
             </div>
             </div>
         </div>
-
-
-            {/* Ends Header Component */}
-                {/* <div className="flex g-20 px w-90">
-                    <div className='flex flex-col g-20'>
-                        <img src="/pmall/3.png" alt="" className="w-full" />
-                        <img src="/pmall/11.png" alt="" className="w-full" />
-                        <img src="/Screenshot 2024-03-21 215058.png" alt="" className="w-full" />
-                    </div>
-                    <div className='flex flex-col g-20'>
-                        <img src="/Health.png" alt="" className="w-full" />
-                        <img src="/Screenshot 2024-03-21 215417.png" alt="" className="w-full" />
-                    </div>
-                    <div className='flex flex-col g-20'>
-                        <img src="/Screenshot 2024-03-21 215854.png" alt="" className="w-full" />
-                        <img src="/pmall/17.png" alt="" className="w-full" />
-                        <img src="/pmall/19.png" alt="" className="w-full" />
-                    </div>
-                </div> */}
                 <div className="row  w-90" style={{margin: '20px auto'}}>
-                {categories?.map(category => (
+
+<CategorySlider categories={categories} />
+   
+
+                {/* {categories?.map(category => (
                            <div className='flex flex-col g-10 alc brand_stores m-5 mt-15 w-125p'>
                             <div className='border b-image'>
                                 <img src={category.category_image} className='icon' width="60px" />
                             </div>
                             <p className="cat_title">{category.name}</p>
                         </div>
-                        ))}
+                        ))} */}
                 </div>
 
 
