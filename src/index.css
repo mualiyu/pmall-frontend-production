@@ -1391,14 +1391,15 @@ input:checked + .slider:before {
 }
 
 .store-container .search {
-  /* border: 2px solid #dedede; */
-  flex: 1 1 0%;
-  height: 50px;
-  border-radius: 25px;
-  font-weight: 600;
-  padding: 0 20px;
-  position: relative;
-  overflow: hidden;
+  border: 2px solid #dedede;
+    /* flex: 1 1; */
+    height: 50px;
+    /* border-radius: 25px; */
+    font-weight: 600;
+    padding: 0 20px;
+    /* position: relative; */
+    overflow: hidden;
+    width: 60%;
 }
 
 .imgBanners {

@@ -168,12 +168,12 @@ const { storeCategories, error } = useCategories();
             {/* Header Component */}
         <>
             {!user?.token && (
-                <div>
-                    <div className="flex justsb alc mb-lg">
+                <div className="top__top__header">
+                    <div className="flex justsb alc" style={{height: '45px'}}>
                         <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" />
                     </div>
-                    <div className='px flex flex-col g-40 search-container w-90'>
-                        <div className="flex justsb alc g-40">
+                    <div className='px flex flex-col search-container w-90'>
+                        <div className="flex justsb alc" style={{marginTop: '15px'}}>
                             <div className="callout">
                             <button className="callout_btn"> 
                             <MenuIcon/>
@@ -279,7 +279,7 @@ const { storeCategories, error } = useCategories();
             )}
         </>
 
-
+<div className="site__content__main">
         <div class="section imgBanners style6 no-pt-section">
             <div class="bannerContain">
                 <div class="collection-banners">
@@ -636,8 +636,9 @@ const { storeCategories, error } = useCategories();
                 </div>
             </div>
             <div className='w-full flex all-center rights'>
-                <p>Pmall 2024</p>
+                <p>&copy; PMall 2025. All rights reserved.</p>
             </div>
+        </div>
         </div>
      );
 }

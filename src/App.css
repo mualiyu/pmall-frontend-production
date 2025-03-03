@@ -1300,6 +1300,7 @@ h1 {
 .callout_btn {
   position: relative;
   border: none;
+  background-color: white;
 }
  .callout:hover .callout_menu {
   display: block;
@@ -1356,9 +1357,14 @@ h1 {
     text-decoration: none;
 }
 .css-i4bv87-MuiSvgIcon-root {
-  fill: #000000!important;
+  fill: #515050!important;
   width: 1.7rem !important;
     height: 1.7rem !important;
+}
+.top__top__header {
+  position: fixed;
+    z-index: 99999;
+    background-color: white;
 }
 .callout__main__menu > ul li {
   display: flex;

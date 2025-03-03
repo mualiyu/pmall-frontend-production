@@ -160,7 +160,7 @@
   width: 1em;
   height: 1em;
   margin-right: 10px !important;
-  color: var(--color-chalk) !important;
+  /* color: var(--color-chalk) !important; */
   display: inline-block;
   fill: #515050;
   -webkit-flex-shrink: 0;
