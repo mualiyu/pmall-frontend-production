@@ -225,7 +225,7 @@ const { storeCategories, error } = useCategories();
                                 </div>
                                 </div>
                             </div>
-                            <img src="/pmall__logo.png" alt="PMall Logo" style={{width: '15%'}} />
+                            <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '15%'}} />
                             <form className="flex alc search" aria-label="Search form">
                                 <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
                                 {/* <button type="button" className='flex alc g-20 shfhegwer' aria-label="Search button">

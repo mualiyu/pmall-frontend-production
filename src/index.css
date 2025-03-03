@@ -2070,7 +2070,7 @@ imgBanners .imgBanner-grid-item img {
 
 .cart-modal .check .css-i4bv87-MuiSvgIcon-root,
 .MuiSvgIcon-root {
-  color: white;
+  color: #515050 !important;
 }
 
 .modal-btns {
