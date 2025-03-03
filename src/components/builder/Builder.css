@@ -162,7 +162,7 @@
   margin-right: 10px !important;
   color: var(--color-chalk) !important;
   display: inline-block;
-  fill: currentColor;
+  fill: #515050;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
