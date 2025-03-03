@@ -1297,6 +1297,93 @@ h1 {
     padding: 5px 12px;
     border-bottom-right-radius: 7px;
 }
+.callout_btn {
+  position: relative;
+  border: none;
+}
+ .callout:hover .callout_menu {
+  display: block;
+}
+.callout_menu {
+  position: absolute;
+  min-width: 620px;
+  background-color: white;
+  padding: 25px 40px;
+  align-items: center;
+  justify-content: space-around;
+  top: 145px;
+  z-index: 9999;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  display: none;
+}
+.callout__main__menu {
+  width: 33.3%;
+}
+.callout__main__menu > ul li {
+  line-height: 2.4rem;
+    border-bottom: thin dashed #d6d6d6;
+    cursor: pointer;
+    color: #5a5d72;
+    display: flex;
+    align-items: center;
+}
+
+.callout__main__menu > ul li::before {
+  content: "keyboard_double_arrow_right";  /* Material Icon name */
+  font-family: "Material Icons";
+  font-size: 13px;
+  margin-right: 8px;
+  vertical-align: middle;
+  color: #5a5d72;
+}
+.sell_on_pmall_btn {
+  padding: 11px 22px;
+    font-weight: 700;
+    color: white;
+    background-color: red;
+    border: none;
+}
+.cart__count {
+  background-color: red;
+    width: 30px;
+    height: 30px;
+    color: white;
+    font-weight: 700;
+    align-items: center;
+    align-content: center;
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+}
+.css-i4bv87-MuiSvgIcon-root {
+  fill: #000000!important;
+  width: 1.7rem !important;
+    height: 1.7rem !important;
+}
+.callout__main__menu > ul li {
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+  transition: padding-left 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.callout__main__menu > ul li:hover {
+  padding-left: 10px;
+  color: #000000;
+}
+
+.callout__main__menu > ul li::before {
+  content: "keyboard_double_arrow_right";
+  font-family: "Material Icons";
+  font-size: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.callout__main__menu > ul li:hover::before {
+  transform: translateX(3px); /* Slight movement */
+}
+
+
 .product-cart-wrap .product-badges span:last-child {
   margin-right: 0px;
 }

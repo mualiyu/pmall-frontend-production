@@ -77,16 +77,19 @@ return (
                     </select>
                     <div className="w-100 justsb alc pointer">
                             <div className="f-bold f-13">
-                                Male
+                                Health
                             </div>
                             <div className="f-bold f-13">
-                            Female
+                            Wellness
                             </div>
                             <div className="f-bold f-13">
                             Fitness
                             </div>
                             <div className="f-bold f-13">
-                            General
+                            Beauty
+                            </div>
+                            <div className="f-bold f-13">
+                            Personal Care
                             </div>
                             <div className="f-bold f-13">
                                 Combo  Products

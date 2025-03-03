@@ -6,6 +6,7 @@ import Loading from "../../utils/loading";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import MenuIcon from '@mui/icons-material/Menu';
 import ProductGrid from "../products/ProductGrid";
 import Typography from "@mui/material/Typography";
 import Header from "../builder/Header";
@@ -13,8 +14,9 @@ import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Link } from 'react-router-dom';
 import { useUser } from "../../context/UserContext";
 import SearchIcon from '@mui/icons-material/Search';
-import Person4Icon from '@mui/icons-material/Person4';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import PersonIcon from '@mui/icons-material/Person';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+// import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge from '@mui/material/Badge';
 import { useCart } from "../../context/CartContext"
 import { useCategories } from "../../context/CategoryContext"
@@ -154,7 +156,7 @@ const { storeCategories, error } = useCategories();
     const { cartCount } = useCart();
     const { user } = useUser();
 
-    const extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'];
+    const extraLinks = ['Health', 'Wellness', 'Fitness', 'Beauty', 'Personal Care', 'Combo Products', 'Become an Affiliate'];
 
     useEffect(()=>{
         getProducts();
@@ -172,26 +174,77 @@ const { storeCategories, error } = useCategories();
                     </div>
                     <div className='px flex flex-col g-40 search-container w-90'>
                         <div className="flex justsb alc g-40">
+                            <div className="callout">
+                            <button className="callout_btn"> 
+                            <MenuIcon/>
+                             </button>
+                           
+                            
+
+                            <div className="callout_menu">
+                                <div className="flex justsb">
+                                    <div className="callout__main__menu">
+                                        <ul>
+                                            <li> Login</li>
+                                            <li>Sell on Pmall</li>
+                                            <li> Locate a Store</li>
+                                            <li> New Offers</li>
+                                            <li> Customer Care</li>
+                                            <li> My Orders</li>
+                                            <li> Vouchers</li>
+                                            <li> Inbox</li>
+                                            
+                                            <li> Logout</li>
+                                        </ul>
+                                    </div>
+                                    <div className="callout__main__menu">
+                                        <ul>
+                                            <li> Sign Up</li>
+                                            <li> Become an Affiliate</li>
+                                            <li> Get Support  </li>
+                                            <li> Buy for Someone</li>
+                                            <li> About Pmall</li>
+                                            <li> Pending Reviews</li>
+                                            <li> Account Management</li>
+                                            <li> Logout</li>
+                                        </ul>
+                                    </div>
+                                    <div className="callout__main__menu">
+                                        <ul>
+                                            <li> Profile Settings</li>
+                                            <li> Security Settings</li>
+                                            <li> Address Book</li>
+                                            <li> iRecharge</li>
+                                            <li> Mine PMT</li>
+                                            <li> Wallet</li>
+                                            <li> Promotions</li>
+                                            <li> Academy</li>
+                                            <li> Blu Pay</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
                             <img src="/pmall-logo 1.png" alt="PMall Logo" />
                             <form className="flex alc search" aria-label="Search form">
                                 <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
-                                <button type="button" className='flex alc g-20 shfhegwer' aria-label="Search button">
+                                {/* <button type="button" className='flex alc g-20 shfhegwer' aria-label="Search button">
                                     <SearchIcon />
-                                </button>
+                                </button> */}
                             </form>
                             <div className='flex alc'>
                                 {/* {showAccount && ( */}
                                     <Link to="/auth/sign-in" className="bold flex alc sb">
-                                        <Person4Icon />
+                                        <PersonIcon />
                                         <p>Login</p>
                                     </Link>
-                               
+                               &nbsp; &nbsp; &nbsp;
                                 {/* {showCart && ( */}
                                     <Link to="/app/cart" className="bold flex alc">
                                         <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
-                                            <ShoppingCartOutlinedIcon />
+                                            <ShoppingBasketIcon />
                                         </Badge>
-                                        <p>Cart</p>
+                                        <p className="cart__count">5</p>
                                     </Link>
                          
                             </div>
@@ -217,6 +270,8 @@ const { storeCategories, error } = useCategories();
                                 {extraLinks.map((text, idx) => (
                                     <div key={idx} className="f-bold f-13">{text}</div>
                                 ))}
+
+                                <button className="sell_on_pmall_btn">Sell on Pmall</button>
                             </div>
                         </div>
                     </div>
@@ -411,6 +466,7 @@ const { storeCategories, error } = useCategories();
             ))}
 
                 <img src="/Screenshot 2024-03-19 163145.png" alt="" />
+                
             <div className='flex justsb alc g-10'>
                     <div className='bg-white-container news flex flex-col gap-10'>
                         <div className='flex justsb'>
