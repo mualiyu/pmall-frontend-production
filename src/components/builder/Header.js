@@ -89,7 +89,7 @@ return (
                             Beauty
                             </div>
                             <div className="f-bold f-13">
-                            Personal Care
+                            Personal care
                             </div>
                             <div className="f-bold f-13">
                                 Combo  Products

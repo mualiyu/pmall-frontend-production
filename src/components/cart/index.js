@@ -37,7 +37,7 @@ const { storeCategories, error } = useCategories();
 
 const getProductsCategories = () => {
         setLoading(true);
-        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories", {
+        fetch("https://api.pmall.com.ng/api/v1/public/products/get-all-categories", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",

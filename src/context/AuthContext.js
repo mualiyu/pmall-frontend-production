@@ -20,7 +20,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/register/vendor", {
+    fetch("https://api.pmall.com.ng/api/v1/register/vendor", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -67,7 +67,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/register/affiliate", {
+    fetch("https://api.pmall.com.ng/api/v1/register/affiliate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -117,7 +117,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/login", {
+    fetch("https://api.pmall.com.ng/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -180,7 +180,7 @@ export const VendorSignupProvider = ({ children }) => {
     setLoading(true);
     inputValues.device_name = 1234;
 
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/login", {
+    fetch("https://api.pmall.com.ng/api/v1/customer/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -235,7 +235,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/forgot-password", {
+    fetch("https://api.pmall.com.ng/api/v1/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -282,7 +282,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/reset-password", {
+    fetch("https://api.pmall.com.ng/api/v1/reset-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -328,7 +328,7 @@ export const VendorSignupProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.email = email
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/verify-code", {
+    fetch("https://api.pmall.com.ng/api/v1/verify-code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -389,7 +389,7 @@ export const VendorSignupProvider = ({ children }) => {
   const getPackages = async (e) => {
     setLoading(true);
 
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/account-packages/all", {
+    fetch("https://api.pmall.com.ng/api/v1/account-packages/all", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

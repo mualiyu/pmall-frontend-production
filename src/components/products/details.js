@@ -45,7 +45,7 @@ const ProductDetails = () => {
     setLoading(true);
     getProductsCategories();
     fetch(
-      `https://api.pmall.mukeey.com.ng/api/v1/public/products/single-product?product_id=${id}`,
+      `https://api.pmall.com.ng/api/v1/public/products/single-product?product_id=${id}`,
       {
         method: "GET",
         headers: {
@@ -73,7 +73,7 @@ const ProductDetails = () => {
   
  const getProductsCategories = () => {
         setLoading(true);
-        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories", {
+        fetch("https://api.pmall.com.ng/api/v1/public/products/get-all-categories", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",

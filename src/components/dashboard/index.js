@@ -157,7 +157,7 @@ const Dashboard = () => {
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
   console.log(user);
   const getUsers = () => {
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/get-all-users", {
+    fetch("https://api.pmall.com.ng/api/v1/get-all-users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -181,7 +181,7 @@ const Dashboard = () => {
 
 const getVendorProducts = (ref)=> {
   console.log(ref);
-  fetch("https://api.pmall.mukeey.com.ng/api/v1/products", {
+  fetch("https://api.pmall.com.ng/api/v1/products", {
         method: "GET",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -206,7 +206,7 @@ const getVendorProducts = (ref)=> {
   
   const getUsersDetails = () => {
     //setLoading(true)
-    fetch("https://api.pmall.mukeey.com.ng/api/v1/profile", {
+    fetch("https://api.pmall.com.ng/api/v1/profile", {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

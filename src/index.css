@@ -1412,8 +1412,8 @@ input:checked + .slider:before {
 }
 .bannerContain {
     max-width: 100%;
-    padding: 15px;
-    height: 440px;
+    padding:19% 0;
+    height: 620px;
     overflow: hidden;
 }
 .collection-banners {

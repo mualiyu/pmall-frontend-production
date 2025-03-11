@@ -5,7 +5,7 @@ import { addToCart, getCart } from "../../utils/cartUtils";
 import LimitWord from '../../utils/limitWord';
 import currency from '../../utils/formatCurrency';
 
-const PRODUCTS_ENDPOINT = "https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category";
+const PRODUCTS_ENDPOINT = "https://api.pmall.com.ng/api/v1/public/products/list-all-by-category";
 
 const ProductGrid = ({ categoryId }) => {
   const [products, setProducts] = useState([]);

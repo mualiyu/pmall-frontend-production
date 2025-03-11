@@ -13,7 +13,7 @@ export const CategoryProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories");
+            const response = await fetch("https://api.pmall.com.ng/api/v1/public/products/get-all-categories");
             if (!response.ok) throw new Error("Failed to fetch categories");
             const result = await response.json();
             setCategories(result.data || []);

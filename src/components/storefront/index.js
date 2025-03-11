@@ -71,7 +71,7 @@ const StoreFront = () => {
     const getProducts = () => {
         setLoading(true);
         getProductsCategories();
-        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all", {
+        fetch("https://api.pmall.com.ng/api/v1/public/products/list-all", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -94,7 +94,7 @@ const StoreFront = () => {
 
     const getProductsBySubCategories = (sub_cat_id) => {
 setLoading(true);
-        fetch(`https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-sub-category?sub_category_id=${sub_cat_id}`, {
+        fetch(`https://api.pmall.com.ng/api/v1/public/products/list-all-by-sub-category?sub_category_id=${sub_cat_id}`, {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -114,7 +114,7 @@ setLoading(true);
     }
     const getProductsCategories = () => {
         setLoading(true);
-        fetch("https://api.pmall.mukeey.com.ng/api/v1/public/products/get-all-categories", {
+        fetch("https://api.pmall.com.ng/api/v1/public/products/get-all-categories", {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -135,7 +135,7 @@ setLoading(true);
 
 
     const getProductByCategory = (cat_id) => {
-        fetch(`https://api.pmall.mukeey.com.ng/api/v1/public/products/list-all-by-category?category_id=${cat_id}`, {
+        fetch(`https://api.pmall.com.ng/api/v1/public/products/list-all-by-category?category_id=${cat_id}`, {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",

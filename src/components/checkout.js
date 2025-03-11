@@ -116,7 +116,7 @@ const CheckoutPage = () => {
 
         if(!loggedInUser) {
             // Register new User
-            fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/register", {
+            fetch("https://api.pmall.com.ng/api/v1/customer/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -149,7 +149,7 @@ const CheckoutPage = () => {
            }))
 
     }
-            fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/checkout/initiate", {
+            fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json;charset=UTF-8",
@@ -167,7 +167,7 @@ const CheckoutPage = () => {
                         sale_id: result.sale.id,
                         amount:result.sale.total_amount
                     }
-                    fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/checkout/paystack/initiate", {
+                    fetch("https://api.pmall.com.ng/api/v1/customer/checkout/paystack/initiate", {
                         method: "POST",
                         headers: {
                         "Content-Type": "application/json;charset=UTF-8",
@@ -241,7 +241,7 @@ const CheckoutPage = () => {
     //         }
         
     
-    //         fetch("https://api.pmall.mukeey.com.ng/api/v1/customer/checkout/initiate", {
+    //         fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
     //             method: "POST",
     //             headers: {
     //             "Content-Type": "application/json;charset=UTF-8",
