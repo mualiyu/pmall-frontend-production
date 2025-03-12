@@ -1417,7 +1417,12 @@ input:checked + .slider:before {
     overflow: hidden;
 }
 .collection-banners {
-  margin-top: 15px;
+  margin-top: 3%;
+}
+.store-footer {
+  background-color: #f2f4f6;
+    width: 100%;
+    padding: 40px;
 }
 .imgBanners .row .img-banner-item {
   padding-left: 10px;
@@ -1638,7 +1643,7 @@ imgBanners .imgBanner-grid-item img {
   border-radius: 10px;
 }
 .style-header {
-    padding: 25px;
+    padding: 10px;
     color: white;
 }
 .h-320 {
@@ -1812,7 +1817,7 @@ imgBanners .imgBanner-grid-item img {
 
 .cart .promo-code {
   background-color: #f5f5f5;
-  width: 400px;
+  width: 520px;
   border-radius: 10px;
   height: auto;
   padding: 28px;

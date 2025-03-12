@@ -9,6 +9,8 @@ import Sidebar from "./builder/Sidebar";
 import Products from "./products";
 import Users from "./users";
 import Vendors from "./vendors";
+import Header from "./builder/Header";
+import Footer from "./builder/Footer";
 import Store from "./store";
 import OrderManagement from "./orderManagement";
 import VendorDetails from "./vendors/details";
@@ -20,6 +22,7 @@ import UserDetails from "./users/details";
 import ProductList from "./productList";
 import Categories from "./categories";
 import Gallery from "./gallery";
+import CategoryProducts from "./productList/categoryProducts"
 import OrderDetails from "./orderManagement/details";
 import SiteSettings from "./siteSettings";
 import VerifyToken from "./auth/verifyToken";
@@ -65,6 +68,7 @@ function Application() {
       <CaseInsensitiveWrapper />
       <div className="app-container">
         {/* {!isLoggedIn && ( */}
+          <Header/>
           <Routes>
             <Route path="/" element={<StoreFront />} />
             <Route path="/auth/sign-in" element={<Login />} />
@@ -74,12 +78,16 @@ function Application() {
             <Route path="/auth/app/verify/:email" element={<VerifyToken />} />
             {/* <Route path="/product/:id" element={<ProductDetails />} /> */}
           </Routes>
-
+          
         {/* {isLoggedIn && ( */}
           <>
+          
             <div className="flex-container">
+            
               <Sidebar className="sidenav" />
+              
               <div className="main__content">
+             
                 <Routes>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/app/users" element={<Users />} />
@@ -97,6 +105,7 @@ function Application() {
                   {/* <Route path="/app/affilate/my-network" element={<MyNetwork />} /> */}
                   <Route path="/app/products" element={<Products />} />
                   <Route path="/app/categories" element={<Categories />} />
+                  <Route path="/store/product/categories/:id" element={<CategoryProducts />} />
                   <Route path="/app/gallery" element={<Gallery />} />
                   <Route path="/app/order/details" element={<OrderDetails />} />
                   <Route path="/app/settings" element={<SiteSettings />} />
@@ -104,7 +113,7 @@ function Application() {
               </div>
             </div>
           </>
-        
+          <Footer/>
       </div>
     </Router>
   );

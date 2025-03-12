@@ -1,5 +1,5 @@
 const fetchProductsByCategory = async (categoryId) => {
-    const endpoint = `https://api.pmall.com.ng/api/v1/public/products/list-all-by-category?category_id=${categoryId}`;
+    const endpoint = `https://api.pmall.com.ng/api/v1/public/products/list-all-by-category?category_id=${2}`;
     try {
         const response = await fetch(endpoint);
         if (!response.ok) {

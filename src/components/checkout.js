@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux";
 import { useCart } from "../context/CartContext";
 import { useUser } from "../context/UserContext";
+import currency from "../utils/formatCurrency";
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import { useNavigate } from 'react-router-dom';
 import ButtonLoader from "../utils/buttonLoader";
@@ -297,7 +298,7 @@ const CheckoutPage = () => {
     //     },
     // };
     return (
-        <div>
+        <div className="mt-20p">
             <Link to="/"><p className="back">Back to marketplace</p></Link>
             <div className="checkout-container flex g-20">
             <div className="checkout">
@@ -523,7 +524,7 @@ const CheckoutPage = () => {
                                         <div>
                                             <p className="f-12 bold">{item.name}</p>
                                             <p>{item.tags}</p>
-                                            <p className="f-12">&#x20A6;{item.selling_price}</p>
+                                            <p className="f-12">&#x20A6;{currency(item.selling_price)}</p>
                                         </div>
                                     </div>
                                     <div className="flex g-10 all-center cart-item-count">
@@ -540,7 +541,7 @@ const CheckoutPage = () => {
                         <div className="flex flex-col g-20">
                             <div className="flex justsb bold b-b">
                                 <p className="f-12">Subtotal</p>
-                                <p className="f-12">&#x20A6;{totalPrice}.00</p>
+                                <p className="f-12"> {currency(totalPrice)}</p>
                             </div>
                             <div className="flex justsb bold b-b">
                                 <p className="f-12">Discount</p>
@@ -548,11 +549,11 @@ const CheckoutPage = () => {
                             </div>
                             <div className="flex justsb bold b-b">
                                 <p className="f-12">VAT</p>
-                                <p className="f-12">&#x20A6;{totalPrice * 0.075}</p>
+                                <p className="f-12">{currency(totalPrice * 0.075)}</p>
                             </div>
                             <div className="flex justsb total bold b-b">
                                 <p className="">Total</p>
-                                <p className="bold">&#x20A6;{totalPrice + (totalPrice * 0.075)}.00</p>
+                                <p className="bold">{currency(totalPrice + (totalPrice * 0.075))}</p>
                             </div>
                         </div>
                             <div className="btn bg-accent p-25 text-center uppercase" style={{marginTop: 25}} onClick={onSubmit}>

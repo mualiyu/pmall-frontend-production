@@ -1,7 +1,6 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useEffect, useState } from 'react';
-import LimitWord from '../../utils/limitWord';
-import currency from '../../utils/formatCurrency';
+import { useNavigate } from "react-router-dom";
 import Loading from "../../utils/loading";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -13,14 +12,12 @@ import Header from "../builder/Header";
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Link } from 'react-router-dom';
 import { useUser } from "../../context/UserContext";
-import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 // import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge from '@mui/material/Badge';
 import { useCart } from "../../context/CartContext"
 import { useCategories } from "../../context/CategoryContext"
-import CategoriesWithProducts from "../productList/categoriesWithProducts"
 import CategorySlider from '../../utils/categoryCarousel';
 
 function TabPanel(props) {
@@ -52,6 +49,7 @@ function TabPanel(props) {
   }
 
 const StoreFront = () => {
+    const navigate = useNavigate();
     const {cartLength} = useCart();
     const [value, setValue] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -68,6 +66,11 @@ const StoreFront = () => {
         return colorArray[randomIndex];
       };
       
+      const handleViewAll = (category) => {
+        navigate(`/store/product/categories/${category.id}`, { state: { category } });
+    };
+
+
     const getProducts = () => {
         setLoading(true);
         getProductsCategories();
@@ -156,8 +159,6 @@ const { storeCategories, error } = useCategories();
     const { cartCount } = useCart();
     const { user } = useUser();
 
-    const extraLinks = ['Health', 'Wellness', 'Fitness', 'Beauty', 'Personal Care', 'Combo Products', 'Become an Affiliate'];
-
     useEffect(()=>{
         getProducts();
         getProductByCategory(2);
@@ -165,120 +166,7 @@ const { storeCategories, error } = useCategories();
     return ( 
         <div className="store-container">
             <Loading loading={loading} />
-            {/* Header Component */}
-        <>
-            {!user?.token && (
-                <div className="top__top__header">
-                    <div className="flex justsb alc" style={{height: '45px'}}>
-                        <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" />
-                    </div>
-                    <div className='px flex flex-col search-container w-90'>
-                        <div className="flex justsb alc" style={{marginTop: '15px'}}>
-                            <div className="callout">
-                            <button className="callout_btn"> 
-                            <MenuIcon/>
-                             </button>
-                           
-                            
-
-                            <div className="callout_menu">
-                                <div className="flex justsb">
-                                    <div className="callout__main__menu">
-                                        <ul>
-                                            <li> Login</li>
-                                            <li>Sell on Pmall</li>
-                                            <li> Locate a Store</li>
-                                            <li> New Offers</li>
-                                            <li> Customer Care</li>
-                                            <li> My Orders</li>
-                                            <li> Vouchers</li>
-                                            <li> Inbox</li>
-                                            
-                                            <li> Logout</li>
-                                        </ul>
-                                    </div>
-                                    <div className="callout__main__menu">
-                                        <ul>
-                                            <li> Sign Up</li>
-                                            <li> Become an Affiliate</li>
-                                            <li> Get Support  </li>
-                                            <li> Buy for Someone</li>
-                                            <li> About Pmall</li>
-                                            <li> Pending Reviews</li>
-                                            <li> Account Management</li>
-                                            <li> Logout</li>
-                                        </ul>
-                                    </div>
-                                    <div className="callout__main__menu">
-                                        <ul>
-                                            <li> Profile Settings</li>
-                                            <li> Security Settings</li>
-                                            <li> Address Book</li>
-                                            <li> iRecharge</li>
-                                            <li> Mine PMT</li>
-                                            <li> Wallet</li>
-                                            <li> Promotions</li>
-                                            <li> Academy</li>
-                                            <li> Blu Pay</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '15%'}} />
-                            <form className="flex alc search" aria-label="Search form">
-                                <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
-                                {/* <button type="button" className='flex alc g-20 shfhegwer' aria-label="Search button">
-                                    <SearchIcon />
-                                </button> */}
-                            </form>
-                            <div className='flex alc'>
-                                {/* {showAccount && ( */}
-                                    <Link to="/auth/sign-in" className="bold flex alc sb">
-                                        <PersonIcon />
-                                        <p>Login</p>
-                                    </Link>
-                               &nbsp; &nbsp; &nbsp;
-                                {/* {showCart && ( */}
-                                    <Link to="/app/cart" className="bold flex alc">
-                                        <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
-                                            <ShoppingBasketIcon />
-                                        </Badge>
-                                        <p className="cart__count">5</p>
-                                    </Link>
-                         
-                            </div>
-                        </div>
-                        <div className="flex alc mb-lg">
-                            {/* {showCategories && ( */}
-                                <div className="flex g-20 alc mr-lg">
-                                    {loading ? (
-                                        <p>Loading categories...</p>
-                                    ) : error ? (
-                                        <p>{error}</p>
-                                    ) : (
-                                        <select style={{ border: '2px solid #c27465', padding: 12, borderRadius: 15, fontWeight: 600 }}>
-                                            <option value="1">Browse All Categories</option>
-                                            {categories?.map(category => (
-                                                <option value={category.name} key={category.id}>{category.name}</option>
-                                            ))}
-                                        </select>
-                                    )}
-                                </div>
-                          
-                            <div className="w-100 justsb alc pointer">
-                                {extraLinks.map((text, idx) => (
-                                    <div key={idx} className="f-bold f-13">{text}</div>
-                                ))}
-
-                                <button className="sell_on_pmall_btn">Sell on Pmall</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </>
-
+            
 <div className="site__content__main">
         <div class="section imgBanners style6 no-pt-section">
             <div class="bannerContain">
@@ -447,15 +335,18 @@ const { storeCategories, error } = useCategories();
             {categories?.map(category => (
                 <div className='flex flex-col alc g-20 bg-white-contain' key={category.id}>
                     <div className='w-full flex justsb style-header' style={{backgroundColor: getRandomColor(backgroundColors)}}>
-                        <div className='g-40 section-tabs'>
+                        <div className='g-40 w-full section-tabs'>
+                            <div className="w-full flex justsb">
                             <h1 className="">{category.name}</h1>
-                            <ul className='mt-lg flex g-15'>
+                            <p className="view__all__btn"  onClick={() => handleViewAll(category)} >View all Products</p>
+                            </div>
+                            <ul className='flex g-15'>
                             {category.sub_categories?.slice(0, 7).map(sub => (
                                 <l1 key={sub.id}>{sub.name}</l1>
                             ))}
                             </ul>
                         </div>
-                        <p>View All</p>
+                        
                     </div>
                     <div className='flex justsb g-10' style={{padding: '25px'}}>
                     <ProductGrid 
@@ -464,179 +355,6 @@ const { storeCategories, error } = useCategories();
                 </div>
 
             ))}
-
-                <img src="/Screenshot 2024-03-19 163145.png" alt="" />
-                
-            <div className='flex justsb alc g-10'>
-                    <div className='bg-white-container news flex flex-col gap-10'>
-                        <div className='flex justsb'>
-                            <h3>LATEST NEWS</h3>
-                            <p>VIEW ALL</p>
-                        </div>
-                        <img src="/Screenshot 2024-03-20 163129.png" alt="" />
-                        <h3>Where does it come from?</h3>
-                        <div className='flex justsb'>
-                            <h4>POSTED OCTOBER 3,2016</h4>
-                            <h4>BY WPTHEMEGO</h4>
-                        </div>
-                        <div className='flex flex-col g-20 mt-5'>
-                            <div className='flex justsb alc'>
-                                <h4>Blog</h4>
-                                <h4>Lorem, ipsum dolor sit amet consec.</h4>
-                            </div>
-                            <div className='flex justsb alc'>
-                                <h4>Blog</h4>
-                                <h4>Lorem, ipsum dolor sit amet consec.</h4>
-                            </div>
-                            <div className='flex justsb alc'>
-                                <h4>Blog</h4>
-                                <h4>Lorem, ipsum dolor sit amet consec.</h4>
-                            </div>
-                            <div className='flex justsb alc'>
-                                <h4>Blog</h4>
-                                <h4>Lorem, ipsum dolor sit amet consec.</h4>
-                            </div>
-                            <div className='flex justsb alc'>
-                                <h4>Blog</h4>
-                                <h4>Lorem, ipsum dolor sit amet consec.</h4>
-                            </div>
-                            <div className='flex justsb alc'>
-                                <h4>Blog</h4>
-                                <h4>Lorem, ipsum dolor sit amet consec.</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='bg-white-container deals flex flex-col g-10'>
-                        <h3>NEVER MISS THESE DEALS</h3>
-                        <div className='grid grid-2 g-20'>
-                            <div className='flex flex-col g-10'>
-                                <img src="/Screenshot 2024-03-20 163309.png" alt="" />
-                                <h3>Super Huge Discounted Deal</h3>
-                                <p>Login to get chance with $500 coupon</p>
-                            </div>
-                            <div className='flex flex-col g-10'>
-                                <img src="/Screenshot 2024-03-20 163409.png" alt="" />
-                                <h3>Super Huge Discounted Deal</h3>
-                                <p>Login to get chance with $500 coupon</p>
-                            </div>
-                            <div className='flex flex-col g-10'>
-                                <img src="/Screenshot 2024-03-20 163446.png" alt="" />
-                                <h3>Super Huge Discounted Deal</h3>
-                                <p>Login to get chance with $500 coupon</p>
-                            </div>
-                            <div className='flex flex-col g-10'>
-                                <img src="/Screenshot 2024-03-20 163531.png" alt="" />
-                                <h3>Super Huge Discounted Deal</h3>
-                                <p>Login to get chance with $500 coupon</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div className='flex justsb'>
-                    <img src="/phone.png" alt="" />
-                    <div className='download-app'>
-                        <img src="/pmall-logo 1.png" alt="" className='logo' />
-                        <h2>The Deals aren't gonna grab themselves</h2>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.<br/> Adipisci sunt ullam, architecto autem praesentium atque omnis<br/> obcaecati perferendis excepturi modi nulla quae consectetur, animi, ut sapiente ipsam exercitationem eius iste.</p>
-                        <div className='flex alc g-10'>
-                            <div className='flex flex-col g-10'>
-                                <img src="/Screenshot 2024-03-20 164510.png" alt="" />
-                                <img src="/Screenshot 2024-03-20 164608.png" alt="" />
-                            </div>
-                            <div className='p-10 bg-white'>
-                                <img src="/Screenshot 2024-03-20 164716.png" alt="" className='' />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className='store-footer flex flex-col g-40 w-90'>
-                    <div className='flex justsb'>
-                        <div className='flex flex-col g-20'>
-                            <h3>Our Mission</h3>
-                            <div className='flex flex-col g-20'>
-                                <p>Financing</p>
-                                <p>Product recyling</p>
-                                <p>Sustainability</p>
-                                <p>Gift Return</p>
-                            </div>    
-                        </div>
-                        <div className='flex flex-col g-20'>
-                            <h3>Support</h3>
-                            <div className='flex flex-col g-20'>
-                                <p>Product Support</p>
-                                <p>Pc Setup & Support</p>
-                                <p>Services</p>
-                                <p>Extended Services Plans</p>
-                                <p>Community</p>
-                            </div>    
-                        </div>
-                        <div className='flex flex-col g-20'>
-                            <h3>Company</h3>
-                            <div className='flex flex-col g-20'>
-                                <p>About Us</p>
-                                <p>Careers</p>
-                                <p>Affilates</p>
-                                <p>Blog</p>
-                            </div>    
-                        </div>
-                        <div className='flex flex-col g-20' >
-                            <h3>Quick Links</h3>
-                            <div className='flex flex-col g-20'>
-                                <p>Store Location & Hours</p>
-                                <p>Click & Collect</p>
-                                <p>Payment</p>
-                                <p>Delivery</p>
-                                <p>Return & Refunds</p>
-                                <p>Secure Shopping</p>
-                                <p>Store Services</p>
-                            </div>    
-                        </div>
-                        <div className='flex flex-col g-20'>
-                            <h3>Connect Us</h3>
-                            <div className='flex flex-col g-20'>
-                                <p>Address: Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                <p>Hotline: +234 9012345678</p>
-                                <p>Email: pmall@gmail.com</p>
-                            </div>    
-                        </div>
-                    </div>
-                    <div className='flex justsb'>
-                        <div className='flex flex-col g-10 p-method'>
-                            <h3>PAYMENT METHOD</h3>
-                            <div className='flex g-10 alc'>
-                                <img src="/Screenshot 2024-03-20 222401.png" alt="" />
-                                <img src="/Screenshot 2024-03-20 222533.png" alt="" />
-                                <img src="/Screenshot 2024-03-20 222559.png" alt="" />
-                                <img src="/Screenshot 2024-03-20 222647.png" alt="" />
-                                <img src="/Screenshot 2024-03-20 222720.png" alt="" />
-                            </div>
-                        </div>
-                        <div className='flex flex-col g-10'>
-                            <h3>Connect Us</h3>
-                            <div className='flex g-20'>
-                                <FacebookRoundedIcon className='icon'/>
-                                <FacebookRoundedIcon className='icon'/>
-                                <FacebookRoundedIcon className='icon'/>
-                                <FacebookRoundedIcon className='icon'/>
-                            </div>
-                        </div>
-                        <div className='newsletter flex flex-col g-10'>
-                            <h3>Newsletter</h3>
-                            <form action="" className='flex g-10'>
-                                <input type="email" name="" id="" />
-                                <button>Subscribe</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div className='flex flex-col g-10'>
-                        <h3>PMall revolutionize online shopping by giving you cash to shop</h3>
-                        <p className='lh'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab provident officiis assumenda? Inventore minima atque architecto eius, nihil laudantium minus perferendis maiores commodi soluta repellat odio explicabo at cumque facilis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab provident officiis assumenda? Inventore minima atque architecto eius, nihil laudantium minus perferendis maiores commodi soluta repellat odio explicabo at cumque facilis!</p>
-                    </div>
-                </div>
-            </div>
-            <div className='w-full flex all-center rights'>
-                <p>&copy; PMall 2025. All rights reserved.</p>
             </div>
         </div>
         </div>

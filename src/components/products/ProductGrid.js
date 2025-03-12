@@ -59,7 +59,7 @@ const ProductGrid = ({ categoryId }) => {
   };
 
   if (loading) return <p>Loading products...</p>;
-  if (error) return <p className="error">{error}</p>;
+  if (error) return <p className="">{error}</p>;
   if (products.length === 0) return <p>No products found for this category.</p>;
 
   return (
@@ -76,7 +76,8 @@ const ProductGrid = ({ categoryId }) => {
           <div className="product-info default-cover card">
             <Link to={`/product/${product.id}`} className="img-bg">
               <img
-                src={product.image || "/default-image.jpg"}
+                // src={product.image || "/default-image.jpg"}
+                src="/8.png"
                 alt={product.name || "Product Image"}
                 className="product__image"
                 style={{ width: 150 }}
