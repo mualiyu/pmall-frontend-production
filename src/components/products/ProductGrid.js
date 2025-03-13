@@ -43,20 +43,43 @@ const ProductGrid = ({ categoryId }) => {
     }else{console.log('hi')}
   }, [categoryId]);
 
-  const handleAddToCart = (product) => {
-    const numOfItems = 1;
-    const cart = getCart();
-    // Check if the product already exists in the cart
-    const isProductInCart = cart.some((item) => item.id === product.id);
+//   const updateCart = (updatedCart) => {
+//     localStorage.setItem("pmallCart", JSON.stringify(updatedCart));
+// };
+const updateCart = (updatedCart) => {
+  const sanitizedCart = updatedCart.map(item => ({
+      ...item,
+      amtItems: Math.max(1, item.amtItems)  // Ensure amtItems is never negative
+  }));
 
-    if (isProductInCart) {
-      setCartMessage(`${product.name} is already in your cart!`);
-    } else {
-      addToCart(product, numOfItems, () => {
-        setCartMessage(`${product.name} added to cart!`);
-      });
-    }
-  };
+  localStorage.setItem("pmallCart", JSON.stringify(sanitizedCart));
+};
+
+
+const handleAddToCart = (product) => {
+  const numOfItems = 1;
+  const cart = getCart();
+
+  // Check if the product already exists in the cart
+  const isProductInCart = cart.some((item) => item.id === product.id);
+
+  if (isProductInCart) {
+      const updatedCart = cart.map((item) =>
+          item.id === product.id
+              ? { ...item, amtItems: Math.max(1, (item.amtItems || 1) + numOfItems) }  // Prevents negative values
+              : item
+      );
+
+      updateCart(updatedCart);
+      setCartMessage(`${product.name} quantity updated in cart!`);
+  } else {
+      const newCart = [...cart, { ...product, amtItems: numOfItems }];
+      updateCart(newCart);
+      setCartMessage(`${product.name} added to cart!`);
+  }
+};
+
+
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p className="">{error}</p>;
@@ -64,7 +87,7 @@ const ProductGrid = ({ categoryId }) => {
 
   return (
     <div className="row">
-      {products.map((product) => (
+      {products?.map((product) => (
         <div
           className="col-sssm-2 col-md-6 col-lg-3 col-xl-3 product-cart-wrap"
           style={{ margin: "20px 9px"}}
@@ -76,8 +99,7 @@ const ProductGrid = ({ categoryId }) => {
           <div className="product-info default-cover card">
             <Link to={`/product/${product.id}`} className="img-bg">
               <img
-                // src={product.image || "/default-image.jpg"}
-                src="/8.png"
+                src={product.image || "/default-image.jpg"}
                 alt={product.name || "Product Image"}
                 className="product__image"
                 style={{ width: 150 }}

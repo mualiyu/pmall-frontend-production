@@ -3,28 +3,23 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useUser } from "../../context/UserContext";
 import currency from "../../utils/formatCurrency";
-import { useCategories } from "../../context/CategoryContext";
 
 const Cart = () => {
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState(() => {
+        if (typeof localStorage !== "undefined") {
+            return JSON.parse(localStorage.getItem("pmallCart")) || [];
+        }
+        return [];
+    });
+
     const { cartLength } = useCart();
     const { user } = useUser();
-    const [loading, setLoading] = useState(false);
 
-    const totalPrice = cart.reduce((acc, item) => acc + item.selling_price * item.amtItems, 0);
+    const totalPrice = cart.reduce((acc, item) => acc + item.selling_price * item.amtItems, 0) || 0;
 
     useEffect(() => {
-        getCart();
-    }, []);
-
-    const getCart = () => {
-        if (typeof localStorage !== "undefined") {
-            const storedCart = JSON.parse(localStorage.getItem("pmallCart")) || [];
-            console.log(storedCart);
-            setCart(storedCart);
-        }
-    };
-
+        localStorage.setItem("pmallCart", JSON.stringify(cart));
+    }, [cart]); // Automatically sync cart with localStorage
 
     const updateCart = (updatedCart) => {
         setCart(updatedCart);
@@ -43,7 +38,7 @@ const Cart = () => {
             .map(item =>
                 item.id === id && item.amtItems > 1 ? { ...item, amtItems: item.amtItems - 1 } : item
             )
-            .filter(item => item.amtItems > 0);
+            .filter(item => item.amtItems > 0); // Removes items with zero quantity
         updateCart(updatedCart);
     };
 
@@ -70,29 +65,40 @@ const Cart = () => {
                             <p className="f-12 red bold pointer" onClick={clearCart}>x Clear cart</p>
                         </div>
                     </div>
+
                     <div className="cart-items">
-                        {cart.map(item => (
-                            <div className="cart-item" key={item.id}>
-                                <div className="flex g-20 testtt">
-                                    <img src={item.image} alt={item.name} />
-                                    <div>
-                                        <p className="f-12 bold">{item.name}</p>
-                                        <p>{item.tags}</p>
+                        {cart.length === 0 ? (
+                            <>
+                                <span> There are no products in your cart. </span>
+                                <Link to="/"> 
+                                    <p style={{ color: 'red', fontWeight: 700 }}>Return to store</p> 
+                                </Link>
+                            </>
+                        ) : (
+                            cart.map(item => (
+                                <div className="cart-item" key={item.id}>
+                                    <div className="flex g-20 testtt">
+                                        <img src={item.image} alt={item.name} />
+                                        <div>
+                                            <p className="f-12 bold">{item.name}</p>
+                                            <p>{item.tags}</p>
+                                        </div>
                                     </div>
+                                    <div className="flex g-10 all-center cart-item-count">
+                                        <p className="f-12 count flex all-center" onClick={() => decrementItemAmt(item.id)}>-</p>
+                                        <p className="f-12">{item.amtItems}</p>
+                                        <p className="f-12 count flex all-center" onClick={() => incrementItemAmt(item.id)}>+</p>
+                                    </div>
+                                    <div>
+                                        <p className="f-16">{currency(item.selling_price)}</p>
+                                    </div>
+                                    <p className="f-16 pointer" onClick={() => deleteCartItem(item.id)}>x</p>
                                 </div>
-                                <div className="flex g-10 all-center cart-item-count">
-                                    <p className="f-12 count flex all-center" onClick={() => decrementItemAmt(item.id)}>-</p>
-                                    <p className="f-12">{item.amtItems}</p>
-                                    <p className="f-12 count flex all-center" onClick={() => incrementItemAmt(item.id)}>+</p>
-                                </div>
-                                <div>
-                                    <p className="f-16">{currency(item.selling_price)}</p>
-                                </div>
-                                <p className="f-16 pointer" onClick={() => deleteCartItem(item.id)}>x</p>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </div>
+
                 <div className="promo-code">
                     <p className="f-12 bold">Promo code</p>
                     <div className="coupon">
@@ -112,16 +118,19 @@ const Cart = () => {
                         </div>
                         <div className="flex justsb bold b-b">
                             <p className="f-12">VAT</p>
-                            <p className="f-12">{currency(totalPrice * 0.075)}</p>
+                            <p className="f-12">{currency((totalPrice * 0.075).toFixed(2))}</p>
                         </div>
                         <div className="flex justsb total bold b-b">
                             <p>Total</p>
-                            <p className="bold">{currency(totalPrice + totalPrice * 0.075)}</p>
+                            <p className="bold">{currency((totalPrice + totalPrice * 0.075).toFixed(2))}</p>
                         </div>
                     </div>
-                    <Link to="/app/checkout" className="mt-lg" style={{ marginTop: 25 }}>
-                        <p className="btn bg-accent text-center uppercase">Checkout</p>
-                    </Link>
+
+                    {cart.length > 0 && (
+                        <Link to="/app/checkout" className="mt-lg" style={{ marginTop: 25 }}>
+                            <p className="btn bg-accent text-center uppercase">Checkout</p>
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>

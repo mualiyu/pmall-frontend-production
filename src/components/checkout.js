@@ -64,6 +64,7 @@ const CheckoutPage = () => {
     const [customer, setCustomer] = useState()
     const [loading, setLoading] = useState(false)
     const [value, setValue] = useState(0);
+   
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
@@ -72,6 +73,12 @@ const CheckoutPage = () => {
   const loginHandler = () => {
     console.log(inputValues);
   };
+
+  const handleChangeAccount = () => {
+      setLoading(true);
+      localStorage.removeItem('authToken');
+      window.location.reload();
+  }
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -102,7 +109,6 @@ const CheckoutPage = () => {
         if(typeof localStorage !== "undefined") {
              setCart(JSON.parse(localStorage.getItem('pmallCart')) || []);
              console.log("Response text:", localStorage.getItem('authToken'));
-            //  setUserToken(JSON.parse(localStorage.getItem('authToken')) || {})
         }
         return;
     }
@@ -141,12 +147,12 @@ const CheckoutPage = () => {
                 });
            
         }
-        const tokenToUse = loggedInUser ? user.token : customer.token;
+        const tokenToUse = loggedInUser ? user?.token : customer?.token;
         const requestBody = {
-         customer_id: loggedInUser ? user.id : customer.id,
+         customer_id: loggedInUser ? user.id : customer?.customer.id,
          products: checkingOutProducts.map(product => ({
              product_id: product.id,
-             quantity: product.quantity
+             quantity: product.amtItems
            }))
 
     }
@@ -204,102 +210,34 @@ const CheckoutPage = () => {
     },[])
 
     const incrementItemAmt = (id) => {
-        const updatedCart = cart.map(item => {
-            if (item.id === id) {
-                return { ...item, amtItems: item.amtItems + 1 };
-            }
-            return item;
+        setCart(prevCart => {
+            const updatedCart = prevCart.map(item => 
+                item.id === id ? { ...item, amtItems: item.amtItems + 1 } : item
+            );
+    
+            console.log(updatedCart);
+            localStorage.setItem('pmallCart', JSON.stringify(updatedCart));
+            return updatedCart;
         });
-
-        setCart(updatedCart);
-        localStorage.setItem('pmallCart', JSON.stringify(updatedCart));
     };
+    
 
     const decrementItemAmt = (id) => {
-        const updatedCart = cart.map(item => {
-            if (item.id === id) {
-                return { ...item, amtItems: item.amtItems - 1 };
-            }
-            return item;
-        });
-
+        const updatedCart = cart
+            .map(item => 
+                item.id === id && item.amtItems > 1 
+                    ? { ...item, amtItems: item.amtItems - 1 } 
+                    : item
+            )
+            .filter(item => item.amtItems > 0); 
+    
         setCart(updatedCart);
         localStorage.setItem('pmallCart', JSON.stringify(updatedCart));
     };
-
-    // const initiateCheckout = (e) => {
-    //     e.preventDefault();
-    //     onSubmit()
-    //     if(customer){
-    //         const requestBody = {
-    //             customer_id: customer.customer.id,
-    //             products: [
-    //             {
-    //                 product_id: 1,
-    //                 quantity: 3
-    //             }
-    //             ]
-    //         }
-        
     
-    //         fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
-    //             method: "POST",
-    //             headers: {
-    //             "Content-Type": "application/json;charset=UTF-8",
-    //             Accept: "application/json",
-    //             Authorization: "Bearer " + customer.token,
-    //             },
-    //             body: JSON.stringify(requestBody), 
-    //         })
-    //             .then((resp) => resp.json())
-    //             .then((result) => {
-    //             console.log(result);
-    //         // setProducts(result.data);
-    //             }) 
-    //             .catch((err) => {
-    //             console.log(err);
-    //             });
-    //         }
-    // };
-
-    // const config = {
-    //     public_key: process.env.REACT_APP_FLW_PUBLIC_KEY,
-    //     tx_ref: Date.now(),
-    //     amount: totalPrice,
-    //     currency: 'NGN',
-    //     payment_options: 'card,mobilemoney,ussd',
-    //     customer: {
-    //     email: formDetails.email,
-    //     phonenumber: formDetails.phone,
-    //     name: formDetails.name,
-    //     },
-    //     customizations: {
-    //     title: 'My Store Payment',
-    //     description: 'Payment for items in cart',
-    //     },
-    // };
-    
-    // const fwConfig = {
-    //     ...config,
-    //     text: 'Pay with Flutterwave!',
-    //     callback: (response) => {
-    //         console.log(response);
-    //         if (response.status === 'successful') {
-    //             // Redirect to success page after successful payment
-    //             navigate('/app/transaction-history'); // Using React Router to navigate
-    //         } else {
-    //             console.log('Payment failed or was cancelled');
-    //             // You can navigate to a failure page or show an error message
-    //         }
-    //         closePaymentModal(); // This will close the modal programmatically
-    //     },
-    //     onClose: () => {
-    //         console.log('Payment modal closed');
-    //     },
-    // };
     return (
         <div className="mt-20p">
-            <Link to="/"><p className="back">Back to marketplace</p></Link>
+            <Link to="/"><p className="back f-bold">Back to Market Place</p></Link>
             <div className="checkout-container flex g-20">
             <div className="checkout">
                 <h1>Checkout</h1>
@@ -383,6 +321,10 @@ const CheckoutPage = () => {
                             </div>
                             
                         </div>
+                        <div class="btn bg-accent p-25 text-center uppercase" style={{marginTop: '45px'}}  onClick={() => handleChangeAccount()} >
+                            Use a different account ?
+                        </div>
+
                         </div>
                     </div>
                     </div>

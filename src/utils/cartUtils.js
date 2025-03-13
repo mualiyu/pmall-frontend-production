@@ -6,7 +6,7 @@ export const getCart = () => {
     return [];
   };
   
-  export const addToCart = (detail, numOfItems, setCartModalActive) => {
+  export const addToCart = (detail, numOfItems, setCartCount, setCartModalActive) => {
     let cart = getCart(); // Retrieve current cart
   
     // Check if the product is already in the cart
@@ -22,5 +22,10 @@ export const getCart = () => {
         setCartModalActive(true);
     }
     }
+
+    if (setCartCount) {
+      setCartCount(cart.reduce((total, item) => total + item.amtItems, 0)); // Ensure count reflects total items, not just unique products
+    }
+    
   };
   

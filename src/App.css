@@ -1297,13 +1297,21 @@ h1 {
   justify-content: center;
 }
 .cart-message {
-  position: absolute;
-    right: 0;
-    background-color: #def9ec;
-    color: green;
-    padding: 5px 14px;
+  position: fixed;
+    bottom: 9px;
+    background-color: green;
+    color: white;
+    padding: 9px 22px;
+    z-index: 9999999;
+    right: 0%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
+.cart-error {
+  background-color: red;
+}
 
 .add-cart .add {
     height: 38px;
@@ -1394,6 +1402,9 @@ h1 {
     background-color: red;
     border: none;
 }
+.no__underline {
+  text-decoration: none;
+}
 .cart__count {
   background-color: red;
     width: 30px;
@@ -1404,7 +1415,6 @@ h1 {
     align-content: center;
     border-radius: 50%;
     text-align: center;
-    text-decoration: none;
 }
 .css-i4bv87-MuiSvgIcon-root {
   fill: #515050!important;

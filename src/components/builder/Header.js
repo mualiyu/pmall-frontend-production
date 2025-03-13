@@ -11,12 +11,13 @@ import { useCategories } from "../../context/CategoryContext"
 
 function Header() {
     const navigate = useNavigate();
-    const {cartLength} = useCart();
     const [value, setValue] = useState(0);
+    const [itemsOnCart, setItemsOnCart] = useState(0);
     const [loading, setLoading] = useState(false);
     const { storeCategories, error } = useCategories();
     const { cartCount } = useCart();
     const { user } = useUser();
+
 
     const extraLinks = ['Health', 'Wellness', 'Fitness', 'Beauty', 'Personal Care', 'Combo Products', 'Become an Affiliate'];
 
@@ -45,6 +46,7 @@ function Header() {
 
     useEffect(()=>{
         getProductsCategories()
+        setItemsOnCart(JSON.parse(localStorage.getItem("pmallCart")))
     },[])
 
 return (
@@ -114,14 +116,18 @@ return (
                             <div className='flex alc'>
                                     <Link to="/auth/sign-in" className="bold flex alc sb">
                                         <PersonIcon />
-                                        <p>Login</p>
+                                        <p>
+                                            {user ? `Hello ${user.fname}` : 'Login'}
+                                        </p>
                                     </Link>
                                &nbsp; &nbsp; &nbsp;
-                                    <Link to="/app/cart" className="bold flex alc">
+                                    <Link to="/app/cart" className="bold flex alc no__underline">
                                         <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
                                             <ShoppingBasketIcon />
                                         </Badge>
-                                        <p className="cart__count">5</p>
+                                        <p className="cart__count">
+                                            {itemsOnCart.length}
+                                        </p>
                                     </Link>
                          
                             </div>

@@ -84,7 +84,7 @@ function Application() {
           
             <div className="flex-container">
             
-              <Sidebar className="sidenav" />
+              {/* <Sidebar className="sidenav" /> */}
               
               <div className="main__content">
              
