@@ -15,13 +15,18 @@ function Header() {
     const [itemsOnCart, setItemsOnCart] = useState(0);
     const [loading, setLoading] = useState(false);
     const { storeCategories, error } = useCategories();
+    const extraLinks = ['Health', 'Wellness', 'Fitness', 'Beauty', 'Personal Care', 'Combo Products', 'Become an Affiliate'];
+    const [categories, setProductCategories] = useState(null);
     const { cartCount } = useCart();
     const { user } = useUser();
 
+    const handleShowCategory = (category) => {
+        navigate(`/store/product/categories/${category.id}`, { state: { category } });
+    }
 
-    const extraLinks = ['Health', 'Wellness', 'Fitness', 'Beauty', 'Personal Care', 'Combo Products', 'Become an Affiliate'];
-
-    const [categories, setProductCategories] = useState(null);
+    const handleViewAllCategories = () => {
+        navigate("/");
+    }
 
     const getProductsCategories = () => {
         setLoading(true);
@@ -34,12 +39,10 @@ function Header() {
         })
             .then((resp) => resp.json())
             .then((result) => {
-            console.log(result);
             setProductCategories(result.data);
             setLoading(false);
             })
             .catch((err) => {
-            console.log(err);
             setLoading(false);
             });
     };
@@ -63,8 +66,6 @@ return (
                             <MenuIcon/>
                              </button>
                            
-                            
-
                             <div className="callout_menu">
                                 <div className="flex justsb">
                                     <div className="callout__main__menu">
@@ -129,7 +130,6 @@ return (
                                             {itemsOnCart.length}
                                         </p>
                                     </Link>
-                         
                             </div>
                         </div>
                         <div className="flex alc mb-lg">
@@ -139,12 +139,25 @@ return (
                                     ) : error ? (
                                         <p>{error}</p>
                                     ) : (
-                                        <select style={{ border: '2px solid #c27465', padding: 12, borderRadius: 15, fontWeight: 600 }}>
-                                            <option value="1">Browse All Categories</option>
-                                            {categories?.map(category => (
-                                                <option value={category.name} key={category.id}>{category.name}</option>
-                                            ))}
-                                        </select>
+                                        <select 
+                                        style={{ border: '2px solid #c27465', padding: 12, borderRadius: 15, fontWeight: 600 }} 
+                                        onChange={(e) => {
+                                            if (e.target.value === "1") {
+                                                handleViewAllCategories(); 
+                                            } else {
+                                                const selectedCategory = categories.find(category => category.name === e.target.value);
+                                                if (selectedCategory) {
+                                                    handleShowCategory(selectedCategory);
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        <option value="1">Browse All Categories</option>
+                                        {categories?.map(category => (
+                                            <option value={category.name} key={category.id}>{category.name}</option>
+                                        ))}
+                                    </select>
+
                                     )}
                                 </div>
                           
