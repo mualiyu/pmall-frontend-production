@@ -2112,3 +2112,14 @@ text-decoration: none;
   border: 1px solid green;
   color: green;
 }
+
+
+@media (min-width:320px)  {
+
+  .product-cart-wrap {
+    width: 215px;
+  }
+  .collection-banners {
+    margin-top: 10%;
+}
+ }

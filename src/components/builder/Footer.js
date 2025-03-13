@@ -7,7 +7,7 @@ function Footer() {
    
     return (
     <>
-            <img src="/Screenshot 2024-03-19 163145.png" alt="" className="mt-20p" style={{width: '100%'}}/>
+            <img src="/Screenshot 2024-03-19 163145.png" alt="" style={{width: '100%'}}/>
                 
                 <div className='flex justsb alc g-10' style={{padding: '40px 20px'}}>
                         

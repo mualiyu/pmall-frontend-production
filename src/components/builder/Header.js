@@ -11,7 +11,6 @@ import { useCategories } from "../../context/CategoryContext"
 
 function Header() {
     const navigate = useNavigate();
-    const [value, setValue] = useState(0);
     const [itemsOnCart, setItemsOnCart] = useState(0);
     const [loading, setLoading] = useState(false);
     const { storeCategories, error } = useCategories();
@@ -118,7 +117,7 @@ return (
                                     <Link to="/auth/sign-in" className="bold flex alc sb">
                                         <PersonIcon />
                                         <p>
-                                            {user ? `Hello ${user.fname}` : 'Login'}
+                                            {user ? `Hello ${user?.fname}` : 'Login'}
                                         </p>
                                     </Link>
                                &nbsp; &nbsp; &nbsp;
@@ -127,7 +126,7 @@ return (
                                             <ShoppingBasketIcon />
                                         </Badge>
                                         <p className="cart__count">
-                                            {itemsOnCart.length}
+                                            {itemsOnCart?.length}
                                         </p>
                                     </Link>
                             </div>
