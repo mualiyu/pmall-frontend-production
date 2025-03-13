@@ -1639,8 +1639,9 @@ imgBanners .imgBanner-grid-item img {
 }
 .bg-white-contain {
   background-color: white;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); */
+  /* border-radius: 10px; */
+  margin-bottom: 20px;
 }
 .style-header {
     padding: 10px;
