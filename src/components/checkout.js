@@ -308,7 +308,7 @@ const CheckoutPage = () => {
                         <div className="promo-code">
                         <div className="flex flex-col g-20">
                             <div className="flex justsb bold b-b">
-                                <p className="f-12">Customer </p>
+                                <p className="f-12">Logged In As </p>
                                 <p className="f-12">{user.fname} {user.lname}</p>
                             </div>
                             <div className="flex justsb bold b-b">
@@ -498,6 +498,7 @@ const CheckoutPage = () => {
                                 <p className="bold">{currency(totalPrice + (totalPrice * 0.075))}</p>
                             </div>
                         </div>
+                        
                             <div className="btn bg-accent p-25 text-center uppercase" style={{marginTop: 25}} onClick={onSubmit}>
                                 {loading ? "loading..." : "Make Payment"}
                             </div>

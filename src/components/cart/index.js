@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useUser } from "../../context/UserContext";
 import currency from "../../utils/formatCurrency";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const Cart = () => {
     const [cart, setCart] = useState(() => {
@@ -56,13 +57,18 @@ const Cart = () => {
         <div className="cart flex g-20 mt-lg mt-20p">
             <div className="w-full flex g-20 cart-container">
                 <div className="w-full maincart">
-                    <div className="flex justsb">
+                
+                    <div className="flex justsb alc">
                         <div className="flex g-10">
                             <h3 className="cart-head">Cart</h3>
                             <p className="f-12">({cart.length} items)</p>
                         </div>
                         <div>
-                            <p className="f-12 red bold pointer" onClick={clearCart}>x Clear cart</p>
+                        <Link to="/"><p className="back f-bold">Continue Shopping</p></Link>
+                        </div>
+                        <div className="flex alc pointer" onClick={clearCart}>
+                            <DeleteOutlineIcon/>
+                            <p className="f-12 red bold pointer"> Empty Cart</p>
                         </div>
                     </div>
 
@@ -103,7 +109,7 @@ const Cart = () => {
                     <p className="f-12 bold">Promo code</p>
                     <div className="coupon">
                         <form onSubmit={(e) => e.preventDefault()}>
-                            <input type="text" placeholder="Enter promo code" />
+                            <input type="text" placeholder="enter promo code" />
                             <button type="submit">Apply</button>
                         </form>
                     </div>
