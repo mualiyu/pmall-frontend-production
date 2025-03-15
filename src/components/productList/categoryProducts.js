@@ -8,11 +8,11 @@ const CategoryProducts = () => {
     const category = location?.state?.category;
     return (
         <div className="flex flex-col gap-5 bg-white p-5 rounded-lg shadow-md fluid__contain">
-            <div className="w-full flex justify-between items-center">
+            {/* <div className="w-full flex justify-between items-center">
                 <div className="space-y-2">
                     <h1 className="text-xl font-bold category__titlehead">{category.name}</h1>
                 </div>
-            </div>
+            </div> */}
             <div className="flex gap-4 overflow-x-auto">
             <div className='flex justsb g-10'>
                     <ProductGrid 

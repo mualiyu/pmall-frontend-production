@@ -92,7 +92,7 @@ const StoreFront = () => {
                        
                     </div>
                 </div>
-                    <div className='flex justsb g-10'>
+                    <div className='flex justsb g-10' style={{width: '100%'}}>
                     <ProductGrid />
                     </div>
                 
