@@ -49,6 +49,7 @@ const CheckoutPage = () => {
     const navigate = useNavigate();
     const { user } = useUser();
     const [userToken, setUserToken] = useState(null)
+    const [showPassword, setShowPassword] = useState(false);
     const [formDetails, setFormDetails] = useState({
         fname: '',
         lname: '',
@@ -69,10 +70,36 @@ const CheckoutPage = () => {
         setValue(newValue);
       };
 
-      
-  const loginHandler = () => {
-    console.log(inputValues);
-  };
+
+
+      const autoVerifyTransaction = (refId) => {
+        const loggedInUser = localStorage.getItem("authToken");
+        console.log(loggedInUser);
+        if (!loggedInUser) {
+            console.log("No authentication token found.");
+            return;
+        }
+    
+        fetch(`https://api.pmall.com.ng/api/v1/customer/checkout/paystack/verify/${refId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                Accept: "application/json",
+                Authorization: `Bearer ${loggedInUser}`,
+            },
+        })
+        .then((resp) => resp.json())
+        .then((result) => {
+            console.log(result);
+            if (result.status) {
+                window.location.href = `/checkout/transaction/${refId}`;
+            } else {
+                console.error("Verification failed:", result.message);
+            }
+        })
+        .catch((err) => console.log("Fetch error:", err));
+    };
+
 
   const handleChangeAccount = () => {
       setLoading(true);
@@ -80,7 +107,7 @@ const CheckoutPage = () => {
       window.location.reload();
   }
 
-  const [showPassword, setShowPassword] = useState(false);
+
 
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -138,6 +165,7 @@ const CheckoutPage = () => {
             if (result.status) {
                 // user is registered, get their token and save
                 setCustomer(result)
+                localStorage.setItem("authToken", JSON.stringify(result.token));
             }else {
                 
             }
@@ -188,7 +216,9 @@ const CheckoutPage = () => {
                         console.log(result);
                         if (result.status) {
                             console.log(result)
-                            window.location.href = result.authorization_url
+                            // Function Trying to verify the transaction
+                            window.location.href = result.authorization_url;
+                            // autoVerifyTransaction(result.reference);
                         }
                         })
                         .catch((err) => {
@@ -498,7 +528,7 @@ const CheckoutPage = () => {
                                 <p className="bold">{currency(totalPrice + (totalPrice * 0.075))}</p>
                             </div>
                         </div>
-                        
+
                             <div className="btn bg-accent p-25 text-center uppercase" style={{marginTop: 25}} onClick={onSubmit}>
                                 {loading ? "loading..." : "Make Payment"}
                             </div>

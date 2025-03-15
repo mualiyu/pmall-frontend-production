@@ -31,6 +31,7 @@ import StoreFront from "./storefront";
 import Cart from "./cart";
 import CheckoutPage from "./checkout";
 import TransactionHistory from "./transactionhistory";
+import TransactionPurchase from "./transactionPurchase";
 
 // Component to normalize path casing
 function CaseInsensitiveWrapper() {
@@ -98,6 +99,7 @@ function Application() {
                   <Route path="/product/:id" element={<ProductDetails />} />
                   <Route path="/app/cart" element={<Cart />} />
                   <Route path="/app/checkout" element={<CheckoutPage />} />
+                  <Route path="/checkout/transaction/:id" element={<TransactionPurchase />} />
                   <Route path="/app/transaction-history" element={<TransactionHistory />} />
                   <Route path="/app/products/list" element={<ProductList />} />
                   <Route path="/app/affilates" element={<Affilates />} />
