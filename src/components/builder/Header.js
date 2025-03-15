@@ -126,7 +126,7 @@ return (
                                             <ShoppingBasketIcon />
                                         </Badge>
                                         <p className="cart__count">
-                                            {itemsOnCart?.length}
+                                            {itemsOnCart?.length === 0 ? 0 : itemsOnCart?.length }
                                         </p>
                                     </Link>
                             </div>

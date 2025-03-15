@@ -54,7 +54,7 @@ const Cart = () => {
     };
 
     return (
-        <div className="cart flex g-20 mt-lg mt-20p">
+        <div className="cart flex g-20 mt-20p" style={{ marginBottom: '7%' }}>
             <div className="w-full flex g-20 cart-container">
                 <div className="w-full maincart">
                 
