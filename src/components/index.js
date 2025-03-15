@@ -37,6 +37,7 @@ import TransactionPurchase from "./transactionPurchase";
 function CaseInsensitiveWrapper() {
   const location = useLocation();
   const navigate = useNavigate();
+  
 
 const toKebabCase = (str) => {
   return str
@@ -60,63 +61,76 @@ const toKebabCase = (str) => {
   return null;
 }
 
-function Application() {
-  const { user } = useUser();
-  const isLoggedIn = Boolean(localStorage.getItem("authToken"));
+function Layout() {
+  const location = useLocation();
+  const isAuthPath = location.pathname.includes("/auth");
+  const isLoggedInPath = location.pathname.includes("/app");
+
+  const showHeaderAndFooter = !(isAuthPath || isLoggedInPath);
 
   return (
-    <Router>
-      <CaseInsensitiveWrapper />
-      <div className="app-container">
-        {/* {!isLoggedIn && ( */}
-          <Header/>
-          <Routes>
-            <Route path="/" element={<StoreFront />} />
-            <Route path="/auth/sign-in" element={<Login />} />
-            <Route path="/auth/app/signup" element={<SignUp />} />
-            <Route path="/auth/app/reset-account" element={<ResetPassword />} />
-            <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
-            <Route path="/auth/app/verify/:email" element={<VerifyToken />} />
-            {/* <Route path="/product/:id" element={<ProductDetails />} /> */}
-          </Routes>
-          
-        {/* {isLoggedIn && ( */}
-          <>
-          
-            <div className="flex-container bg___chalk">
-            
-              {/* <Sidebar className="sidenav" /> */}
-              
-              <div className="main__content">
-             
-                <Routes>
-                  <Route path="/dashboard" element={<Dashboard />} />
+    <div className="app-container">
+      {/* Show Header only if NOT on auth pages */}
+      {showHeaderAndFooter && <Header />}
+
+      <Routes>
+
+        {/* Authentication Routes */}
+
+        <Route path="/auth/sign-in" element={<Login />} />
+        <Route path="/auth/app/signup" element={<SignUp />} />
+        <Route path="/auth/app/reset-account" element={<ResetPassword />} />
+        <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
+        <Route path="/auth/app/verify/:email" element={<VerifyToken />} />
+      </Routes>
+
+        <>
+          <div className="flex-container bg___chalk">
+          {isLoggedInPath && <Sidebar className="sidenav" /> }
+            <div className="main__content">
+              <Routes>
+
+                {/* User Routes */}
+
+                  <Route path="/app/dashboard" element={<Dashboard />} />
                   <Route path="/app/users" element={<Users />} />
                   <Route path="/app/users/details" element={<UserDetails />} />
                   <Route path="/app/vendors" element={<Vendors />} />
                   <Route path="/app/order-management" element={<OrderManagement />} />
                   <Route path="/app/vendors/details" element={<VendorDetails />} />
-                  <Route path="/product/:id" element={<ProductDetails />} />
-                  <Route path="/app/cart" element={<Cart />} />
-                  <Route path="/app/checkout" element={<CheckoutPage />} />
-                  <Route path="/checkout/transaction/:id" element={<TransactionPurchase />} />
                   <Route path="/app/transaction-history" element={<TransactionHistory />} />
                   <Route path="/app/products/list" element={<ProductList />} />
                   <Route path="/app/affilates" element={<Affilates />} />
                   <Route path="/app/affilates/details" element={<AffilateDetails />} />
-                  {/* <Route path="/app/affilate/my-network" element={<MyNetwork />} /> */}
                   <Route path="/app/products" element={<Products />} />
                   <Route path="/app/categories" element={<Categories />} />
-                  <Route path="/store/product/categories/:id" element={<CategoryProducts />} />
                   <Route path="/app/gallery" element={<Gallery />} />
                   <Route path="/app/order/details" element={<OrderDetails />} />
                   <Route path="/app/settings" element={<SiteSettings />} />
-                </Routes>
-              </div>
+              
+                {/* Store Routes */}
+
+                <Route path="/" element={<StoreFront />} />
+                <Route path="/product/:id" element={<ProductDetails />} />
+                <Route path="/product/cart" element={<Cart />} />
+                <Route path="/product/checkout" element={<CheckoutPage />} />
+                <Route path="/checkout/transaction/:id" element={<TransactionPurchase />} />
+                <Route path="/store/product/categories/:id" element={<CategoryProducts />} />
+
+              </Routes>
             </div>
-          </>
-          <Footer/>
-      </div>
+          </div>
+          
+          {showHeaderAndFooter && <Footer />}
+        </>
+    </div>
+  );
+}
+
+function Application() {
+  return (
+    <Router>
+      <Layout />
     </Router>
   );
 }

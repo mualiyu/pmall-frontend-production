@@ -831,7 +831,7 @@ console.log(user?.accountType)
               aria-label="basic tabs example">
                   <Tab label="Products list" {...a11yProps(0)} />
                   
-                  {user?.role !== 'Admin' && (
+                  {user?.role === 'Admin' && (
                     <div>
                     <Tab label="Categories" {...a11yProps(1)} />
                    
@@ -884,23 +884,28 @@ console.log(user?.accountType)
                   </TableCell>
                   <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}>
                     <div className="lheight13">
-                      <h4 className="f-300">{product?.name} </h4>
+                      <p className="badge">{product?.name} </p>
                     </div>
                   </TableCell>
                   <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}>
-                    {categories?.map(category =>(
+                    <p className="badge">{categories?.map(category =>(
                     category?.id == product?.category_id && category?.name 
-                  ))}       
+                  ))}        </p>
                   </TableCell>
                   <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}>
-                    {brands?.map(brand =>(
+                  <p className="badge">{brands?.map(brand =>(
                       brand?.id == product?.brand_id && brand?.name 
-                    ))}
+                    ))} </p>
                   </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> &#x20A6;{addCommasToNumberString(product?.cost_price)} </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> &#x20A6;{addCommasToNumberString(product?.selling_price)} </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> {product?.inStock} </TableCell>
-                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> {moment(product?.created_at).add(1, "years").calendar()} </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> 
+                  <p className="badge"> &#x20A6;{addCommasToNumberString(product?.cost_price)}  </p>
+                  </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> <p className="badge"> &#x20A6;{addCommasToNumberString(product?.selling_price)} </p> </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> 
+                  
+                  <p className="badge">  {product?.inStock}  </p>
+                  </TableCell>
+                  <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}> <p className="badge"> {moment(product?.created_at).add(1, "years").calendar()} </p></TableCell>
                   <TableCell onClick={() => navigate(`/app/products/details/${product?.id}`)}>
                     {" "}
                     {product?.status == 1 ?

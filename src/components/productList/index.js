@@ -22,21 +22,7 @@ import Stack from '@mui/material/Stack';
 import { useRef } from 'react';
 Chart.register(ArcElement);
 
-const top100Films = [
-  { title: 'Beauty',},
-  { title: 'Phones'},
-  { title: 'Gadgets'},
-  { title: 'Electronics', year: 2008 },
-  { title: 'Makeup', year: 1957 },
-  { title: "Cough", year: 1993 },
-  { title: ' Summer', year: 1994 },
-  { title: 'Clothing', year: 2001 },
-  { title: 'Ceramics', year: 1971 },
-  { title: 'Footwear', year: 2007 },
-  { title: 'Foodstuff', year: 1976 },
-  { title: 'Toys', year: 1962 },
-  { title: 'Children', year: 1944 },
-];
+
 
 
 const style = {
@@ -198,127 +184,7 @@ const ProductList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <img src={profile} className="w30"/>
-                </div>
-              </TableCell>
-              <TableCell>IPhone 14</TableCell>
-              <TableCell> Phones </TableCell>
-              <TableCell> IPhone </TableCell>
-              <TableCell> 1,100,000 </TableCell>
-              <TableCell> 1,200,000 </TableCell>
-              <TableCell>In stock(120) </TableCell>
-              <TableCell> Simple</TableCell>
-              <TableCell>19/05/2023 </TableCell>
-              <TableCell> A clean IPhone 14 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-success">Published</span>{" "}
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-            <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <img src={profile} className="w30"/>
-                </div>
-              </TableCell>
-              <TableCell> Mucinex </TableCell>
-              <TableCell> Cough </TableCell>
-              <TableCell> Peace </TableCell>
-              <TableCell>  200,000 </TableCell>
-              <TableCell> 300,000 </TableCell>
-              <TableCell>In stock(120) </TableCell>
-              <TableCell> Simple</TableCell>
-              <TableCell>19/05/2023 </TableCell>
-              <TableCell> Perfect drug for your cough </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-error">Pending </span>
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-
-            <TableRow>
-            <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                <img src={profile} className="w30"/>
-                </div>
-              </TableCell>
-              <TableCell> Fridge </TableCell>
-              <TableCell> Home electronics</TableCell>
-              <TableCell> Thermocool</TableCell>
-              <TableCell> 150,000 </TableCell>
-              <TableCell> 200,000 </TableCell>
-              <TableCell>In stock(120) </TableCell>
-              <TableCell> Simple</TableCell>
-              <TableCell>19/05/2023 </TableCell>
-              <TableCell>Long lasting fridge for preservating</TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-error"> Pending </span>
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-            <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                <img src={profile} className="w30"/>
-                </div>
-              </TableCell>
-              <TableCell> Android television </TableCell>
-              <TableCell> Home electronics</TableCell>
-              <TableCell> Samsung </TableCell>
-              <TableCell>  390,000  </TableCell>
-              <TableCell> 400,000 </TableCell>
-              <TableCell>In stock(120) </TableCell>
-              <TableCell> Simple</TableCell>
-              <TableCell>19/05/2023 </TableCell>
-              <TableCell> Android smart tv to watch your favorites </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-error">Pending </span>
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-            <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                <img src={profile} className="w30"/>
-                </div>
-              </TableCell>
-              <TableCell>IPhone 11 </TableCell>
-              <TableCell> Phones </TableCell>
-              <TableCell> IPhone </TableCell>
-              <TableCell> 400,000 </TableCell>
-              <TableCell> 450,000 </TableCell>
-              <TableCell>In stock(120) </TableCell>
-              <TableCell> Simple</TableCell>
-              <TableCell>19/05/2023 </TableCell>
-              <TableCell> A brand new IPhone 11 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-success">Published </span>
-              </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
+            
           </TableBody>
         </Table>
       </TableContainer>
@@ -484,7 +350,7 @@ const ProductList = () => {
                 <Autocomplete
                   multiple
                   id="tags-outlined"
-                  options={top100Films}
+                  // options={top100Films}
                   getOptionLabel={(option) => option.title}
                   filterSelectedOptions
                   renderInput={(params) => (

@@ -134,7 +134,7 @@ const ProductDetails = () => {
                             <p>Login</p>
                         </Link>
                         {/* {showCart && ( */}
-                        <Link to="/app/cart" className="bold flex alc">
+                        <Link to="/product/cart" className="bold flex alc">
                             <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
                                 <ShoppingCartOutlinedIcon />
                             </Badge>
@@ -268,7 +268,7 @@ const ProductDetails = () => {
                 <h3>Item successfully added to cart  </h3>
                 <div className="modal-btns">
                   <div  className="modal-btn btn-1">
-                    <Link to="/app/cart"><p>Proceed to cart</p></Link>
+                    <Link to="/product/cart"><p>Proceed to cart</p></Link>
                   </div>
                   <div  className="modal-btn btn-2">
                     <Link to="/"><p>Continue shopping</p></Link>

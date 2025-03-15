@@ -133,7 +133,7 @@ const Cart = () => {
                     </div>
 
                     {cart.length > 0 && (
-                        <Link to="/app/checkout" className="mt-lg" style={{ marginTop: 25 }}>
+                        <Link to="/product/checkout" className="mt-lg" style={{ marginTop: 25 }}>
                             <p className="btn bg-accent text-center uppercase">Checkout</p>
                         </Link>
                     )}

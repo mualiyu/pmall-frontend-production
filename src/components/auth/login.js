@@ -28,7 +28,7 @@ const Login = () => {
     inputValues,
     onChangeHandler,
     handleLogin,
-    loading,
+    // loading,
     toastMsg,
     toastType,
   } = useVendor();
@@ -88,10 +88,11 @@ const Login = () => {
               </span>
               <button
                 className="login-btn bold"
-                disabled={loading}
+                // disabled={loading}
                 type="submit"
                 onClick={handleLogin}>
-                {loading ? <ButtonLoader /> : "Login"}
+                {/* {loading ? <ButtonLoader /> : "Login"} */}
+                Login
               </button>
               <p className="center">Don't have an account yet?</p>
               <Link to="/auth/app/Signup">

@@ -153,7 +153,7 @@ export const VendorSignupProvider = ({ children }) => {
             setToastMsg("");
           }, 5000);
           setTimeout(() => {
-            window.location.href = "/dashboard";
+            window.location.href = "/app/dashboard";
           }, 2000);
 
           setLoading(false);

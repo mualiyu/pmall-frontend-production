@@ -1196,8 +1196,7 @@ input:checked + .slider:before {
   font-size: 12px;
 }
 
-.order-summary .right .track-btn .css-i4bv87-MuiSvgIcon-root,
-.MuiSvgIcon-root {
+.order-summary .right .track-btn .css-i4bv87-MuiSvgIcon-root {
   color: blue;
 }
 
@@ -1216,8 +1215,7 @@ input:checked + .slider:before {
   padding-left: 8px;
   color: #fff;
 }
-.order-summary .tab-btn .css-i4bv87-MuiSvgIcon-root,
-.MuiSvgIcon-root {
+.order-summary .tab-btn .css-i4bv87-MuiSvgIcon-root {
   color: white !important;
 }
 
@@ -1412,6 +1410,12 @@ input:checked + .slider:before {
 }
 .bg___chalk {
   background-color: #f1f1f2;
+}
+.icon___light {
+  color: #fff;
+} 
+.icon___normal {
+  width: 1.3rem !important;
 }
 .bannerContain {
     max-width: 100%;
@@ -1768,6 +1772,7 @@ imgBanners .imgBanner-grid-item img {
   border: 1px solid #eee;
   border-radius: 20px;
   padding: 20px;
+  background-color: white;
 }
 
 .cart .maincart .cart-head {
@@ -2079,8 +2084,7 @@ imgBanners .imgBanner-grid-item img {
 }
 
 
-.cart-modal .check .css-i4bv87-MuiSvgIcon-root,
-.MuiSvgIcon-root {
+.cart-modal .check .css-i4bv87-MuiSvgIcon-root {
   color: #515050 !important;
 }
 

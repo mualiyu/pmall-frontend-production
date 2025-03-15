@@ -14,7 +14,7 @@ const CategoryProducts = () => {
                 </div>
             </div> */}
             <div className="flex gap-4 overflow-x-auto">
-            <div className='flex justsb g-10'>
+            <div className='flex justsb g-10' style={{width: '100%'}}>
                     <ProductGrid 
                                 categoryId={category.id} />
                     </div>

@@ -11,7 +11,7 @@ function SidebarRow({ Icon, title, path, onClick }) {
   return (
     <Link to={path} style={{ textDecoration: "none" }}>
       <div className="sidebarRow alc" onClick={handleClick}>
-        {Icon && <Icon className="sidebar__icon" />}
+        {Icon && <Icon className="sidebar__icon icon___light icon___normal" />}
         <p className="sidebar__title"> {title} </p>
       </div>
     </Link>

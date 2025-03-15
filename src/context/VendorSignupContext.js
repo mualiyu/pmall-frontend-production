@@ -20,7 +20,7 @@ export const VendorSignupProvider = ({ children }) => {
     const onSubmitHandler = async(e) => {
         if (e) {
           e.preventDefault(); 
-          fetch("http://18.119.84.184/api/v1/register/vendor",{
+          fetch("https://api.pmall.com.ng/api/v1/register/vendor",{
             method:"POST",
             headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
@@ -42,7 +42,7 @@ export const VendorSignupProvider = ({ children }) => {
       const onAffilateSubmitHandler = async(e) => {
         if (e) {
           e.preventDefault(); 
-          fetch("http://18.119.84.184/api/v1/register/affiliate",{
+          fetch("https://api.pmall.com.ng/api/v1/register/affiliate",{
             method:"POST",
             headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
@@ -68,7 +68,7 @@ export const VendorSignupProvider = ({ children }) => {
       
         inputValues.device_name = 1234;
       
-        const response = await fetch("http://18.119.84.184/api/v1/login", {
+        const response = await fetch("https://api.pmall.com.ng/api/v1/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -91,7 +91,7 @@ export const VendorSignupProvider = ({ children }) => {
         console.log("Login successful:", data); 
         Toaster("Sucessful","sucess")
       setTimeout(()=>{
-        window.location.href = "/dashboard";
+        window.location.href = "/app/dashboard";
       },500000);
       
       };
@@ -99,7 +99,7 @@ export const VendorSignupProvider = ({ children }) => {
       const onForgotPasswordHandler = async(e) => {
         if (e) {
           e.preventDefault(); 
-          fetch("http://18.119.84.184/api/v1/forgot-password",{
+          fetch("https://api.pmall.com.ng/api/v1/forgot-password",{
             method:"POST",
             headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
@@ -124,7 +124,7 @@ export const VendorSignupProvider = ({ children }) => {
       
         // Validate credentials 
       
-        fetch("http://18.119.84.184/api/v1/reset-password",{
+        fetch("https://api.pmall.com.ng/api/v1/reset-password",{
           method:"POST",
           headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -147,7 +147,7 @@ export const VendorSignupProvider = ({ children }) => {
         inputValues.email = "mualiyuoox@gmail.com";
         // Validate credentials 
       
-        fetch("http://18.119.84.184/api/v1/verify-code",{
+        fetch("https://api.pmall.com.ng/api/v1/verify-code",{
           method:"POST",
           headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -189,7 +189,7 @@ export const VendorSignupProvider = ({ children }) => {
           setLoading(true);
           const token = localStorage.getItem("authToken");
         try {
-          const response = await fetch('https://pmall-api.arc.sch.ng/api/v1/profile/update', {
+          const response = await fetch('https://api.pmall.com.ng/api/v1/profile/update', {
             method: 'POST',
             headers:{ 
               'Content-Type': 'application/json;charset=UTF-8', 

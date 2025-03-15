@@ -71,7 +71,7 @@ function Sidebar() {
           <div className="s-divider"></div>
           {/* <h3 className="ml-20p"> Administrators </h3> */}
           <SidebarRow
-            path="/dashboard"
+            path="/app/dashboard"
             Icon={SpeedIcon}
             title="Dashboard"
           />
@@ -254,7 +254,7 @@ function Sidebar() {
               Icon={NotificationsActiveIcon}
               title="Notification"
             />
-            <div className="header__info abs" style={{bottom: 20}}>
+            <div className="header__info" style={{marginTop: 20}}>
               <div className="user__avatar bg-warning">
                 <h3>
                   {getInitials(user?.fname)}

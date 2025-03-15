@@ -121,7 +121,7 @@ return (
                                         </p>
                                     </Link>
                                &nbsp; &nbsp; &nbsp;
-                                    <Link to="/app/cart" className="bold flex alc no__underline">
+                                    <Link to="/product/cart" className="bold flex alc no__underline">
                                         <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
                                             <ShoppingBasketIcon />
                                         </Badge>
