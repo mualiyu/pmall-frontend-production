@@ -1410,6 +1410,9 @@ input:checked + .slider:before {
 .slider-container{
   width: 100%;
 }
+.bg___chalk {
+  background-color: #f1f1f2;
+}
 .bannerContain {
     max-width: 100%;
     padding:10% 0;

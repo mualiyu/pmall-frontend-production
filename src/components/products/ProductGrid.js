@@ -99,7 +99,7 @@ const ProductGrid = ({ categoryId = null }) => {
   if (error) return <p className="error-message">{error}</p>;
 
   return (
-    <div>
+    <div style={{width: '100%'}}>
       {categories
         ?.filter(category => productsByCategory[category.id]?.length > 0) 
         .map(category => (

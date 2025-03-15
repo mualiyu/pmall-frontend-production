@@ -83,7 +83,7 @@ function Application() {
         {/* {isLoggedIn && ( */}
           <>
           
-            <div className="flex-container">
+            <div className="flex-container bg___chalk">
             
               {/* <Sidebar className="sidenav" /> */}
               

@@ -1166,10 +1166,10 @@ h1 {
 }
 
 .category__titlehead {
-  background-color: #bdbdbd;
+  background-color: black;
     width: 100%;
     padding: 9px 22px;
-    color: #551717;
+    color: white;
 }
 .fluid__contain {
     width: 90%;
