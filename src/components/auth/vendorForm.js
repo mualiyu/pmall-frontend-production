@@ -86,13 +86,6 @@ const VendorForm = ({ inputValues, onChangeHandler }) => {
             <option value="2">Beta Package - N15,000</option>
             <option value="3">Premium Package - N20,000</option>
           </select>
-          {/* <input
-            type="number"
-            name="package_id"
-            className="last-name form-control"
-            onChange={onChangeHandler}
-            value={inputValues.package_id || ""}
-          /> */}
         </div>
       </span>
     </div>

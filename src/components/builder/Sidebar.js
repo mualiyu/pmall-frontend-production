@@ -206,6 +206,11 @@ function Sidebar() {
                 Icon={LocalShippingIcon}
                 title="Locate a Stockiest"
               />
+              <SidebarRow
+                path=""
+                Icon={ShoppingBasketIcon}
+                title="Market Place"
+              />
               </>
           )}
           {(user?.accountType === "Stockiest" ||

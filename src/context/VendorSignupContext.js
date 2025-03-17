@@ -65,36 +65,43 @@ export const VendorSignupProvider = ({ children }) => {
      
       const handleLogin = async (e) => {
         e.preventDefault(); // Prevent default form submission
+        setLoading(true);
+        const loginData = { ...inputValues, device_name: 1234 };
       
-        inputValues.device_name = 1234;
+        try {
+          const response = await fetch("https://api.pmall.com.ng/api/v1/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json;charset=UTF-8",
+              "Accept": "application/json",
+            },
+            body: JSON.stringify(loginData),
+          });
       
-        const response = await fetch("https://api.pmall.com.ng/api/v1/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            "Accept": "application/json",
-          },
-          body: JSON.stringify(inputValues),
-        });
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error:", errorData);
+            Toaster(errorData.message || "Login failed", "error");
+            return;
+          }
       
-        if (!response.ok) {
-          const error = await response.text(); // Extract error message
-          console.error("Error:", error);
-          alert("Login failed: " + error); // Display error to user
-          return;
+          const data = await response.json();
+          const token = data.data.token;
+          localStorage.setItem("userToken", token);
+      
+          console.log("Login successful:", data);
+          Toaster("Successful", "success");
+      setLoading(false);
+          setTimeout(() => {
+            window.location.href = "/app/dashboard";
+          }, 500); // Redirect after 0.5s
+        } catch (error) {
+          console.error("Unexpected error:", error);
+          Toaster("Something went wrong. Please try again.", "error");
+          setLoading(false);
         }
-      
-        const data = await response.json(); // Parse JSON response
-      
-        const token = data.data.token;
-        localStorage.setItem("userToken", token);
-        console.log("Login successful:", data); 
-        Toaster("Sucessful","sucess")
-      setTimeout(()=>{
-        window.location.href = "/app/dashboard";
-      },500000);
-      
       };
+      
 
       const onForgotPasswordHandler = async(e) => {
         if (e) {

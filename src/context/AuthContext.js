@@ -130,7 +130,6 @@ export const VendorSignupProvider = ({ children }) => {
         setLoading(false);
         console.log(result);
         if (result.status) {
-          console.log(result.data);
           localStorage.setItem("authToken", result.data.token);
           setUser({
             id: result.data.user.id,
@@ -147,7 +146,7 @@ export const VendorSignupProvider = ({ children }) => {
             regDate: result.data.user.created_at,
             refId: result.data.user.my_ref_id,
           });
-          setToastMsg("Boom! Login successful");
+          setToastMsg(`Boom! ${result.message}`);
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
@@ -160,8 +159,7 @@ export const VendorSignupProvider = ({ children }) => {
         } else {
           console.log(result.message);
           setToastMsg(
-            "Oops! there seems to be an error. Confirm login credientials"
-          );
+            `Oops! ${result.message}`);
           setToastType("error");
           setTimeout(() => {
             setToastMsg("");

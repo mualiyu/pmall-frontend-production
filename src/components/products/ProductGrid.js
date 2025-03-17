@@ -84,7 +84,7 @@ const ProductGrid = ({ categoryId = null }) => {
       cart = cart.map((item) =>
         item.id === product.id ? { ...item, amtItems: Math.max(1, (item.amtItems || 1) + numOfItems) } : item
       );
-      setCartMessage(`${product.name} quantity updated in cart!`);
+      setCartMessage(`${product.name} updated in cart!`);
     } else {
       cart.push({ ...product, amtItems: numOfItems });
       setCartMessage(`${product.name} added to cart!`);
@@ -92,7 +92,7 @@ const ProductGrid = ({ categoryId = null }) => {
 
     localStorage.setItem("pmallCart", JSON.stringify(cart));
 
-    setTimeout(() => setCartMessage(""), 3000); // Auto-clear message after 3 seconds
+    setTimeout(() => setCartMessage(""), 3000);
   };
 
   if (loading) return <p>Loading products...</p>;

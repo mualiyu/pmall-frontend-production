@@ -933,7 +933,7 @@ thead {
 }
 
 .button-loader {
-  position: relative;
+  position: absolute;
 }
 
 .spinner {

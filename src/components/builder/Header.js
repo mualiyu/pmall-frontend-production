@@ -114,13 +114,27 @@ return (
                                 <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
                             </form>
                             <div className='flex alc'>
+                            {!user?.loggedIn && (
                                     <Link to="/auth/sign-in" className="bold flex alc sb">
                                         <PersonIcon />
                                         <p>
-                                            {user ? `Hello ${user?.fname}` : 'Login'}
+                                            {user?.loggedIn ? `Hello ${user?.fname}` : 'Login'}
                                         </p>
                                     </Link>
+                                    )}
                                &nbsp; &nbsp; &nbsp;
+
+                               {user?.loggedIn &&
+                               <>
+                               Hello {user?.fname},
+                               <Link to="/auth/sign-in" className="bold flex alc sb">
+                                        <p>
+                                            Log Out
+                                        </p>
+                                    </Link> 
+                                    </>
+                                    }
+                                    &nbsp; &nbsp; &nbsp;
                                     <Link to="/product/cart" className="bold flex alc no__underline">
                                         <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
                                             <ShoppingBasketIcon />

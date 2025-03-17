@@ -119,7 +119,7 @@ const AffilateForm = ({ inputValues, onChangeHandler }) => {
           className="form-control"
           onChange={onChangeHandler}
           value={inputValues.ref_id || ""}
-          placeholder="e.g  PM-000000000"
+          placeholder="e.g  PM-000000"
         />
       </div>
     </span>

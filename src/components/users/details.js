@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import nigeriaStateAndLgas from "../nigeriaStateAndLgas.json";
 import ButtonLoader from "../../utils/buttonLoader";
 import Toaster from "../../utils/toaster";
+import currency from "../../utils/formatCurrency";
 
 const style = {
   position: "absolute",
@@ -190,110 +191,130 @@ const UserDetails = () => {
               Edit profile
             </button>
           </div>
+         
           <div className="left w-full flex g-20">
             <div className="">
               <div className="top flex flex-col g-20 items-center">
-                <img src={profile} className="profile_pic b-round" />
+                <img src={profile} className="profile_pic" />
                 <h1 style={{ textTransform: "capitalize" }}>
                   {profileDetails?.fname} {profileDetails?.lname}
                 </h1>
-                <div className="flex alc">
+                <h4 className="f-300 center" style={{marginTop: '-20px'}}>({profileDetails?.user_type})</h4>
+                {/* <div className="flex alc">
                   <Rating name="read-only" value={value} readOnly />
                   <p>0 Rates</p>
-                </div>
+                </div> */}
                 <div className="flex flex-col g-30 mt-10">
-                  <h3 className="bold grid-item">Personal Information</h3>
                   {profileDetails?.user_type === "Vendor" && (
-                    <div className="flex g-10">
+                    <div className="g-10">
+                      {<h4 className="f-300">{profileDetails?.store_name}</h4>}
                       <p>Store Name</p>
-                      {<h4>{profileDetails?.store_name}</h4>}
+                      
                     </div>
                   )}
-                  <div className="flex g-10">
+                  <div className="flex justsb">
+                  <div className="g-10">
+                  <h4 className="f-300" >{profileDetails?.username || "N/A"}</h4>
+                    <p>Username</p>
+                    
+                  </div>
+                  <div className="g-10">
+                <h4 className="f-300"> {moment(profileDetails?.created_at).format("ll")}</h4>
+                  <p>Member Since</p>
+                 
+                </div>
+                </div>
+
+                  <div className="g-10">
+                  <h4 className="f-300">{profileDetails?.email}</h4>
                     <p>Email</p>
-                    <h4>{profileDetails?.email}</h4>
+                    
                   </div>
 
-                  <div className="flex g-10">
+                  <div className="g-10">
+                  <h4 className="f-300">{profileDetails?.phone}</h4>
                     <p>Phone Number</p>
-                    <h4>{profileDetails?.phone}</h4>
+                   
                   </div>
-                  <div className="flex g-10">
-                    <p>Username</p>
-                    <h4>{profileDetails?.username || "N/A"}</h4>
-                  </div>
+                  
                 </div>
               </div>
             </div>
 
             {loading && <ButtonLoader />}
             {profileDetails && (
-              <div className="details w-full grid grid-3 gr-20 bl">
-                <div className="flex g-10 grid-item">
-                  <p>User Type</p>
-                  <h4>{profileDetails?.user_type}</h4>
+
+
+
+              <div className="details w-full grid grid-3 bl-dashed">
+                
+                <div className="g-10">
+                <h4 className="f-300">{profileDetails?.my_ref_id || "N/A"}</h4>
+                  <p>Referral ID</p>
+                  
                 </div>
-                <div className="flex g-10 grid-item">
-                  <p>My Ref ID</p>
-                  <h4>{profileDetails?.my_ref_id || "N/A"}</h4>
+                <div className="g-10">
+                <h4 className="f-300 title-case">{profileDetails?.acct_type || "N/A"}</h4>
+                  <p>Account Type</p>
+                </div>
+                <div className="g-10">
+                <h4 className="f-300">{profileDetails?.package_id || "N/A"}</h4>
+                  <p>Package Type </p>
+                  
                 </div>
                 {profileDetails.user_type === "Vendor" && (
-                  <div className="flex g-10 grid-item">
+                  <div className="g-10">
+                    <h4 className="f-300">{profileDetails?.store_id || "N/A"}</h4>
                     <p>Store ID</p>
-                    <h4>{profileDetails?.store_id || "N/A"}</h4>
+                    
                   </div>
                 )}
 
-                <div className="flex g-10 grid-item">
+              
+
+                <div className="g-10">
+                <h4 className="f-300">{profileDetails?.acct_name || "N/A"}</h4>
                   <p>Bank Account Name</p>
-                  <h4>{profileDetails?.acct_name || "N/A"}</h4>
+                  
                 </div>
-                <div className="flex g-10 grid-item">
+                <div className="g-10">
+                <h4 className="f-300">{profileDetails?.acct_number || "N/A"}</h4>
                   <p>Bank Account Number</p>
-                  <h4>{profileDetails?.acct_number || "N/A"}</h4>
+                  
                 </div>
-                <div className="flex g-10 grid-item">
-                  <p>Bank Account Type</p>
-                  <h4>{profileDetails?.acct_type || "N/A"}</h4>
-                </div>
-                <div className="flex g-10 grid-item">
+                
+                <div className="g-10">
+                <h4 className="f-300">{profileDetails?.bank || "N/A"}</h4>
                   <p>Bank</p>
-                  <h4>{profileDetails?.bank || "N/A"}</h4>
+                  
                 </div>
                 {profileDetails.user_type === "Vendor" && (
                   <>
-                    <div className="flex g-10 grid-item">
+                    <div className="g-10">
+                    <h4 className="f-300">{profileDetails?.state || "N/A"}</h4>
                       <p>State</p>
-                      <h4>{profileDetails?.state || "N/A"}</h4>
+                      
                     </div>
-                    <div className="flex g-10 grid-item">
+                    <div className="g-10">
+                    <h4 className="f-300">{profileDetails?.lga || "N/A"}</h4>
                       <p>LGA</p>
-                      <h4>{profileDetails?.lga || "N/A"}</h4>
+                      
                     </div>
                   </>
                 )}
-                {/* <div className="flex g-10">
+                {/* <div className="g-10">
                   <p>Role ID</p>
                   <h4>{profileDetails?.role_id || "N/A"}</h4>
                 </div> */}
-                <div className="flex g-10 grid-item">
-                  <p>Package ID</p>
-                  <h4>{profileDetails?.package_id || "N/A"}</h4>
-                </div>
-                <div className="flex g-10 grid-item">
-                  <p>Account Status</p>
-                  <h4>
+                
+                <div className="g-10">
+                  <h4 className="f-300">
                     {profileDetails?.status === "1" ? "Active" : "Not Active"}
                   </h4>
+                  <p>Account Status</p>
+                  
                 </div>
-                <div className="flex g-10 grid-item">
-                  <p>Last interaction</p>
-                  <h4>40 mins ago</h4>
-                </div>
-                <div className="flex g-10 grid-item">
-                  <p>Member Since</p>
-                  <h4> {moment(profileDetails?.created_at).format("ll")}</h4>
-                </div>
+                
               </div>
             )}
           </div>
@@ -329,8 +350,11 @@ const UserDetails = () => {
               </Box>
             </div>
           </div>
+        
         </div>
+        
       </div>
+     
       {profileDetails && (
         <Modal
           open={newVendorModal}

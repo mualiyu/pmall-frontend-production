@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useForm from "../../utils/useForm";
 import AffilateForm from "./affilateForm";
 import VendorForm from "./vendorForm";
-import { useContext, useRef, useState } from "react";
+import { useState } from "react";
 import { useVendor } from "../../context/AuthContext";
 import Toaster from "../../utils/toaster";
 import ButtonLoader from "../../utils/buttonLoader";
@@ -19,7 +19,6 @@ const SignUp = () => {
     console.log(inputValues);
   };
 
-  //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(signUpHandler);
   const {
     inputValues,
     onChangeHandler,
@@ -95,19 +94,19 @@ const SignUp = () => {
             </span>
             {vendorForm ? (
               <button
-                className={`continue-btn my-20 ${!vendorForm && "affilate"}`}
+                className={`continue-btn my-20 relative ${!vendorForm && "affilate"}`}
                 onClick={signUpHandler}
-                disabled={loading}
+                disabled={!loading}
                 >
-                {loading ?<ButtonLoader /> : "Continue"}
+                {!loading ?<ButtonLoader /> : "Continue"}
               </button>
             ) : (
               <button
-                className={`continue-btn my-20 ${!vendorForm && "affilate"}`}
+                className={`continue-btn my-20 relative ${!vendorForm && "affilate"}`}
                 onClick={onAffilateSubmitHandler}
-               disabled={loading}
+               disabled={!loading}
                 >
-                {loading ?<ButtonLoader /> : "Continue"}
+                {!loading ?<ButtonLoader /> : "Continue"}
               </button>
             )}
             <p className="have-an-account bold">
