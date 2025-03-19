@@ -3,7 +3,7 @@ import "./App.css";
 import "./assets/fonts/fonts/fonts.css";
 import Application from "./components";
 import { UserProvider } from "./context/UserContext";
-import { VendorSignupProvider } from "./context/VendorSignupContext";
+import { VendorSignupProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import { CategoryProvider } from "./context/CategoryContext";
 

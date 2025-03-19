@@ -30,6 +30,7 @@ const SignUp = () => {
     submittedValues,
   } = useVendor();
   const [vendorForm, setVendorForm] = useState(true);
+  console.log(loading)
   return (
     <div className="signup-screen">
       <div
@@ -96,17 +97,17 @@ const SignUp = () => {
               <button
                 className={`continue-btn my-20 relative ${!vendorForm && "affilate"}`}
                 onClick={signUpHandler}
-                disabled={!loading}
+                disabled={loading}
                 >
-                {!loading ?<ButtonLoader /> : "Continue"}
+                {loading ?<ButtonLoader /> : "Continue"}
               </button>
             ) : (
               <button
                 className={`continue-btn my-20 relative ${!vendorForm && "affilate"}`}
                 onClick={onAffilateSubmitHandler}
-               disabled={!loading}
+               disabled={loading}
                 >
-                {!loading ?<ButtonLoader /> : "Continue"}
+                {loading ?<ButtonLoader /> : "Continue"}
               </button>
             )}
             <p className="have-an-account bold">
