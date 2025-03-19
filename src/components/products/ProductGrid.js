@@ -71,7 +71,7 @@ const ProductGrid = ({ categoryId = null }) => {
   }, [categories]);
 
   const handleViewAll = (category) => {
-    navigate(`/store/product/categories/${category.id}`, { state: { category } });
+    navigate(`/store/product/categories/${category.name}`, { state: { category } });
   };
 
   const handleAddToCart = (product) => {

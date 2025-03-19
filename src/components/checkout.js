@@ -144,11 +144,11 @@ const CheckoutPage = () => {
         // Prevent default form submission
             setLoading(true);
         // confirm user is logged in
-        let loggedInUser = localStorage.getItem('authToken');
+        let currentUser = localStorage.getItem('user');
         
         const checkingOutProducts = JSON.parse(localStorage.getItem('pmallCart'))
 
-        if(!loggedInUser) {
+        if(!user.loggedIn) {
             // Register new User
             fetch("https://api.pmall.com.ng/api/v1/customer/register", {
           method: "POST",
@@ -175,14 +175,13 @@ const CheckoutPage = () => {
                 });
            
         }
-        const tokenToUse = loggedInUser ? user?.token : customer?.token;
+        const tokenToUse = user?.loggedIn === true ? user?.token : customer?.token;
         const requestBody = {
-         customer_id: loggedInUser ? user.id : customer?.customer.id,
-         products: checkingOutProducts.map(product => ({
-             product_id: product.id,
+         customer_id: user?.loggedIn === true ? user?.id : customer?.customer.id,
+         products: checkingOutProducts.map( product => ({
+            product_id: product.id,
              quantity: product.amtItems
            }))
-
     }
             fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
                 method: "POST",
