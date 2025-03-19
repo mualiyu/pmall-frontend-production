@@ -114,6 +114,7 @@ export const VendorSignupProvider = ({ children }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent default form submission
+    console.log(loading);
     setLoading(true);
     inputValues.device_name = 1234;
 
@@ -171,6 +172,7 @@ export const VendorSignupProvider = ({ children }) => {
         console.log(err);
         setLoading(false);
       });
+      console.log(loading);
   };
 
   const customerLogin = async (e) => {
@@ -385,7 +387,7 @@ export const VendorSignupProvider = ({ children }) => {
   };
 
   const getPackages = async (e) => {
-    setLoading(true);
+    // setLoading(true);
 
     fetch("https://api.pmall.com.ng/api/v1/account-packages/all", {
       method: "GET",

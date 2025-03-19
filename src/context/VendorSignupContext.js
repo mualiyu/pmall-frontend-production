@@ -65,7 +65,7 @@ export const VendorSignupProvider = ({ children }) => {
      
       const handleLogin = async (e) => {
         e.preventDefault(); // Prevent default form submission
-        setLoading(true);
+        setLoading(false);
         const loginData = { ...inputValues, device_name: 1234 };
       
         try {

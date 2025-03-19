@@ -32,6 +32,8 @@ const Login = () => {
     toastMsg,
     toastType,
   } = useVendor();
+  console.log(loading)
+  
   return (
     <section>
       <div className="login-screen">
@@ -88,10 +90,10 @@ const Login = () => {
               </span>
               <button
                 className="login-btn bold"
-                disabled={!loading}
+                disabled={loading}
                 type="submit"
                 onClick={handleLogin}>
-                {!loading ? <ButtonLoader /> : "Login"}
+                {loading ? <ButtonLoader /> : "Login"}
               </button>
               <p className="center">Don't have an account yet?</p>
               <Link to="/auth/app/Signup">

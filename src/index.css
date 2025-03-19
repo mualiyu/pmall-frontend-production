@@ -409,6 +409,9 @@ button {
   font-size: 12px;
   font-weight: 700;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .reset-password .right .container form button.reset-btn {
   background-color: var(--primary-bg-color);
@@ -435,6 +438,9 @@ button {
   border: none;
   margin-bottom: 36px;
   font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .signup-screen .right .main form button.continue-btn.affilate {
   margin-bottom: 16px;
