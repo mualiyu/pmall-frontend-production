@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import Loading from "../../utils/loading";
 import ProductGrid from "../products/ProductGrid";
 import CategorySlider from '../../utils/categoryCarousel';
-
+import useProductCategories from "../../hooks/useProductCategories";
 
 const StoreFront = () => {
     const [loading, setLoading] = useState(false);
-    const [categories, setProductCategories] = useState(null)
+    const { productCategories, error } = useProductCategories();
   
     useEffect(()=>{
     },[])
@@ -78,7 +78,7 @@ const StoreFront = () => {
             </div>
         </div>
         <div className="row  w-90" style={{margin: '20px auto'}}>
-            <CategorySlider categories={categories} />
+            <CategorySlider categories={productCategories} />
         </div>
             <div className='px flex flex-col g-40 w-90'>
                 <div className='flex flex-col g-40'>

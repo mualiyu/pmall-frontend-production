@@ -103,7 +103,7 @@ function Layout() {
                   <Route path="/app/products/list" element={<ProductList />} />
                   <Route path="/app/affilates" element={<Affilates />} />
                   <Route path="/app/affilates/details" element={<AffilateDetails />} />
-                  <Route path="/app/network/genealogy" element={<MyNetwork />} />
+                  <Route path="app/network/genealogy/" element={<MyNetwork />} />
                   <Route path="/app/products" element={<Products />} />
                   <Route path="/app/categories" element={<Categories />} />
                   <Route path="/app/gallery" element={<Gallery />} />

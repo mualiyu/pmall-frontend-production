@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useUser } from "../../context/UserContext";
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
@@ -15,7 +15,7 @@ function Header() {
     const [loading, setLoading] = useState(false);
     const { storeCategories, error } = useCategories();
     const extraLinks = ['Health', 'Wellness', 'Fitness', 'Beauty', 'Personal Care', 'Combo Products', 'Become an Affiliate'];
-    const [categories, setProductCategories] = useState(null);
+    const [categories, setProductCategories] = useState([]);
     const { cartCount } = useCart();
     const { user } = useUser();
 
@@ -27,29 +27,29 @@ function Header() {
         navigate("/");
     }
 
-    const getProductsCategories = () => {
+    const getProductsCategories = useCallback(() => {
         setLoading(true);
         fetch("https://api.pmall.com.ng/api/v1/public/products/get-all-categories", {
             method: "GET",
             headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            Accept: "application/json",
+                "Content-Type": "application/json;charset=UTF-8",
+                Accept: "application/json",
             },
         })
             .then((resp) => resp.json())
             .then((result) => {
-            setProductCategories(result.data);
-            setLoading(false);
+                setProductCategories(result.data);
+                setLoading(false);
             })
-            .catch((err) => {
-            setLoading(false);
+            .catch(() => {
+                setLoading(false);
             });
-    };
+    }, []);
 
     useEffect(()=>{
         getProductsCategories()
         setItemsOnCart(JSON.parse(localStorage.getItem("pmallCart")))
-    },[])
+    },[getProductsCategories])
 
 return (
     <>

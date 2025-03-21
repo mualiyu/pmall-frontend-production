@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 const CategorySlider = ({ categories }) => {
   const settings = {
     dots: false,
+    lazyLoad: true,
+    arrows: false,
     infinite: true,
     slidesToShow: 7,
     slidesToScroll: 1,
