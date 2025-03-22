@@ -3,14 +3,14 @@ import "./App.css";
 import "./assets/fonts/fonts/fonts.css";
 import Application from "./components";
 import { UserProvider } from "./context/UserContext";
-import { VendorSignupProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import { CategoryProvider } from "./context/CategoryContext";
 
 function App() {
   return (
     <div className="layout">
-      <VendorSignupProvider>
+      <AuthProvider>
         <UserProvider>
         <CategoryProvider>
           <CartProvider>
@@ -18,7 +18,7 @@ function App() {
           </CartProvider>
           </CategoryProvider>
         </UserProvider>
-      </VendorSignupProvider>
+      </AuthProvider>
     </div>
   );
 }
