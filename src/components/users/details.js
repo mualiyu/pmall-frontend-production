@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
-import { useVendor } from "../../context/VendorSignupContext";
+import { useVendor } from "../../context/AuthContext";
 import Modal from "@mui/material/Modal";
 import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
