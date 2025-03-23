@@ -4,7 +4,7 @@ import { useUser } from "./UserContext";
 
 const AuthContext = createContext();
 
-export const VendorSignupProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [inputValues, setState] = useState({});
   const [submittedValues, setSubmittedValues] = useState({});
   const [loading, setLoading] = useState(false);
@@ -427,6 +427,7 @@ export const VendorSignupProvider = ({ children }) => {
         onForgotPasswordHandler,
         handleResetPassword,
         handleVerifyToken,
+        setLoading,
         toastMsg,
         toastType,
         submittedValues,
