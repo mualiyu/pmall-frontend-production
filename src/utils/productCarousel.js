@@ -13,7 +13,7 @@ const ProductCarousel = ({ products }) => {
     slidesToShow: 7,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 1000,
+    speed: 3500,
     pauseOnHover: true,
     autoplaySpeed: 2000,
     cssEase: "linear",
