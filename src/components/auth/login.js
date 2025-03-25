@@ -51,7 +51,7 @@ const Login = () => {
             <p className="bold">Welcome back, you've been missed!</p>
             <form action="">
               <div className="pos-rel">
-                <label className="abs"> Username / Email </label>
+                <label className="abs"> Username / Email2 </label>
                 <input
                   type="text"
                   className="form-control"

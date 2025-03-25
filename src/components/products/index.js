@@ -23,7 +23,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 // import { useVendor } from "../../context/VendorSignupContext";
-import { useVendor } from "../../context/AuthContext";
+import { useVendor } from "../../context/VendorSignupContext";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useUser } from "../../context/UserContext";
