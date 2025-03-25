@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 import { useUser } from "../../context/UserContext";
 import PersonIcon from '@mui/icons-material/Person';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useCart } from "../../context/CartContext"
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -137,7 +137,7 @@ return (
                                     &nbsp; &nbsp; &nbsp;
                                     <Link to="/product/cart" className="bold flex alc no__underline">
                                         <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
-                                            <ShoppingBasketIcon />
+                                            <ShoppingCartIcon />
                                         </Badge>
                                         <p className="cart__count">
                                             {itemsOnCart?.length === 0 ? 0 : itemsOnCart?.length }

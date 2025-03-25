@@ -87,7 +87,7 @@ const ProductGrid = ({ categoryId = null }) => {
       setCartMessage(
         <>
           {product.name} updated in cart! <br />
-          <Link to="/product/cart" style={{ color: "orange", textDecoration: "underline" }}>
+          <Link to="/cart" style={{ color: "orange", textDecoration: "underline" }}>
             View Cart
           </Link>
         </>
@@ -97,7 +97,7 @@ const ProductGrid = ({ categoryId = null }) => {
       setCartMessage(
         <>
           {product.name} added to cart! <br />
-          <Link to="/product/cart" style={{ color: "orange", fontWeight: 700, textDecoration: "underline" }}>
+          <Link to="/cart" style={{ color: "orange", fontWeight: 700, textDecoration: "underline" }}>
             View Cart
           </Link>
         </>

@@ -5,8 +5,7 @@ import CategorySlider from '../../utils/categoryCarousel';
 import useProductCategories from "../../hooks/useProductCategories";
 
 const StoreFront = () => {
-    const [loading, setLoading] = useState(false);
-    const { productCategories, error } = useProductCategories();
+    const { productCategories, loading, error } = useProductCategories();
   
     useEffect(()=>{
     },[])
@@ -14,7 +13,7 @@ const StoreFront = () => {
         <div className="store-container">
             <Loading loading={loading} />
             
-<div className="site__content__main">
+<div className="site__content__main" style={{marginTop: '17%'}}>
         <div class="section imgBanners style6 no-pt-section">
             <div class="bannerContain">
                 <div class="collection-banners">
@@ -29,6 +28,9 @@ const StoreFront = () => {
                                     <span class="ttl"><span class="tt-small">WELLNESS PRODUCTS</span></span>
                                 </a>
                             </div>
+                                <div>
+                                    <img src="/Screenshot 2024-03-19 145936.png" alt="" className='w-full b-15'/>
+                                </div>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 col-lg-6 img-banner-item">
@@ -81,7 +83,7 @@ const StoreFront = () => {
             <CategorySlider categories={productCategories} />
         </div>
             <div className='px flex flex-col g-40 w-90'>
-                <div className='flex flex-col g-40'>
+                {/* <div className='flex flex-col g-40'>
                     <div className='flex g-20'>
                         <div>
                             <img src="/Screenshot 2024-03-19 145936.png" alt="" className='w-full'/>
@@ -91,7 +93,7 @@ const StoreFront = () => {
                         </div>
                        
                     </div>
-                </div>
+                </div> */}
                     <div className='flex justsb g-10' style={{width: '100%'}}>
                     <ProductGrid />
                     </div>

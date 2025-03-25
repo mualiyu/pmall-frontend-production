@@ -63,6 +63,7 @@ const CheckoutPage = () => {
         password_confirmation: ''
     });
     const [customer, setCustomer] = useState()
+    
     const [loading, setLoading] = useState(false)
     const [value, setValue] = useState(0);
    
@@ -102,8 +103,7 @@ const CheckoutPage = () => {
 
 
   const handleChangeAccount = () => {
-      setLoading(true);
-      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
       window.location.reload();
   }
 
@@ -130,6 +130,7 @@ const CheckoutPage = () => {
         });
       };
     const [cart,setCart] =  useState([])
+    const [btnLoader, setBtnLoader] = useState(false);
     const {cartLength} = useCart();
     const totalPrice = cart.map(item => item.selling_price * item.amtItems).reduce((acc, curr) => acc + curr, 0);
     const getCart = () => {
@@ -141,96 +142,99 @@ const CheckoutPage = () => {
     }
 
     const onSubmit = async () => {
-        // Prevent default form submission
-            setLoading(true);
-        // confirm user is logged in
-        let currentUser = localStorage.getItem('user');
-        
-        const checkingOutProducts = JSON.parse(localStorage.getItem('pmallCart'))
-
-        if(!user.loggedIn) {
-            // Register new User
-            fetch("https://api.pmall.com.ng/api/v1/customer/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(formDetails),
-        })
-          .then((resp) => resp.json())
-          .then((result) => {
-            setLoading(false);
-            console.log(result);
-            if (result.status) {
-                // user is registered, get their token and save
-                setCustomer(result)
-                localStorage.setItem("authToken", JSON.stringify(result.token));
-            }else {
-                
-            }
-        })
-            .catch((err) => {
-                console.log(err);
+        try {
+            setBtnLoader(true);
+            console.log("Button clicked, loader set to true");
+    
+            const checkingOutProducts = JSON.parse(localStorage.getItem('pmallCart')) || [];
+            
+            if (!user?.loggedIn) {
+                console.log("User not logged in, attempting registration...");
+    
+                const registerResponse = await fetch("https://api.pmall.com.ng/api/v1/customer/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json;charset=UTF-8",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify(formDetails),
                 });
-           
-        }
-        const tokenToUse = user?.loggedIn === true ? user?.token : customer?.token;
-        const requestBody = {
-         customer_id: user?.loggedIn === true ? user?.id : customer?.customer.id,
-         products: checkingOutProducts.map( product => ({
-            product_id: product.id,
-             quantity: product.amtItems
-           }))
-    }
-            fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
+    
+                const registerResult = await registerResponse.json();
+                console.log("Registration result:", registerResult);
+    
+                if (registerResult.status) {
+                    setCustomer(registerResult);
+                } else {
+                    console.error("Registration failed.");
+                    setBtnLoader(false);
+                    return;
+                }
+            }
+    
+            console.log("User:", user);
+            console.log("Customer:", customer);
+    
+            const tokenToUse = user?.loggedIn ? user?.token : customer?.token;
+            console.log("Token to be used:", tokenToUse);
+    
+            const requestBody = {
+                customer_id: user?.loggedIn ? user?.id : customer?.customer?.id,
+                products: checkingOutProducts.map(product => ({
+                    product_id: product.id,
+                    quantity: product.amtItems
+                }))
+            };
+    
+            console.log("Request Body:", requestBody);
+    
+            // Initiate checkout
+            const checkoutResponse = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
                 method: "POST",
                 headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                Accept: "application/json",
-                Authorization: "Bearer " + tokenToUse,
+                    "Content-Type": "application/json;charset=UTF-8",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + tokenToUse,
                 },
-                body: JSON.stringify(requestBody), 
-            })
-                .then((resp) => resp.json())
-                .then((result) => {
-                console.log(result);
-                if(result.status) {
-                    setLoading(false);
-                    const saleData = {
-                        sale_id: result.sale.id,
-                        amount:result.sale.total_amount
-                    }
-                    fetch("https://api.pmall.com.ng/api/v1/customer/checkout/paystack/initiate", {
-                        method: "POST",
-                        headers: {
+                body: JSON.stringify(requestBody),
+            });
+    
+            const checkoutResult = await checkoutResponse.json();
+            console.log("Checkout Result:", checkoutResult);
+    
+            if (checkoutResult.status) {
+                const saleData = {
+                    sale_id: checkoutResult.sale.id,
+                    amount: checkoutResult.sale.total_amount,
+                };
+    
+                // Initiate payment
+                const paymentResponse = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/paystack/initiate", {
+                    method: "POST",
+                    headers: {
                         "Content-Type": "application/json;charset=UTF-8",
                         Accept: "application/json",
                         Authorization: "Bearer " + tokenToUse,
-                        },
-                        body: JSON.stringify(saleData), 
-                    })
-                        .then((resp) => resp.json())
-                        .then((result) => {
-                        console.log(result);
-                        if (result.status) {
-                            console.log(result)
-                            // Function Trying to verify the transaction
-                            window.location.href = result.authorization_url;
-                            // autoVerifyTransaction(result.reference);
-                        }
-                        })
-                        .catch((err) => {
-                        console.log(err);
-                        });
-                    }
-                    })
-                    .catch((err) => {
-                    console.log(err);
-                    });
-               
-          setLoading(false);
-      };
+                    },
+                    body: JSON.stringify(saleData),
+                });
+    
+                const paymentResult = await paymentResponse.json();
+                console.log("Payment Result:", paymentResult);
+    
+                if (paymentResult.status) {
+                    console.log("Redirecting to payment page...");
+                    window.location.href = paymentResult.authorization_url;
+                }
+            }
+        } catch (error) {
+            console.error("Error during submission:", error);
+        } finally {
+            setBtnLoader(false);  // Ensure the loader is reset after the process
+            console.log("Loader reset to false");
+        }
+    };
+    
 
     useEffect(()=>{ 
         getCart()
@@ -334,7 +338,7 @@ const CheckoutPage = () => {
                             ) : (
                 <div className="profile-container">
                     <div>
-                        <div className="promo-code">
+                        <div className="promo-code w-full" style={{width: '100%'}}>
                         <div className="flex flex-col g-20">
                             <div className="flex justsb bold b-b">
                                 <p className="f-12">Logged In As </p>
@@ -350,7 +354,7 @@ const CheckoutPage = () => {
                             </div>
                             
                         </div>
-                        <div class="btn bg-accent p-25 text-center uppercase" style={{marginTop: '45px'}}  onClick={() => handleChangeAccount()} >
+                        <div class="btn bg-accent p-25 text-center uppercase" style={{marginTop: '10%',width: '35%'}}  onClick={() => handleChangeAccount()} >
                             Use a different account ?
                         </div>
 
@@ -528,9 +532,15 @@ const CheckoutPage = () => {
                             </div>
                         </div>
 
-                            <div className="btn bg-accent p-25 text-center uppercase" style={{marginTop: 25}} onClick={onSubmit}>
-                                {loading ? "loading..." : "Make Payment"}
-                            </div>
+
+                        <button 
+    className="btn bg-accent p-25 text-center uppercase"
+    style={{ marginTop: 25 }}
+    onClick={onSubmit}
+    disabled={btnLoader}
+>
+    {btnLoader ? <ButtonLoader/> : 'Pay Now!'}
+</button>
                             {/* <FlutterWaveButton {...fwConfig} className="checkout-btn pointer"/> */}
                         </div>
                     </div>

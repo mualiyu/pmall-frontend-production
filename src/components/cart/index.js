@@ -4,6 +4,7 @@ import { useCart } from "../../context/CartContext";
 import { useUser } from "../../context/UserContext";
 import currency from "../../utils/formatCurrency";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Cart = () => {
     const [cart, setCart] = useState(() => {
@@ -64,7 +65,11 @@ const Cart = () => {
                             <p className="f-12">({cart.length} items)</p>
                         </div>
                         <div>
-                        <Link to="/"><p className="back f-bold">Continue Shopping</p></Link>
+                        <Link to="/">
+                            <p className="back f-bold flex aic">
+                            <ShoppingCartIcon />
+                            Continue Shopping
+                            </p></Link>
                         </div>
                         <div className="flex alc pointer" onClick={clearCart}>
                             <DeleteOutlineIcon/>
@@ -98,18 +103,20 @@ const Cart = () => {
                                     <div>
                                         <p className="f-16">{currency(item.selling_price)}</p>
                                     </div>
-                                    <p className="f-16 pointer" onClick={() => deleteCartItem(item.id)}>x</p>
+                                    <p className="f-16 pointer" onClick={() => deleteCartItem(item.id)}>
+                                    <DeleteOutlineIcon className="trash___can"/>
+                                    </p>
                                 </div>
                             ))
                         )}
                     </div>
                 </div>
 
-                <div className="promo-code">
-                    <p className="f-12 bold">Promo code</p>
+                <div className="promo-code" style={{width: '38%'}}>
+                    {/* <p className="f-12 bold">Promo code</p> */}
                     <div className="coupon">
                         <form onSubmit={(e) => e.preventDefault()}>
-                            <input type="text" placeholder="enter promo code" />
+                            <input type="text" placeholder="Enter promo code" />
                             <button type="submit">Apply</button>
                         </form>
                     </div>
@@ -133,8 +140,8 @@ const Cart = () => {
                     </div>
 
                     {cart.length > 0 && (
-                        <Link to="/product/checkout" className="mt-lg" style={{ marginTop: 25 }}>
-                            <p className="btn bg-accent text-center uppercase">Checkout</p>
+                        <Link to="/checkout" className="mt-lg" style={{ marginTop: '20%' }}>
+                            <p className="btn bg-accent text-center uppercase">Proceed to Checkout</p>
                         </Link>
                     )}
                 </div>
