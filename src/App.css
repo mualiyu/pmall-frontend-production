@@ -1426,6 +1426,7 @@ h1 {
 } */
 .top__top__header {
   position: fixed;
+  width: 100%;
     z-index: 99999;
     background-color: white;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
