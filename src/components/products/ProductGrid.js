@@ -85,22 +85,22 @@ const ProductGrid = ({ categoryId = null }) => {
         item.id === product.id ? { ...item, amtItems: Math.max(1, (item.amtItems || 1) + numOfItems) } : item
       );
       setCartMessage(
-        <>
+        <div className="title-case">
           {product.name} updated in cart! <br />
           <Link to="/cart" style={{ color: "orange", textDecoration: "underline" }}>
             View Cart
           </Link>
-        </>
+        </div>
       );
     } else {
       cart.push({ ...product, amtItems: numOfItems });
       setCartMessage(
-        <>
+        <div className="title-case">
           {product.name} added to cart! <br />
           <Link to="/cart" style={{ color: "orange", fontWeight: 700, textDecoration: "underline" }}>
             View Cart
           </Link>
-        </>
+        </div>
       );
     }
 
@@ -126,7 +126,7 @@ const ProductGrid = ({ categoryId = null }) => {
                 </div>
                 <ul className="flex g-15">
                   {category.sub_categories?.slice(0, 7).map((sub) => (
-                    <li key={sub.id}>{sub.name}</li>
+                    <li key={sub.id} className="sub__cat__hover" > {sub.name}</li>
                   ))}
                 </ul>
               </div>

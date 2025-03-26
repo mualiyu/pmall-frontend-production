@@ -1795,6 +1795,13 @@ input:checked + .slider:before {
   background-color: white;
   /* width: 62%; */
 }
+.sub__cat__hover{
+  text-decoration: none;
+  color: white 
+}
+.sub__cat__hover:hover{
+  color: orange;
+}
 .bl-dashed {
   border-left: 1px dashed #c4c4c4;
 }

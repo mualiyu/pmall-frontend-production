@@ -109,7 +109,7 @@ return (
                                 </div>
                                 </div>
                             </div>
-                            <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '15%'}} />
+                                <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '15%'}} />
                             <form className="flex alc store-container__search" aria-label="Search form">
                                 <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
                             </form>
@@ -135,7 +135,7 @@ return (
                                     </>
                                     }
                                     &nbsp; &nbsp; &nbsp;
-                                    <Link to="/product/cart" className="bold flex alc no__underline">
+                                    <Link to="/cart" className="bold flex alc no__underline p-10">
                                         <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
                                             <ShoppingCartIcon />
                                         </Badge>

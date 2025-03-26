@@ -91,7 +91,7 @@ const Cart = () => {
                                     <div className="flex g-20 testtt">
                                         <img src={item.image} alt={item.name} />
                                         <div>
-                                            <p className="f-12 bold">{item.name}</p>
+                                            <p className="f-12 bold title-case">{item.name}</p>
                                             <p>{item.tags}</p>
                                         </div>
                                     </div>

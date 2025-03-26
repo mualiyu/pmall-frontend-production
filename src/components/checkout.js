@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useCart } from "../context/CartContext";
 import { useUser } from "../context/UserContext";
 import currency from "../utils/formatCurrency";
+import Toast from "../utils/Toast";
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import { useNavigate } from 'react-router-dom';
 import ButtonLoader from "../utils/buttonLoader";
@@ -129,8 +130,11 @@ const CheckoutPage = () => {
           [name]: value,
         });
       };
-    const [cart,setCart] =  useState([])
+    const [cart,setCart] =  useState([]);
+    const [toast, setToast] = useState(null);
     const [btnLoader, setBtnLoader] = useState(false);
+    const [customerData, setCustomerData] = useState(null);
+    const [checkoutMessage, setCheckoutMessage] = useState("");
     const {cartLength} = useCart();
     const totalPrice = cart.map(item => item.selling_price * item.amtItems).reduce((acc, curr) => acc + curr, 0);
     const getCart = () => {
@@ -141,55 +145,182 @@ const CheckoutPage = () => {
         return;
     }
 
-    const onSubmit = async () => {
-        try {
-            setBtnLoader(true);
-            console.log("Button clicked, loader set to true");
+    // const onSubmit = async () => {
+    //     try {
+    //         setBtnLoader(true);
+    //         console.log("Button clicked, loader set to true");
     
-            const checkingOutProducts = JSON.parse(localStorage.getItem('pmallCart')) || [];
+    //         const checkingOutProducts = JSON.parse(localStorage.getItem('pmallCart')) || [];
             
-            if (!user?.loggedIn) {
-                console.log("User not logged in, attempting registration...");
+    //         if (!user?.loggedIn) {
+    //             console.log("User not logged in, attempting registration...");
     
-                const registerResponse = await fetch("https://api.pmall.com.ng/api/v1/customer/register", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json;charset=UTF-8",
-                        Accept: "application/json",
-                    },
-                    body: JSON.stringify(formDetails),
-                });
+    //             const registerResponse = await fetch("https://api.pmall.com.ng/api/v1/customer/register", {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json;charset=UTF-8",
+    //                     Accept: "application/json",
+    //                 },
+    //                 body: JSON.stringify(formDetails),
+    //             });
     
-                const registerResult = await registerResponse.json();
-                console.log("Registration result:", registerResult);
+    //             const registerResult = await registerResponse.json();
+    //             console.log("Registration result:", registerResult);
     
-                if (registerResult.status) {
-                    setCustomer(registerResult);
-                } else {
-                    console.error("Registration failed.");
-                    setBtnLoader(false);
-                    return;
-                }
+    //             if (registerResult.status) {
+    //                 setCustomer(registerResult);
+    //             } else {
+    //                 console.error("Registration failed.");
+    //                 setBtnLoader(false);
+    //                 return;
+    //             }
+    //         }
+    
+    //         console.log("User:", user);
+    //         console.log("Customer:", customer);
+    
+    //         const tokenToUse = user?.loggedIn ? user?.token : customer?.token;
+    //         console.log("Token to be used:", tokenToUse);
+    
+    //         const requestBody = {
+    //             customer_id: user?.loggedIn ? user?.id : customer?.customer?.id,
+    //             products: checkingOutProducts.map(product => ({
+    //                 product_id: product.id,
+    //                 quantity: product.amtItems
+    //             }))
+    //         };
+    
+    //         console.log("Request Body:", requestBody);
+    
+           
+    //         const checkoutResponse = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json;charset=UTF-8",
+    //                 Accept: "application/json",
+    //                 Authorization: "Bearer " + tokenToUse,
+    //             },
+    //             body: JSON.stringify(requestBody),
+    //         });
+    
+    //         const checkoutResult = await checkoutResponse.json();
+    //         console.log("Checkout Result:", checkoutResult);
+    
+    //         if (checkoutResult.status) {
+    //             const saleData = {
+    //                 sale_id: checkoutResult.sale.id,
+    //                 amount: checkoutResult.sale.total_amount,
+    //             };
+    
+    //             const paymentResponse = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/paystack/initiate", {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json;charset=UTF-8",
+    //                     Accept: "application/json",
+    //                     Authorization: "Bearer " + tokenToUse,
+    //                 },
+    //                 body: JSON.stringify(saleData),
+    //             });
+    
+    //             const paymentResult = await paymentResponse.json();
+    //             console.log("Payment Result:", paymentResult);
+    
+    //             if (paymentResult.status) {
+    //                 console.log("Redirecting to payment page...");
+    //                 window.location.href = paymentResult.authorization_url;
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.error("Error during submission:", error);
+    //     } finally {
+    //         setBtnLoader(false);  
+    //         console.log("Loader reset to false");
+    //     }
+    // };
+    
+    const handleErrors = (errorResponse) => {
+        if (!errorResponse?.message) return "An unknown error occurred.";
+    
+        const errorMessages = Object.entries(errorResponse.message).map(
+            ([field, messages]) => `${field}: ${messages.join(", ")}`
+        );
+    
+        return errorMessages.join("\n"); // Joining all error messages for display
+    };
+
+    
+
+
+    const registerUser = async () => {
+        if (user?.loggedIn) return user; // If logged in, return user data.
+    
+        console.log("User not logged in, attempting registration...");
+        setToast({ message: "Attempting registration...", type: "warning" });
+        setTimeout(() => setToast(null), 5000);
+        try {
+            const response = await fetch("https://api.pmall.com.ng/api/v1/customer/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify(formDetails),
+            });
+    
+            const result = await response.json();
+            console.log("Registration result:", result);
+    
+            if (!result.status) {
+                setToast({ message: `Registration Failed... ${result}`, type: "error" });
+                setTimeout(() => setToast(null), 5000);
+                return false; // Registration failed
             }
     
-            console.log("User:", user);
-            console.log("Customer:", customer);
+            setCustomer(result);
+            console.log(result);
+            setToast({ message: "User registered... attempting checkout...", type: "success" });
+            setTimeout(() => setToast(null), 5000);
+            // setCheckoutMessage(handleErrors(result));
+            return result; // Return newly registered customer data
     
-            const tokenToUse = user?.loggedIn ? user?.token : customer?.token;
-            console.log("Token to be used:", tokenToUse);
+        } catch (error) {
+            setToast({ message: `Error during registration: ${error}`, type: "error" });
+        setTimeout(() => setToast(null), 5000);
+            setCheckoutMessage(handleErrors(error));
+            return false;
+        }
+    };
     
-            const requestBody = {
-                customer_id: user?.loggedIn ? user?.id : customer?.customer?.id,
-                products: checkingOutProducts.map(product => ({
-                    product_id: product.id,
-                    quantity: product.amtItems
-                }))
-            };
+    const initiateCheckout = async (customerData) => {
+        const tokenToUse = user?.loggedIn ? user?.token : customerData?.token;
+        const customerId = user?.loggedIn ? user?.id : customerData?.customer.id;
+        
+        if (!tokenToUse || !customerId) {
+            setToast({ message: "Token or Customer ID missing! Cannot proceed. Kindly login again as we couldn't verify the user", type: "error" });
+            setTimeout(() => setToast(null), 5000);
+            return false;
+        }
     
-            console.log("Request Body:", requestBody);
+        const checkingOutProducts = JSON.parse(localStorage.getItem('pmallCart')) || [];
+        if (checkingOutProducts.length === 0) {
+            setToast({ message: "Cart is empty! Cannot proceed.", type: "error" });
+            setTimeout(() => setToast(null), 5000);
+            console.error("Cart is empty! Cannot proceed.");
+            return false;
+        }
     
-            // Initiate checkout
-            const checkoutResponse = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
+        const requestBody = {
+            customer_id: customerId,
+            products: checkingOutProducts.map(product => ({
+                product_id: product.id,
+                quantity: product.amtItems
+            }))
+        };
+    
+        console.log("Checkout Request Body:", requestBody);
+    
+        try {
+            const response = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json;charset=UTF-8",
@@ -199,46 +330,122 @@ const CheckoutPage = () => {
                 body: JSON.stringify(requestBody),
             });
     
-            const checkoutResult = await checkoutResponse.json();
-            console.log("Checkout Result:", checkoutResult);
+            const result = await response.json();
+            console.log("Checkout Result:", result);
     
-            if (checkoutResult.status) {
-                const saleData = {
-                    sale_id: checkoutResult.sale.id,
-                    amount: checkoutResult.sale.total_amount,
-                };
-    
-                // Initiate payment
-                const paymentResponse = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/paystack/initiate", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json;charset=UTF-8",
-                        Accept: "application/json",
-                        Authorization: "Bearer " + tokenToUse,
-                    },
-                    body: JSON.stringify(saleData),
-                });
-    
-                const paymentResult = await paymentResponse.json();
-                console.log("Payment Result:", paymentResult);
-    
-                if (paymentResult.status) {
-                    console.log("Redirecting to payment page...");
-                    window.location.href = paymentResult.authorization_url;
-                }
+            if (!result.status) {
+                setToast({ message: `Checkout initiation failed: ${result}`, type: "error" });
+            setTimeout(() => setToast(null), 5000);
+                console.error("Checkout initiation failed:", result);
+                return false;
             }
+            setToast({ message: "Product(s) mapped to user... Initiating payment...", type: "warning" });
+            setTimeout(() => setToast(null), 5000);
+            return result.sale; // Return sale data for payment
+    
         } catch (error) {
-            console.error("Error during submission:", error);
-        } finally {
-            setBtnLoader(false);  // Ensure the loader is reset after the process
-            console.log("Loader reset to false");
+            setToast({ message: "Error during checkout initiation:", type: "error" });
+            setTimeout(() => setToast(null), 5000);
+            console.error("Error during checkout initiation:", error);
+            return false;
         }
     };
     
+    const initiatePayment = async (saleData, customerData) => {
+        const tokenToUse = user?.loggedIn ? user?.token : customerData?.token;
+        if (!tokenToUse) {
+            setToast({ message: "Token is missing! Cannot proceed.", type: "error" });
+            setTimeout(() => setToast(null), 5000);
+            console.error("Token is missing! Cannot proceed.");
+            return false;
+        }
+    
+        const paymentData = {
+            sale_id: saleData.id,
+            amount: saleData.total_amount,
+        };
+    
+        console.log("Payment Request Body:", paymentData);
+    
+        try {
+            const response = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/paystack/initiate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + tokenToUse,
+                },
+                body: JSON.stringify(paymentData),
+            });
+    
+            const result = await response.json();
+            console.log("Payment Result:", result);
+    
+            if (!result.status) {
+                setToast({message: `Payment initiation failed: ${result.message}`, type: "error" });
+            setTimeout(() => setToast(null), 5000);
+                console.error("Payment initiation failed:", result);
+                return false;
+            }
+    
+            console.log("Redirecting to payment page...");
+            window.location.href = result.authorization_url;
+            return true; // Payment initiated successfully
+    
+        } catch (error) {
+            setToast({message: `Error during payment initiation: ${error}`, type: "error" });
+            setTimeout(() => setToast(null), 5000);
+            console.error("Error during payment initiation:", error);
+            return false;
+        }
+    };
+    
+    const onSubmit = async () => {
+        try {
+            setBtnLoader(true);
+            console.log("Button clicked, loader set to true");
+    
+            const customerData = await registerUser();
+            if (!customerData) {
+                setToast({message: `Registration step failed!`, type: "error" });
+            setTimeout(() => setToast(null), 5000);
+                console.error("Registration step failed!");
+                setBtnLoader(false);
+                return;
+            }
+    
+            const saleData = await initiateCheckout(customerData);
+            if (!saleData) {
+                setToast({message: `Checkout step failed!`, type: "error" });
+            setTimeout(() => setToast(null), 5000);
+                console.error("Checkout step failed!");
+                setBtnLoader(false);
+                return;
+            }
+    
+            const paymentSuccess = await initiatePayment(saleData, customerData);
+            if (!paymentSuccess) {
+                setToast({message: `Payment step failed!`, type: "error" });
+                setTimeout(() => setToast(null), 5000);
+                console.error("Payment step failed!");
+                setBtnLoader(false);
+            }
+            
+        } catch (error) {
+            setToast({message: `Error during submission: ${error}`, type: "error" });
+                setTimeout(() => setToast(null), 5000);
+            console.error("Error during submission:", error);
+        } finally {
+            setBtnLoader(false);
+        }
+    };
+
+    
+
 
     useEffect(()=>{ 
         getCart()
-        console.log(user);
+        console.log(cart);
         return;
     },[])
 
@@ -270,6 +477,9 @@ const CheckoutPage = () => {
     
     return (
         <div className="mt-20p">
+            
+            {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+
             <Link to="/"><p className="back f-bold">Back to Market Place</p></Link>
             <div className="checkout-container flex g-20">
             <div className="checkout">
@@ -497,9 +707,9 @@ const CheckoutPage = () => {
                                     <div className="flex items-center g-10">
                                         <img src={item.image} alt="" />
                                         <div>
-                                            <p className="f-12 bold">{item.name}</p>
+                                            <p className="f-12 bold title-case">{item.name}</p>
                                             <p>{item.tags}</p>
-                                            <p className="f-12">&#x20A6;{currency(item.selling_price)}</p>
+                                            <p className="f-12">{currency(item.selling_price)}</p>
                                         </div>
                                     </div>
                                     <div className="flex g-10 all-center cart-item-count">

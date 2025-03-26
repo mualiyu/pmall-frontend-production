@@ -272,7 +272,7 @@ tbody {
     z-index:99999;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: top;
     opacity: 0;
     pointer-events: none;
     transition: all 0.2s;
@@ -1298,11 +1298,12 @@ h1 {
 }
 .cart-message {
   position: fixed;
-    bottom: 9px;
+    bottom: 3%;
     background-color: green;
     color: white;
     padding: 9px 22px;
     z-index: 9999999;
+    min-width: 25%;
     right: 0%;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -1504,7 +1505,7 @@ h1 {
 @media (min-width: 576px) {
   .col-sssm-2 {
       flex: 0 0 auto;
-      width: 15.5%;
+      width: 15.3%;
       min-width: 200px;
   }
 }
