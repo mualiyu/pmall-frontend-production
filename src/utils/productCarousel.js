@@ -54,6 +54,7 @@ const ProductCarousel = ({ products }) => {
                         <div className="product_desc">
                           <div className="flex-col g-5">
                             <p className="product__name bold uppercase">{LimitWord(product.name || "Unnamed Product", 3)}</p>
+                            <p className="product__name text-muted">{LimitWord(product.description, 7)}</p>
                             <h3 className="red bold product__cost">
                               {currency(product.selling_price || 0)}
                               &nbsp;
