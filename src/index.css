@@ -1795,6 +1795,16 @@ input:checked + .slider:before {
   background-color: white;
   /* width: 62%; */
 }
+.whatsapp__icon {
+  position: fixed;
+    bottom: 5%;
+    z-index: 999;
+    right: 0;
+    background-color: red;
+}
+.text-muted{
+  color: #676767!important;
+}
 .sub__cat__hover{
   text-decoration: none;
   color: white 

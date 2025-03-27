@@ -13,7 +13,7 @@ const ProductCarousel = ({ products }) => {
     lazyLoad: true,
     arrows: false,
     slidesToShow: 7,
-    autoplay: true,
+    autoplay: false,
     speed: 1000,
     pauseOnHover: true,
     autoplaySpeed: 2000,

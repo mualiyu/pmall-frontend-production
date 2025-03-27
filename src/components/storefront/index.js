@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Loading from "../../utils/loading";
 import ProductGrid from "../products/ProductGrid";
 import CategorySlider from '../../utils/categoryCarousel';
+import { Link } from "react-router-dom";
 import useProductCategories from "../../hooks/useProductCategories";
 
 const StoreFront = () => {
@@ -99,7 +100,11 @@ const StoreFront = () => {
                     </div>
                 
             </div>
+            <a className="whatsapp__icon" aria-label="Chat on WhatsApp" href="https://wa.me/2347084802028" target="_blank" rel="noopener noreferrer">
+    <img alt="Chat on WhatsApp" src="icons8-whatsapp.gif" />
+</a>
         </div>
+      
         </div>
      );
 }
