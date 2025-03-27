@@ -1801,6 +1801,8 @@ input:checked + .slider:before {
     z-index: 999;
     right: 0;
     background-color: red;
+    width: 5%;
+    height: 7%;
 }
 .text-muted{
   color: #676767!important;

@@ -30,7 +30,7 @@ const StoreFront = () => {
                                 </a>
                             </div>
                                 <div>
-                                    <img src="/Screenshot 2024-03-19 145936.png" alt="" className='w-full b-15'/>
+                                    <img src="/pmall___ad.png" alt="" className='w-full b-15'/>
                                 </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@ const StoreFront = () => {
                 
             </div>
             <a className="whatsapp__icon" aria-label="Chat on WhatsApp" href="https://wa.me/2347084802028" target="_blank" rel="noopener noreferrer">
-    <img alt="Chat on WhatsApp" src="icons8-whatsapp.gif" />
+    <img alt="Chat on WhatsApp" src="icons8-whatsapp.gif" style={{width: '100%'}} />
 </a>
         </div>
       

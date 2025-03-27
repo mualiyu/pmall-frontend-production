@@ -139,7 +139,8 @@
   padding: 11px 0;
 }
 .css-2slu8c {
-  height: 70% !important;
+  height: 90% !important;
+  width: 90%!important;
   overflow-y: auto;
 }
 .mb-7 {
@@ -492,7 +493,7 @@ tr:nth-child(even) {
   margin: 0 !important;
 }
 .no-border {
-  border: none;
+  border: none!important;
 }
 css-6od3lo-MuiChip-label {
   padding: 3px !important;
@@ -1260,7 +1261,7 @@ h1 {
   border-radius: var(--bs-card-border-radius);
 } */
 .product__name {
-  font-size: 13px;
+  font-size: 14px;
   color: #111111;
   text-transform: capitalize;
 }

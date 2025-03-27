@@ -147,6 +147,31 @@ return (
                         </div>
                         <div className="flex alc mb-lg">
                                 <div className="flex g-20 alc mr-lg">
+                                <div className="callout">
+                            <button className="callout_btn"> 
+                            <MenuIcon/>
+                             </button>
+                           
+                            <div className="callout_menu">
+                                <div className="flex justsb">
+                                    <div className="callout__main__menu">
+                                    
+                                       
+                                       <ul>
+                                        {categories?.map(category => (
+                                            <li> {category.name}</li>
+                                        ))}
+                                        </ul> 
+                                    </div>
+                                </div>
+                                </div>
+                           </div>
+
+
+
+
+
+
                                     {loading ? (
                                         <p>Loading categories...</p>
                                     ) : error ? (
@@ -167,7 +192,13 @@ return (
                                     >
                                         <option value="1">Browse All Categories</option>
                                         {categories?.map(category => (
-                                            <option value={category.name} key={category.id}>{category.name}</option>
+                                            <option value={category.name} key={category.id} className="uppercase">
+                                                <div>
+                                                <img src={category.category_image} alt={category.name}/>
+                                            </div>
+                                               
+                                                &nbsp; {category.name}
+                                                </option>
                                         ))}
                                     </select>
 

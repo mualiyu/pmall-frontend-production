@@ -390,6 +390,7 @@ const CheckoutPage = () => {
     
             console.log("Redirecting to payment page...");
             window.location.href = result.authorization_url;
+            localStorage.removeItem("pmallCart");
             return true; // Payment initiated successfully
     
         } catch (error) {

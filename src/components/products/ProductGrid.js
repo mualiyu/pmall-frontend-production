@@ -4,7 +4,7 @@ import axios from "axios";
 import { addToCart, getCart } from "../../utils/cartUtils";
 import LimitWord from "../../utils/limitWord";
 import currency from "../../utils/formatCurrency";
-
+import FindCategoryByID from "../../utils/findCategoryByID";
 const PRODUCTS_ENDPOINT = "https://api.pmall.com.ng/api/v1/public/products/list-all";
 const CATEGORIES_ENDPOINT = "https://api.pmall.com.ng/api/v1/public/products/get-all-categories";
 
@@ -12,6 +12,7 @@ const ProductGrid = ({ categoryId = null }) => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [productsByCategory, setProductsByCategory] = useState({});
+  const [categoryName, setCategoryName] = useState("Loading...");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cartMessage, setCartMessage] = useState("");
@@ -35,10 +36,11 @@ const ProductGrid = ({ categoryId = null }) => {
       if (!productData?.data || !Array.isArray(productData.data)) {
         throw new Error("Invalid product data format");
       }
-
+      
       // Group products by category_id
       const groupedProducts = productData.data.reduce((acc, product) => {
         if (!product.category_id) return acc;
+        // fetchCategory(product.category_id);
         acc[product.category_id] = acc[product.category_id] || [];
         acc[product.category_id].push(product);
         return acc;
@@ -54,8 +56,20 @@ const ProductGrid = ({ categoryId = null }) => {
     }
   }, [categoryId]); // Only recreate function when `categoryId` changes
 
+
+//   const fetchCategory = async (cat__id) => {
+//     console.log(cat__id);
+//     const categoryData = await FindCategoryByID(CATEGORIES_ENDPOINT, cat__id);
+//     console.log(categoryData);
+//     setCategoryName(categoryData ? categoryData : "Unknown Category");
+// };
+
+
   useEffect(() => {
     fetchCategoriesAndProducts();
+    
+
+ 
   }, [fetchCategoriesAndProducts]);
 
   const categoryBackgrounds = useMemo(
