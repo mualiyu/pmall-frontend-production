@@ -2231,6 +2231,22 @@ right connector from last child*/
 /*Thats all. I hope you enjoyed it.
 Thanks :)*/
 
+.specifications{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.specifications h1{
+  font-size: 20px;
+}
+
+.specifications .spec{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
 @media (min-width:320px)  {
 
