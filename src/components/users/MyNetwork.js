@@ -44,7 +44,7 @@ function MyNetwork() {
 			return;
 		}
 	
-		copyToClipboard(`My Ref: ${user.refId} copied!`, (message, type) => {
+		copyToClipboard(`${user.refId}`, (message, type) => {
 			setToast({ message, type });
 			setTimeout(() => setToast(null), 5000);
 		});
@@ -115,7 +115,7 @@ function MyNetwork() {
         <>
 		 {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 		<div className="flex w-100 vbczsds">
-		<p class="flex alc"> My Referral ID <span className="text-muted py-5"> {user?.refId} </span> <ContentCopyIcon title="Click to copy" 
+		<p class="flex alc" onClick={handleCopy} > My Referral ID <span className="text-muted py-5"> {user?.refId} </span> <ContentCopyIcon title="Click to copy" 
         onClick={handleCopy} 
         style={{ cursor: 'pointer', marginLeft: '8px' }} /></p>
 <p> Account Type <span className="text-muted py-5"> {user?.accountType} </span> </p>
