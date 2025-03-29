@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useUser } from "../../context/UserContext";
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
+import XIcon from '@mui/icons-material/X';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 function Footer() {
    
@@ -106,9 +108,9 @@ function Footer() {
                             <div className='flex flex-col g-20'>
                                 <h3>Connect Us</h3>
                                 <div className='flex flex-col g-20'>
-                                    <p>Address: Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                    <p>Hotline: +234 9012345678</p>
-                                    <p>Email: pmall@gmail.com</p>
+                                    <p>Support: +234 806 571 1318</p>
+                                    <p>Sales: +234 708 480 2028</p>
+                                    <p>Email: support@pmall.com.ng</p>
                                 </div>    
                             </div>
                         </div>
@@ -123,16 +125,18 @@ function Footer() {
                                     <img src="/Screenshot 2024-03-20 222720.png" alt="" />
                                 </div>
                             </div>
-                            {/* <div className='flex flex-col g-10'>
-                                <h3>Connect Us</h3>
-                                <div className='flex g-20'>
-                                    <FacebookRoundedIcon className='icon'/>
-                                    <FacebookRoundedIcon className='icon'/>
-                                    <FacebookRoundedIcon className='icon'/>
-                                    <FacebookRoundedIcon className='icon'/>
-                                </div>
-                            </div> */}
                             <div className='newsletter flex flex-col g-10'>
+                                <div className="flex">
+                                    <a href="https://www.facebook.com/share/15d9qDZ3Cv/" target="_blank">
+                                        <FacebookRoundedIcon  fontSize = 'large'/>
+                                    </a>
+                                    <a href="https://x.com/PMALLNG?t=qkObRmh0tNuWiBxgEVuJLQ&s=09" target="_blank">
+                                        <XIcon fontSize = 'large'/>
+                                    </a>
+                                    <a href="https://www.instagram.com/pmall.ng?igsh=ZXRpNW40M2doNm13" target="_blank">
+                                        <InstagramIcon fontSize = 'large'/>
+                                    </a>
+                                </div>
                                 <h3>Newsletter</h3>
                                 <form action="" className='flex g-10'>
                                     <input type="email" name="" id="" />

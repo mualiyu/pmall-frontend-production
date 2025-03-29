@@ -16,17 +16,24 @@ export default function DebitCard(props) {
         <div className="debit_card-inner">
           <div className="debit_card_front">
             <img
-              src="https://i.ibb.co/PYss3yv/map.png"
+              src="/map.png"
               className="map-img"
               alt="Pmall"
               style={{ opacity: "0.1" }}
             />
-            <div className="row">
+            <div className="">
+              <div className="flex justsb">
               <img
-                src="https://i.ibb.co/G9pDnYJ/chip.png"
-                width="45px"
+                src="/chip.png"
+                width="30px"
                 alt="Pmall"
               />
+              <p style={{ textTransform: "capitalize", fontSize: 12 }}>
+                {user?.storeName
+                  ? user?.storeName
+                  : user?.fname + " " + user?.lname}
+              </p>
+              </div>
               <div style={{padding:10}}>
                 <h1 style={{ fontSize: 20 }}>&#x20A6;0.00</h1>
                 <p style={{ color: "rgb(227 227 227 / 70%)", fontSize: 10 }}>
@@ -34,20 +41,16 @@ export default function DebitCard(props) {
                 </p>
               </div>
             </div>
-            <div className="row card-no">
+            <div className="card-no">
               <p style={{ fontSize: 18 }}>{user?.refId}</p>
             </div>
             <div className="row debit_card_name">
-              <p style={{ textTransform: "capitalize" }}>
-                {user?.storeName
-                  ? user?.storeName
-                  : user?.fname + " " + user?.lname}
-              </p>
+              
 
-              <div className="">
+              {/* <div className="">
                 <p>{moment(user?.regDate).add(1, "years").calendar()} </p>
                 <p style={{ color: "rgb(227 227 227 / 70%)" }}>Due Next</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -161,7 +161,7 @@ const ProductList = () => {
   const [products, setProducts] = useState();
   const [brands, setBrand] = useState();
   const [categories, setCategories] = useState();
-  const [subCategories, setSubCategories] = useState();
+  const [subCategories, setSubCategories] = useState([]);
   const [newProduct, setNewProduct] = useState();
   const [value, setValue] = useState(0);
   const [pmallUsers, setPmallUsers] = useState([]);
@@ -204,9 +204,14 @@ const ProductList = () => {
       const newCategory = e.target.value;
       console.log(e);
       setSelectedCategory(newCategory);
-      const matchingSubCategories = categories.find((category) => category.id == newCategory?.sub_categories) || [];
-      setSubCategories(matchingSubCategories);
+      console.log(newCategory);
+      console.log(categories);
+      const matchingSubCategories = categories.find((category) => category.id == newCategory) || [];
+
+      console.log(matchingSubCategories);
+      setSubCategories(matchingSubCategories?.sub_categories);
       console.log(matchingSubCategories)
+      console.log(subCategories);
       console.log(categories)
       if(!e?.persist){
           setState(inputValues, ({...inputValues, [e?.target.name]: e?.target.value })); 
@@ -543,8 +548,10 @@ const ProductList = () => {
     })
       .then((resp) => resp.json())
       .then((result) => {
+        console.log(result);
         if(result.status){
           setToastMsg("Great! Subcategory added successfully");
+          setSubCategories(result.data);
           setToastType("success")
           setInterval(() => {
             setToastMsg("");
@@ -825,23 +832,25 @@ console.log(user?.accountType)
           </div>
         </div>
       </section>
+      {/* Categories, subcategories and brand tab */}
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
               value={value}
               onChange={handleTabChange}
               aria-label="basic tabs example">
-                  <Tab label="Products list" {...a11yProps(0)} />
+                  <Tab label="Products List" {...a11yProps(0)} />
                   
-                  {user?.role === 'Admin' && (
-                    <div>
+                  {/* {user?.role === 'Admin' && ( */}
+                    {/* <div> */}
                     <Tab label="Categories" {...a11yProps(1)} />
-                   
-                    <Tab label="Brands" {...a11yProps(2)} />
-                    </div>
-                  )}
-                 <Tab label="Sub Categories" {...a11yProps(3)} />
+                    <Tab label="Sub Categories" {...a11yProps(2)} />
+                    <Tab label="Brands" {...a11yProps(3)} />
+                    {/* </div> */}
+                  {/* )} */}
+                
             </Tabs>
       </Box>
+      {/* End categories, subcategories and brand tab */}
       <TabPanel value={value} index={0}>
         <section className="flex-container alc p-y my-40">
           <div className="">
@@ -914,7 +923,7 @@ console.log(user?.accountType)
                     : <span className="badge">unpublished</span>
                     }
                   </TableCell>
-                  <TableCell  onClick={() => editProduct(product)}>
+                  <TableCell  onClick={() => setNewProductModal(true)}>
                     {" "}
                     <EditIcon />{" "}
                   </TableCell>
@@ -928,7 +937,7 @@ console.log(user?.accountType)
           </Table>
         </TableContainer>
       </TabPanel>
-      {user.role !== 'Admin' && (
+      {/* {user.role !== 'Admin' && ( */}
         <>
       <TabPanel value={value} index={1}>
         <section className="flex-container alc p-y my-40">
@@ -1029,7 +1038,7 @@ console.log(user?.accountType)
         </TableContainer>
       </TabPanel>
       </>
-      )}
+   
       <TabPanel value={value} index={2}>
         <section className="flex-container alc p-y my-40">
           <div className="w-full">
@@ -1042,7 +1051,7 @@ console.log(user?.accountType)
         </section>
         {subCategories && (
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="Porduct Table">
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="Product Table">
             <TableHead>
               <TableRow>
                 {categoryColumns.map((column) => (
@@ -1182,8 +1191,8 @@ console.log(user?.accountType)
                     disabled={!selectedCategory}
                     >
                     <option value="default"> Select Sub Category</option>
-                    {subCategories?.map((category) => (
-                      <option value={category.id}>{category.name}</option>
+                    {subCategories?.map((sub_cat) => (
+                      <option value={sub_cat.id}>{sub_cat.name}</option>
                     ))}
                   </select>
                 </div>
@@ -1211,18 +1220,18 @@ console.log(user?.accountType)
                     type="number"
                     className="form-control-input "
                     name="cost_price"
-                    placeholder="1,500"
+                    placeholder="1500"
                     onChange={onChangeHandler}
                     value={inputValues.cost_price || ""}
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
-                  <label>Selling Price</label>
+                  <label>Selling Price (selling price are usually higher than cost price)</label>
                   <input
                     type="number"
                     className="form-control-input "
                     name="selling_price"
-                    placeholder="1,200"
+                    placeholder="1200"
                     onChange={onChangeHandler}
                     value={inputValues.selling_price || ""}
                   />
@@ -1230,33 +1239,47 @@ console.log(user?.accountType)
               </section>
               <section className="flex-container mb-lg">
               <div className="pos-rel w100-m10 ">
-                  <label> In stock</label>
-                  <input
+                  <label> PRODUCT CURRENTLY AVAILABLE FOR PURCHASE?</label>
+                  <select
+                  className="form-control-input "
+                  name="inStock"
+                    // value={inputValues.category_id || ""}
+                    // name="category_id"
+                    onChange={onChangeHandler}
+                    value={inputValues.inStock || ""}
+                    >
+                    <option value="default"> Select Product availability</option>
+                    
+                      <option value={1}>In Stock</option>
+                      <option value={0}>Currently Out of Stock</option>
+                  </select>
+
+                  {/* <input
                     type="number"
                     className="form-control-input "
                     name="inStock"
-                    placeholder="1,500"
+                    placeholder="500"
                     onChange={onChangeHandler}
                     value={inputValues.inStock || ""}
-                  />
+                  /> */}
                 </div>
 
                 <div className="pos-rel w100-m10 ">
-                  <label>Quantity</label>
+                  <label>Quantity (UNITS CURRENTLY AVAILABLE)</label>
                   <input
                     type="number"
                     className="form-control-input "
                     name="quantity"
-                    placeholder="1,500"
+                    placeholder="500"
                     onChange={onChangeHandler}
                     value={inputValues.quantity || ""}
                   />
                 </div>
               </section>
               <section className="flex-container mb-lg">
-                <div className="pos-rel w100-m10 ">
-                  <label>Add Tags</label>
-                  <Stack spacing={3} sx={{ width: 500 }}>
+                <div className="pos-rel w-100 ">
+                  <label style={{marginBottom: 7}}>SELECT TAGS ASSOCIATED WITH PRODUCT </label>
+                  <Stack spacing={3} sx={{ width: "100%" }}>
                     <Autocomplete
                       multiple
                       id="tags-outlined"
@@ -1388,9 +1411,9 @@ console.log(user?.accountType)
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Product Description </label>
+                  <label className="mb-7"> Describe this product (Weight, variant, size etc) </label>
                   <textarea
-                    placeholder="Enter product description"
+                    placeholder="Enter product description & specification"
                     className="form-textarea w-100"
                     name="description"
                     onChange={onChangeHandler}
@@ -1398,7 +1421,7 @@ console.log(user?.accountType)
                     ></textarea>
                 </div>
 
-                <div className="pos-rel w100-m10"></div>
+                {/* <div className="pos-rel w100-m10"></div> */}
               </section>
 
               <div className="flex__normal w-30 pull-right mt-35">
@@ -1511,15 +1534,16 @@ console.log(user?.accountType)
                 </div>
               <div className="pos-rel w100-m10 ">
                   <label className="mb-7"> Sub Category</label>
+
                   <select
                     className="search__bar w-100"
-                    value={inputValues.sub_category_id || ""}
                     name="sub_category_id"
                     onChange={onChangeHandler}
+                    value={inputValues.sub_categories}
                     >
                     <option value="default"> Select Sub Category</option>
-                    {subCategories?.map((sub) => (
-                      <option value={sub.id}>{sub.name}</option>
+                    {subCategories?.map((sub_cat) => (
+                      <option value={sub_cat.id}>{sub_cat.name}</option>
                     ))}
                   </select>
                 </div>
@@ -1566,6 +1590,31 @@ console.log(user?.accountType)
               </section>
               <section className="flex-container mb-lg">
               <div className="pos-rel w100-m10 ">
+                  <label> PRODUCT CURRENTLY AVAILABLE FOR PURCHASE?</label>
+                  <select
+                  className="form-control-input "
+                  name="inStock"
+                    // value={inputValues.category_id || ""}
+                    // name="category_id"
+                    onChange={onChangeHandler}
+                    value={inputValues.inStock || ""}
+                    >
+                    <option value="default"> Select Product availability</option>
+                    
+                      <option value={1}>In Stock</option>
+                      <option value={0}>Currently Out of Stock</option>
+                  </select>
+
+                  {/* <input
+                    type="number"
+                    className="form-control-input "
+                    name="inStock"
+                    placeholder="500"
+                    onChange={onChangeHandler}
+                    value={inputValues.inStock || ""}
+                  /> */}
+                </div>
+              {/* <div className="pos-rel w100-m10 ">
                   <label> In stock</label>
                   <input
                     type="number"
@@ -1575,7 +1624,7 @@ console.log(user?.accountType)
                     onChange={onChangeHandler}
                     value={inputValues.inStock || ""}
                   />
-                </div>
+                </div> */}
 
                 <div className="pos-rel w100-m10 ">
                   <label>Quantity</label>
@@ -1591,8 +1640,8 @@ console.log(user?.accountType)
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
-                  <label>Add Tags</label>
-                  <Stack spacing={3} sx={{ width: 500 }}>
+                  <label style={{marginBottom: 7}}>Add Tags</label>
+                  <Stack spacing={3} sx={{ width: "100%" }}>
                     <Autocomplete
                       multiple
                       id="tags-outlined"
@@ -1653,9 +1702,9 @@ console.log(user?.accountType)
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Product Description </label>
+                  <label className="mb-7"> Describe this product (Weight, variant, size etc) </label>
                   <textarea
-                    placeholder="Enter product description"
+                    placeholder="Enter product description & specification"
                     className="form-textarea w-100"
                     name="description"
                     onChange={onChangeHandler}
@@ -1663,7 +1712,7 @@ console.log(user?.accountType)
                     ></textarea>
                 </div>
 
-                <div className="pos-rel w100-m10"></div>
+                {/* <div className="pos-rel w100-m10"></div> */}
               </section>
 
               <div className="flex__normal w-30 pull-right mt-35">

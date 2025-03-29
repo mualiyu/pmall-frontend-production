@@ -139,7 +139,8 @@
   padding: 11px 0;
 }
 .css-2slu8c {
-  height: 70% !important;
+  height: 90% !important;
+  width: 90%!important;
   overflow-y: auto;
 }
 .mb-7 {
@@ -272,7 +273,7 @@ tbody {
     z-index:99999;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: top;
     opacity: 0;
     pointer-events: none;
     transition: all 0.2s;
@@ -492,7 +493,7 @@ tr:nth-child(even) {
   margin: 0 !important;
 }
 .no-border {
-  border: none;
+  border: none!important;
 }
 css-6od3lo-MuiChip-label {
   padding: 3px !important;
@@ -1260,7 +1261,7 @@ h1 {
   border-radius: var(--bs-card-border-radius);
 } */
 .product__name {
-  font-size: 13px;
+  font-size: 14px;
   color: #111111;
   text-transform: capitalize;
 }
@@ -1298,11 +1299,12 @@ h1 {
 }
 .cart-message {
   position: fixed;
-    bottom: 9px;
+    bottom: 3%;
     background-color: green;
     color: white;
     padding: 9px 22px;
     z-index: 9999999;
+    min-width: 25%;
     right: 0%;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -1407,14 +1409,17 @@ h1 {
 }
 .cart__count {
   background-color: red;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     color: white;
     font-weight: 700;
     align-items: center;
     align-content: center;
     border-radius: 50%;
     text-align: center;
+    margin-left: -17px;
+    z-index: 999;
+    margin-top: -15px;
 }
 /* .css-i4bv87-MuiSvgIcon-root {
   fill: #515050!important;
@@ -1423,6 +1428,7 @@ h1 {
 } */
 .top__top__header {
   position: fixed;
+  width: 100%;
     z-index: 99999;
     background-color: white;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
@@ -1500,7 +1506,7 @@ h1 {
 @media (min-width: 576px) {
   .col-sssm-2 {
       flex: 0 0 auto;
-      width: 15.5%;
+      width: 23%;
       min-width: 200px;
   }
 }

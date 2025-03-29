@@ -1426,9 +1426,9 @@ input:checked + .slider:before {
 }
 .bannerContain {
     max-width: 100%;
-    padding:10% 0;
-    height: 620px;
-    overflow: hidden;
+    /* padding:10% 0; */
+    height: 100%;
+    /* overflow: hidden; */
 }
 .collection-banners {
   margin-top: 3%;
@@ -1438,6 +1438,10 @@ input:checked + .slider:before {
     width: 100%;
     padding: 40px;
 }
+.b-15 {
+  border-radius: 20px;
+    margin-top: 15px;
+}
 .imgBanners .row .img-banner-item {
   padding-left: 10px;
   padding-right: 10px;
@@ -1445,17 +1449,19 @@ input:checked + .slider:before {
 .imgBanners .imgBanner-grid-item {
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
 }
 .imgBanners .inner {
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
+  border-radius: 10px;
 }
 .imgBanners .inner * {
   -ms-transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4sease-in-out;
   transition: all 0.4sease-in-out;
 }
-imgBanners .imgBanner-grid-item img {
+.imgBanners .imgBanner-grid-item img {
   display: block;
   width: 100%;
   -ms-transition: all ease-out 0.5s;
@@ -1466,6 +1472,7 @@ imgBanners .imgBanner-grid-item img {
 .imgBanners .inner img {
   display: block;
   width: 100%;
+  border-radius: 10px;
 }
 .blur-up.lazyloaded {
   -webkit-filter: blur(0);
@@ -1772,6 +1779,12 @@ imgBanners .imgBanner-grid-item img {
 .cart-container {
   margin: 0 50px;
 }
+.cart-container2 {
+  margin: 0 10px;
+}
+.trash___can:hover{
+  color: red;
+}
 .cart .maincart {
   display: flex;
   flex-direction: column;
@@ -1780,6 +1793,26 @@ imgBanners .imgBanner-grid-item img {
   border-radius: 20px;
   padding: 20px;
   background-color: white;
+  /* width: 62%; */
+}
+.whatsapp__icon {
+  position: fixed;
+    bottom: 5%;
+    z-index: 999;
+    right: 0;
+    background-color: red;
+    width: 5%;
+    height: 7%;
+}
+.text-muted{
+  color: #676767!important;
+}
+.sub__cat__hover{
+  text-decoration: none;
+  color: white 
+}
+.sub__cat__hover:hover{
+  color: orange;
 }
 .bl-dashed {
   border-left: 1px dashed #c4c4c4;
@@ -1834,8 +1867,8 @@ imgBanners .imgBanner-grid-item img {
 }
 
 .cart .promo-code {
-  background-color: #f2f4f6;
-  width: 520px;
+  background-color: #fefefe;
+  /* width: 100%; */
   border-radius: 10px;
   height: auto;
   padding: 28px;
@@ -2020,6 +2053,7 @@ imgBanners .imgBanner-grid-item img {
   background-color: #f8f9fa;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 38%;
 }
 .checkout-right h1 {
   margin-bottom: 20px;

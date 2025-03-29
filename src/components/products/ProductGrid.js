@@ -4,7 +4,7 @@ import axios from "axios";
 import { addToCart, getCart } from "../../utils/cartUtils";
 import LimitWord from "../../utils/limitWord";
 import currency from "../../utils/formatCurrency";
-
+import FindCategoryByID from "../../utils/findCategoryByID";
 const PRODUCTS_ENDPOINT = "https://api.pmall.com.ng/api/v1/public/products/list-all";
 const CATEGORIES_ENDPOINT = "https://api.pmall.com.ng/api/v1/public/products/get-all-categories";
 
@@ -12,6 +12,7 @@ const ProductGrid = ({ categoryId = null }) => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [productsByCategory, setProductsByCategory] = useState({});
+  const [categoryName, setCategoryName] = useState("Loading...");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cartMessage, setCartMessage] = useState("");
@@ -35,10 +36,11 @@ const ProductGrid = ({ categoryId = null }) => {
       if (!productData?.data || !Array.isArray(productData.data)) {
         throw new Error("Invalid product data format");
       }
-
+      
       // Group products by category_id
       const groupedProducts = productData.data.reduce((acc, product) => {
         if (!product.category_id) return acc;
+        // fetchCategory(product.category_id);
         acc[product.category_id] = acc[product.category_id] || [];
         acc[product.category_id].push(product);
         return acc;
@@ -54,8 +56,20 @@ const ProductGrid = ({ categoryId = null }) => {
     }
   }, [categoryId]); // Only recreate function when `categoryId` changes
 
+
+//   const fetchCategory = async (cat__id) => {
+//     console.log(cat__id);
+//     const categoryData = await FindCategoryByID(CATEGORIES_ENDPOINT, cat__id);
+//     console.log(categoryData);
+//     setCategoryName(categoryData ? categoryData : "Unknown Category");
+// };
+
+
   useEffect(() => {
     fetchCategoriesAndProducts();
+    
+
+ 
   }, [fetchCategoriesAndProducts]);
 
   const categoryBackgrounds = useMemo(
@@ -85,22 +99,22 @@ const ProductGrid = ({ categoryId = null }) => {
         item.id === product.id ? { ...item, amtItems: Math.max(1, (item.amtItems || 1) + numOfItems) } : item
       );
       setCartMessage(
-        <>
+        <div className="title-case">
           {product.name} updated in cart! <br />
-          <Link to="/product/cart" style={{ color: "orange", textDecoration: "underline" }}>
+          <Link to="/cart" style={{ color: "orange", textDecoration: "underline" }}>
             View Cart
           </Link>
-        </>
+        </div>
       );
     } else {
       cart.push({ ...product, amtItems: numOfItems });
       setCartMessage(
-        <>
+        <div className="title-case">
           {product.name} added to cart! <br />
-          <Link to="/product/cart" style={{ color: "orange", fontWeight: 700, textDecoration: "underline" }}>
+          <Link to="/cart" style={{ color: "orange", fontWeight: 700, textDecoration: "underline" }}>
             View Cart
           </Link>
-        </>
+        </div>
       );
     }
 
@@ -126,7 +140,7 @@ const ProductGrid = ({ categoryId = null }) => {
                 </div>
                 <ul className="flex g-15">
                   {category.sub_categories?.slice(0, 7).map((sub) => (
-                    <li key={sub.id}>{sub.name}</li>
+                    <li key={sub.id} className="sub__cat__hover" > {sub.name}</li>
                   ))}
                 </ul>
               </div>
@@ -152,6 +166,7 @@ const ProductGrid = ({ categoryId = null }) => {
                         <div className="product_desc">
                           <div className="flex-col g-5">
                             <p className="product__name bold uppercase">{LimitWord(product.name || "Unnamed Product", 3)}</p>
+                            <p className="product__name text-muted">{LimitWord(product.description, 7)}</p>
                             <h3 className="red bold product__cost">
                               {currency(product.selling_price || 0)}
                               &nbsp;

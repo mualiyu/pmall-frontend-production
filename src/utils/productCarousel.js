@@ -3,19 +3,21 @@ import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import LimitWord from "./limitWord";
 import currency from "./formatCurrency";
+import "../utils/carousel.css";
 
 const ProductCarousel = ({ products }) => {
+
   const settings = {
     dots: false,
     infinite: true,
     lazyLoad: true,
     arrows: false,
     slidesToShow: 7,
-    slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     speed: 1000,
     pauseOnHover: true,
     autoplaySpeed: 2000,
+    slidesToScroll: 1,
     cssEase: "linear",
     responsive: [
       {
@@ -31,17 +33,12 @@ const ProductCarousel = ({ products }) => {
 
   return (
     <div className="slider-container">
-
-
-
-
-<Slider {...settings}>
-<div className="flex justsb g-10" style={{ padding: "25px" }}>
-              <div className="row">
-              {products?.map((product) => (
-                  <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3 product-cart-wrap flex justsb" style={{ margin: "20px 9px" }} key={product.id}>
+<h1 className="recommended___products">Recommended Products </h1>
+      <Slider {...settings}>
+      {products?.map((product) => (
+                  <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3 product-cart-wrap flex justsb m-40"  key={product.id}>
                     <div className="product-badges product-badges-position product-badges-mrg">
-                      <span className="hot">NEW</span>
+                      <span className="hot">BOOSTED</span>
                     </div>
                     <div className="product-info default-cover card">
                       <Link to={`/product/${product.id}`} className="img-bg">
@@ -57,6 +54,7 @@ const ProductCarousel = ({ products }) => {
                         <div className="product_desc">
                           <div className="flex-col g-5">
                             <p className="product__name bold uppercase">{LimitWord(product.name || "Unnamed Product", 3)}</p>
+                            <p className="product__name text-muted">{LimitWord(product.description, 7)}</p>
                             <h3 className="red bold product__cost">
                               {currency(product.selling_price || 0)}
                               &nbsp;
@@ -70,9 +68,7 @@ const ProductCarousel = ({ products }) => {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-</Slider>
+      </Slider>
     </div>
   );
 };
