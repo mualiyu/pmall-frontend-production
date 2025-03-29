@@ -123,7 +123,7 @@ console.log(cart);
       cart.push({ ...detail, amtItems: numOfItems });
       setCartMessage(
         <div className="title-case">
-          {detail.name} added to cart! <br />
+          {detail?.name} added to cart! <br />
           <Link to="/cart" style={{ color: "orange", fontWeight: 700, textDecoration: "underline" }}>
             View Cart
           </Link>
