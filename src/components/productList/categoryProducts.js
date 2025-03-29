@@ -23,7 +23,7 @@ const CategoryProducts = () => {
         {/* <h3> Related Products </h3> */}
             <div className="flex gap-4 overflow-x-auto">
             <div className='flex justsb g-10' style={{width: '100%'}}>
-            <ProductCarousel products={products} />
+            <ProductCarousel products={products} quantity={7} />
                     </div>
             </div>
             

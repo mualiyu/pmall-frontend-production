@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Header from "../builder/Header";
 import { useParams, Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { getCart } from "../../utils/cartUtils";
+import useProductCategories from "../../hooks/useProductCategories";
 import Rating from "@mui/material/Rating";
 import SearchIcon from '@mui/icons-material/Search';
 import Person4Icon from '@mui/icons-material/Person4';
 import Loading from "../../utils/loading";
+import ProductCarousel from "../../utils/productCarousel";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -19,6 +21,7 @@ const ProductDetails = () => {
   const { user } = useUser();
   const decodedProductName = decodeURIComponent(productName);
   const [loading, setLoading] = useState(null);
+  const [cartMessage, setCartMessage] = useState("");
   const [moreImages, setMoreImages] = useState([]);
   const [value, setValue] = useState(4);
   const [detail, setDetails] = useState(null);
@@ -26,6 +29,7 @@ const ProductDetails = () => {
   const { storeCategories, error } = useCategories();
   const [categories, setProductCategories] = useState(null)
   const [cartModalActive, setCartModalActive] = useState(false)
+  const { products } = useProductCategories();
     const { cartCount } = useCart();
 
     const extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'];
@@ -97,16 +101,51 @@ const ProductDetails = () => {
     getProductDetails();
   }, []);
 
-  function addToCart(){
-    let cart = []
-    if(typeof localStorage !== "undefined") {
-        cart = (JSON.parse(localStorage.getItem('pmallCart'))) || []
-    } 
+  const handleAddToCart = useCallback(() => {
+    const numOfItems = 1;
+    let cart = getCart();
+console.log(cart);
+    const isProductInCart = cart?.some((item) => item?.id === detail?.id);
 
-     cart.push({...detail, amtItems:numOfItems})
-    localStorage.setItem('pmallCart', JSON.stringify(cart))
-    setCartModalActive(true)
-  }
+    if (isProductInCart) {
+      cart = cart.map((item) =>
+        item.id === detail.id ? { ...item, amtItems: Math.max(1, (item.amtItems || 1) + numOfItems) } : item
+      );
+      setCartMessage(
+        <div className="title-case">
+          {detail.name} updated in cart! <br />
+          <Link to="/cart" style={{ color: "orange", textDecoration: "underline" }}>
+            View Cart
+          </Link>
+        </div>
+      );
+    } else {
+      cart.push({ ...detail, amtItems: numOfItems });
+      setCartMessage(
+        <div className="title-case">
+          {detail.name} added to cart! <br />
+          <Link to="/cart" style={{ color: "orange", fontWeight: 700, textDecoration: "underline" }}>
+            View Cart
+          </Link>
+        </div>
+      );
+    }
+
+    localStorage.setItem("pmallCart", JSON.stringify(cart));
+
+    setTimeout(() => setCartMessage(""), 7000);
+  }, []);
+
+  // function addToCart(){
+  //   let cart = []
+  //   if(typeof localStorage !== "undefined") {
+  //       cart = (JSON.parse(localStorage.getItem('pmallCart'))) || []
+  //   } 
+
+  //    cart.push({...detail, amtItems:numOfItems})
+  //   localStorage.setItem('pmallCart', JSON.stringify(cart))
+  //   setCartModalActive(true)
+  // }
 
   const addCommasToNumberString = (numberString) =>{
     return  numberString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
@@ -190,7 +229,7 @@ const ProductDetails = () => {
             </div>
           </div>
           <div className="right">
-            <h3 className="prod-name">{detail?.name ? detail?.name : "..."}</h3>
+            <h3 className="prod-name title-case">{detail?.name ? detail?.name : "..."}</h3>
             <Rating
               name="read-only"
               value={value}
@@ -203,8 +242,8 @@ const ProductDetails = () => {
             {detail?.selling_price ? <h4 className="prod-price">
             &#x20A6;{addCommasToNumberString(detail?.selling_price)} <span className="former-price"> &#x20A6;{addCommasToNumberString(detail?.cost_price)}</span>
             </h4> : <h4 className="prod-price">No Price Tag</h4> }
-            <p className="prod-desc">
-              {detail?.description ? detail?.description : "A dummy t shirt template for a brand called on-fire, available in not so different colors"}
+            <p className="prod-desc capitalize">
+              {detail?.description ? detail?.description : "No description added for this product"}
             </p>
             {/* <h3 className="f18">Quantity</h3> */}
             <div className="variations" style={{margin: '20px 0'}}>
@@ -214,70 +253,87 @@ const ProductDetails = () => {
                   <p className="size">S</p>
                   <p className="size">M</p>
                   <p className="size">L</p>
-                  <p className="size">XL</p>
-                  <p className="size">XXL</p>
                 </div>
               </div> */}
               <div>
                 {/* <p className="f-13  mb-10">Quantity</p> */}
-                <h3 className="f18" style={{margin: '7px 0'}}>Select quantity</h3>
+                <h3 style={{margin: '7px 0'}}>Select Quantity</h3>
                 <div className="flex g-20 size">
                   <p className="pointer" onClick={decAmt}>-</p>
                   <p>{numOfItems}</p>
                   <p className="pointer" onClick={incAmt}>+</p>
                 </div>
-                {/* <div className="other-images">
-                  <img src={moreImages !== null ? moreImages[0] : ""} alt="" className="main-image" />
-                  <img src={moreImages !== null ? moreImages[1] : ""} alt="" className="main-image" />
-                  <img src={moreImages !== null ? moreImages[2] : ""} alt="" className="main-image" />
-                </div> */}
               </div>
             </div>
             <div className="right">
              
-            <div className="flex g-10">
-              <button className="f-13" onClick={addToCart}>Add to Cart</button>
-              <button className="f-13 btn-sec" onClick={addToCart}>Continue Shopping</button>
-              {/* <div className="favourite flex all-center">
-                <FavoriteIcon />
-              </div> */}
+            
+
+            <h3>Product Information</h3>
+      <div className="transaction-table sgdfhhjsd">
+          <div className="row">
+          <div className="cell">Category</div>
+            <div className="cell">{detail?.category?.name}</div>
             </div>
-            <div className="flex gap-10">
-              <p className="f-13">
-                <span className="f-bold f-13">Category : </span> {detail?.category?.name}
-              </p>
-              <p className="f-13">
-                <span className="f-bold f-13">Brand : </span> {detail?.brand?.name}
-              </p>
-              <p className="f-13">
-                <span className="f-bold f-13">Availability : </span> {detail?.quantity} products in
-                stock
-              </p>
-                <p className="f-13">
-                  <span className="f-bold f-13">Amt Sold : </span> {detail?.inStock}
-                </p>
-                <p className="f-13">
-                  <span className="f-bold f-13">Tags : </span> {detail?.tags}
-                </p>
-              </div>
+            <div className="row">
+            <div className="cell">Brand</div>
+            <div className="cell">{detail?.brand?.name}</div>
+          </div>
+          <div className="row">
+          <div className="cell">Availability</div>
+            <div className="cell">{detail?.inStock > 0 ? "Yes" : "Out of Stock"} </div>
+            </div>
+            <div className="row">
+            <div className="cell">Quanity Sold</div>
+            <div className="cell">{detail?.quantity}</div>
+          </div>
+          <div className="row">
+            <div className="cell">Product Tags</div>
+            <div className="cell">{detail?.tags}</div>
+          </div>
+      </div>
+
+      <div className="flex g-10">
+              <button className="f-13" onClick={handleAddToCart}>Add to Cart</button>
+              <Link to="/">
+              <button className="f-13 btn-sec sjdhfscs">Continue Shopping</button>
+              </Link>
+            </div>
+
+
             </div>
           </div>
-          <div className={`cart-modal-container ${cartModalActive && "active"}`}>
+
+        
+        
+          {/* <div className={`cart-modal-container ${cartModalActive && "active"}`}>
             <div className="cart-modal">
               <CheckCircleIcon className="check"/>
                 <h3>Item successfully added to cart  </h3>
                 <div className="modal-btns">
                   <div  className="modal-btn btn-1">
-                    <Link to="/product/cart"><p>Proceed to cart</p></Link>
+                    <Link to="/cart"><p>Proceed to cart</p></Link>
                   </div>
                   <div  className="modal-btn btn-2">
                     <Link to="/"><p>Continue shopping</p></Link>
                   </div>
                 </div>
+            </div> */}
+           
+          {/* </div> */}
+          </div>
+          <div className="flex flex-col gap-5 p-5 rounded-lg shadow-md " style={{margin: '5% auto'}}>
+        {/* <h3> Related Products </h3> */}
+            <div className="flex gap-4 overflow-x-auto">
+            <div className='flex justsb g-10' style={{width: '100%'}}>
+            <ProductCarousel products={products} quantity={5} />
+                    </div>
             </div>
-          </div>
-          </div>
+            
+        </div>
+
         </div>  
+        {cartMessage && <p className="cart-message">{cartMessage}</p>}
       {/* </div>   */}
     </>
   );
