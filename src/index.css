@@ -2303,6 +2303,85 @@ right connector from last child*/
 /*Thats all. I hope you enjoyed it.
 Thanks :)*/
 
+.specifications{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 50px;
+  width: 400px;
+}
+
+.specifications h1{
+  font-size: 16px;
+}
+
+.specifications h2{
+ margin-bottom: 5px;
+ font-size: 16px;
+}
+
+.specifications p{
+  font-size: 18px;
+}
+
+.specifications .spec-list{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.specifications .spec{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 22px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #4caf50; /* Green when active */
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
 
 @media (min-width:320px)  {
 

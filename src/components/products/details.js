@@ -15,6 +15,8 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Badge from '@mui/material/Badge';
 import { useCart } from "../../context/CartContext"
 import { useCategories } from "../../context/CategoryContext"
+import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 
 const ProductDetails = () => {
   const { id, productName } = useParams();
@@ -150,6 +152,23 @@ console.log(cart);
   const addCommasToNumberString = (numberString) =>{
     return  numberString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
   }
+    const bestTaken = [
+      { name: 'Before meal', value: true },
+      { name: 'With meal', value: false },
+      { name: 'After meal', value: false },
+      { name: 'Morning', value: true },
+      { name: 'Afternoon', value: true },
+      { name: 'Night', value: true }
+  ];
+
+  const notFor = [
+    { name: 'Pregnant women', value: true },
+    { name: 'Breastfeeding mothers', value: true },
+    { name: 'Kids under 4', value: true },
+    { name: 'Kids under 8', value: true },
+    { name: 'Kids under 12', value: false },
+];
+
 
   return (
     <>
@@ -301,6 +320,35 @@ console.log(cart);
             </div>
 
 
+            </div>
+            <div className="specifications">
+              <h1>Specifications</h1>
+              <div>
+                <h2>Best taken:</h2>
+                {bestTaken.map((item, index) => (
+                  <div className="spec">
+                    <p>{item.name}</p>
+                    <div
+                        className="flex all-center"
+                    >
+                    {item.value == false ? <ToggleOffIcon /> :  <ToggleOnIcon />}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <h2>Not for:</h2>
+                {notFor.map((item, index) => (
+                  <div className="spec">
+                    <p>{item.name}</p>
+                    <div
+                        className="flex all-center"
+                    >
+                    {item.value == false ? <ToggleOffIcon /> :  <ToggleOnIcon />}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
