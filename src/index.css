@@ -657,6 +657,38 @@ button {
   width: 40px;
   height: 40px;
 }
+.py-5{
+  padding: 0 5px
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.product__image {
+  transition: transform 0.3s ease-in-out;
+}
+
+.product__image:hover {
+  transform: scale(1.1); 
+}
+.vbczsds {
+  background-color: white;
+  padding: 20px;
+  margin-left: -20px;
+  position: fixed;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.off___canvas__menu {
+    width: 25%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+}
 .vendor-details .bdtop {
   border-top: 1px solid #d1d0d0d6;
 }
@@ -666,8 +698,8 @@ button {
   margin: 20px 30px;
 }
 .prod-details .main-image {
-  height: 400px;
-  width: 430px;
+  height: 100%;
+  width: 100%;
   margin-bottom: 10px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -685,6 +717,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 60%
 }
 .prod-details .right .prod-name {
   font-size: 25px;
@@ -717,9 +750,14 @@ button {
 }
 .prod-details .right button,
 .prod-details .right .favourite {
-  background: #def9ec;
-    color: green;
+  background: #213ea3;
+    color: white;
     border: none;
+}
+.sjdhfscs {
+  border: thin solid #213ea3!important;
+    color: #213ea3!important;
+    background-color: white!important;
 }
 .prod-details .right button {
   width: 200px;

@@ -75,6 +75,11 @@ function Sidebar() {
             Icon={SpeedIcon}
             title="Dashboard"
           />
+          <SidebarRow
+                path=""
+                Icon={ShoppingBasketIcon}
+                title="Market Place"
+              />
            <SidebarRow
                 path=""
                 Icon={EuroIcon}
@@ -129,22 +134,22 @@ function Sidebar() {
             user?.accountType === "Admin") && (
               <>
             <SidebarRow
-              path="/app/affilates"
+              path="/app/network/genealogy/"
               Icon={HubIcon}
               title="Affiliate Management"
             />
-            <SidebarRow
-                path=""
+            {/* <SidebarRow
+                path="/app/network/genealogy/"
                 Icon={Groups2Icon}
                 title="My Network"
-              />
+              /> */}
               <SidebarRow
                 path=""
                 Icon={CardGiftcardIcon}
                 title="Promotions"
               />
               <SidebarRow
-                path=""
+                path="/app/network/genealogy/"
                 Icon={ReduceCapacityIcon}
                 title="Geneology"
               />
@@ -164,11 +169,7 @@ function Sidebar() {
                 title="Sales"
               />
            
-              <SidebarRow
-                path=""
-                Icon={ShoppingBasketIcon}
-                title="Market Place"
-              />
+              
               <SidebarRow
                 path=""
                 Icon={ShoppingCartIcon}

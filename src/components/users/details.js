@@ -148,7 +148,7 @@ const UserDetails = () => {
           setProfileDetails(result.data.user);
           console.log(profileDetails);
         }
-        setProfileDetails(result.data.user);
+        setProfileDetails(result?.data.user);
         setState({
           fname: result.data.user.fname,
           lname: result.data.user.lname,

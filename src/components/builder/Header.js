@@ -135,7 +135,7 @@ return (
                                     </>
                                     }
                                     &nbsp; &nbsp; &nbsp;
-                                    <Link to="/cart" className="bold flex alc no__underline p-10">
+                                    <Link to="/cart" className="bold flex alc no__underline" style={{padding: 10}}>
                                         <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
                                             <ShoppingCartIcon />
                                         </Badge>

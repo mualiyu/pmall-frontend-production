@@ -5,15 +5,15 @@ import LimitWord from "./limitWord";
 import currency from "./formatCurrency";
 import "../utils/carousel.css";
 
-const ProductCarousel = ({ products }) => {
+const ProductCarousel = ({ products, quantity }) => {
 
   const settings = {
     dots: false,
     infinite: true,
     lazyLoad: true,
     arrows: false,
-    slidesToShow: 7,
-    autoplay: false,
+    slidesToShow: quantity,
+    autoplay: true,
     speed: 1000,
     pauseOnHover: true,
     autoplaySpeed: 2000,

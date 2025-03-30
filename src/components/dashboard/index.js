@@ -39,7 +39,7 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { useUser } from "../../context/UserContext";
 import getInitials from "../../utils/getInitials";
-import { useVendor } from "../../context/AuthContext";
+import { useVendor } from "../../context/VendorSignupContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
