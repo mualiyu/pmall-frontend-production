@@ -31,6 +31,9 @@ import moment from "moment";
 import Vendors from "../vendors";
 import Toaster from "../../utils/toaster";
 import ButtonLoader from "../../utils/buttonLoader";
+import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
+
 Chart.register(ArcElement);
 
 const top100Films = [
@@ -199,6 +202,7 @@ const ProductList = () => {
     setValue(newValue);
   };
   const [selectedCategory, setSelectedCategory] = useState("");
+
 
   const handleCategoryChange = (e) => {
       const newCategory = e.target.value;
@@ -799,6 +803,35 @@ const ProductList = () => {
     getCategories()
 console.log(user?.accountType)
   }, [newProduct]);
+
+  const [bestTaken, setBestTaken] = useState([
+    { name: 'Before meal', value: true },
+    { name: 'With meal', value: false },
+    { name: 'After meal', value: false },
+    { name: 'Morning', value: true },
+    { name: 'Afternoon', value: true },
+    { name: 'Night', value: true }
+]);
+
+  const [notFor, setItems] = useState([
+    { name: 'Pregnant women', value: true },
+    { name: 'Breastfeeding mothers', value: true },
+    { name: 'Kids under 4', value: true },
+    { name: 'Kids under 8', value: true },
+    { name: 'Kids under 12', value: false },
+  ]);
+
+    const handleBestTakenToggle = (index) => {
+      bestTaken[index].value = !bestTaken[index].value; 
+      setBestTaken([...bestTaken]); 
+      console.log(bestTaken)
+  }
+
+    const handleNotForToggle = (index) => {
+        notFor[index].value = !notFor[index].value; 
+        setItems([...notFor]); //
+        console.log(notFor)
+    }
   return (
     <section>
       <Toaster text={toastMsg} className={toastType} />
@@ -1438,6 +1471,53 @@ console.log(user?.accountType)
                 </button>
               </div>
             </form>
+            <div className="specifications">
+              <h1>Specifications</h1>
+              <div>
+                <h2>Best taken:</h2>
+                <div className="spec-list">
+                  {bestTaken.map((item, index) => (
+                    <div className="spec">
+                      <p>{item.name}</p>
+                      <div
+                          className="flex all-center"
+                      >
+                     <label className="switch">
+                        <input
+                            type="checkbox"
+                            checked={item.value}
+                            onChange={() => handleBestTakenToggle(index)}
+                        />
+                        <span className="slider round"></span>
+                    </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h2>Not for:</h2>
+                <div className="spec-list">
+                  {notFor.map((item, index) => (
+                    <div className="spec">
+                      <p>{item.name}</p>
+                      <div
+                          className="flex all-center"
+                      >
+                      <label className="switch">
+                        <input
+                            type="checkbox"
+                            checked={item.value}
+                            onChange={() => handleNotForToggle(index)}
+                        />
+                        <span className="slider round"></span>
+                    </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </section>
         </Box>
       </Modal>
