@@ -147,7 +147,7 @@ export const AuthProvider = ({ children }) => {
             regDate: result.data.user.created_at,
             refId: result.data.user.my_ref_id,
           });
-          setToastMsg(`Boom! ${result.message}`);
+          setToastMsg("Boom! Login successful. It's great to have you back!");
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");

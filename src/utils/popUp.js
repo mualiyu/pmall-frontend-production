@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import moment from "moment";
 import { motion } from "framer-motion";
+import PackageName from "./accountPackages"
 import { X } from "lucide-react";
 
 const Popup = ({ isOpen, onClose, user, children }) => {
@@ -40,6 +41,18 @@ const Popup = ({ isOpen, onClose, user, children }) => {
           <div className="cell">Account Type</div>
             <div className="cell">{user.user_type} </div>
             </div>
+            {user.user_type === "Vendor" && (
+              <>
+            <div className="row">
+            <div className="cell">Store Name </div>
+            <div className="cell">{user.store_name}</div>
+          </div>
+          <div className="row">
+          <div className="cell">Store URL </div>
+          <div className="cell">https://pmall.com.ng/{user.store_url}</div>
+        </div>
+        </>
+          )}
             <div className="row">
             <div className="cell">Username</div>
             <div className="cell">{user.username}</div>
@@ -68,7 +81,9 @@ const Popup = ({ isOpen, onClose, user, children }) => {
           </div>
           <div className="row">
             <div className="cell">Package</div>
-            <div className="cell">{user.package_id}</div>
+            <div className="cell">
+              <PackageName id={user.package_id} type={user.user_type} />
+            </div>
           </div>
       </div>
                     </>

@@ -334,7 +334,7 @@ const CheckoutPage = () => {
             console.log("Checkout Result:", result);
     
             if (!result.status) {
-                setToast({ message: `Checkout initiation failed: ${result}`, type: "error" });
+                setToast({ message: `Checkout initiation failed: ${result.message}`, type: "error" });
             setTimeout(() => setToast(null), 5000);
                 console.error("Checkout initiation failed:", result);
                 return false;
@@ -417,8 +417,8 @@ const CheckoutPage = () => {
     
             const saleData = await initiateCheckout(customerData);
             if (!saleData) {
-                setToast({message: `Checkout step failed!`, type: "error" });
-            setTimeout(() => setToast(null), 5000);
+                setToast({message: `Oops! Not your fault, try logging back in again`, type: "error" });
+            setTimeout(() => setToast(null), 9000);
                 console.error("Checkout step failed!");
                 setBtnLoader(false);
                 return;

@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
-import { useUser } from "../../context/UserContext";
+import { useUser, useLogOut } from "../../context/UserContext";
 import PersonIcon from '@mui/icons-material/Person';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import HelpIcon from '@mui/icons-material/Help';
 import { useCart } from "../../context/CartContext"
 import Badge from '@mui/material/Badge';
+import CategoryDropdown from "../../utils/categoryDropdown"
 import MenuIcon from '@mui/icons-material/Menu';
 import { useCategories } from "../../context/CategoryContext"
 
@@ -17,39 +19,28 @@ function Header() {
     const extraLinks = ['Health', 'Wellness', 'Fitness', 'Beauty', 'Personal Care', 'Combo Products', 'Become an Affiliate'];
     const [categories, setProductCategories] = useState([]);
     const { cartCount } = useCart();
-    const { user } = useUser();
+    const { user, setUser } = useUser();
+    const logOut = useLogOut(); 
 
-    const handleShowCategory = (category) => {
-        navigate(`/store/product/categories/${category.id}`, { state: { category } });
-    }
+   
 
-    const handleViewAllCategories = () => {
-        navigate("/");
-    }
+        // const handleLogOut = useCallback(() => {
+        //     localStorage.removeItem("user");
+        //     localStorage.removeItem("authToken");
+        //     localStorage.removeItem("pmallCart");
+        //     sessionStorage.clear();
+        //     setUser({
+        //         token: "",
+        //         loggedIn: false,
+        //       });
+        //       setTimeout(() => {
+        //         navigate("/auth/sign-in");
+        //       }, 2000);
+        // }, [navigate]);
 
-    const getProductsCategories = useCallback(() => {
-        setLoading(true);
-        fetch("https://api.pmall.com.ng/api/v1/public/products/get-all-categories", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                Accept: "application/json",
-            },
-        })
-            .then((resp) => resp.json())
-            .then((result) => {
-                setProductCategories(result.data);
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
-    }, []);
-
-    useEffect(()=>{
-        getProductsCategories()
-        setItemsOnCart(JSON.parse(localStorage.getItem("pmallCart")))
-    },[getProductsCategories])
+    //  useEffect(()=>{
+    //     setItemsOnCart(JSON.parse(localStorage.getItem("pmallCart")))
+    // },[])
 
 return (
     <>
@@ -69,152 +60,124 @@ return (
                                 <div className="flex justsb">
                                     <div className="callout__main__menu">
                                         <ul>
-                                            <li> Login</li>
-                                            <li>Sell on Pmall</li>
-                                            <li> Locate a Store</li>
-                                            <li> New Offers</li>
-                                            <li> Customer Care</li>
-                                            <li> My Orders</li>
-                                            <li> Vouchers</li>
-                                            <li> Inbox</li>
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  Login</li>
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span> Sell on Pmall</li>
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  Locate a Store</li>
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  New Offers</li>
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  Customer Care</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> My Orders</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Vouchers</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Inbox</li>
                                             
                                             <li> Logout</li>
                                         </ul>
                                     </div>
                                     <div className="callout__main__menu">
                                         <ul>
-                                            <li> Sign Up</li>
-                                            <li> Become an Affiliate</li>
-                                            <li> Get Support  </li>
-                                            <li> Buy for Someone</li>
-                                            <li> About Pmall</li>
-                                            <li> Pending Reviews</li>
-                                            <li> Account Management</li>
-                                            <li> Logout</li>
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span> Sign Up</li>
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  Become an Affiliate</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Get Support  </li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Buy for Someone</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> About Pmall</li>
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  Pending Reviews</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Account Management</li>
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  Logout</li>
                                         </ul>
                                     </div>
                                     <div className="callout__main__menu">
                                         <ul>
-                                            <li> Profile Settings</li>
-                                            <li> Security Settings</li>
-                                            <li> Address Book</li>
-                                            <li> iRecharge</li>
-                                            <li> Mine PMT</li>
-                                            <li> Wallet</li>
-                                            <li> Promotions</li>
-                                            <li> Academy</li>
-                                            <li> Blu Pay</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Profile Settings</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Security Settings</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Address Book</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> iRecharge</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Mine PMT</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Wallet</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Promotions</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Academy</li>
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Blu Pay</li>
                                         </ul>
                                     </div>
                                 </div>
                                 </div>
                             </div>
-                                <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '15%'}} />
+                            <a href="/" style={{width: '15%'}}>
+                                <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '100%'}} />
+                                </a>
                             <form className="flex alc store-container__search" aria-label="Search form">
                                 <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
                             </form>
                             <div className='flex alc'>
-                            {!user?.loggedIn && (
-                                    <Link to="/auth/sign-in" className="bold flex alc sb">
-                                        <PersonIcon />
-                                        <p>
-                                            {user?.loggedIn ? `Hello ${user?.fname}` : 'Login'}
-                                        </p>
-                                    </Link>
-                                    )}
-                               &nbsp; &nbsp; &nbsp;
-
-                               {user?.loggedIn &&
-                               <>
-                               Hello {user?.fname},
-                               <Link to="/auth/sign-in" className="bold flex alc sb">
-                                        <p>
-                                            Log Out
-                                        </p>
-                                    </Link> 
-                                    </>
-                                    }
-                                    &nbsp; &nbsp; &nbsp;
-                                    <Link to="/cart" className="bold flex alc no__underline" style={{padding: 10}}>
-                                        <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
-                                            <ShoppingCartIcon />
-                                        </Badge>
-                                        <p className="cart__count">
-                                            {itemsOnCart?.length === 0 ? 0 : itemsOnCart?.length }
-                                        </p>
-                                    </Link>
-                            </div>
-                        </div>
-                        <div className="flex alc mb-lg">
-                                <div className="flex g-20 alc mr-lg">
-                                <div className="callout">
-                            <button className="callout_btn"> 
-                            <MenuIcon/>
+                                
+                        {/* User Account menu and Log out */}
+                            {user?.loggedIn ? (
+                            <div className="myaccount">
+                            <button className="myaccount_btn flex alc"> 
+                                <PersonIcon /> 
+                                <span style={{color: 'rebeccapurple'}}>
+                                Manage Account
+                                </span>
                              </button>
-                           
-                            <div className="callout_menu">
+                            <div className="myaccount_menu">
                                 <div className="flex justsb">
-                                    <div className="callout__main__menu">
-                                    
-                                       
-                                       <ul>
-                                        {categories?.map(category => (
-                                            <li> {category.name}</li>
-                                        ))}
-                                        </ul> 
+                                    <div className="myaccount__main__menu">
+                                        <ul>
+                                            <li className="bold"> {`Hello ${user?.fname}`}  </li>
+                                            <Link to="/app/dashboard" className="no-underline pointer">
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  Dashboard</li>
+                                            </Link>
+                                            <Link to="/app/dashboard" className="no-underline pointer">
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  My Orders</li>
+                                            </Link>
+                                            <Link to="/app/dashboard" className="no-underline pointer">
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Support </li>
+                                            </Link>
+                                            
+                                            <li onClick={logOut}> <span class="material-icons">keyboard_double_arrow_right</span> Logout</li>
+
+                                        </ul>
                                     </div>
                                 </div>
                                 </div>
-                           </div>
-
-
-
-
-
-
-                                    {loading ? (
-                                        <p>Loading categories...</p>
-                                    ) : error ? (
-                                        <p>{error}</p>
-                                    ) : (
-                                        <select 
-                                        style={{ border: '2px solid #c27465', padding: 12, borderRadius: 15, fontWeight: 600 }} 
-                                        onChange={(e) => {
-                                            if (e.target.value === "1") {
-                                                handleViewAllCategories(); 
-                                            } else {
-                                                const selectedCategory = categories.find(category => category.name === e.target.value);
-                                                if (selectedCategory) {
-                                                    handleShowCategory(selectedCategory);
-                                                }
-                                            }
-                                        }}
-                                    >
-                                        <option value="1">Browse All Categories</option>
-                                        {categories?.map(category => (
-                                            <option value={category.name} key={category.id} className="uppercase">
-                                                <div>
-                                                <img src={category.category_image} alt={category.name}/>
-                                            </div>
-                                               
-                                                &nbsp; {category.name}
-                                                </option>
-                                        ))}
-                                    </select>
-
-                                    )}
                                 </div>
-                          
+                            ): (
+                                <Link to="/auth/sign-in" className="bold flex alc sb">
+                                        <PersonIcon />
+                                        <p>
+                                           Account Login 
+                                        </p>
+                                    </Link>
+                            )}
+
+
+                                    &nbsp; &nbsp; &nbsp;
+                                    {/* Cart */}
+                                    <Link to="/cart" className="bold flex alc no__underline" style={{padding: 10}}>
+                                        <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
+                                            <HelpIcon />
+                                        </Badge>
+                                        <p className="bold"> Help </p>
+                                        {/* <p className="cart__count">
+                                            {itemsOnCart?.length === 0 ? 0 : itemsOnCart?.length }
+                                        </p> */}
+                                    </Link>
+                            </div>
+                        </div>
+                    <div className="flex justsb mb-lg">
+                        {loading ? 'loading...' : (
+                          <CategoryDropdown />
+                          )}
                             <div className="w-100 justsb alc pointer">
                                 {extraLinks.map((text, idx) => (
                                     <div key={idx} className="f-bold f-13">{text}</div>
                                 ))}
-
+                            <Link to="/auth/">
                                 <button className="sell_on_pmall_btn">Sell on Pmall</button>
+                                </Link>
+                            </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {/* </div> */}
             {/* )} */}
         </>
 )

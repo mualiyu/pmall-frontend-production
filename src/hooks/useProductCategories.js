@@ -26,6 +26,7 @@ const useProductCategories = () => {
         }
 
         const result = await response.json();
+        console.log(result);
         setProducts(result.data);
       } catch (err) {
         console.error("Error fetching Products:", err);

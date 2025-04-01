@@ -1,7 +1,37 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BASE_URL } from "../../utils/config";
+import { useUser } from "../../context/UserContext";
 import useForm from "../../utils/useForm";
 
 const VendorForm = ({ inputValues, onChangeHandler }) => {
+const [vendorPackages, setVendorPackages] = useState([]);
+const [loading, setLoading] = useState(false);
+const { user } = useUser();
+  const fetchAllPackages = () => {
+    setLoading(true);
+    fetch(`${BASE_URL}/account-packages/all`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            Authorization: "Bearer " + user?.token,
+        },
+    })
+        .then((resp) => resp.json())
+        .then((result) => {
+    setVendorPackages(result.data.packages.filter(pkg => pkg.type === "Vendor"));
+            setLoading(false);
+        })
+        .catch((err) => {
+            setLoading(false);
+        });
+};
+
+useEffect(()=>{
+  fetchAllPackages()
+},[])
+
   return (
     <div>
       <div className="pos-rel flex">
@@ -82,9 +112,11 @@ const VendorForm = ({ inputValues, onChangeHandler }) => {
             name="package_id"
             className="last-name form-control"
             onChange={onChangeHandler}>
-            <option value="1">Lite Package - N10,000 </option>
-            <option value="2">Beta Package - N15,000</option>
-            <option value="3">Premium Package - N20,000</option>
+              {
+                vendorPackages.map((pack)=>(
+                  <option value={pack.id} key={pack.id}>{pack.name} - {pack.price} </option>
+                ))
+              }
           </select>
         </div>
       </span>

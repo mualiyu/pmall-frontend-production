@@ -1,4 +1,5 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, useEffect, createContext, useContext, useCallback } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const UserContext = createContext();
 
@@ -37,6 +38,7 @@ const UserProvider = ({ children }) => {
   );
 };
 
+// Custom hook to access user context
 const useUser = () => {
   const context = useContext(UserContext);
   if (!context) {
@@ -45,4 +47,26 @@ const useUser = () => {
   return context;
 };
 
-export { UserProvider, useUser };
+// Custom hook for handling logout
+const useLogOut = () => {
+  const navigate = useNavigate(); 
+  const { setUser } = useUser(); 
+
+  return useCallback(() => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("pmallCart");
+    sessionStorage.clear();
+
+    setUser({
+      token: "",
+      loggedIn: false,
+    });
+
+    setTimeout(() => {
+      navigate("/auth/sign-in");
+    }, 500);
+  }, [navigate, setUser]);
+};
+
+export { UserProvider, useUser, useLogOut };

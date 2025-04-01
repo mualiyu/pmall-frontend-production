@@ -3,10 +3,12 @@ import Rating from "@mui/material/Rating";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import Person2Icon from '@mui/icons-material/Person2';
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
-import { useVendor } from "../../context/AuthContext";
+import { useVendor } from "../../context/VendorSignupContext";
+import PackageName from "../../utils/accountPackages"
 import Modal from "@mui/material/Modal";
 import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
@@ -148,7 +150,7 @@ const UserDetails = () => {
           setProfileDetails(result.data.user);
           console.log(profileDetails);
         }
-        setProfileDetails(result?.data.user);
+        setProfileDetails(result.data.user);
         setState({
           fname: result.data.user.fname,
           lname: result.data.user.lname,
@@ -176,11 +178,14 @@ const UserDetails = () => {
   }, [submittedValues]);
 
   return (
-    <section className="page__header w-full" style={{ display: "block" }}>
+    <section className="w-full" style={{ display: "block" }}>
       <Toaster text={toastMsg} className={toastType} />
       <div className="user-details">
         <div className="page__header">
-          <h1>User Details</h1>
+        <div className="flex-container alc">
+          <Person2Icon />
+          <h3>User Profile</h3> 
+        </div>
         </div>
 
         <div className="flex-container flex-col w-full p-y my-40 g-20">
@@ -192,7 +197,7 @@ const UserDetails = () => {
             </button>
           </div>
          
-          <div className="left w-full flex g-20">
+          <div className="left w-full flex g-20" style={{backgroundColor: '#f1f1f1'}}>
             <div className="">
               <div className="top flex flex-col g-20 items-center">
                 <img src={profile} className="profile_pic" />
@@ -212,8 +217,8 @@ const UserDetails = () => {
                       
                     </div>
                   )}
-                  <div className="flex justsb">
-                  <div className="g-10">
+                  <div className="flex" style={{justifyContent: 'space-between'}}>
+                  <div className="g-10 mr-10">
                   <h4 className="f-300" >{profileDetails?.username || "N/A"}</h4>
                     <p>Username</p>
                     
@@ -258,7 +263,9 @@ const UserDetails = () => {
                   <p>Account Type</p>
                 </div>
                 <div className="g-10">
-                <h4 className="f-300">{profileDetails?.package_id || "N/A"}</h4>
+                <h4 className="f-300">
+                <PackageName id={profileDetails?.package_id} type={profileDetails?.user_type}/>
+                  </h4>
                   <p>Package Type </p>
                   
                 </div>
@@ -312,47 +319,11 @@ const UserDetails = () => {
                     {profileDetails?.status === "1" ? "Active" : "Not Active"}
                   </h4>
                   <p>Account Status</p>
-                  
                 </div>
-                
               </div>
             )}
           </div>
-          <div className="w-full right">
-            <div className="flex g-0">
-              <Box sx={{ width: "100%" }}>
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                  <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="basic tabs example">
-                    <Tab label="Affiliate" {...a11yProps(0)} />
-                    <Tab label="Vendor" {...a11yProps(1)} />
-                    <Tab label="Stockiest" {...a11yProps(2)} />
-                  </Tabs>
-                </Box>
-                <TabPanel value={value} index={0}>
-                  <h1>test</h1>
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                  <div>
-                    <button
-                      className="btn btn-primary p-25 mt-15"
-                      style={{ float: "right" }}>
-                      Add new role
-                    </button>
-                    <h2>test2</h2>
-                  </div>
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                  <h3>test3</h3>
-                </TabPanel>
-              </Box>
-            </div>
-          </div>
-        
         </div>
-        
       </div>
      
       {profileDetails && (
@@ -432,7 +403,7 @@ const UserDetails = () => {
                       <label> Store Name </label>
                       <input
                         type="text"
-                        className="form-control-input "
+                        className="form-control-input title-case"
                         name="store_name"
                         disabled
                         onChange={onChangeHandler}
@@ -452,7 +423,7 @@ const UserDetails = () => {
                         value={
                           profileDetails?.store_url
                             ? profileDetails?.store_url
-                            : "N/A"
+                            : `https://pmall.com.ng/${profileDetails.store_name}`
                         }
                       />
                     </div>

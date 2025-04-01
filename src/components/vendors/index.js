@@ -1,5 +1,10 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useUser } from "../../context/UserContext";
+import { BASE_URL } from "../../utils/config"; 
+import Toast from "../../utils/Toast"
+import PackageName from "../../utils/accountPackages"
+import moment from "moment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import GroupsIcon from "@mui/icons-material/Groups";
 import Table from "@mui/material/Table";
@@ -31,14 +36,12 @@ const style = {
 
 const columns = [
   { id: "vendor", label: "Vendor Name" },
-  { id: "location", label: "location" },
-  { id: "sales", label: "Sales" },
+  { id: "location", label: "Location" },
+  { id: "email", label: "Email Address" },
   { id: "phone", label: "Phone Number" },
   { id: "plan", label: "Package" },
-  { id: "prod_qty", label: "Prod. Qty" },
-  { id: "status", label: "Status" },
   { id: "registered", label: "Registered" },
-  { id: "action", label: "" },
+  { id: "status", label: "Status" },
 ];
 
 const data = {
@@ -61,34 +64,140 @@ var config = {
 function createData(
   vendor,
   location,
-  sales,
+  email,
   phone,
   plan,
-  product_qty,
   status,
   registered,
-  action
 ) {
   return {
     vendor,
     location,
-    sales,
+    email,
     phone,
     plan,
-    product_qty,
     status,
     registered,
-    action,
   };
 }
 
 const Vendors = () => {
   const [newVendorModal, setNewVendorModal] = useState(false);
+  const [allVendors, setAllVendors] = useState([]);
+  const [vendorPackages, setVendorPackages] = useState([]);
+  const [toast, setToast] = useState(null);
+  const [loading, setLoading] =useState(false);
   const handleModalClose = () => setNewVendorModal(false);
   const navigate = useNavigate();
+  const { user } = useUser();
+  const [error, setError] = useState("");
 
+  const [formData, setFormData] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    phone: "",
+    store_name: "",
+    ref_id: "",
+    package_id: vendorPackages.length > 0 ? vendorPackages[0].id : "",
+  });
+
+  const onChangeHandler = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await fetch(`${BASE_URL}/register/vendor`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user?.token,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        setToast({ message: "Failed to register vendor!", type: "error" });
+			  setTimeout(() => setToast(null), 7000);
+        setLoading(false);
+      }
+      const result = await response.json();
+      console.log(result);
+      setToast({ message: `${result.message}`, type: "success" });
+      setLoading(false);
+      handleModalClose();
+      
+      setFormData({
+        fname: "",
+        lname: "",
+        email: "",
+        phone: "",
+        store_name: "",
+        ref_id: "",
+        package_id: "",
+      });
+			setTimeout(() => setToast(null), 9000);
+      fetchVendors();
+    } catch (error) {
+      setLoading(false);
+      setToast({ message: "Failed to register vendor!", type: "error" });
+			setTimeout(() => setToast(null), 7000);
+    }
+  };
+
+  const fetchVendors = () => {
+    setLoading(true);
+    fetch(`${BASE_URL}/get-all-vendors`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            Authorization: "Bearer " + user?.token,
+        },
+    })
+        .then((resp) => resp.json())
+        .then((result) => {
+            setAllVendors(result.data.vendors || []);
+            fetchAllPackages()
+            setLoading(false);
+        })
+        .catch((err) => {
+            console.log(err);
+            setLoading(false);
+        });
+};
+
+
+const fetchAllPackages = () => {
+  setLoading(true);
+  fetch(`${BASE_URL}/account-packages/all`, {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + user?.token,
+      },
+  })
+      .then((resp) => resp.json())
+      .then((result) => {
+  setVendorPackages(result.data.packages.filter(pkg => pkg.type === "Vendor"));
+          setLoading(false);
+      })
+      .catch((err) => {
+          setLoading(false);
+      });
+};
+
+
+useEffect(()=> {
+  fetchVendors();
+},[])
   return (
     <section>
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <section className="page__header">
         <div className="flex-container alc">
           <GroupsIcon />
@@ -103,7 +212,7 @@ const Vendors = () => {
               <Doughnut data={data} options={config} className="w80" />
             </div>
             <h3 className="stat__value ml-10">
-              209
+              {allVendors?.length}
               <p className="sub__title">Total Vendors</p> &nbsp;
             </h3>
           </div>
@@ -154,141 +263,36 @@ const Vendors = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow onClick={() => navigate("details")}>
+            {allVendors?.map((vendor)=>(
+            <TableRow onClick={() => navigate("details")} key={vendor.id}>
               <TableCell className="b-r">
                 <div className="d-flex alc f-10 flex-start">
-                  <div className="user__avatar bg-success">
-                    <h3>AP</h3>
+                <div className={`user__avatar ${vendor.acct_number !== null ? "bg-success" : "bg-error"}`}>
+                    <h3 className="uppercase">
+                      {vendor.fname[0]}{vendor.lname[0]}</h3>
                   </div>
                   <div className="lheight13">
-                    <h4 className="f-300">Ahmed Peter</h4>
-                    <p className="sub__title">hooli Stores</p>
+                    <h4 className="f-300">{vendor.fname} {vendor.lname}</h4>
+                    <p className="sub__title">{vendor.store_name}</p>
                   </div>
                 </div>
               </TableCell>
-              <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> 104</TableCell>
-              <TableCell> 0803 000 0000</TableCell>
-              <TableCell> Basic </TableCell>
-              <TableCell> 3 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-success">Active</span>{" "}
+              <TableCell> {vendor.state ? vendor.state : 'N/A'} [{vendor.lga ? vendor.lga : 'N/A'} ]</TableCell>
+              <TableCell> {vendor.email}</TableCell>
+              <TableCell> {vendor.phone}</TableCell>
+              <TableCell> 
+                <PackageName id={vendor.package_id} type={vendor.user_type} />  
               </TableCell>
+              <TableCell> {moment(vendor.created_at).format("ll")} </TableCell>
               <TableCell>
                 {" "}
-                <MoreVertIcon />{" "}
+                <span className={`badge ${vendor.acct_number !== null ? "bg-success" : "bg-error"}`}>
+                  {vendor.acct_number !== null ? "Active" : "Inactive"}
+                  </span>{" "}
               </TableCell>
             </TableRow>
-            <TableRow onClick={() => navigate("details")}>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <div className="user__avatar bg-error">
-                    <h3>PY</h3>
-                  </div>
-                  <div className="lheight13">
-                    <h4 className="f-300">Philip Yahaya</h4>
-                    <p className="sub__title">Abdulmalik Corner</p>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> 86 </TableCell>
-              <TableCell> 0803 000 0000</TableCell>
-              <TableCell> Premium </TableCell>
-              <TableCell> 9 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-error">Inactive </span>
-              </TableCell>
-              <TableCell> June 12, 1982 </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-
-            <TableRow onClick={() => navigate("details")}>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <div className="user__avatar bg-success">
-                    <h3>PY</h3>
-                  </div>
-                  <div className="lheight13">
-                    <h4 className="f-300">Philip Yahaya</h4>
-                    <p className="sub__title">Stacey's Spa</p>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> 34</TableCell>
-              <TableCell> 0803 000 0000</TableCell>
-              <TableCell> Basic </TableCell>
-              <TableCell> 2 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-error">Inactive </span>
-              </TableCell>
-              <TableCell> June 12, 1982 </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <div className="user__avatar bg-warning">
-                    <h3>DA</h3>
-                  </div>
-                  <div className="lheight13">
-                    <h4 className="f-300">Dennis Abdulmalik</h4>
-                    <p className="sub__title">STF/09/2623</p>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> 34</TableCell>
-              <TableCell> 0803 000 0000</TableCell>
-              <TableCell> Deluxe </TableCell>
-              <TableCell> 40 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-error">Inactive </span>
-              </TableCell>
-              <TableCell> June 12, 1982 </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                  <div className="user__avatar bg-error">
-                    <h3>MS</h3>
-                  </div>
-                  <div className="lheight13">
-                    <h4 className="f-300">Dennis Abdulmalik</h4>
-                    <p className="sub__title">Store Title</p>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell> Abuja [Garki]</TableCell>
-              <TableCell> 34</TableCell>
-              <TableCell> 0803 000 0000</TableCell>
-              <TableCell> Basic </TableCell>
-              <TableCell> 3 </TableCell>
-              <TableCell>
-                {" "}
-                <span className="badge bg-success">Active </span>
-              </TableCell>
-              <TableCell> June 12, 1982 </TableCell>
-              <TableCell>
-                {" "}
-                <MoreVertIcon />{" "}
-              </TableCell>
-            </TableRow>
+            ))}
+            
           </TableBody>
         </Table>
       </TableContainer>
@@ -307,23 +311,21 @@ const Vendors = () => {
             </Typography>
             <div className="s-divider"></div>
           </div>
-          <section className="flex__normal">
+          <section className="flex__normal" style={{marginTop: 65}}>
             <div className="w-200">
-              <div className="profile_pic_holder b-round">
-                <img src={profile} className="profile_pic b-round" />
-                <button className="btn btn-primary p-25 mt-15">
-                  Upload Photo
-                </button>
+              <div className="">
               </div>
             </div>
-            <form style={{ width: "100%" }}>
+            <form style={{ width: "100%" }} onSubmit={handleSubmit}>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
                   <label> Firstname</label>
                   <input
                     type="text"
                     className="form-control-input "
-                    name="username"
+                    name="fname"
+                    onChange={onChangeHandler}
+                    value={formData.fname}
                     placeholder="e.g Adamu"
                   />
                 </div>
@@ -332,7 +334,9 @@ const Vendors = () => {
                   <input
                     type="text"
                     className="form-control-input "
-                    name="username"
+                    name="lname"
+                    onChange={onChangeHandler}
+                    value={formData.lname}
                     placeholder="e.g Norris"
                   />
                 </div>
@@ -343,7 +347,9 @@ const Vendors = () => {
                   <input
                     type="email"
                     className="form-control-input "
-                    name="username"
+                    name="email"
+                    onChange={onChangeHandler}
+                    value={formData.email}
                     placeholder="email@domain.com"
                   />
                 </div>
@@ -352,22 +358,27 @@ const Vendors = () => {
                   <input
                     type="number"
                     className="form-control-input "
-                    name="username"
+                    name="phone"
+                    onChange={onChangeHandler}
+                    value={formData.phone}
                     placeholder="e.g. 0803 000 0000"
                   />
                 </div>
-              </section>
-
-              <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
                   <label> Store Name </label>
                   <input
                     type="text"
                     className="form-control-input "
                     name="store_name"
+                    onChange={onChangeHandler}
+                    value={formData.store_name}
                     placeholder="e.g Hooli Stores"
                   />
                 </div>
+              </section>
+
+              <section className="flex-container mb-lg">
+                
                 <div className="pos-rel w100-m10 ">
                   <label> Store ULR </label>
                   <input
@@ -381,93 +392,43 @@ const Vendors = () => {
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
-                  <label> Account Name </label>
+                  <label> Referral ID </label>
                   <input
                     type="text"
                     className="form-control-input "
-                    name="account_name"
-                    placeholder="e.g. Ahmed Peter"
+                    name="ref_id"
+                    onChange={onChangeHandler}
+                    value={formData.ref_id}
+                    placeholder="e.g. PM-000000"
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
-                  <label> Account Number </label>
-                  <input
-                    type="number"
-                    className="form-control-input "
-                    name="username"
-                    placeholder="e.g. 0458060996"
-                  />
-                </div>
-                <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Account Type </label>
+                  <label className="mb-7"> Package Type </label>
                   <select
-                    className="search__bar w-100"
-                    defaultValue={"default"}>
-                    <option value="default"> Select Account Type</option>
-                    <option value="personal"> Personal </option>
-                    <option value="business"> Business</option>
-                  </select>
+            name="package_id"
+            className="search__bar w-100"
+            value={formData.package_id}
+            onChange={onChangeHandler}>
+              {
+                vendorPackages.map((pack)=>(
+                  <option value={pack.id} key={pack.id}>{pack.name} - {pack.price} </option>
+                ))
+              }
+          </select>
                 </div>
               </section>
 
-              <section className="flex-container mb-lg">
-                <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Select Bank</label>
-                  <select
-                    className="search__bar w-100"
-                    defaultValue={"default"}>
-                    <option value="default"> Select Bank</option>
-                    <option value="Bank 1"> Bank 1</option>
-                    <option value="Bank 2"> Bank 2</option>
-                    <option value="Bank 3"> Bank 3</option>
-                    <option value="Bank 4"> Bank 4</option>
-                  </select>
-                </div>
-                <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Store Location</label>
-                  <select
-                    className="search__bar w-100"
-                    defaultValue={"default"}>
-                    <option value="default"> Select State</option>
-                    <option value="State 1"> State 1</option>
-                    <option value="State 2"> State 2</option>
-                    <option value="State 3"> State 3</option>
-                    <option value="State 4"> State 4</option>
-                  </select>
-                </div>
-                <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Local Government Area</label>
-                  <select
-                    className="search__bar w-100"
-                    defaultValue={"default"}>
-                    <option value="default"> Select LGA</option>
-                    <option value="LGA 1"> LGA 1</option>
-                    <option value="LGA 2"> LGA 2</option>
-                    <option value="LGA 3"> LGA 3</option>
-                    <option value="LGA 4"> LGA 4</option>
-                  </select>
-                </div>
-              </section>
-              <section className="flex-container mb-lg">
-                <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Address</label>
-                  <textarea
-                    placeholder="Enter store address"
-                    className="form-textarea w-100"></textarea>
-                </div>
-
-                <div className="pos-rel w100-m10"></div>
-              </section>
-              <div className="flex__normal w-30 pull-right mt-35">
-                <button
-                  onClick={handleModalClose}
-                  className="btn btn-secondary p-25 pull-right mr-10">
-                  Cancel
-                </button>
-                <button className="btn btn-primary p-25 pull-right">
-                  Save
-                </button>
-              </div>
+              {error && <p className="text-danger">{error}</p>}
+              <div className="flex__normal pull-right mt-35">
+          <button type="button" disabled={loading} className="btn btn-secondary p-25 pull-right mr-10"
+          onClick={handleModalClose}
+          >
+            Cancel
+          </button>
+          <button type="submit" className="btn btn-primary p-25 pull-right" disabled={loading}>
+          {loading ? "Saving record..." : "Register Vendor"} 
+          </button>
+        </div>
             </form>
           </section>
         </Box>

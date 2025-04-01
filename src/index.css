@@ -48,6 +48,12 @@ button {
 .purple {
   color: var(--primary-bg-color);
 }
+.jusbtw{
+  justify-content: space-between;
+}
+.f-11 {
+  font-size: 11px;
+}
 .pointer {
   cursor: pointer;
 }
@@ -657,6 +663,17 @@ button {
   width: 40px;
   height: 40px;
 }
+
+.menu-list > ul > li.menu-item-has-children {
+  transition: all 0.55s ease-in-out;
+}
+.menu-list > ul > li {
+  display: inline-block;
+  position: relative;
+  padding: 0px 24px;
+}
+
+
 .py-5{
   padding: 0 5px
 }
@@ -1823,27 +1840,59 @@ input:checked + .slider:before {
 .trash___can:hover{
   color: red;
 }
-.cart .maincart {
+
+/* .back_to_top {
+  position: fixed;
+  z-index: 99999;
+  bottom: 30px;
+  right: 2%;
+} */
+
+.back_to_top {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  cursor: pointer;
+  background: #6a5acd;
+  border-radius: 50%;
+  padding: 10px;
   display: flex;
-  flex-direction: column;
-  gap: 40px;
-  border: 1px solid #eee;
-  border-radius: 20px;
-  padding: 20px;
-  background-color: white;
-  /* width: 62%; */
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
+
+.back_to_top .back_totop_icon {
+  font-size: 40px;
+  color: white;
+}
+
+.back_to_top.hide {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(70px);
+}
+
+.back_to_top.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 .whatsapp__icon {
   position: fixed;
-    bottom: 5%;
+    bottom: 9%;
     z-index: 999;
-    right: 0;
+    left: 0;
     background-color: red;
     width: 5%;
     height: 7%;
 }
 .text-muted{
   color: #676767!important;
+}
+.w-100i {
+  width: 100%!important
 }
 .sub__cat__hover{
   text-decoration: none;
@@ -2100,6 +2149,63 @@ input:checked + .slider:before {
 .checkout-right .cart-item {
   background: #fff;
 }
+.text-light{
+  color: white;
+}
+
+.cart____information{
+    position: fixed;
+    right: -10px;
+    bottom: 0;
+    z-index: 9999;
+    width: 30%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.product_information_in_cart {
+  
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+.product_information_in_cart {
+  background-color: #191970;
+    color: white;
+    border-top-left-radius: 7px;
+    padding: 7px 21px;
+    border-top-right-radius: 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.pad-20 {
+  padding: 0 20px;
+  background-color: white;
+}
+.cart____item {
+  padding: 5px;
+    /* border-radius: 7px; */
+    margin-bottom: 5px;
+    border-bottom: thin dashed #d6d6d6;
+}
+.lite {
+  margin-left: auto;
+}
+.minicart {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  /* border: 1px solid #eee; */
+  border-radius: 20px;
+  /* padding: 20px; */
+  /* background-color: white; */
+  /* width: 62%; */
+}
+
+.product_information_in_cart  .cart-item {
+  background: #fff;
+}
 .t-history {
   padding: 50px;
   display: flex;
@@ -2121,6 +2227,29 @@ input:checked + .slider:before {
   position: relative;
 }
 
+.minicart-items {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.minicart-items.open {
+  max-height: 500px; /* Adjust based on content size */
+  opacity: 1;
+  overflow-y: scroll;
+}
+
+.toggle-button {
+  cursor: pointer;
+  color: #007bff;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.toggle-button:hover {
+  color: #0056b3;
+}
 .cart-modal-container{
  opacity: 0;
 }
@@ -2268,7 +2397,19 @@ right connector from last child*/
 	border-left: 1px solid #ccc;
 	width: 0; height: 20px;
 }
+.profile__notification {
+  width: 100%;
+    background-color: #ffb31f8c;
+    color: black;
+    padding: 5px 10px;
+    margin-top: -31px;
+    border-radius: 4px;
+    margin-bottom: 34px;
+}
 
+.back_totop_icon {
+    transform: scale(2.5);
+}
 .tree li a{
 	border: 1px solid #ccc;
 	padding: 5px 10px;
@@ -2276,6 +2417,7 @@ right connector from last child*/
 	color: #666;
 	font-family: arial, verdana, tahoma;
 	font-size: 11px;
+  line-height: 1em;
 	display: inline-block;
 	
 	border-radius: 5px;

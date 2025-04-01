@@ -2,9 +2,10 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { addToCart, getCart } from "../../utils/cartUtils";
+import MiniCart from "../../utils/miniCart";
+import BackToTop from "../../utils/backToTop";
 import LimitWord from "../../utils/limitWord";
 import currency from "../../utils/formatCurrency";
-import FindCategoryByID from "../../utils/findCategoryByID";
 const PRODUCTS_ENDPOINT = "https://api.pmall.com.ng/api/v1/public/products/list-all";
 const CATEGORIES_ENDPOINT = "https://api.pmall.com.ng/api/v1/public/products/get-all-categories";
 
@@ -13,6 +14,7 @@ const ProductGrid = ({ categoryId = null }) => {
   const [categories, setCategories] = useState([]);
   const [productsByCategory, setProductsByCategory] = useState({});
   const [categoryName, setCategoryName] = useState("Loading...");
+  const [todayCart, setTodayCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cartMessage, setCartMessage] = useState("");
@@ -64,12 +66,16 @@ const ProductGrid = ({ categoryId = null }) => {
 //     setCategoryName(categoryData ? categoryData : "Unknown Category");
 // };
 
+// const cartTray = () => {
+//   setLoading(true);
+//   let cart = getCart();
+//   setTodayCart(cart);
+//   setLoading(false);
+// }
+
 
   useEffect(() => {
     fetchCategoriesAndProducts();
-    
-
- 
   }, [fetchCategoriesAndProducts]);
 
   const categoryBackgrounds = useMemo(
@@ -91,7 +97,7 @@ const ProductGrid = ({ categoryId = null }) => {
   const handleAddToCart = useCallback((product) => {
     const numOfItems = 1;
     let cart = getCart();
-
+    
     const isProductInCart = cart.some((item) => item.id === product.id);
 
     if (isProductInCart) {
@@ -116,6 +122,7 @@ const ProductGrid = ({ categoryId = null }) => {
           </Link>
         </div>
       );
+      setTodayCart(cart);
     }
 
     localStorage.setItem("pmallCart", JSON.stringify(cart));
@@ -128,6 +135,7 @@ const ProductGrid = ({ categoryId = null }) => {
 
   return (
     <div style={{ width: "100%" }}>
+      <BackToTop/>
       {categories
         ?.filter((category) => productsByCategory[category.id]?.length > 0)
         .map((category) => (
@@ -153,7 +161,7 @@ const ProductGrid = ({ categoryId = null }) => {
                       <span className="hot">NEW</span>
                     </div>
                     <div className="product-info default-cover card">
-                      <Link to={`/product/${product.id}`} className="img-bg">
+                    <Link to={`/product/${product.id}`} className="img-bg">
                         <img
                           src={product.image || "/default-image.jpg"}
                           alt={product.name || "Product Image"}
@@ -162,7 +170,7 @@ const ProductGrid = ({ categoryId = null }) => {
                           onError={(e) => (e.target.src = "/default-image.jpg")}
                         />
                       </Link>
-                      <Link to={`/product/${product.id}`} className="no__underline">
+                      <Link to={`/product/${product.id}`} className="img-bg">
                         <div className="product_desc">
                           <div className="flex-col g-5">
                             <p className="product__name bold uppercase">{LimitWord(product.name || "Unnamed Product", 3)}</p>
@@ -187,6 +195,11 @@ const ProductGrid = ({ categoryId = null }) => {
             </div>
           </div>
         ))}
+         <a className="whatsapp__icon" aria-label="Chat on WhatsApp" href="https://wa.me/2347084802028" target="_blank" rel="noopener noreferrer">
+    <img alt="Chat on WhatsApp" src="/icons8-whatsapp.gif" style={{width: '100%'}} />
+</a>
+<MiniCart cartInfo={todayCart} />
+
       {cartMessage && <p className="cart-message">{cartMessage}</p>}
     </div>
   );

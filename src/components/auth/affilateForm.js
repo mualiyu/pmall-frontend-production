@@ -1,15 +1,46 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { BASE_URL } from "../../utils/config";
+import { useUser } from "../../context/UserContext";
 import useForm from "../../utils/useForm";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const AffilateForm = ({ inputValues, onChangeHandler }) => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [affiliatePackages, setAffiliatePackages] = useState([]);
+  const { user } = useUser();
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+
+  
+  const fetchAllPackages = () => {
+    setLoading(true);
+    fetch(`${BASE_URL}/account-packages/all`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            Authorization: "Bearer " + user?.token,
+        },
+    })
+        .then((resp) => resp.json())
+        .then((result) => {
+    setAffiliatePackages(result.data.packages.filter(pkg => pkg.type === "Affiliate"));
+            setLoading(false);
+        })
+        .catch((err) => {
+            setLoading(false);
+        });
+};
+
+useEffect(()=>{
+  fetchAllPackages()
+},[])
+
 
   return (
     <span className="affilate-form">
@@ -98,9 +129,11 @@ const AffilateForm = ({ inputValues, onChangeHandler }) => {
             name="package_id"
             className="last-name form-control"
             onChange={onChangeHandler}>
-            <option value="2">Standard - 10,000</option>
-            <option value="3">Silver - 25,000</option>
-            <option value="4">Gold - 50,000</option>
+             {
+                affiliatePackages.map((pack)=>(
+                  <option value={pack.id}>{pack.name} - {pack.price} </option>
+                ))
+              }
           </select>
           {/* <input
                         type="number" 

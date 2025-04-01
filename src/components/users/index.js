@@ -323,7 +323,9 @@ const Users = () => {
   useEffect(() => {
     console.log(user?.token);
     getUsers();
-    getAssistants();
+    {user.user_type=== "vendor" && (
+      getAssistants()
+    )}
     // updateChartValue();
   }, [newProduct]);
   return (
@@ -341,13 +343,14 @@ const Users = () => {
               onClick={() => setnewAdminModal(true)}>
               Create Admin
             </button>
-          ) : (
+          ) : user.accountType === "Vendor" ? (
             <button
               className="btn btn-primary p-25"
               onClick={() => setnewUserModal(true)}>
               Add Vendor Assistant
             </button>
-          )}
+          ) : null
+          }
         </div>
       </section>
       <div className="s-divider"></div>

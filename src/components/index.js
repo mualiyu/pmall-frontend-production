@@ -20,11 +20,13 @@ import AffilateDetails from "./affilates/details";
 import Dashboard from "./dashboard";
 import UserDetails from "./users/details";
 import MyNetwork from "./users/MyNetwork";
+import Messaging from "./messaging";
 import NetworkDetails from "./users/networkDetails";
 import ProductList from "./productList";
 import Categories from "./categories";
 import Gallery from "./gallery";
-import CategoryProducts from "./productList/categoryProducts"
+import CategoryProducts from "./productList/categoryProducts";
+import PackageList from "./packages";
 import OrderDetails from "./orderManagement/details";
 import SiteSettings from "./siteSettings";
 import VerifyToken from "./auth/verifyToken";
@@ -102,9 +104,11 @@ function Layout() {
                   <Route path="/app/vendors/details" element={<VendorDetails />} />
                   <Route path="/app/transaction-history" element={<TransactionHistory />} />
                   <Route path="/app/products/list" element={<ProductList />} />
+                  <Route path="/app/messaging" element={<Messaging />} />
                   <Route path="/app/affilates" element={<Affilates />} />
                   <Route path="/app/affilates/details" element={<AffilateDetails />} />
                   <Route path="/app/network/genealogy/" element={<MyNetwork />} />
+                  <Route path="/app/account/packages" element={<PackageList />} />
                   <Route path="/app/products" element={<Products />} />
                   <Route path="/app/categories" element={<Categories />} />
                   <Route path="/app/gallery" element={<Gallery />} />
@@ -119,7 +123,7 @@ function Layout() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/checkout/transaction/:id" element={<TransactionPurchase />} />
-                <Route path="/store/product/categories/:id" element={<CategoryProducts />} />
+                <Route path="/category/:id" element={<CategoryProducts />} />
 
               </Routes>
             </div>

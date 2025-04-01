@@ -287,10 +287,11 @@ tbody {
 .page__header {
   display: flex;
   align-items: center;
-  padding: 21px 10px;
+  padding: 20px;
   justify-content: space-between;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
-    margin-bottom: 33px;
+  margin-bottom: 33px;
+  background-color: white;
 }
 .flex__normal {
   display: flex;
@@ -540,9 +541,11 @@ css-6od3lo-MuiChip-label {
 }
 .main__content {
   width: 100%;
-  margin: 0 20px;
+  /* margin: 0 20px; */
   /* height: 100vh; */
   overflow-x: scroll;
+  background-color: white;
+  padding: 0 20px;
 }
 .css-1t4lqmc-MuiButtonBase-root-MuiTab-root {
   min-width: 0 !important;
@@ -676,9 +679,9 @@ ngx-charts-advanced-pie-chart .advanced-pie-legend-wrapper {
 }
 .form-textarea {
   border: thin solid #e0e0e0;
-  height: 90px;
-  width: 400px !important;
-  padding: 9px;
+  height: 140px;
+  min-width: 400px;
+  padding: 11px;
   border-radius: 5px;
 }
 label {
@@ -1393,13 +1396,152 @@ h1 {
 }
 
 .callout__main__menu > ul li::before {
-  content: "keyboard_double_arrow_right";  /* Material Icon name */
   font-family: "Material Icons";
   font-size: 13px;
   margin-right: 8px;
   vertical-align: middle;
   color: #5a5d72;
 }
+
+
+
+/* Start Account menu */
+.myaccount_btn {
+  position: relative;
+  border: none;
+  background-color: white;
+}
+ .myaccount:hover .myaccount_menu {
+  display: block;
+}
+.material-icons {
+  font-size: 13px;
+  margin-right: 8px;
+  vertical-align: middle;
+  color: #5a5d72;
+}
+
+.myaccount_menu {
+  position: absolute;
+  min-width: 200px;
+  background-color: white;
+  padding: 25px 40px;
+  align-items: center;
+  justify-content: space-around;
+  top: 115px;
+  z-index: 9999;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  display: none;
+}
+.myaccount__main__menu {
+  /* width: 33.3%; */
+}
+.myaccount__main__menu > ul li {
+  line-height: 2.4rem;
+    border-bottom: thin dashed #d6d6d6;
+    cursor: pointer;
+    color: #5a5d72;
+    display: flex;
+    align-items: center;
+}
+
+.myaccount__main__menu > ul li::before {
+  font-family: "Material Icons";
+  font-size: 13px;
+  margin-right: 8px;
+  vertical-align: middle;
+  color: #5a5d72;
+}
+.myaccount__main__menu > ul li {
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+  transition: padding-left 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.myaccount__main__menu > ul li:hover {
+  padding-left: 10px;
+  color: #000000;
+}
+
+.myaccount__main__menu > ul li::before {
+  font-family: "Material Icons";
+  font-size: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.myaccount__main__menu > ul li:hover::before {
+  transform: translateX(3px); /* Slight movement */
+}
+
+
+/* End Account Menu */
+
+.category_btn {
+  position: relative;
+  border: none;
+  background-color: white;
+}
+ .category:hover .category_menu {
+  display: block;
+}
+
+
+.category_menu {
+  position: absolute;
+  min-width: 300px;
+  background-color: white;
+  padding: 25px 40px;
+  align-items: center;
+  justify-content: space-around;
+  top: 200px;
+  z-index: 9999;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  display: none;
+}
+.category__main__menu {
+  /* width: 15%; */
+}
+.category__main__menu > ul li {
+  line-height: 2.4rem;
+    border-bottom: thin dashed #d6d6d6;
+    cursor: pointer;
+    color: #5a5d72;
+    display: flex;
+    align-items: center;
+}
+
+.category__main__menu > ul li::before {
+  font-family: "Material Icons";
+  font-size: 13px;
+  margin-right: 8px;
+  vertical-align: middle;
+  color: #5a5d72;
+}
+.category__main__menu > ul li {
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+  transition: padding-left 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.category__main__menu > ul li:hover {
+  padding-left: 10px;
+  color: #000000;
+}
+
+.category__main__menu > ul li::before {
+  font-family: "Material Icons";
+  font-size: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.category__main__menu > ul li:hover::before {
+  transform: translateX(3px); /* Slight movement */
+}
+
+
+
 .sell_on_pmall_btn {
   padding: 11px 22px;
     font-weight: 700;
@@ -1449,7 +1591,6 @@ h1 {
 }
 
 .callout__main__menu > ul li::before {
-  content: "keyboard_double_arrow_right";
   font-family: "Material Icons";
   font-size: 12px;
   transition: transform 0.3s ease-in-out;

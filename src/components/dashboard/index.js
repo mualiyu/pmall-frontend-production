@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { BASE_URL } from "../../utils/config";
+import Loading from "../../utils/loading";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
@@ -57,13 +59,6 @@ const top100Films = [
   { title: "Electronics", year: 2008 },
   { title: "Makeup", year: 1957 },
   { title: "Cough", year: 1993 },
-  { title: " Summer", year: 1994 },
-  { title: "Clothing", year: 2001 },
-  { title: "Ceramics", year: 1971 },
-  { title: "Footwear", year: 2007 },
-  { title: "Foodstuff", year: 1976 },
-  { title: "Toys", year: 1962 },
-  { title: "Children", year: 1944 },
 ];
 
 const style = {
@@ -143,6 +138,7 @@ function createData(product_name, date, transaction_id, amt, sales) {
 const Dashboard = () => {
   const [newVendorModal, setNewVendorModal] = useState(false);
   const [dashboardTab, setDashboardTab] = useState(true);
+  const [allDownlines, setAllDownlines] = useState(null);
   const [affilateTab, setAffilateTab] = useState(false);
   const [vendorTab, setVendorTab] = useState(false);
   const [productTab, setProductTab] = useState(false);
@@ -152,36 +148,14 @@ const Dashboard = () => {
   const [countAffiliates, setCountAffiliates] = useState(0);
   const [productList, setProductList] = useState(null);
   const [countVendors, setCountVendors] = useState(0);
-  const [pmallUsers, setPmallUsers] = useState([]);
+  const [pmallUser, setPmallUser] = useState([]);
   const { loading, setLoading, setProfileDetails } = useVendor();
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
-  console.log(user);
-  const getUsers = () => {
-    fetch("https://api.pmall.com.ng/api/v1/get-all-users", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        Accept: "application/json",
-        Authorization: "Bearer " + user?.token,
-      },
-    })
-      .then((resp) => resp.json())
-      .then((result) => {
-        console.log(result.data.users);
-        setPmallUsers(result.data.users);
-       
-
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-     
-      console.log(pmallUsers);
-  };
+  
 
 const getVendorProducts = (ref)=> {
   console.log(ref);
-  fetch("https://api.pmall.com.ng/api/v1/products", {
+  fetch(`${BASE_URL}/products`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -200,13 +174,11 @@ const getVendorProducts = (ref)=> {
       .catch((err) => {
         console.log(err);
       });
-      // setCountAffiliates(pmallUsers.reduce((count, item) => item.user_type === "Affiliate" ? count + 1 : count, 0));
-      // setCountVendors(pmallUsers.reduce((count, item) => item.user_type === "Vendor" ? count + 1 : count, 0));
 }
   
   const getUsersDetails = () => {
-    //setLoading(true)
-    fetch("https://api.pmall.com.ng/api/v1/profile", {
+    setLoading(true)
+    fetch(`${BASE_URL}/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -218,33 +190,75 @@ const getVendorProducts = (ref)=> {
       .then((result) => {
         console.log(result);
         if (result.status) {
-          setPmallUsers(result.data.user.referrals);
-          // if(result?.data?.user.user_type === 'Vendor') {
-            console.log(result?.data?.user.store_id);
+          getMyNetwork();
+          setLoading(false);
+          // setUserDetails(result.data.user);
+          setPmallUser(result.data.user);
+          if(result?.data?.user.user_type === 'Vendor') {
             getVendorProducts(result?.data?.user.store_id);
-          // }
+          }
         }
-        // setLoading(false)
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err);
       });
-      console.log(pmallUsers);
-      setCountAffiliates(pmallUsers.reduce((count, item) => item.user_type === "Affiliate" ? count + 1 : count, 0));
-      setCountVendors(pmallUsers.reduce((count, item) => item.user_type === "Vendor" ? count + 1 : count, 0));
+      console.log(pmallUser);
+      
+      
   };
 
-  useEffect(() => {
-    getUsersDetails();
-  }, []);
+  const countTotalDownlines = (persons) => {
+    let count = 0;
+    const countRecursive = (userList) => {
+        if (!userList || userList.length === 0) return;
+        userList.forEach((user) => {
+            count++;
+            if (user.all_downline?.length > 0) {
+                countRecursive(user.all_downline);
+            }
+        });
+    };
+    countRecursive(persons);
+    return count;
+};
+
+  const getMyNetwork = () => {
+    setLoading(true);
+    fetch(`${BASE_URL}/profile/hierarchy-all-downline`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            Authorization: "Bearer " + user?.token,
+        },
+    })
+        .then((resp) => resp.json())
+        .then((result) => {
+    console.log(result.data)
+    setCountAffiliates(result?.data?.allDownline.reduce((count, item) => item.user_type === "Affiliate" ? count + 1 : count, 0));
+          setCountVendors(result?.data?.allDownline.reduce((count, item) => item.user_type === "Vendor" ? count + 1 : count, 0));
+            setAllDownlines(result?.data?.allDownline || []);
+            setLoading(false);
+        })
+        .catch((err) => {
+            setLoading(false);
+        });
+};
+
 
   useEffect(() => {
     let isLoggedIn = localStorage.getItem("authToken");
     if (!isLoggedIn) {
       navigate("/");
     }
-    getUsers();
+    getUsersDetails();
   }, []);
+
+  // useEffect(() => {
+    
+    // getUsers();
+  // }, []);
   const dashboard = () => {
     setAffilateTab(false);
     setProductTab(false);
@@ -272,6 +286,7 @@ const getVendorProducts = (ref)=> {
 
   return (
     <section className="dashboard">
+      <Loading loading={loading}/>
       <section className="page__header">
         <div className="flex-container alc justsb w-100">
           <div>
@@ -313,8 +328,16 @@ const getVendorProducts = (ref)=> {
            )}
         </div>
       </section>
+      {user?.user_type !== "Admin" && !pmallUser.acct_number && (
+      <section>
+        <div className="profile__notification">
+           Good to see you {user.fname} {user.lname}! Just a few steps left to hitting the ground running. Add your banking details <Link to="/app/users/details" className="f-13"> Smash this link </Link>
+            </div>
+      </section>
+      )}
       {dashboardTab && (
         <div className="flex g-10 justsb">
+          
           <div style={{ width: "75%" }}>
             <section style={{ marginBottom: 30 }}>
               <div
@@ -330,7 +353,7 @@ const getVendorProducts = (ref)=> {
                       )}
                     </span>
                     <span className="balance-text">
-                      <h1 className="flex">{countVendors} </h1>
+                      <h1 className="flex">{countVendors ? countVendors : 0 } </h1>
                       <h4 className="color-grey">
                         {user.accountType === "Vendor"
                           ? "Products Sold"
@@ -348,7 +371,7 @@ const getVendorProducts = (ref)=> {
                     </span>
                     <span className="balance-text">
                     {user.accountType === "Affiliate" && (
-                      <h1 className="flex">{countAffiliates} </h1>
+                      <h1 className="flex"> {countAffiliates ? countAffiliates : 0 } </h1>
                     )}
                       {user.accountType === "Vendor" && (
                       <h1 className="flex">{productList?.length} </h1>
@@ -372,14 +395,18 @@ const getVendorProducts = (ref)=> {
                     </span>
                     <span className="balance-text">
                       <h1 className="flex">
-                        2000 <sup> PMT</sup>
+                      {user.accountType !== "Admin"
+                          ? pmallUser?.wallet?.pmt 
+                          : "0"}
+
+                        
                       </h1>
-                      <h4 className="color-grey">
+                      <p className="text-muted">
                         {" "}
                         {user.accountType !== "Admin"
                           ? "PMT Wallet"
                           : "Total Stores"}
-                      </h4>
+                      </p>
                     </span>
                   </div>
                   <div className="balance">
@@ -391,10 +418,10 @@ const getVendorProducts = (ref)=> {
                       )}
                     </span>
                     <span className="balance-text">
-                      <h1 className="flex">&#x20A6;000.00 </h1>
+                      <h1 className="flex">{pmallUser?.wallet?.pv} </h1>
                       <h4 className="color-grey">
                         {user.accountType !== "Admin"
-                          ? "Sales Wallet"
+                          ? "Point Value (PV)"
                           : "Total Affiliates"}
                       </h4>
                     </span>
@@ -428,7 +455,7 @@ const getVendorProducts = (ref)=> {
               <Line options={options} data={data} />
             </div>
             <div className="s-divider"></div>
-
+{user.user_type==="Vendor" && (
             <TableContainer component={Paper}>
               <Table
                 sx={{ minWidth: 650 }}
@@ -583,8 +610,9 @@ const getVendorProducts = (ref)=> {
                 </TableBody>
               </Table>
             </TableContainer>
+            )}
           </div>
-          <div className="g-20 flex-col">
+          <div className="g-20 flex-col" style={{width: "25%"}}>
             <button class="btn btn-warning">
               {" "}
               {user.accountType === "Vendor"
@@ -593,8 +621,11 @@ const getVendorProducts = (ref)=> {
                 ? "Become a vendor"
                 : "Create a New Vendor"}
             </button>
+            <button class="btn btn-primary">
+            Withdraw Money
+            </button>
 
-            <div className="total-profit g-5 flex-col">
+            {/* <div className="total-profit g-5 flex-col">
               <p>Total Profit</p>
               <h1 style={{ fontSize: 20 }}>&#x20A6;0.00</h1>
               <div className="withdraw">
@@ -616,16 +647,21 @@ const getVendorProducts = (ref)=> {
                   </span>
                 </div>
                 <button>Withdraw Money</button>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
 
-            {user.accountType !== "Vendor" && (
+            {pmallUser?.referrals?.length > 0 && user.accountType !== "Vendor" && (
               <>
                 <div className="recent-vendors">
-                  <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
+                <div className="flex jusbtw">
+                  <h1 style={{ marginBottom: 20, textTransform: "" }}>
                     My Vendors
                   </h1>
-                  {pmallUsers?.length === 0 && (
+                  <Link to="/app/network/genealogy">
+                  <p className="text-muted f-11">See Network</p>
+                  </Link>
+                  </div>
+                  {countAffiliates === 0 && (
                     <p>
                       {" "}
                       Oops! No worries. Register a Vendor to start earning
@@ -634,7 +670,7 @@ const getVendorProducts = (ref)=> {
                   )}
 
                   <div className="gap-10">
-                    {pmallUsers
+                    {allDownlines
                       ?.filter((user) => user.user_type === "Vendor")
                       .map((user) => (
                         <div className="flex">
@@ -658,7 +694,7 @@ const getVendorProducts = (ref)=> {
                             </h4>
                             <p className="sub__title">
                               {moment(user.created_at).format(
-                                "MMM DD [at] hh:mm A"
+                                "DD MMM YYYY [at] hh:mm A"
                               )}
                             </p>
                           </div>
@@ -667,10 +703,15 @@ const getVendorProducts = (ref)=> {
                   </div>
                 </div>
                 <div className="recent-affilates">
-                  <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
+                <div className="flex jusbtw">
+                  <h1 style={{ marginBottom: 20, textTransform: "" }}>
                     My Affiliates
                   </h1>
-                  {pmallUsers?.length === 0 && (
+                  <Link to="/app/network/genealogy">
+                  <p className="text-muted f-11">See Network</p>
+                  </Link>
+                  </div>
+                  {countVendors === 0 && (
                     <p>
                       {" "}
                       Oops! No worries. Register an Affiliate to start earning
@@ -678,7 +719,7 @@ const getVendorProducts = (ref)=> {
                     </p>
                   )}
                   <div className="gap-10">
-                    {pmallUsers
+                    {allDownlines
                       ?.filter((user) => user.user_type === "Affiliate")
                       .map((user) => (
                         <div className="flex">
@@ -702,7 +743,7 @@ const getVendorProducts = (ref)=> {
                             </h4>
                             <p className="sub__title">
                               {moment(user.created_at).format(
-                                "MMM DD [at] hh:mm A"
+                                "DD MMM YYYY [at] hh:mm A"
                               )}
                             </p>
                           </div>
@@ -712,47 +753,40 @@ const getVendorProducts = (ref)=> {
                 </div>
                 <div className="recent-affilates">
                   <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                    HIGHEST PAYOUT AFFILIATES
+                    MOST INFLUENCIAL AFFILIATES
                   </h1>
                   <div className="gap-10">
-                    <div className="flex">
-                      <div className="user__avatar bg-success">
-                        <h3>AP</h3>
-                      </div>
-                      <div>
-                        <h4 className="f-300">Ahmed Peter (84 Downlines)</h4>
-                        <p className="sub__title">&#x20A6; 812,935</p>
-                      </div>
-                    </div>
-                    <div className="flex">
-                      <div className="user__avatar bg-error">
-                        <h3>PY</h3>
-                      </div>
-                      <div>
-                        <h4 className="f-300">Philip Yahaya (200 Downlines)</h4>
-                        <p className="sub__title">&#x20A6; 812,935</p>
-                      </div>
-                    </div>
-                    <div className="flex">
-                      <div className="user__avatar bg-success">
-                        <h3>DA</h3>
-                      </div>
-                      <div>
-                        <h4 className="f-300">
-                          Dennis Abdulmalik (78 Downlines)
-                        </h4>
-                        <p className="sub__title">&#x20A6; 812,935</p>
-                      </div>
-                    </div>
-                    <div className="flex">
-                      <div className="user__avatar bg-warning">
-                        <h3>OD</h3>
-                      </div>
-                      <div>
-                        <h4 className="f-300">Ogun Dunamis (66 Downlines)</h4>
-                        <p className="sub__title">&#x20A6; 812,935</p>
-                      </div>
-                    </div>
+                  {allDownlines
+                      ?.filter((user) => user.user_type === "Affiliate")
+                      .sort((a, b) => countTotalDownlines(b.all_downline) - countTotalDownlines(a.all_downline))
+                      .map((user) => (
+                        <div className="flex">
+                          <div
+                            className="user__avatar"
+                            style={{
+                              backgroundColor:
+                                userBadge[
+                                  Math.floor(Math.random() * userBadge.length)
+                                ],
+                              color: "#1a3e9c",
+                            }}>
+                            <h3 style={{ textTransform: "uppercase" }}>
+                              {getInitials(user?.fname)}
+                              {getInitials(user?.lname)}
+                            </h3>
+                          </div>
+                          <div>
+                            <h4 className="f-300 capitalze">
+                            {user.fname} {user.lname} - ({countTotalDownlines(user.all_downline)} downlines)
+                            </h4>
+                            <p className="sub__title">
+                              {moment(user.created_at).format(
+                                "DD MMM YYYY [at] hh:mm A"
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                   </div>
                 </div>
               </>

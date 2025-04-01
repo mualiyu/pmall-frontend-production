@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../context/UserContext";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Person4Icon from '@mui/icons-material/Person4';
 import { copyToClipboard } from "../../utils/copyTextToClipboard";
 import Loading from "../../utils/loading";
 import moment from "moment";
 import Toast from "../../utils/Toast"
+import { BASE_URL } from "../../utils/config"
 import Popup from "../../utils/popUp";
 
 function MyNetwork() {
@@ -17,7 +19,7 @@ function MyNetwork() {
 
     const getMyNetwork = () => {
         setLoading(true);
-        fetch("https://api.pmall.com.ng/api/v1/profile/hierarchy-all-downline", {
+        fetch(`${BASE_URL}/profile/hierarchy-all-downline`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
@@ -27,12 +29,11 @@ function MyNetwork() {
         })
             .then((resp) => resp.json())
             .then((result) => {
-				console.log(result?.data?.allDownline);
+				console.log(result.data)
                 setAllDownlines(result?.data?.allDownline || []);
                 setLoading(false);
             })
             .catch((err) => {
-                console.log(err);
                 setLoading(false);
             });
     };
@@ -69,7 +70,6 @@ function MyNetwork() {
     };
 
 	const countDirectDownlines = (users) => {
-		console.log(users)
 		return users?.length ;
 	};
 
@@ -88,7 +88,10 @@ function MyNetwork() {
                                     setIsPopupOpen(true);
                                 }}
                             >
-                                {`${user.username}`}
+								<Person4Icon/>
+								<p>{user.user_type === "Vendor" ? user.store_name : user.username}</p>
+
+								
                                 <br />
                                 {`${user.my_ref_id}`}
                             </a>
@@ -104,7 +107,6 @@ function MyNetwork() {
 
     useEffect(() => {
         if (user?.token) {
-			console.log(user);
             getMyNetwork();
         }
     }, [user?.token]);

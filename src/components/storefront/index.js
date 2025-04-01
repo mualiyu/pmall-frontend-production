@@ -9,6 +9,7 @@ const StoreFront = () => {
     const { productCategories, loading, error } = useProductCategories();
   
     useEffect(()=>{
+        console.log(productCategories);
     },[])
     return ( 
         <div className="store-container">
@@ -84,25 +85,12 @@ const StoreFront = () => {
             <CategorySlider categories={productCategories} />
         </div>
             <div className='px flex flex-col g-40 w-90'>
-                {/* <div className='flex flex-col g-40'>
-                    <div className='flex g-20'>
-                        <div>
-                            <img src="/Screenshot 2024-03-19 145936.png" alt="" className='w-full'/>
-                        </div>
-                        <div>
-                            <img src="/Screenshot 2024-03-19 145810.png" alt="" className='w-full' />
-                        </div>
-                       
-                    </div>
-                </div> */}
                     <div className='flex justsb g-10' style={{width: '100%'}}>
                     <ProductGrid />
                     </div>
                 
             </div>
-            <a className="whatsapp__icon" aria-label="Chat on WhatsApp" href="https://wa.me/2347084802028" target="_blank" rel="noopener noreferrer">
-    <img alt="Chat on WhatsApp" src="icons8-whatsapp.gif" style={{width: '100%'}} />
-</a>
+           
         </div>
       
         </div>

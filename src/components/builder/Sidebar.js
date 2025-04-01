@@ -30,12 +30,13 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import Person2Icon from '@mui/icons-material/Person2';
 import HubIcon from "@mui/icons-material/Hub";
-import { useUser } from "../../context/UserContext";
+import { useUser, useLogOut } from "../../context/UserContext";
 import logo from "../../assets/imgs/pmall_logo_200.png";
 import "./Builder.css";
 
 function Sidebar() {
   const { user, setUser } = useUser();
+  const logOut = useLogOut();
   const navigate = useNavigate();
   console.log(user);
   console.log(localStorage.getItem("authToken"));
@@ -46,18 +47,7 @@ function Sidebar() {
     }
     return false;
   };
-  const handleLogOut = () => {
-    setUser({
-      token: "",
-      loggedIn: false,
-    });
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
-
-    console.log(user);
-  };
-
+  
   return (
     // {}
     <>
@@ -67,9 +57,9 @@ function Sidebar() {
             <img src={logo} alt="Pmall" style={{ width: 130 }} />
             {/* <h3> Logo </h3> */}
           </div>
-
+{/* <h3 className="ml-20p" style={{fontSize: 11, color: '#ffb31f'}}> Administrators </h3> */}
           <div className="s-divider"></div>
-          {/* <h3 className="ml-20p"> Administrators </h3> */}
+          
           <SidebarRow
             path="/app/dashboard"
             Icon={SpeedIcon}
@@ -102,7 +92,7 @@ function Sidebar() {
                <SidebarRow
                 path="/app/users/details/"
                 Icon={Person2Icon}
-                title="Account Management"
+                title="My Profile"
               />
                <SidebarRow
             path="/app/users"
@@ -122,7 +112,7 @@ function Sidebar() {
             <SidebarRow
             path="/app/users/details"
             Icon={Person2Icon}
-            title="Account Management"
+            title="My Account Proflle"
           />
           </>
           )}
@@ -134,7 +124,7 @@ function Sidebar() {
             user?.accountType === "Admin") && (
               <>
             <SidebarRow
-              path="/app/network/genealogy/"
+              path="/app/affilates"
               Icon={HubIcon}
               title="Affiliate Management"
             />
@@ -144,9 +134,9 @@ function Sidebar() {
                 title="My Network"
               /> */}
               <SidebarRow
-                path=""
+                path="/app/account/packages"
                 Icon={CardGiftcardIcon}
-                title="Promotions"
+                title="Account Packages"
               />
               <SidebarRow
                 path="/app/network/genealogy/"
@@ -222,7 +212,7 @@ function Sidebar() {
               title="Dispatch Management"
             />
           )}
-          <SidebarRow path="/app" Icon={EmailIcon} title="Messaging/Support" />
+          <SidebarRow path="/app/messaging" Icon={EmailIcon} title="Messaging/Support" />
 
           <SidebarRow
             path="/app"
@@ -230,17 +220,23 @@ function Sidebar() {
             title="Transaction Records"
           />
           {user?.accountType === "Admin" && (
+            <>
+            {/* <SidebarRow
+              path="/app"
+              Icon={AssignmentIcon}
+              title="User Account"
+            /> */}
             <SidebarRow
               path="/app"
               Icon={AssignmentIcon}
               title="PMall Reports"
             />
+            </>
           )}
           <SidebarRow
-            path="/auth/sign-in"
             Icon={PowerSettingsNewIcon}
             title="Log Out"
-            onClick={handleLogOut}
+            onClick={logOut}
           />
 
           <div className="w-100 f-bottom">
