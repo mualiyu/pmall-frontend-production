@@ -808,15 +808,15 @@ console.log(user?.accountType)
     { name: 'Before meal', value: true },
     { name: 'With meal', value: false },
     { name: 'After meal', value: false },
-    { name: 'Morning', value: true },
-    { name: 'Afternoon', value: true },
-    { name: 'Night', value: true }
+    { name: 'Morning', value: false },
+    { name: 'Afternoon', value: false },
+    { name: 'Night', value: false }
 ]);
 
   const [notFor, setItems] = useState([
-    { name: 'Pregnant women', value: true },
-    { name: 'Breastfeeding mothers', value: true },
-    { name: 'Kids under 4', value: true },
+    { name: 'Pregnant women', value: false },
+    { name: 'Breastfeeding mothers', value: false },
+    { name: 'Kids under 4', value: false },
     { name: 'Kids under 8', value: true },
     { name: 'Kids under 12', value: false },
   ]);
@@ -1136,11 +1136,11 @@ console.log(user?.accountType)
             <div className="s-divider"></div>
           </div>
           <section className="flex__normal">
-            <div className="w-200">
-              <div className="profile_pic_holder">
+            <div className="w-250">
+              <div className="">
                 {inputValues.image ?
-                 <img src={inputValues.image} className="profile_pic" name="image" value={inputValues.image || ""} /> :
-                <img src={profile} className="profile_pic" name="image" value={inputValues.image || ""} />
+                 <img src={inputValues.image} className="w-100i" name="image" value={inputValues.image || ""} /> :
+                <img src={profile} className="w-100i" name="image" value={inputValues.image || ""} />
                 }
                 <div className="pos-rel w100-m10 ">
                   <input
@@ -1194,7 +1194,7 @@ console.log(user?.accountType)
                     type="text"
                     className="form-control-input "
                     name="name"
-                    placeholder="e.g IPhone 14"
+                    placeholder="e.g Herbal jinger"
                     onChange={onChangeHandler}
                     value={inputValues.name || ""}
                   />
@@ -1259,7 +1259,7 @@ console.log(user?.accountType)
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
-                  <label>Selling Price (selling price are usually higher than cost price)</label>
+                  <label>Selling Price (lower than cost price)</label>
                   <input
                     type="number"
                     className="form-control-input "
@@ -1272,7 +1272,7 @@ console.log(user?.accountType)
               </section>
               <section className="flex-container mb-lg">
               <div className="pos-rel w100-m10 ">
-                  <label> PRODUCT CURRENTLY AVAILABLE FOR PURCHASE?</label>
+                  <label> PRODUCT AVAILABLE FOR PURCHASE?</label>
                   <select
                   className="form-control-input "
                   name="inStock"
@@ -1298,7 +1298,7 @@ console.log(user?.accountType)
                 </div>
 
                 <div className="pos-rel w100-m10 ">
-                  <label>Quantity (UNITS CURRENTLY AVAILABLE)</label>
+                  <label>Quantity AVAILABLE</label>
                   <input
                     type="number"
                     className="form-control-input "
@@ -1323,7 +1323,7 @@ console.log(user?.accountType)
                       getOptionLabel={(option) => option.title}
                       filterSelectedOptions
                       renderInput={(params) => (
-                        <TextField {...params} placeholder="New tag" />
+                        <TextField {...params} placeholder="Select multiple" />
                       )}
                     />
                   </Stack>
@@ -1443,42 +1443,12 @@ console.log(user?.accountType)
                 </div>
               </section>
               <section className="flex-container mb-lg">
-                <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Describe this product (Weight, variant, size etc) </label>
-                  <textarea
-                    placeholder="Enter product description & specification"
-                    className="form-textarea w-100"
-                    name="description"
-                    onChange={onChangeHandler}
-                    value={inputValues.description || ""}
-                    ></textarea>
-                </div>
-
-                {/* <div className="pos-rel w100-m10"></div> */}
-              </section>
-
-              <div className="flex__normal w-30 pull-right mt-35">
-                <button
-                  onClick={handleModalClose}
-                  className="btn btn-secondary p-25 pull-right mr-10">
-                  Cancel
-                </button>
-                <button className="btn btn-primary p-25 pull-right"
-                 onClick={ VendorCreateProduct}
-                disabled={loading}
-                >
-                {loading ?<ButtonLoader /> : "Save"}
-                </button>
-              </div>
-            </form>
-            <div className="specifications">
-              <h1>Specifications</h1>
               <div>
-                <h2>Best taken:</h2>
-                <div className="spec-list">
+                <p className="uppercase f-13">Best taken:</p>
+                <div className="spec-list m-10">
                   {bestTaken.map((item, index) => (
-                    <div className="spec">
-                      <p>{item.name}</p>
+                    <div className="spec f-13">
+                      <label className="mb-7">{item.name} </label>
                       <div
                           className="flex all-center"
                       >
@@ -1495,12 +1465,14 @@ console.log(user?.accountType)
                   ))}
                 </div>
               </div>
+              </section>
+              <section className="flex-container mb-lg">
               <div>
-                <h2>Not for:</h2>
-                <div className="spec-list">
+                <p className="uppercase f-13">Product not for:</p>
+                <div className="spec-list flex m-10">
                   {notFor.map((item, index) => (
-                    <div className="spec">
-                      <p>{item.name}</p>
+                    <div className="spec f-13">
+                     <label className="mb-7">{item.name} </label>
                       <div
                           className="flex all-center"
                       >
@@ -1517,7 +1489,38 @@ console.log(user?.accountType)
                   ))}
                 </div>
               </div>
-            </div>
+              </section>
+
+              <section className="flex-container mb-lg">
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7"> Describe this product (Weight, variant, size etc) </label>
+                  <textarea
+                    placeholder=""
+                    className="form-textarea w-100 mt-10"
+                    name="description"
+                    onChange={onChangeHandler}
+                    value={inputValues.description || ""}
+                    ></textarea>
+                </div>
+
+                {/* <div className="pos-rel w100-m10"></div> */}
+              </section>
+
+              <div className="flex__normal pull-right mt-35">
+                <button
+                  onClick={handleModalClose}
+                  className="btn btn-secondary p-25 pull-right mr-10">
+                  Cancel
+                </button>
+                <button className="btn btn-primary p-25 pull-right"
+                 onClick={ VendorCreateProduct}
+                disabled={loading}
+                >
+                {loading ?<ButtonLoader /> : "Save Product"}
+                </button>
+              </div>
+            </form>
+           
           </section>
         </Box>
       </Modal>
@@ -1536,8 +1539,8 @@ console.log(user?.accountType)
           </div>
           <section className="flex__normal">
             <div className="w-200">
-              <div className="profile_pic_holder">
-                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+              <div className="">
+                <img src={profile} className="w-100i" name="image" value={inputValues.image|| ""} />
                 <div className="pos-rel w100-m10 ">
                   <input
                     type="file"
@@ -1732,7 +1735,7 @@ console.log(user?.accountType)
                       getOptionLabel={(option) => option.title}
                       filterSelectedOptions
                       renderInput={(params) => (
-                        <TextField {...params} placeholder="New tag" />
+                        <TextField {...params} placeholder="Select multiple" />
                       )}
                     />
                   </Stack>
@@ -1782,10 +1785,9 @@ console.log(user?.accountType)
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Describe this product (Weight, variant, size etc) </label>
+                  <label className="mb-10 "> Describe this product (Weight, variant, size etc) </label>
                   <textarea
-                    placeholder="Enter product description & specification"
-                    className="form-textarea w-100"
+                    className="form-textarea w-100 mt-10"
                     name="description"
                     onChange={onChangeHandler}
                     value={inputValues.description || ""}
@@ -1795,7 +1797,7 @@ console.log(user?.accountType)
                 {/* <div className="pos-rel w100-m10"></div> */}
               </section>
 
-              <div className="flex__normal w-30 pull-right mt-35">
+              <div className="flex__normal pull-right mt-35">
                 <button
                   onClick={handleEditProductModalClose}
                   className="btn btn-secondary p-25 pull-right mr-10">
@@ -1803,7 +1805,7 @@ console.log(user?.accountType)
                 </button>
                 <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateProduct} disabled={loading}
                 >
-                {loading ?<ButtonLoader /> : " Save"}
+                {loading ?<ButtonLoader /> : " Save Product"}
                 </button>
               </div>
             </form>
@@ -1825,7 +1827,7 @@ console.log(user?.accountType)
           </div>
           <section className="flex__normal">
             <div className="w-200">
-              <div className="profile_pic_holder">
+              <div className="">
                 <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
                 <div className="pos-rel w100-m10 ">
                   <input
@@ -1929,7 +1931,7 @@ console.log(user?.accountType)
           </div>
           <section className="flex__normal">
             <div className="w-200">
-              <div className="profile_pic_holder">
+              <div className="">
                 <img src={inputValues.category_image} className="profile_pic" name="image" value={inputValues.image|| ""} />
                 <div className="pos-rel w100-m10 ">
                   <input
@@ -2030,7 +2032,7 @@ console.log(user?.accountType)
           </div>
           <section className="flex__normal">
             <div className="w-200">
-              <div className="profile_pic_holder">
+              <div className="">
                 <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
                 <div className="pos-rel w100-m10 ">
                   
@@ -2109,8 +2111,8 @@ console.log(user?.accountType)
           </div>
           <section className="flex__normal">
             <div className="w-200">
-              <div className="profile_pic_holder">
-                <img src={profile} className="profile_pic" name="image" value={inputValues.image|| ""} />
+              <div className="">
+                <img src={profile} className="w-100i" name="image" value={inputValues.image|| ""} />
                 <div className="pos-rel w100-m10 ">
                   <input
                     type="file"
@@ -2213,8 +2215,8 @@ console.log(user?.accountType)
           </div>
           <section className="flex__normal">
             <div className="w-200">
-              <div className="profile_pic_holder">
-                <img src={inputValues?.brand_image} className="profile_pic" name="image" value={inputValues.image|| ""} />
+              <div className="">
+                <img src={inputValues?.brand_image} className="w-100i" name="image" value={inputValues.image|| ""} />
                 <div className="pos-rel w100-m10 ">
                   <input
                     type="file"

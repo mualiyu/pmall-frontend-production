@@ -2463,14 +2463,21 @@ Thanks :)*/
  font-size: 16px;
 }
 
-.specifications p{
-  font-size: 18px;
+.specifications{
+    display: flex;
+    align-items: center;
+}
+.spec-list{
+  display: flex;
+  align-items: center;
 }
 
-.specifications .spec-list{
+.spec{
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 5px;
 }
 .specifications .spec{
   display: flex;

@@ -170,7 +170,7 @@ const ProductGrid = ({ categoryId = null }) => {
                           onError={(e) => (e.target.src = "/default-image.jpg")}
                         />
                       </Link>
-                      <Link to={`/product/${product.id}`} className="img-bg">
+                      <Link to={`/product/${product.id}`} className="no__underline">
                         <div className="product_desc">
                           <div className="flex-col g-5">
                             <p className="product__name bold uppercase">{LimitWord(product.name || "Unnamed Product", 3)}</p>
