@@ -1161,6 +1161,25 @@ h1 {
   margin-right: 15px;
   color: #1e1e1ed6;
 }
+.c-red{
+  color: red;
+}
+.text-left{
+  text-align: left;
+}
+.fw-400{
+  font-weight: 400;
+}
+.mt-n-5{
+  margin-top: -5px;
+}
+.shadow-grid {
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+}
+.lg-icon {
+    transform: scale(1.8);
+    fill: #383838!important;
+}
 .store-container__search {
   border: 2px solid #dedede;
     /* flex: 1 1; */
@@ -1170,7 +1189,7 @@ h1 {
     padding: 0 20px;
     /* position: relative; */
     overflow: hidden;
-    width: 60%;
+    width: 45%;
 }
 
 .category__titlehead {
