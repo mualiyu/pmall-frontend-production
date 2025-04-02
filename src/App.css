@@ -1192,6 +1192,46 @@ h1 {
     width: 45%;
 }
 
+.advert-carousel {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.advert-slide {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.advert-slide.active {
+  opacity: 1;
+}
+
+.advert-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.advert-img:hover {
+  transform: scale(1.05);
+}
+
+.advert-img.large {
+  width: 100%;
+}
+
+.advert-img.small {
+  width: 50%;
+}
+
+
 .category__titlehead {
   background-color: black;
     width: 100%;

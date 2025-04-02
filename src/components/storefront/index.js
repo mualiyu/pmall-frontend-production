@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Loading from "../../utils/loading";
+import AdvertCarousel from "../../utils/adverts";
 import ProductGrid from "../products/ProductGrid";
 import CategorySlider from '../../utils/categoryCarousel';
 import { Link } from "react-router-dom";
@@ -7,7 +8,13 @@ import useProductCategories from "../../hooks/useProductCategories";
 
 const StoreFront = () => {
     const { productCategories, loading, error } = useProductCategories();
-  
+    // const adverts = [
+    //     { id: 1, image_path: "/advert/sefdghfgjjh.png", size: "large", url: "https://product1.com" },
+    //     { id: 2, image_path: "/advert/asfgdsfxvdsfbdh.gif", size: "large", url: "https://product1.com" },
+    //     { id: 3, image_path: "https://pmallstores.netlify.app/Screenshot%202024-03-19%20163145.png", size: "large", url: "https://product2.com" },
+    //     { id: 4, image_path: "/advert/rsefrgfhfj.gif", size: "large", url: "https://product3.com" },
+    //   ];
+
     useEffect(()=>{
         console.log(productCategories);
     },[])
@@ -15,7 +22,7 @@ const StoreFront = () => {
         <div className="store-container">
             <Loading loading={loading} />
             
-<div className="site__content__main" style={{marginTop: '17%'}}>
+<div className="site__content__main" style={{marginTop: '17%', marginBottom: '2%'}}>
         <div class="section imgBanners style6 no-pt-section">
             <div class="bannerContain">
                 <div class="collection-banners">
@@ -31,7 +38,9 @@ const StoreFront = () => {
                                 </a>
                             </div>
                                 <div>
-                                    <img src="/pmall___ad.png" alt="" className='w-full b-15'/>
+                                    {/* <img className="w-full b-15" src="/advert/sefdghfgjjh.png"/> */}
+                                    <img className="w-full b-15" src="/advert/nbvczxvb.gif"/>
+                                {/* <AdvertCarousel adverts={adverts} interval={5000} /> */}
                                 </div>
                         </div>
                     </div>

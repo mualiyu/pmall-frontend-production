@@ -161,7 +161,7 @@ return (
                                             <HeadphonesIcon className="lg-icon"/>
                                         </Badge>
                                         <div>
-                                        <p className="fw-400"> Call us now: <span className="c-red fw-400">08065475245</span> </p>
+                                        <p className="fw-400"> Call us now: <span className="c-red fw-400">07084802028</span> </p>
                                         <p className="fw-400 mt-n-5">Email: <span className="text-muted fw-400">support@pmall.com.ng </span></p>
                                         </div>
                                         {/* <p className="cart__count">

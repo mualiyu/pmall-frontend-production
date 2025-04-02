@@ -328,7 +328,7 @@ const getVendorProducts = (ref)=> {
            )}
         </div>
       </section>
-      {user?.user_type !== "Admin" && !pmallUser.acct_number && (
+      {!loading && user?.user_type !== "Admin" && !pmallUser.acct_number && (
       <section>
         <div className="profile__notification">
            Good to see you {user.fname} {user.lname}! Just a few steps left to hitting the ground running. Add your banking details <Link to="/app/users/details" className="f-13"> Smash this link </Link>
@@ -650,7 +650,7 @@ const getVendorProducts = (ref)=> {
               </div> */}
             {/* </div> */}
 
-            {pmallUser?.referrals?.length > 0 && user.accountType !== "Vendor" && (
+            {!loading && pmallUser?.referrals?.length > 0 && user.accountType !== "Vendor" && (
               <>
                 <div className="recent-vendors">
                 <div className="flex jusbtw">

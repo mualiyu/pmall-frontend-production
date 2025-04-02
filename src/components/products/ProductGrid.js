@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { addToCart, getCart } from "../../utils/cartUtils";
+import AdvertCarousel from "../../utils/adverts";
 import MiniCart from "../../utils/miniCart";
 import BackToTop from "../../utils/backToTop";
 import LimitWord from "../../utils/limitWord";
@@ -20,6 +21,13 @@ const ProductGrid = ({ categoryId = null }) => {
   const [cartMessage, setCartMessage] = useState("");
 
   const backgroundColors = ["#191970", "#6A5ACD", "#4169E1", "#008080"];
+
+  const adverts = [
+    { id: 1, image_path: "/advert/sefdghfgjjh.png", size: "large", url: "https://product1.com" },
+    { id: 2, image_path: "/advert/asfgdsfxvdsfbdh.gif", size: "large", url: "https://product1.com" },
+    { id: 3, image_path: "https://pmallstores.netlify.app/Screenshot%202024-03-19%20163145.png", size: "large", url: "https://product2.com" },
+    // { id: 4, image_path: "/advert/rsefrgfhfj.gif", size: "large", url: "https://product3.com" },
+  ];
 
   const fetchCategoriesAndProducts = useCallback(async () => {
     setLoading(true);
@@ -155,7 +163,7 @@ const ProductGrid = ({ categoryId = null }) => {
             </div>
             <div className="flex justsb g-10" style={{ padding: "25px" }}>
               <div className="row">
-                {(productsByCategory[category.id] || []).map((product) => (
+              {(productsByCategory[category.id] || []).slice(0, 8).map((product) => (
                   <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3 product-cart-wrap" style={{ margin: "20px 9px" }} key={product.id}>
                     <div className="product-badges product-badges-position product-badges-mrg">
                       <span className="hot">NEW</span>
@@ -195,11 +203,13 @@ const ProductGrid = ({ categoryId = null }) => {
             </div>
           </div>
         ))}
+       
+
          <a className="whatsapp__icon" aria-label="Chat on WhatsApp" href="https://wa.me/2347084802028" target="_blank" rel="noopener noreferrer">
     <img alt="Chat on WhatsApp" src="/icons8-whatsapp.gif" style={{width: '100%'}} />
 </a>
 <MiniCart cartInfo={todayCart} />
-
+ {/* <AdvertCarousel adverts={adverts} interval={5000} /> */}
       {cartMessage && <p className="cart-message">{cartMessage}</p>}
     </div>
   );
