@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useUser, useLogOut } from "../../context/UserContext";
 import PersonIcon from '@mui/icons-material/Person';
 // import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import HeadphonesIcon from '@mui/icons-material/Headphones';
 import HelpIcon from '@mui/icons-material/Help';
 import { useCart } from "../../context/CartContext"
 import Badge from '@mui/material/Badge';
@@ -111,17 +112,21 @@ return (
                         {/* User Account menu and Log out */}
                             {user?.loggedIn ? (
                             <div className="myaccount">
-                            <button className="myaccount_btn flex alc"> 
-                                <PersonIcon /> 
-                                <span style={{color: 'rebeccapurple'}}>
+                            <button className="myaccount_btn flex"> 
+                                <PersonIcon className="lg-icon" /> 
+                                <div className="text-left">
+                                        <p className="bold"> {`Hello ${user?.fname}`} </p>
+                                        <p className="fw-400">Manage Account</p>
+                                        </div>
+                                        
+                                {/* <span style={{color: 'rebeccapurple'}}>
                                 Manage Account
-                                </span>
+                                </span> */}
                              </button>
                             <div className="myaccount_menu">
                                 <div className="flex justsb">
                                     <div className="myaccount__main__menu">
                                         <ul>
-                                            <li className="bold"> {`Hello ${user?.fname}`}  </li>
                                             <Link to="/app/dashboard" className="no-underline pointer">
                                             <li><span class="material-icons">keyboard_double_arrow_right</span>  Dashboard</li>
                                             </Link>
@@ -151,15 +156,18 @@ return (
 
                                     &nbsp; &nbsp; &nbsp;
                                     {/* Cart */}
-                                    <Link to="/cart" className="bold flex alc no__underline" style={{padding: 10}}>
+                                    <div className="bold flex alc no__underline" style={{padding: 10}}>
                                         <Badge badgeContent={cartCount} color="secondary" overlap="rectangular">
-                                            <HelpIcon />
+                                            <HeadphonesIcon className="lg-icon"/>
                                         </Badge>
-                                        <p className="bold"> Help </p>
+                                        <div>
+                                        <p className="fw-400"> Call us now: <span className="c-red fw-400">08065475245</span> </p>
+                                        <p className="fw-400 mt-n-5">Email: <span className="text-muted fw-400">support@pmall.com.ng </span></p>
+                                        </div>
                                         {/* <p className="cart__count">
                                             {itemsOnCart?.length === 0 ? 0 : itemsOnCart?.length }
                                         </p> */}
-                                    </Link>
+                                    </div>
                             </div>
                         </div>
                     <div className="flex justsb mb-lg">
