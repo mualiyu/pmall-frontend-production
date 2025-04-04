@@ -14,16 +14,8 @@ function TransactionPurchase() {
     const location = useLocation();
 
   useEffect(() => {
-    console.log(trxref)
-  const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get('trxref');
-
-
-    const transactionReference = searchParams.get("trxref");
-    console.log(transactionReference);
-    console.log(id);
-    // console.log(searchParams);
-    // autoVerifyTransaction(trxref);
+  const transactionReference = searchParams.get("trxref");
+    autoVerifyTransaction(transactionReference);
     // const fetchTransaction = async () => {
     //   try {
     //     const token = localStorage.getItem("authToken");
@@ -48,6 +40,7 @@ function TransactionPurchase() {
 
 
   const autoVerifyTransaction = (refId) => {
+    console.log("Please wait.... Verifying transaction")
     const loggedInUser = localStorage.getItem("authToken");
     console.log(loggedInUser);
     if (!loggedInUser) {

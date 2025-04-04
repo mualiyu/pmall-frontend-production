@@ -13,6 +13,7 @@ import Header from "./builder/Header";
 import Footer from "./builder/Footer";
 import Store from "./store";
 import OrderManagement from "./orderManagement";
+import LeadershipRank from "./documentation/leadershipRank";
 import VendorDetails from "./vendors/details";
 import ProductDetails from "./products/details";
 import AffilateDetails from "./affilates/details";
@@ -104,6 +105,7 @@ function Layout() {
                   <Route path="/app/vendors/details" element={<VendorDetails />} />
                   <Route path="/app/transaction-history" element={<TransactionHistory />} />
                   <Route path="/app/products/list" element={<ProductList />} />
+                  <Route path="/app/leadership-rank" element={<LeadershipRank />} />
                   <Route path="/app/messaging" element={<Messaging />} />
                   <Route path="/app/affilates" element={<Affilates />} />
                   <Route path="/app/affilates/details" element={<AffilateDetails />} />
