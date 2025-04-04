@@ -1,40 +1,85 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams, useLocation } from "react-router-dom";
 import axios from "axios";
+// import queryString from 'query-string';
 import currency from "../utils/formatCurrency";
 import "./transaction.css";
 
 function TransactionPurchase() {
-    // const { transactionId } = useParams();
-    // const [transaction, setTransaction] = useState(null);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+    const { trxref } = useParams();
+    const [searchParams] = useSearchParams();
+    const [transaction, setTransaction] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const location = useLocation();
+
+  useEffect(() => {
+    console.log(trxref)
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('trxref');
 
 
-//   useEffect(() => {
-//     const fetchTransaction = async () => {
-//       try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(
-//           `https://api.pmall.com.ng/api/v1/customer/transactions/${transactionId}`,
-//           {
-//             headers: { Authorization: `Bearer ${token}` },
-//           }
-//         );
-//         setTransaction(response.data.data);
-//       } catch (err) {
-//         setError("Failed to fetch transaction details.");
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
+    const transactionReference = searchParams.get("trxref");
+    console.log(transactionReference);
+    console.log(id);
+    // console.log(searchParams);
+    // autoVerifyTransaction(trxref);
+    // const fetchTransaction = async () => {
+    //   try {
+    //     const token = localStorage.getItem("authToken");
+    //     const response = await axios.get(
+    //       `https://api.pmall.com.ng/api/v1/customer/transactions/${transactionId}`,
+    //       {
+    //         headers: { Authorization: `Bearer ${token}` },
+    //       }
+    //     );
+    //     console.log(response);
+    //     setTransaction(response.data.data);
+    //   } catch (err) {
+    //     setError("Failed to fetch transaction details.");
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
 
-//     fetchTransaction();
-//   }, [transactionId]);
+    // fetchTransaction();
+  }, []);
 
-//   if (loading) return <p>Loading transaction details...</p>;
-//   if (error) return <p className="error-message">{error}</p>;
-//   if (!transaction) return <p>No transaction found.</p>;
+
+
+  const autoVerifyTransaction = (refId) => {
+    const loggedInUser = localStorage.getItem("authToken");
+    console.log(loggedInUser);
+    if (!loggedInUser) {
+        console.log("No authentication token found.");
+        return;
+    }
+
+    fetch(`https://api.pmall.com.ng/api/v1/customer/checkout/paystack/verify/${refId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            Authorization: `Bearer ${loggedInUser}`,
+        },
+    })
+    .then((resp) => resp.json())
+    .then((result) => {
+        console.log(result);
+        if (result.status) {
+          console.log(result)
+            // window.location.href = `/checkout/transaction/${refId}`;
+        } else {
+            console.error("Verification failed:", result.message);
+        }
+    })
+    .catch((err) => console.log("Fetch error:", err));
+};
+
+
+  if (loading) return <p>Loading transaction details...</p>;
+  if (error) return <p className="error-message">{error}</p>;
+  if (!transaction) return <p>No transaction found.</p>;
 
 
 
