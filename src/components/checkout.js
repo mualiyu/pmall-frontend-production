@@ -74,35 +74,6 @@ const CheckoutPage = () => {
 
 
 
-      const autoVerifyTransaction = (refId) => {
-        const loggedInUser = localStorage.getItem("authToken");
-        console.log(loggedInUser);
-        if (!loggedInUser) {
-            console.log("No authentication token found.");
-            return;
-        }
-    
-        fetch(`https://api.pmall.com.ng/api/v1/customer/checkout/paystack/verify/${refId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                Accept: "application/json",
-                Authorization: `Bearer ${loggedInUser}`,
-            },
-        })
-        .then((resp) => resp.json())
-        .then((result) => {
-            console.log(result);
-            if (result.status) {
-                window.location.href = `/checkout/transaction/${refId}`;
-            } else {
-                console.error("Verification failed:", result.message);
-            }
-        })
-        .catch((err) => console.log("Fetch error:", err));
-    };
-
-
   const handleChangeAccount = () => {
       localStorage.removeItem('user');
       window.location.reload();

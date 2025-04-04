@@ -555,7 +555,6 @@ const ProductList = () => {
         console.log(result);
         if(result.status){
           setToastMsg("Great! Subcategory added successfully");
-          setSubCategories(result.data);
           setToastType("success")
           setInterval(() => {
             setToastMsg("");

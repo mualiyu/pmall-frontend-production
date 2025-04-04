@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 
-const API_URL = process.env.REACT_APP_CATEGORIES_ENDPOINT || "https://api.pmall.com.ng/api/v1/public/products/get-all-categories";
+const API_URL = process.env.REACT_APP_CATEGORIES_ENDPOINT || "https://api.pmall.com.ng/api/v1/product-brand/get-all";
 
-const useProductCategories = () => {
-  const [productCategories, setProductCategories] = useState([]);
+const useProductBrands = () => {
+  const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchBrands = async () => {
       setLoading(true);
       setError(null);
 
@@ -26,19 +26,20 @@ const useProductCategories = () => {
         }
 
         const result = await response.json();
-        setProductCategories(result.data);
+        console.log(result);
+        setBrands(result.data.brands);
       } catch (err) {
-        console.error("Error fetching categories:", err);
+        console.error("Error fetching Brands:", err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCategories();
+    fetchBrands();
   }, []);
 
-  return { productCategories, loading, error };
+  return { brands, loading, error };
 };
 
-export default useProductCategories;
+export default useProductBrands;
