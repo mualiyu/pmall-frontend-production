@@ -144,7 +144,7 @@ function Sidebar() {
                 title="Geneology"
               />
               <SidebarRow
-                path=""
+                path="/app/leadership-rank"
                 Icon={FortIcon}
                 title="Leadership Rank"
               />

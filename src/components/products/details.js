@@ -321,35 +321,6 @@ console.log(cart);
 
 
             </div>
-            <div className="specifications">
-              <h1>Specifications</h1>
-              <div>
-                <h2>Best taken:</h2>
-                {bestTaken.map((item, index) => (
-                  <div className="spec">
-                    <p>{item.name}</p>
-                    <div
-                        className="flex all-center"
-                    >
-                    {item.value == false ? <ToggleOffIcon /> :  <ToggleOnIcon />}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div>
-                <h2>Not for:</h2>
-                {notFor.map((item, index) => (
-                  <div className="spec">
-                    <p>{item.name}</p>
-                    <div
-                        className="flex all-center"
-                    >
-                    {item.value == false ? <ToggleOffIcon /> :  <ToggleOnIcon />}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
         

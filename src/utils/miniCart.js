@@ -6,14 +6,15 @@ const MiniCart = ({ cartInfo }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
+   
     <div className="cart____information">
       
-      {/* {cartInfo?.length > 0 && ( */}
+      {cartInfo?.length > 0 && (
       <div>
         <div className="product_information_in_cart">
         {cartInfo?.length === 0 && (<h1 className="text-center"> Cart is empty! </h1>)}
         {cartInfo?.length > 0 && (<h1>{ cartInfo?.length } Item(s) now in Cart</h1>)}
-        <Link to="/cart" className="text-light">Checkout</Link>
+        <Link to="/checkout" className="text-light">Checkout</Link>
         {cartInfo?.length > 0 && (
         <p className="toggle-button" onClick={() => setIsOpen(!isOpen)}>
                 {isOpen ? "Hide Cart" : "View Cart"}
@@ -47,6 +48,7 @@ const MiniCart = ({ cartInfo }) => {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 };

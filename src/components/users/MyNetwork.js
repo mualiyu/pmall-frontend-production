@@ -129,6 +129,7 @@ function MyNetwork() {
 		</div>
             <div className="tree">
                 <p className="text-center" style={{ marginTop: 120 }}>
+                <Person4Icon/>
                     {user?.fname} {user?.lname}
                 </p>
                 {loading ? <Loading loading={loading}/> : <UserHierarchy allDownlines={allDownlines} />}

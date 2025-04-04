@@ -124,7 +124,7 @@ function Layout() {
                 <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
-                <Route path="/checkout/transaction/:id" element={<TransactionPurchase />} />
+                <Route path="/checkout/transaction/verify" element={<TransactionPurchase />} />
                 <Route path="/category/:id" element={<CategoryProducts />} />
 
               </Routes>

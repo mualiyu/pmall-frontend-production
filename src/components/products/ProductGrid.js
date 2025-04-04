@@ -64,23 +64,17 @@ const ProductGrid = ({ categoryId = null }) => {
     } finally {
       setLoading(false);
     }
-  }, [categoryId]); // Only recreate function when `categoryId` changes
+  }, [categoryId]); 
 
-
-//   const fetchCategory = async (cat__id) => {
-//     console.log(cat__id);
-//     const categoryData = await FindCategoryByID(CATEGORIES_ENDPOINT, cat__id);
-//     console.log(categoryData);
-//     setCategoryName(categoryData ? categoryData : "Unknown Category");
-// };
-
-// const cartTray = () => {
-//   setLoading(true);
-//   let cart = getCart();
-//   setTodayCart(cart);
-//   setLoading(false);
-// }
-
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1)); 
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+  
 
   useEffect(() => {
     fetchCategoriesAndProducts();
@@ -97,7 +91,7 @@ const ProductGrid = ({ categoryId = null }) => {
 
   const handleViewAll = useCallback(
     (category) => {
-      navigate(`/store/product/categories/${category.name}`, { state: { category } });
+      navigate(`/category/${category.name}`, { state: { category } });
     },
     [navigate]
   );
@@ -163,7 +157,7 @@ const ProductGrid = ({ categoryId = null }) => {
             </div>
             <div className="flex justsb g-10" style={{ padding: "25px" }}>
               <div className="row">
-              {(productsByCategory[category.id] || []).slice(0, 8).map((product) => (
+              {(shuffleArray(productsByCategory[category.id] || []).slice(0, 8)).map((product) => (
                   <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3 product-cart-wrap" style={{ margin: "20px 9px" }} key={product.id}>
                     <div className="product-badges product-badges-position product-badges-mrg">
                       <span className="hot">NEW</span>
