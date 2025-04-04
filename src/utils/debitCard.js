@@ -62,11 +62,11 @@ export default function DebitCard({currentLoggedInUser}) {
             <PackageName id={currentLoggedInUser.package_id} type={currentLoggedInUser.user_type} />
              </p> */}
               <div style={{padding:10}}>
-                {currentLoggedInUser.user_type === "Affiliate" ?
+                {currentLoggedInUser?.user_type === "Affiliate" ?
                 <h1 className="text-left" style={{ fontSize: 20 }}>{currency(currentLoggedInUser?.wallet?.amount)}</h1>
                 :  <h1 className="text-left" style={{ fontSize: 20 }}>{currency(0)}</h1>}
                 
-                {currentLoggedInUser.user_type === "Affiliate" ?
+                {currentLoggedInUser?.user_type === "Affiliate" ?
                 <p style={{ color: "rgb(227 227 227 / 70%)", fontSize: 10, marginTop: 5 }}>
                   Balance on wallet
                 </p> : <p style={{ color: "rgb(227 227 227 / 70%)", fontSize: 10, marginTop: 5 }}>
