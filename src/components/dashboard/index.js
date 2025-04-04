@@ -345,11 +345,28 @@ const getVendorProducts = (ref)=> {
                 style={{ justifyContent: "space-between" }}>
                 <div className="left_top_dashboard">
                   <div className="balance">
-                    <span className="balance-icon-container">
+                    <span className="">
                       {user.accountType === "Vendor" ? (
-                        <ShoppingBasketIcon />
+                        <div
+                        className="user__avatar wd-50"
+                        style={{
+                          backgroundColor:
+                            userBadge[
+                              Math.floor(Math.random() * userBadge.length)
+                            ],
+                          color: "#1a3e9c",
+                        }}>
+                        <h3 className="bold" style={{ textTransform: "uppercase", fontSize: 13 }}> PS </h3>
+                        </div>
                       ) : (
-                        <StorefrontIcon />
+                        <div
+                            className="user__avatar wd-50"
+                            style={{
+                              backgroundColor:'#ffb31f3d',
+                              color: "#ffb31f",
+                            }}>
+                            <h3 className="bold" style={{ textTransform: "uppercase", fontSize: 13 }}> TV </h3>
+                            </div>
                       )}
                     </span>
                     <span className="balance-text">
@@ -362,11 +379,28 @@ const getVendorProducts = (ref)=> {
                     </span>
                   </div>
                   <div className="balance">
-                    <span className="balance-icon-container">
+                    <span className="">
                       {user.accountType === "Vendor" ? (
-                        <ShoppingBasketIcon />
+                        <div
+                        className="user__avatar wd-50"
+                        style={{
+                          backgroundColor:
+                            userBadge[
+                              Math.floor(Math.random() * userBadge.length)
+                            ],
+                          color: "#1a3e9c",
+                        }}>
+                        <h3 className="bold" style={{ textTransform: "uppercase", fontSize: 13 }}> TP </h3>
+                        </div>
                       ) : (
-                        <HubIcon />
+                        <div
+                            className="user__avatar wd-50"
+                            style={{
+                              backgroundColor:'#c3d0f3',
+                              color: "#1a3e9c",
+                            }}>
+                            <h3 className="bold" style={{ textTransform: "uppercase", fontSize: 13 }}> TA </h3>
+                            </div>
                       )}
                     </span>
                     <span className="balance-text">
@@ -386,11 +420,30 @@ const getVendorProducts = (ref)=> {
                 </div>
                 <div className="left_top_dashboard">
                   <div className="balance">
-                    <span className="balance-icon-container">
+                    <span className="">
                       {user.accountType !== "Admin" ? (
-                        <CurrencyBitcoinIcon />
+                        // <CurrencyBitcoinIcon />
+                        // <div className="flex">
+                          <div
+                            className="user__avatar wd-50"
+                            style={{
+                              backgroundColor: '#10ac7e3d',
+                              color: "#466f48",
+                            }}>
+                            <h3 className="bold" style={{ textTransform: "uppercase", fontSize: 13 }}> PW </h3>
+                            </div>
                       ) : (
-                        <StorefrontIcon />
+                        <div
+                            className="user__avatar wd-50"
+                            style={{
+                              backgroundColor:
+                                userBadge[
+                                  Math.floor(Math.random() * userBadge.length)
+                                ],
+                              color: "#1a3e9c",
+                            }}>
+                            <h3 className="bold" style={{ textTransform: "uppercase", fontSize: 13 }}> TS </h3>
+                            </div>
                       )}
                     </span>
                     <span className="balance-text">
@@ -410,25 +463,47 @@ const getVendorProducts = (ref)=> {
                     </span>
                   </div>
                   <div className="balance">
-                    <span className="balance-icon-container">
+                    <span className="">
                       {user.accountType !== "Admin" ? (
-                        <SavingsIcon />
+                        <div
+                        className="user__avatar wd-50"
+                        style={{
+                          backgroundColor:'#fa50053d',
+                          color: "#a74d47",
+                        }}>
+                        <h3 className="bold" style={{ textTransform: "uppercase", fontSize: 13 }}> PV </h3>
+                        </div>
                       ) : (
-                        <HubIcon />
+                        <div
+                            className="user__avatar wd-50"
+                            style={{
+                              backgroundColor:'#c3d0f3',
+                              color: "#1a3e9c",
+                            }}>
+                            <h3 className="bold" style={{ textTransform: "uppercase", fontSize: 13 }}> TA </h3>
+                            </div>
                       )}
                     </span>
                     <span className="balance-text">
-                      <h1 className="flex">{pmallUser?.wallet?.pv} </h1>
+                    {user.accountType === "Admin"
+                          ? <h1 className="flex">0.00 </h1>
+                          : user.accountType === "Vendor"
+                          ? <h1 className="flex">0.00 </h1>
+                          : <h1 className="flex">{pmallUser?.wallet?.pv} </h1>
+                    }
                       <h4 className="color-grey">
-                        {user.accountType !== "Admin"
-                          ? "Point Value (PV)"
-                          : "Total Affiliates"}
+                      {user.accountType === "Admin"
+                          ? "Total Affiliates"
+                          : user.accountType === "Vendor"
+                          ? "Daily Sales" 
+                          : "Point Value"
+                        }
                       </h4>
                     </span>
                   </div>
                 </div>
                 <div className="center_top_dashboard">
-                  <DebitCard />
+                  <DebitCard currentLoggedInUser={pmallUser}/>
                 </div>
               </div>
             </section>

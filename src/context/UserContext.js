@@ -19,6 +19,7 @@ const UserProvider = ({ children }) => {
           storeId: "",
           fname: "",
           lname: "",
+          package: "",
           userAvatar: "",
           refId: "",
           regDate: "",

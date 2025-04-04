@@ -20,6 +20,7 @@ const { user } = useUser();
     })
         .then((resp) => resp.json())
         .then((result) => {
+          console.log(result);
     setVendorPackages(result.data.packages.filter(pkg => pkg.type === "Vendor"));
             setLoading(false);
         })
