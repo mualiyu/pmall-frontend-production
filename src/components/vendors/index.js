@@ -83,6 +83,8 @@ function createData(
 
 const Vendors = () => {
   const [newVendorModal, setNewVendorModal] = useState(false);
+  const [allAffiliates, setAllAffiliates] = useState([]);
+  const [selectParent, setSelectParent] = useState("yes");
   const [allVendors, setAllVendors] = useState([]);
   const [vendorPackages, setVendorPackages] = useState([]);
   const [toast, setToast] = useState(null);
@@ -98,13 +100,36 @@ const Vendors = () => {
     email: "",
     phone: "",
     store_name: "",
-    ref_id: "",
+    my_ref_id: "",
     package_id: vendorPackages.length > 0 ? vendorPackages[0].id : "",
   });
 
   const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const fetchAffiliates = () => {
+    setLoading(true);
+    fetch(`${BASE_URL}/get-all-affiliates`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            Authorization: "Bearer " + user?.token,
+        },
+    })
+        .then((resp) => resp.json())
+        .then((result) => {
+    console.log(result);
+    fetchAllPackages()
+      setAllAffiliates(result.data.affiliates || [])
+            setLoading(false);
+        })
+        .catch((err) => {
+            console.log(err);
+            setLoading(false);
+        });
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -136,11 +161,13 @@ const Vendors = () => {
         email: "",
         phone: "",
         store_name: "",
-        ref_id: "",
+        my_ref_id: "",
         package_id: "",
       });
 			setTimeout(() => setToast(null), 9000);
       fetchVendors();
+      // Make Payment
+      window.location.href = result?.data?.payment.authorization_url;
     } catch (error) {
       setLoading(false);
       setToast({ message: "Failed to register vendor!", type: "error" });
@@ -161,7 +188,8 @@ const Vendors = () => {
         .then((resp) => resp.json())
         .then((result) => {
             setAllVendors(result.data.vendors || []);
-            fetchAllPackages()
+            fetchAllPackages();
+            fetchAffiliates();
             setLoading(false);
         })
         .catch((err) => {
@@ -391,17 +419,50 @@ useEffect(()=> {
                 </div>
               </section>
               <section className="flex-container mb-lg">
+              <div className="pos-rel w100-m10 ">
+                  <label className="mb-7"> Select Parent For Vendor </label>
+                  <select
+                    className="search__bar w-100"
+                    name="selectParent"
+                    value={selectParent}
+                    onChange={(e) => setSelectParent(e.target.value)}
+          >
+                    <option value="yes"> Yes</option>
+                    <option value="no"> No</option>
+                  </select>
+                </div>
+                {selectParent === "yes" && (
                 <div className="pos-rel w100-m10 ">
-                  <label> Referral ID </label>
+                  <label className="mb-7"> Choose affilate</label>
+                  <select
+                    className="search__bar w-100"
+                    value={formData.my_ref_id}
+                    name="my_ref_id"
+                    onChange={onChangeHandler}>
+                      <option> Select Parent</option>
+                      {
+                        allAffiliates.map((affiliate)=>(
+                          <option value={affiliate.my_ref_id} className="title-case"> {affiliate.fname} {affiliate.lname} => ({affiliate.my_ref_id})</option>
+                        ))
+                      }
+                    
+                  </select>
+                </div>
+                )}
+
+              {selectParent === "no" && (
+                <div className="pos-rel w100-m10 ">
+                  <label className="mb-7"> Affiliate Id</label>
                   <input
                     type="text"
                     className="form-control-input "
-                    name="ref_id"
+                    name="my_ref_id"
                     onChange={onChangeHandler}
-                    value={formData.ref_id}
+                    value={formData.my_ref_id}
                     placeholder="e.g. PM-000000"
                   />
                 </div>
+              )}
                 <div className="pos-rel w100-m10 ">
                   <label className="mb-7"> Package Type </label>
                   <select

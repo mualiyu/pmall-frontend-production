@@ -101,7 +101,7 @@ const Affilates = () => {
     phone: "",
     username: "",
     password: "",
-    ref_id: "",
+    my_ref_id: "",
     package_id: affiliatePackages.length > 0 ? affiliatePackages[0].id : "",
   });
 
@@ -141,15 +141,13 @@ const Affilates = () => {
         phone: "",
         username: "",
         password: "",
-        ref_id: "",
+        my_ref_id: "",
         package_id: "",
       });
-
-      // Make Payment
-      window.location.href = result?.data?.payment.authorization_url;
-     
 			setTimeout(() => setToast(null), 9000);
       fetchAffiliates();
+      // Make Payment
+      window.location.href = result?.data?.payment.authorization_url;
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -286,7 +284,7 @@ useEffect(()=> {
                   </div>
                   <div className="lheight13">
                     <h4 className="f-300 uppercase">{affiliate.fname} {affiliate.lname}</h4>
-                    <p className="sub__title">{affiliate.ref_id}</p>
+                    <p className="sub__title">{affiliate.my_ref_id}</p>
                   </div>
                 </div>
               </TableCell>
@@ -414,8 +412,7 @@ useEffect(()=> {
                     className="search__bar w-100"
                     name="selectParent"
                     value={selectParent}
-                    onChange={(e) => setSelectParent(e.target.value)}
-          >
+                    onChange={(e) => setSelectParent(e.target.value)}>
                     <option value="yes"> Yes</option>
                     <option value="no"> No</option>
                   </select>
@@ -425,13 +422,13 @@ useEffect(()=> {
                   <label className="mb-7"> Select affilate</label>
                   <select
                     className="search__bar w-100"
-                    value={formData.ref_id}
-                    name="ref_id"
+                    value={formData.my_ref_id}
+                    name="my_ref_id"
                     onChange={onChangeHandler}>
                       <option> Select Parent</option>
                       {
                         allAffiliates.map((affiliate)=>(
-                          <option value={affiliate.ref_id} className="title-case"> {affiliate.fname} {affiliate.lname} => ({affiliate.ref_id})</option>
+                          <option value={affiliate.my_ref_id} className="title-case"> {affiliate.fname} {affiliate.lname} => ({affiliate.my_ref_id})</option>
                         ))
                       }
                     
@@ -445,9 +442,9 @@ useEffect(()=> {
                   <input
                     type="text"
                     className="form-control-input "
-                    name="ref_id"
+                    name="my_ref_id"
                     onChange={onChangeHandler}
-                    value={formData.ref_id}
+                    value={formData.my_ref_id}
                     placeholder="e.g. PM-000000"
                   />
                 </div>
