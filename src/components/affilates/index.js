@@ -110,6 +110,7 @@ const Affilates = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log(formData);
     e.preventDefault();
     setLoading(true);
     try {
@@ -131,7 +132,7 @@ const Affilates = () => {
       console.log(result);
       setToast({ message: `${result.message}`, type: "success" });
       setLoading(false);
-      handleModalClose();
+       handleModalClose();
       
       setFormData({
         fname: "",
@@ -143,10 +144,15 @@ const Affilates = () => {
         ref_id: "",
         package_id: "",
       });
+
+      // Make Payment
+      window.location.href = result?.data?.payment.authorization_url;
+     
 			setTimeout(() => setToast(null), 9000);
       fetchAffiliates();
     } catch (error) {
       setLoading(false);
+      console.log(error);
       setToast({ message: "Failed to register Affiliate!", type: "error" });
 			setTimeout(() => setToast(null), 7000);
     }
@@ -280,7 +286,7 @@ useEffect(()=> {
                   </div>
                   <div className="lheight13">
                     <h4 className="f-300 uppercase">{affiliate.fname} {affiliate.lname}</h4>
-                    <p className="sub__title">{affiliate.my_ref_id}</p>
+                    <p className="sub__title">{affiliate.ref_id}</p>
                   </div>
                 </div>
               </TableCell>
@@ -420,11 +426,12 @@ useEffect(()=> {
                   <select
                     className="search__bar w-100"
                     value={formData.ref_id}
+                    name="ref_id"
                     onChange={onChangeHandler}>
                       <option> Select Parent</option>
                       {
                         allAffiliates.map((affiliate)=>(
-                          <option value={affiliate.id} className="title-case"> {affiliate.fname} {affiliate.lname} => ({affiliate.my_ref_id})</option>
+                          <option value={affiliate.ref_id} className="title-case"> {affiliate.fname} {affiliate.lname} => ({affiliate.ref_id})</option>
                         ))
                       }
                     

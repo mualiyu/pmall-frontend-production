@@ -75,7 +75,7 @@ export default function DebitCard({currentLoggedInUser}) {
               </div>
             </div>
             <div className="card-no flex">
-              <p style={{ fontSize: 18 }}  onClick={handleCopy} >{currentLoggedInUser?.my_ref_id}
+              <p style={{ fontSize: 18 }}  onClick={handleCopy} >{currentLoggedInUser?.ref_id}
               </p>
               <ContentCopyIcon title="Click to copy" 
               onClick={handleCopy} 
