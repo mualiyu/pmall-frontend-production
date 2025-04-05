@@ -16,25 +16,6 @@ function TransactionPurchase() {
   useEffect(() => {
   const transactionReference = searchParams.get("trxref");
     autoVerifyTransaction(transactionReference);
-    // const fetchTransaction = async () => {
-    //   try {
-    //     const token = localStorage.getItem("authToken");
-    //     const response = await axios.get(
-    //       `https://api.pmall.com.ng/api/v1/customer/transactions/${transactionId}`,
-    //       {
-    //         headers: { Authorization: `Bearer ${token}` },
-    //       }
-    //     );
-    //     console.log(response);
-    //     setTransaction(response.data.data);
-    //   } catch (err) {
-    //     setError("Failed to fetch transaction details.");
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-
-    // fetchTransaction();
   }, []);
 
 

@@ -23,9 +23,12 @@ const ProductGrid = ({ categoryId = null }) => {
   const backgroundColors = ["#191970", "#6A5ACD", "#4169E1", "#008080"];
 
   const adverts = [
-    { id: 1, image_path: "/advert/sefdghfgjjh.png", size: "large", url: "https://product1.com" },
-    { id: 2, image_path: "/advert/asfgdsfxvdsfbdh.gif", size: "large", url: "https://product1.com" },
+    { id: 1, image_path: "/advert/cat_banner.gif", size: "large", url: "" },
+    { id: 2, image_path: "/advert/asfgdsfxvdsfbdh.gif", size: "large", url: "" },
     { id: 3, image_path: "https://pmallstores.netlify.app/Screenshot%202024-03-19%20163145.png", size: "large", url: "https://product2.com" },
+    { id: 4, image_path: "/advert/cart_banner.gif", size: "large", url: "" },
+    { id: 5, image_path: "/advert/asfgdsfxvdsfbdh.gif", size: "large", url: "" },
+    { id: 6, image_path: "/advert/asfgdsfxvdsfbdh.gif", size: "large", url: "" },
     // { id: 4, image_path: "/advert/rsefrgfhfj.gif", size: "large", url: "https://product3.com" },
   ];
 
@@ -140,7 +143,8 @@ const ProductGrid = ({ categoryId = null }) => {
       <BackToTop/>
       {categories
         ?.filter((category) => productsByCategory[category.id]?.length > 0)
-        .map((category) => (
+        .map((category, index) => (
+          <React.Fragment key={category.id}>
           <div className="flex flex-col alc g-20 bg-white-contain" key={category.id}>
             <div className="w-full flex justsb style-header" style={{ backgroundColor: categoryBackgrounds[category.id] }}>
               <div className="g-40 w-full section-tabs">
@@ -196,6 +200,18 @@ const ProductGrid = ({ categoryId = null }) => {
               </div>
             </div>
           </div>
+          {adverts[index] && (
+        <div className="flex justify-center my-8">
+          <a href={adverts[index].url} target="_blank" rel="noopener noreferrer">
+            <img
+              src={adverts[index].image_path}
+              size={adverts[index].size}
+              style={{ maxWidth: "100%", borderRadius: "10px" }}
+            />
+          </a>
+        </div>
+      )}
+          </React.Fragment>
         ))}
        
 
