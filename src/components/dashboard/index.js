@@ -814,7 +814,7 @@ const getVendorProducts = (ref)=> {
                           </div>
                           <div>
                             <h4 className="f-300 capitalze">
-                              {user.fname} {user.lname} -{user.ref_id}
+                              {user.fname} {user.lname} -{user.my_ref_id}
                             </h4>
                             <p className="sub__title">
                               {moment(user.created_at).format(
@@ -827,13 +827,21 @@ const getVendorProducts = (ref)=> {
                   </div>
                 </div>
                 <div className="recent-affilates">
-                  <h1 style={{ marginBottom: 20, textTransform: "uppercase" }}>
-                    MOST INFLUENCIAL AFFILIATES
+                  <h1 style={{ marginBottom: 20,}}>
+                  Top Performing Affiliates
                   </h1>
                   <div className="gap-10">
                   {allDownlines
-                      ?.filter((user) => user.user_type === "Affiliate")
-                      .sort((a, b) => countTotalDownlines(b.all_downline) - countTotalDownlines(a.all_downline))
+                      ?.filter(
+                        (user) =>
+                          user.user_type === "Affiliate" &&
+                          Array.isArray(user.all_downline) &&
+                          user.all_downline.length > 0
+                      )
+                      .sort(
+                        (a, b) =>
+                          countTotalDownlines(b.all_downline) - countTotalDownlines(a.all_downline)
+                      )
                       .map((user) => (
                         <div className="flex">
                           <div

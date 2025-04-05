@@ -16,6 +16,7 @@ import OrderManagement from "./orderManagement";
 import LeadershipRank from "./documentation/leadershipRank";
 import VendorDetails from "./vendors/details";
 import ProductDetails from "./products/details";
+import AdvertMaker from "./advert";
 import AffilateDetails from "./affilates/details";
 // import MyNetwork from "./affilates/myNetwork";
 import Dashboard from "./dashboard";
@@ -114,6 +115,7 @@ function Layout() {
                   <Route path="/app/products" element={<Products />} />
                   <Route path="/app/categories" element={<Categories />} />
                   <Route path="/app/gallery" element={<Gallery />} />
+                  <Route path="/app/advert_maker" element={<AdvertMaker />} />
                   <Route path="/app/order/details" element={<OrderDetails />} />
                   <Route path="/app/network/details" element={<NetworkDetails />} />
                   <Route path="/app/settings" element={<SiteSettings />} />

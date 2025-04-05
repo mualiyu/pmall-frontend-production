@@ -1610,7 +1610,10 @@ input:checked + .slider:before {
 .brand_stores .b-image .icon {
   filter: grayscale(1) invert(3);
   opacity: 0.8;
-  width: 100%;
+  width: 90%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+
 }
 .mr-lg {
   margin-right: 20px;

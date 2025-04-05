@@ -36,9 +36,9 @@ const StoreFront = () => {
                             <div class="inner topleft">
                                 <a href="#">
                                     <span class="img">
-                                        <img class="blur-up lazyloaded" data-src="/top-natural-health-products-2021-large.webp" src="/top-natural-health-products-2021-large.webp" alt="WELLNESS PRODUCTS" title=" "/>
+                                        <img class="blur-up lazyloaded" data-src="/advert/ld__banner.png" src="/advert/ld__banner.png" alt="WELLNESS PRODUCTS" title=" "/>
                                     </span>
-                                    <span class="ttl"><span class="tt-small">WELLNESS PRODUCTS</span></span>
+                                    {/* <span class="ttl"><span class="tt-small">WELLNESS PRODUCTS</span></span> */}
                                 </a>
                             </div>
                                 <div>
@@ -81,9 +81,9 @@ const StoreFront = () => {
                                     <div class="inner topleft">
                                         <a href="#">
                                             <span class="img">
-                                                <img class="blur-up lazyloaded" data-src="/best-intermittent-fasting-foods-large.jpg" src="/best-intermittent-fasting-foods-large.jpg" alt="GENERAL PRODUCTS" title=" "/>
+                                                <img class="blur-up lazyloaded" data-src="/advert/large__banner.png" src="/advert/large__banner.png" alt="GENERAL PRODUCTS" title=" "/>
                                             </span>
-                                            <span class="ttl"><span class="tt-small">GENERAL PRODUCTS</span></span>
+                                            {/* <span class="ttl"><span class="tt-small">GENERAL PRODUCTS</span></span> */}
                                         </a>
                                     </div>
                                 </div>

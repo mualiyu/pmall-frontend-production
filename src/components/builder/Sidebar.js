@@ -8,6 +8,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import EuroIcon from '@mui/icons-material/Euro';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import MoneyIcon from '@mui/icons-material/Money';
+import FlagIcon from '@mui/icons-material/Flag';
 import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import FlutterDashIcon from '@mui/icons-material/FlutterDash';
 import FortIcon from '@mui/icons-material/Fort';
@@ -230,6 +231,11 @@ function Sidebar() {
               path="/app"
               Icon={AssignmentIcon}
               title="PMall Reports"
+            />
+            <SidebarRow
+              path="/app/advert_maker"
+              Icon={FlagIcon}
+              title="Advert Maker"
             />
             </>
           )}
