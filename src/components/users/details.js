@@ -260,7 +260,7 @@ const UserDetails = () => {
                 </div>
                 <div className="g-10">
                 <h4 className="f-300 title-case">{profileDetails?.acct_type || "N/A"}</h4>
-                  <p>Account Type</p>
+                  <p>Bank Account Type</p>
                 </div>
                 <div className="g-10">
                 <h4 className="f-300">

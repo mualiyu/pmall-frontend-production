@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Toaster from "../utils/toaster";
+import Toast from "../utils/Toast";
 import { useUser } from "./UserContext";
 
 const AuthContext = createContext();
@@ -10,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
   const [toastType, setToastType] = useState("");
+  const [toast, setToast] = useState(null);
   const [packages, setPackages] = useState({});
   const [customer, setCustomer] = useState(null); // Store user data
 
@@ -20,6 +22,7 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     inputValues.device_name = 1234;
+    console.log(JSON.stringify(inputValues));
     fetch("https://api.pmall.com.ng/api/v1/register/vendor", {
       method: "POST",
       headers: {
@@ -37,7 +40,8 @@ export const AuthProvider = ({ children }) => {
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
-            window.location.href = "/auth/sign-in";
+            // window.location.href = "/auth/sign-in";
+            window.location.href = result?.data?.payment.authorization_url;
           }, 2000);
 
           setLoading(false);
@@ -85,7 +89,8 @@ export const AuthProvider = ({ children }) => {
           setToastType("success");
           setTimeout(() => {
             setToastMsg("");
-            window.location.href = "/auth/sign-in";
+            window.location.href = result?.data?.payment.authorization_url;
+            // window.location.href = "/auth/sign-in";
           }, 2000);
 
           setLoading(false);
@@ -147,11 +152,8 @@ export const AuthProvider = ({ children }) => {
             regDate: result.data.user.created_at,
             refId: result.data.user.my_ref_id,
           });
-          setToastMsg("Boom! Login successful. It's great to have you back!");
-          setToastType("success");
-          setTimeout(() => {
-            setToastMsg("");
-          }, 5000);
+          setToast({ message: "Boom! Login successful. It's great to have you back!", type: "success" });
+            setTimeout(() => setToast(null), 5000);
           setTimeout(() => {
             window.location.href = "/app/dashboard";
           }, 2000);
@@ -429,6 +431,8 @@ export const AuthProvider = ({ children }) => {
         handleVerifyToken,
         setLoading,
         toastMsg,
+        toast,
+        setToast,
         toastType,
         submittedValues,
         loading,

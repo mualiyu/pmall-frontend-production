@@ -282,7 +282,9 @@ tbody {
         opacity: 1;
         pointer-events: all;
     }
-
+    .loading.active > span{
+        margin-top: 40%
+    }
 
 .page__header {
   display: flex;
@@ -316,7 +318,6 @@ tbody {
 .profile_pic {
   width: 80px;
   height: 80px;
-  /* border-radius: 50%; */
   background-size: cover;
   background-repeat: no-repeat;
 }
