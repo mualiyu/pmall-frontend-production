@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux";
-import { useCart } from "../context/CartContext";
 import { useUser } from "../context/UserContext";
 import currency from "../utils/formatCurrency";
 import Toast from "../utils/Toast";
-import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
-import { useNavigate } from 'react-router-dom';
 import ButtonLoader from "../utils/buttonLoader";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -47,9 +43,7 @@ function TabPanel(props) {
 
 
 const CheckoutPage = () => {
-    const navigate = useNavigate();
-    const { user } = useUser();
-    const [userToken, setUserToken] = useState(null)
+    const { user, setUser } = useUser();
     const [showPassword, setShowPassword] = useState(false);
     const [formDetails, setFormDetails] = useState({
         fname: '',
@@ -88,7 +82,6 @@ const CheckoutPage = () => {
   const {
     inputValues,
     onChangeHandler,
-    handleLogin,
     customerLogin,
     toastMsg,
     toastType,
@@ -104,9 +97,7 @@ const CheckoutPage = () => {
     const [cart,setCart] =  useState([]);
     const [toast, setToast] = useState(null);
     const [btnLoader, setBtnLoader] = useState(false);
-    const [customerData, setCustomerData] = useState(null);
     const [checkoutMessage, setCheckoutMessage] = useState("");
-    const {cartLength} = useCart();
     const totalPrice = cart.map(item => item.selling_price * item.amtItems).reduce((acc, curr) => acc + curr, 0);
     const getCart = () => {
         if(typeof localStorage !== "undefined") {
@@ -189,6 +180,17 @@ const CheckoutPage = () => {
                 setLoading(false);
               }
             console.log(result);
+            localStorage.setItem("authToken", result?.token);
+            setUser({
+                id: result.customer.id,
+                username: result.customer.username,
+                email: result.customer.email,
+                token: result.token,
+                loggedIn: true,
+                fname: result.customer.fname,
+                lname: result.customer.lname,
+                regDate: result.customer.created_at,
+              });
             
             // setCheckoutMessage(handleErrors(result));
             return result; // Return newly registered customer data
@@ -354,9 +356,8 @@ const CheckoutPage = () => {
 
     useEffect(()=>{ 
         getCart()
-        console.log(cart);
         return;
-    },[])
+    },[cart])
 
     const incrementItemAmt = (id) => {
         setCart(prevCart => {
