@@ -2652,7 +2652,7 @@ input:checked + .slider:before {
     margin: 10px 3px;
   }
   .product-cart-wrap {
-    max-width: 143px!important;
+    max-width: 138px!important;
 }
 .whatsapp__icon {
   bottom: 0!important;
