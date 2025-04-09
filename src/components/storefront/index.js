@@ -62,7 +62,7 @@ const StoreFront = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 img-banner-item">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 img-banner-item nerrrd">
                                 <div class="imgBanner-grid-item">
                                     <div class="inner topright">
                                         <a href="#">

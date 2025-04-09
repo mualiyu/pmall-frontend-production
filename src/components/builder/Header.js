@@ -48,10 +48,10 @@ return (
             {/* {!user?.token && ( */}
                 <div className="top__top__header">
                     <div className="flex justsb alc" style={{height: '45px'}}>
-                        <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" />
+                        <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" className="" />
                     </div>
                     <div className='px flex flex-col search-container w-90'>
-                        <div className="flex justsb alc" style={{marginTop: '15px'}}>
+                        <div className="flex justsb alc dgcwuywsndh" style={{marginTop: '15px'}}>
                             <div className="callout">
                             <button className="callout_btn"> 
                             <MenuIcon/>
@@ -102,12 +102,12 @@ return (
                                 </div>
                             </div>
                             <a href="/" style={{width: '15%'}}>
-                                <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '100%'}} />
+                                <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '100%'}} className="pmall____logo"/>
                                 </a>
                             <form className="flex alc store-container__search" aria-label="Search form">
                                 <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
                             </form>
-                            <div className='flex alc'>
+                            <div className='flex alc bbnex'>
                                 
                         {/* User Account menu and Log out */}
                             {user?.loggedIn ? (
@@ -170,11 +170,11 @@ return (
                                     </div>
                             </div>
                         </div>
-                    <div className="flex justsb mb-lg">
+                    <div className="flex justsb mb-lg bbnex">
                         {loading ? 'loading...' : (
                           <CategoryDropdown />
                           )}
-                            <div className="w-100 justsb alc pointer">
+                            <div className="w-100 justsb alc pointer kkkwieiw">
                                 {extraLinks.map((text, idx) => (
                                     <div key={idx} className="f-bold f-13">{text}</div>
                                 ))}

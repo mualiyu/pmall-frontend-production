@@ -2573,3 +2573,128 @@ input:checked + .slider:before {
     margin-top: 10%;
 }
  }
+
+ @media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .checkout-container {
+      display: block;
+      margin-top: 30px;
+    }
+    .btn{
+      width: 100%!important;
+    }
+    .checkout-container{
+      padding: 0;
+    }
+    .checkout-right{
+      width: 100%;
+      margin-top: 20px;
+      margin-bottom: 60px;
+    }
+    .main__content{
+      padding: 0;
+      margin: 0;
+    }
+    .top__top__header{
+      position: relative!important;
+    }
+    .footbar{
+      display: block;
+    }
+    .newsletter, .mission_block, .contact_block{
+      display: none;
+    }
+    .news img, .deals img {
+      max-width: 230px;
+  }
+  .mt-20p {
+    margin-top: 0!important;
+  }
+  .w-90 {
+    width: 100%
+  }
+  .callout {
+    display: none;
+  }
+  .dgcwuywsndh{
+    display: inline-block;
+    margin-top: 0!important
+  
+  }
+  .bbnex {
+    margin-left: 17%;
+    width: 100%;
+  }
+  .store-container__search{
+    width: 90%!important;
+    margin: 0 auto;
+  }
+  .category_btn {
+    position: absolute!important;
+    top: 100px!important;
+    right: 25px!important;
+  }
+  .pmall____logo {
+    width: 50%!important;
+    margin-left: 30%;
+    transform: translate(-52%);
+    margin-bottom: -32px;
+  }
+  .css-19kzrtu{
+    padding: 0!important
+  }
+  .nerrrd{
+    width: 100%!important;
+    padding: 0!important;
+    /* margin: 0!important; */
+    margin: 10px 3px;
+  }
+  .product-cart-wrap {
+    max-width: 143px!important;
+}
+.whatsapp__icon {
+  bottom: 0!important;
+  background-color: transparent;
+  width: 10%;
+    height: 4%;
+}
+.prod-details {
+  gap: 13px;
+  margin: 4px 0;
+  display: block;
+}
+.prod-details .right{
+  width: 100%;
+}
+.yyyybbb{
+  display: none;
+}
+.cost__price{
+  display: block;
+}
+.add-cart .add{
+    font-size: 11px;
+    padding: 0 15px;
+    margin: 0;
+}
+.loading.active > span{
+  margin-top: 100%;
+}
+  .kkkwieiw{
+    display: none;
+  }
+  .login-screen .right, .reset-password .right, .signup-screen .right {
+    width: 100%;
+  }
+  .m-pd-0{
+    padding: 0!important;
+  }
+  .signup-screen .right .main{
+    width: 90%;
+  }
+  .vendor__banner, .affiliate__banner{
+    display: none;
+  }
+}

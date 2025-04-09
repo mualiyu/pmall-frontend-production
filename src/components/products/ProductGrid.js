@@ -159,7 +159,7 @@ const ProductGrid = ({ categoryId = null }) => {
                 </ul>
               </div>
             </div>
-            <div className="flex justsb g-10" style={{ padding: "25px" }}>
+            <div className="flex justsb g-10 m-pd-0" style={{ padding: "25px" }}>
               <div className="row">
               {(shuffleArray(productsByCategory[category.id] || []).slice(0, 8)).map((product) => (
                   <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3 product-cart-wrap" style={{ margin: "20px 9px" }} key={product.id}>
@@ -180,7 +180,7 @@ const ProductGrid = ({ categoryId = null }) => {
                         <div className="product_desc">
                           <div className="flex-col g-5">
                             <p className="product__name bold uppercase">{LimitWord(product.name || "Unnamed Product", 3)}</p>
-                            <p className="product__name text-muted">{LimitWord(product.description, 7)}</p>
+                            <p className="product__name text-muted yyyybbb">{LimitWord(product.description, 7)}</p>
                             <h3 className="red bold product__cost">
                               {currency(product.selling_price || 0)}
                               &nbsp;

@@ -11,7 +11,7 @@ function Footer() {
     <>
             <img src="/Screenshot 2024-03-19 163145.png" alt="" style={{width: '100%'}}/>
                 
-                <div className='flex justsb alc g-10' style={{padding: '40px 20px'}}>
+                <div className='flex justsb alc g-10 footbar' style={{padding: '40px 20px'}}>
                         
                         <div className='deals flex flex-col g-10'>
                             <h3>NEVER MISS THESE DEALS</h3>
@@ -67,7 +67,7 @@ function Footer() {
                     </div>
                      <div className='store-footer flex flex-col g-40 w-90'>
                         <div className='flex justsb'>
-                            <div className='flex flex-col g-20'>
+                            <div className='flex flex-col g-20 mission_block'>
                                 <h3>Our Mission</h3>
                                 <div className='flex flex-col g-20'>
                                     <p>Financing</p>
@@ -105,7 +105,7 @@ function Footer() {
                                     <p>Return & Refunds</p>
                                 </div>    
                             </div>
-                            <div className='flex flex-col g-20'>
+                            <div className='flex flex-col g-20 contact_block'>
                                 <h3>Connect Us</h3>
                                 <div className='flex flex-col g-20'>
                                     <p>Support: +234 806 571 1318</p>

@@ -357,7 +357,7 @@ const CheckoutPage = () => {
     useEffect(()=>{ 
         getCart()
         return;
-    },[cart])
+    },[])
 
     const incrementItemAmt = (id) => {
         setCart(prevCart => {
