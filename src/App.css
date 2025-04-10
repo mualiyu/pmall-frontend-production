@@ -1018,7 +1018,7 @@ button:disabled {
 @media only screen and (max-width: 767px) {
   .alert {
     width: 80%;
-    background-color: rgba(0, 100, 0, 0.4);
+    background-color: #186a18e8;
   }
 }
 
