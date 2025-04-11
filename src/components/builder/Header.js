@@ -104,7 +104,7 @@ return (
                             <a href="/" style={{width: '15%'}}>
                                 <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '100%'}} className="pmall____logo"/>
                                 </a>
-                            <form className="flex alc store-container__search" aria-label="Search form">
+                            <form className="flex alc store-container__search no-display" aria-label="Search form">
                                 <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
                             </form>
                             <div className='flex alc bbnex'>
@@ -170,14 +170,19 @@ return (
                                     </div>
                             </div>
                         </div>
-                    <div className="flex justsb mb-lg bbnex">
+                    <div className="flex justsb mb-lg  bbnex">
                         {loading ? 'loading...' : (
                           <CategoryDropdown />
                           )}
-                            <div className="w-100 justsb alc pointer kkkwieiw">
+                            <div className="w-100 justsb alc g-20 pointer kkkwieiw ">
+                                
                                 {extraLinks.map((text, idx) => (
-                                    <div key={idx} className="f-bold f-13">{text}</div>
+                                    <div key={idx} className="f-bold f-13 no-display">{text}</div>
                                 ))}
+                            
+                            <form className="flex alc store-container__search no-large-display w-100" aria-label="Search form">
+                                <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" className='w-full' />
+                            </form>
                             <Link to="/auth/">
                                 <button className="sell_on_pmall_btn">Sell on Pmall</button>
                                 </Link>

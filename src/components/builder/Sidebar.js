@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SidebarRow from "./SidebarRow";
 import SpeedIcon from "@material-ui/icons/Speed";
@@ -34,9 +34,15 @@ import HubIcon from "@mui/icons-material/Hub";
 import { useUser, useLogOut } from "../../context/UserContext";
 import logo from "../../assets/imgs/pmall_logo_200.png";
 import "./Builder.css";
+import { useVendor } from "../../context/VendorSignupContext";
 
 function Sidebar() {
   const { user, setUser } = useUser();
+  const {
+    visible,
+    setVisible,
+  } = useVendor();
+  
   const logOut = useLogOut();
   const navigate = useNavigate();
   console.log(user);
@@ -53,7 +59,7 @@ function Sidebar() {
     // {}
     <>
       {user?.token && (
-        <div className="sidebar no-print">
+        <div className={`sidebar no-print  mobile-sidebar ${visible ? "mobile-sidebar-visible " : "mobile-sidebar"}`}>
           <div className="logo__holder">
             <img src={logo} alt="Pmall" style={{ width: 130 }} />
             {/* <h3> Logo </h3> */}

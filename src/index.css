@@ -2566,6 +2566,9 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(18px);
 }
+.no-large-display{
+  display: none !important;
+}
 
 
 @media (min-width:320px)  {
@@ -2663,7 +2666,31 @@ input:checked + .slider:before {
   .signup-screen .right .form-logo{
     margin-top: 0;
   }
-
+  .no-display{
+    display: none !important;
+  }
+  .no-large-display{
+    display: flex !important;
+  }
+  .mobile-sidebar{
+    position: absolute;
+    left: -200px;
+    top:0;
+    display: none;
+  }
+  .mobile-sidebar-visible{
+   left: 0;
+   top:0;
+   display: block;
+  }
+ .sidebar{
+  left: 0;
+  top:0 !important;
+  width: 30% !important;
+  height: 100%;
+ }
+ }
+ 
  @media only screen 
   and (min-device-width: 320px) 
   and (max-device-width: 480px)
