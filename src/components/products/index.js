@@ -33,6 +33,8 @@ import Toaster from "../../utils/toaster";
 import ButtonLoader from "../../utils/buttonLoader";
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
 Chart.register(ArcElement);
 
@@ -170,7 +172,8 @@ const ProductList = () => {
   const [pmallUsers, setPmallUsers] = useState([]);
   const [moreImages, setMoreImages] = useState([]);
   const { user } = useUser();
-  const {inputValues, setState, onChangeHandler,loading, setLoading} = useVendor();
+  const {inputValues, setState, onChangeHandler,loading, setLoading,  visible,
+    setVisible,} = useVendor();
   const handleChange = (event, newValue) => {
     const selectedTitles = newValue.map((tag) => tag.title).join(', '); // Join titles with comma
     console.log(selectedTitles); // Update state with comma-separated string
@@ -831,6 +834,12 @@ console.log(user?.accountType)
         setItems([...notFor]); //
         console.log(notFor)
     }
+    const showSidebar = () => {
+      setVisible(true)
+    }
+    const hideSidebar = () => {
+      setVisible(false)
+    }
   return (
     <section>
       <Toaster text={toastMsg} className={toastType} />
@@ -839,6 +848,14 @@ console.log(user?.accountType)
           <ShoppingCartIcon />
           <h3>Manage Products</h3>
         </div>
+        {visible ?
+         <div onClick={hideSidebar} className="no-large-display pointer">
+          <CloseIcon />
+        </div > :  
+        <div onClick={showSidebar}  className="no-large-display pointer">
+          <MenuIcon />
+        </div>
+        }
       </section>
       <div className="s-divider"></div>
       <section style={{ display: "flex" }}>

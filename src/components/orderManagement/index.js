@@ -21,6 +21,9 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import MenuIcon from '@mui/icons-material/Menu';
+import { useVendor } from "../../context/VendorSignupContext";
+import CloseIcon from '@mui/icons-material/Close';
 Chart.register(ArcElement);
 const top100Films = [
   { title: "Beauty" },
@@ -126,6 +129,16 @@ const OrderManagement = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const {
+    visible,
+    setVisible,
+  } = useVendor();
+  const showSidebar = () => {
+    setVisible(true)
+  }
+  const hideSidebar = () => {
+    setVisible(false)
+  }
   return (
     <section>
       <section className="page__header">
@@ -133,6 +146,14 @@ const OrderManagement = () => {
           <GroupsIcon />
           <h3>Order Details</h3>
         </div>
+        {visible ?
+         <div onClick={hideSidebar} className="no-large-display pointer">
+          <CloseIcon />
+        </div > :  
+        <div onClick={showSidebar}  className="no-large-display pointer">
+          <MenuIcon />
+        </div>
+        }
       </section>
       <div className="s-divider"></div>
       <Box sx={{ width: "100%" }}>

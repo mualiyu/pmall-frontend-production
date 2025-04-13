@@ -100,10 +100,11 @@ const Login = () => {
                 <button className="create-account bold">Create account</button>
               </Link>
             </form>
-          </div>
-          <div className="form-logo">
+            <div className="form-logo">
             <img src="/pmall-logo 1.png" alt="" />
           </div>
+          </div>
+          
         </div>
       </div>
     </section>

@@ -67,10 +67,11 @@ const ResetPassword = () => {
                 </Link>
               </span>
             </form>
-          </div>
-          <div className="form-logo">
+            <div className="form-logo">
             <img src="/pmall-logo 1.png" alt="" />
           </div>
+          </div>
+          
         </div>
       </div>
     </section>
