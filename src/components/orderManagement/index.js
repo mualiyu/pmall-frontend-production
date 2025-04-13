@@ -147,10 +147,10 @@ const OrderManagement = () => {
           <h3>Order Details</h3>
         </div>
         {visible ?
-         <div onClick={hideSidebar} className="no-large-display">
+         <div onClick={hideSidebar} className="no-large-display pointer">
           <CloseIcon />
         </div > :  
-        <div onClick={showSidebar}  className="no-large-display">
+        <div onClick={showSidebar}  className="no-large-display pointer">
           <MenuIcon />
         </div>
         }
