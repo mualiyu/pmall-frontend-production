@@ -2686,7 +2686,7 @@ input:checked + .slider:before {
  .sidebar{
   left: 0;
   top:0 !important;
-  width: 30% !important;
+  width: 40% !important;
   height: 140vh !important;
  }
  .dash-mobile{
