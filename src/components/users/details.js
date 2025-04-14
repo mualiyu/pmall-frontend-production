@@ -180,7 +180,7 @@ const UserDetails = () => {
   useEffect(() => {
     getUsersDetails();
   }, [submittedValues]);
-  const showSidebar = () => {
+   const showSidebar = () => {
     setVisible(true)
   }
   const hideSidebar = () => {

@@ -42,6 +42,9 @@ import Stack from "@mui/material/Stack";
 import { useUser } from "../../context/UserContext";
 import getInitials from "../../utils/getInitials";
 import { useVendor } from "../../context/VendorSignupContext";
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -149,7 +152,7 @@ const Dashboard = () => {
   const [productList, setProductList] = useState(null);
   const [countVendors, setCountVendors] = useState(0);
   const [pmallUser, setPmallUser] = useState([]);
-  const { loading, setLoading, setProfileDetails } = useVendor();
+  const { loading, setLoading, setProfileDetails,visible, setVisible } = useVendor();
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
   
 
@@ -283,6 +286,12 @@ const getVendorProducts = (ref)=> {
     setVendorTab(false);
     setDashboardTab(false);
   };
+  const showSidebar = () => {
+    setVisible(true)
+  }
+  const hideSidebar = () => {
+    setVisible(false)
+  }
 
   return (
     <section className="dashboard">
@@ -326,6 +335,14 @@ const getVendorProducts = (ref)=> {
             Visit Mall
           </Link>
            )}
+           {visible ?
+         <div onClick={hideSidebar} className="no-large-display pointer">
+          <CloseIcon />
+        </div > :  
+        <div onClick={showSidebar}  className="no-large-display pointer">
+          <MenuIcon />
+        </div>
+        }
         </div>
       </section>
       {!loading && user?.user_type !== "Admin" && !pmallUser.acct_number && (
@@ -336,13 +353,14 @@ const getVendorProducts = (ref)=> {
       </section>
       )}
       {dashboardTab && (
-        <div className="flex g-10 justsb">
+        <div className="flex g-10 justsb ">
           
           <div style={{ width: "75%" }}>
             <section style={{ marginBottom: 30 }}>
               <div
-                className="flex g-10"
+                className="flex g-10 dash-mobile"
                 style={{ justifyContent: "space-between" }}>
+                  <div className="flex g-10 ">
                 <div className="left_top_dashboard">
                   <div className="balance">
                     <span className="">
@@ -502,6 +520,7 @@ const getVendorProducts = (ref)=> {
                     </span>
                   </div>
                 </div>
+                </div>
                 <div className="center_top_dashboard">
                   <DebitCard currentLoggedInUser={pmallUser}/>
                 </div>
@@ -509,7 +528,7 @@ const getVendorProducts = (ref)=> {
             </section>
             <div
               style={{ width: "100%", maxHeight: "100%" }}
-              className="dashboard-chart gap-10 g-20">
+              className="dashboard-chart gap-10 g-20 no-display">
               <div className="gap-10 g-20">
                 <div className="flex-container">
                   <h3>General Sale Activity</h3>
@@ -687,7 +706,7 @@ const getVendorProducts = (ref)=> {
             </TableContainer>
             )}
           </div>
-          <div className="g-20 flex-col" style={{width: "25%"}}>
+          <div className="g-20 flex-col no-display" style={{width: "25%"}}>
             <button class="btn btn-warning">
               {" "}
               {user.accountType === "Vendor"
