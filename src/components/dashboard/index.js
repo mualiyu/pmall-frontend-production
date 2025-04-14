@@ -353,14 +353,14 @@ const getVendorProducts = (ref)=> {
       </section>
       )}
       {dashboardTab && (
-        <div className="flex g-10 justsb ">
+        <div className="flex g-10 justsb main">
           
           <div style={{ width: "75%" }}>
             <section style={{ marginBottom: 30 }}>
               <div
                 className="flex g-10 dash-mobile"
                 style={{ justifyContent: "space-between" }}>
-                  <div className="flex g-10 ">
+                  <div className="flex g-10 justsb w-100">
                 <div className="left_top_dashboard">
                   <div className="balance">
                     <span className="">
@@ -549,7 +549,7 @@ const getVendorProducts = (ref)=> {
               <Line options={options} data={data} />
             </div>
             <div className="s-divider"></div>
-{user.user_type==="Vendor" && (
+              {user.user_type==="Vendor" && (
             <TableContainer component={Paper}>
               <Table
                 sx={{ minWidth: 650 }}
@@ -706,8 +706,8 @@ const getVendorProducts = (ref)=> {
             </TableContainer>
             )}
           </div>
-          <div className="g-20 flex-col no-display" style={{width: "25%"}}>
-            <button class="btn btn-warning">
+          <div className="g-20 flex-col dash-btns" style={{width: "25%"}}>
+            <button class="btn btn-warning w-100">
               {" "}
               {user.accountType === "Vendor"
                 ? "Become an affiliate"
@@ -715,7 +715,7 @@ const getVendorProducts = (ref)=> {
                 ? "Become a vendor"
                 : "Create a New Vendor"}
             </button>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary ">
             Withdraw Money
             </button>
 
