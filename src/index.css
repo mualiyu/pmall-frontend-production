@@ -2703,6 +2703,18 @@ input:checked + .slider:before {
  .dash-btns{
    width: 100% !important;
  }
+.user-details .left{
+  flex-direction: column;
+}
+.user-details .left .top{
+  align-items: flex-start;
+}
+.user-details .left .details{
+ display: grid;
+ grid-template-columns:repeat(2, 1fr);
+ gap: 10px;
+ padding-left:0 ;
+}
  }
  
  @media only screen 

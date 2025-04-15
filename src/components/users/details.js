@@ -227,7 +227,7 @@ const UserDetails = () => {
                   <Rating name="read-only" value={value} readOnly />
                   <p>0 Rates</p>
                 </div> */}
-                <div className="flex flex-col g-30 mt-10">
+                <div className="flex flex-col g-30 mt-10 main-details">
                   {profileDetails?.user_type === "Vendor" && (
                     <div className="g-10">
                       {<h4 className="f-300">{profileDetails?.store_name}</h4>}
