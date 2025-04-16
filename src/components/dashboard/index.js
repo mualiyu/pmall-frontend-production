@@ -2,7 +2,14 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
+import EmailIcon from "@mui/icons-material/Email";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Loading from "../../utils/loading";
+import SidebarRow from "../builder/SidebarRow";
+import SpeedIcon from "@material-ui/icons/Speed";
+import EuroIcon from '@mui/icons-material/Euro';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
@@ -293,7 +300,7 @@ const getVendorProducts = (ref)=> {
             <ul className="flex-container g-20 sub__title">
               {/* {user?.accountType === "Admin" && ( */}
               <li className="active pointer" onClick={dashboard}>
-                Dashboard
+              Hi {user?.fname}! <p className="text-muted">Dashboard</p>
               </li>
               {/* )} */}
               {(user?.accountType === "Affiliate" ||
@@ -321,11 +328,22 @@ const getVendorProducts = (ref)=> {
             Manage
           </h3>
           )}
-           {user?.accountType !== "Admin" && (
+           {/* {user?.accountType !== "Admin" && (
           <Link to="/" className="pointer h3 bold" style={{fontSize: 14}}>
             Visit Mall
           </Link>
-           )}
+           )} */}
+           <div className="no-large-display pointer">
+           <PowerSettingsNewIcon/> Log Out
+           </div>
+           
+           {/* {visible ?
+         <div onClick={hideSidebar} className="no-large-display pointer">
+          <CloseIcon />
+        </div > :  
+        <div onClick={showSidebar}  className="no-large-display pointer">
+          <MenuIcon />
+        </div>} */}
         </div>
       </section>
       {!loading && user?.user_type !== "Admin" && !pmallUser.acct_number && (
@@ -343,6 +361,7 @@ const getVendorProducts = (ref)=> {
               <div
                 className="flex g-10"
                 style={{ justifyContent: "space-between" }}>
+                  <div className="flex g-10 justsb w-100 dash-mobile-stat">
                 <div className="left_top_dashboard">
                   <div className="balance">
                     <span className="">
@@ -502,7 +521,8 @@ const getVendorProducts = (ref)=> {
                     </span>
                   </div>
                 </div>
-                <div className="center_top_dashboard">
+                </div>
+                <div className="center_top_dashboard dash-mobile-debit">
                   <DebitCard currentLoggedInUser={pmallUser}/>
                 </div>
               </div>
@@ -1017,6 +1037,109 @@ const getVendorProducts = (ref)=> {
           </section>
         </Box>
       </Modal>
+
+      <section className="mobile__nav flex" >
+         {/* If user is Affiliate */}
+      {(user?.accountType === "Affiliate" && (
+        <div> 
+      <SidebarRow
+            path="/app/dashboard"
+            Icon={StorefrontIcon}
+            title="Dashboard"
+          />
+          <SidebarRow
+                path=""
+                Icon={ShoppingBasketIcon}
+                title="Vendors"
+              />
+              <SidebarRow
+                path=""
+                Icon={ShoppingCartIcon}
+                title="Affiliates"
+              />
+           <SidebarRow
+                path=""
+                Icon={EmailIcon}
+                title="Message"
+              />
+           <SidebarRow
+                path=""
+                Icon={CreditCardIcon}
+                title="Genealogy"
+              />
+           <SidebarRow
+                path=""
+                Icon={CreditCardIcon}
+                title="Profile"
+              />
+              </div>
+      ))}
+
+      {/* If user is Vendor */}
+
+      {(user?.accountType === "Vendor" && (
+        <div> 
+      <SidebarRow
+            path="/app/dashboard"
+            Icon={StorefrontIcon}
+            title="Dashboard"
+          />
+          <SidebarRow
+                path=""
+                Icon={ShoppingBasketIcon}
+                title="Market"
+              />
+              <SidebarRow
+                path=""
+                Icon={ShoppingCartIcon}
+                title="Products"
+              />
+           <SidebarRow
+                path=""
+                Icon={EmailIcon}
+                title="Message"
+              />
+           <SidebarRow
+                path=""
+                Icon={CreditCardIcon}
+                title="Orders"
+              />
+           <SidebarRow
+                path=""
+                Icon={CreditCardIcon}
+                title="Profile"
+              />
+              </div>
+      ))}
+
+       {/* If user is Customer */}
+
+      {(user?.accountType !== "Vendor") && (user?.accountType !== "Affiliate") && (user?.accountType !== "Admin") && (
+        <div> 
+      <SidebarRow
+            path="/app/dashboard"
+            Icon={StorefrontIcon}
+            title="Dashboard"
+          />
+          <SidebarRow
+                path=""
+                Icon={ShoppingCartIcon}
+                title="Market Place"
+              />
+           
+           <SidebarRow
+                path="/app/transaction-history"
+                Icon={CreditCardIcon}
+                title="My Orders"
+              />
+              <SidebarRow
+                path=""
+                Icon={EmailIcon}
+                title="Message/Support"
+              />
+              </div>
+      )}
+      </section>
     </section>
   );
 };
