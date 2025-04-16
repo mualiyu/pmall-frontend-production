@@ -216,9 +216,9 @@ function Sidebar() {
           <SidebarRow path="/app/messaging" Icon={EmailIcon} title="Messaging/Support" />
 
           <SidebarRow
-            path="/app"
+            path="/app/transaction/history"
             Icon={CreditCardIcon}
-            title="Transaction Records"
+            title="Transaction/Order History"
           />
           {user?.accountType === "Admin" && (
             <>

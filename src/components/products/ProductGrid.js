@@ -201,12 +201,12 @@ const ProductGrid = ({ categoryId = null }) => {
             </div>
           </div>
           {adverts[index] && (
-        <div className="flex justify-center my-8">
+        <div className="flex justify-center my-8" style={{marginTop: "-20px", marginBottom: 10,}}>
           <a href={adverts[index].url} target="_blank" rel="noopener noreferrer">
             <img
               src={adverts[index].image_path}
               size={adverts[index].size}
-              style={{ maxWidth: "100%", borderRadius: "10px" }}
+              style={{ maxWidth: "100%", height: "100%", borderRadius: "10px", }}
             />
           </a>
         </div>

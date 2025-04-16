@@ -32,6 +32,7 @@ import PackageList from "./packages";
 import OrderDetails from "./orderManagement/details";
 import SiteSettings from "./siteSettings";
 import VerifyToken from "./auth/verifyToken";
+import TransactionOrderHistory from "./transactions";
 import { useUser } from "../context/UserContext";
 import StoreFront from "./storefront";
 import Cart from "./cart";
@@ -109,6 +110,7 @@ function Layout() {
                   <Route path="/app/leadership-rank" element={<LeadershipRank />} />
                   <Route path="/app/messaging" element={<Messaging />} />
                   <Route path="/app/affilates" element={<Affilates />} />
+                  <Route path="/app/transaction/history" element={<TransactionOrderHistory />} />
                   <Route path="/app/affilates/details" element={<AffilateDetails />} />
                   <Route path="/app/network/genealogy/" element={<MyNetwork />} />
                   <Route path="/app/account/packages" element={<PackageList />} />

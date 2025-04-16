@@ -2151,6 +2151,33 @@ input:checked + .slider:before {
   color: #333;
 }
 
+/* Base - Hide everything by default */
+.mobile-only,
+.desktop-only {
+  display: none;
+}
+
+/* Mobile view */
+@media (max-width: 767px) {
+  .mobile-only {
+    display: block !important;
+  }
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* Desktop view */
+@media (min-width: 768px) {
+  .desktop-only {
+    display: block !important;
+  }
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+
 .checkout-button {
   width: 100%;
   padding: 15px;
@@ -2525,6 +2552,9 @@ Thanks :)*/
   height: 22px;
 }
 
+.hidden__on__mobile {
+  display: none;
+}
 .switch input {
   opacity: 0;
   width: 0;
@@ -2697,4 +2727,5 @@ input:checked + .slider:before {
   .vendor__banner, .affiliate__banner{
     display: none;
   }
+  
 }

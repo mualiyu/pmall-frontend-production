@@ -130,7 +130,7 @@ return (
                                             <Link to="/app/dashboard" className="no-underline pointer">
                                             <li><span class="material-icons">keyboard_double_arrow_right</span>  Dashboard</li>
                                             </Link>
-                                            <Link to="/app/dashboard" className="no-underline pointer">
+                                            <Link to="/app/transaction/history" className="no-underline pointer">
                                             <li><span class="material-icons">keyboard_double_arrow_right</span>  My Orders</li>
                                             </Link>
                                             <Link to="/app/dashboard" className="no-underline pointer">

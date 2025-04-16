@@ -41,8 +41,7 @@ function TransactionPurchase() {
     .then((result) => {
         console.log(result);
         if (result.status) {
-          console.log(result)
-            // window.location.href = `/checkout/transaction/${refId}`;
+            window.location.href = `/app/transaction/history`;
         } else {
             console.error("Verification failed:", result.message);
         }

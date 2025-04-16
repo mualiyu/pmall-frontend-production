@@ -26,6 +26,7 @@ const AdvertCarousel = ({ adverts, interval = 3000 }) => {
               src={ad.image_path}
               alt={`Advert ${ad.id}`}
               className={`advert-img ${ad.size === "large" ? "large" : "small"}`}
+              style={{borderRadius: 0}}
             />
           </a>
         </div>
