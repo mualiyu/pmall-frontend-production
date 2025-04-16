@@ -16,6 +16,7 @@ export const VendorSignupProvider = ({ children }) => {
     const handleModalClose = () => setNewVendorModal(false);
     const [profileDetails, setProfileDetails]  = useState(); 
     const token = localStorage.getItem("authToken");
+    const [visible,setVisible] = useState(false)
 
     const onSubmitHandler = async(e) => {
         if (e) {
@@ -233,7 +234,7 @@ export const VendorSignupProvider = ({ children }) => {
       };
 
   return (
-    <VendorSignupContext.Provider value={{ inputValues, setState, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,VendorUpdateProfile,newVendorModal,setNewVendorModal, handleModalClose,profileDetails,setProfileDetails,submittedValues,loading, setLoading}}>
+    <VendorSignupContext.Provider value={{ inputValues, setState, onChangeHandler, onSubmitHandler,handleLogin,onAffilateSubmitHandler,onForgotPasswordHandler,handleResetPassword, handleVerifyToken,VendorUpdateProfile,newVendorModal,setNewVendorModal, handleModalClose,profileDetails,setProfileDetails,submittedValues,loading, setLoading,visible,setVisible}}>
       {children}
     </VendorSignupContext.Provider>
   );

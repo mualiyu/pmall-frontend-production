@@ -544,7 +544,7 @@ css-6od3lo-MuiChip-label {
   width: 100%;
   /* margin: 0 20px; */
   /* height: 100vh; */
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
   background-color: white;
   padding: 0 20px;
 }
@@ -977,7 +977,7 @@ button:disabled {
   height: 50px;
   position: fixed;
   top: 15px;
-  right: -55px;
+  right: -100%;
   transition: all 0.2s;
   display: flex;
   justify-content: center;

@@ -16,6 +16,8 @@ import nigeriaStateAndLgas from "../nigeriaStateAndLgas.json";
 import ButtonLoader from "../../utils/buttonLoader";
 import Toaster from "../../utils/toaster";
 import currency from "../../utils/formatCurrency";
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
 const style = {
   position: "absolute",
@@ -103,6 +105,8 @@ const UserDetails = () => {
     setLoading,
     toastMsg,
     toastType,
+    visible,
+    setVisible,
   } = useVendor();
 
   const [selectedState, setSelectedState] = useState("");
@@ -176,6 +180,12 @@ const UserDetails = () => {
   useEffect(() => {
     getUsersDetails();
   }, [submittedValues]);
+   const showSidebar = () => {
+    setVisible(true)
+  }
+  const hideSidebar = () => {
+    setVisible(false)
+  }
 
   return (
     <section className="w-full" style={{ display: "block" }}>
@@ -186,6 +196,14 @@ const UserDetails = () => {
           <Person2Icon />
           <h3>User Profile</h3> 
         </div>
+        {visible ?
+         <div onClick={hideSidebar} className="no-large-display pointer">
+          <CloseIcon />
+        </div > :  
+        <div onClick={showSidebar}  className="no-large-display pointer">
+          <MenuIcon />
+        </div>
+        }
         </div>
 
         <div className="flex-container flex-col w-full p-y my-40 g-20">
@@ -209,7 +227,7 @@ const UserDetails = () => {
                   <Rating name="read-only" value={value} readOnly />
                   <p>0 Rates</p>
                 </div> */}
-                <div className="flex flex-col g-30 mt-10">
+                <div className="flex flex-col g-30 mt-10 main-details">
                   {profileDetails?.user_type === "Vendor" && (
                     <div className="g-10">
                       {<h4 className="f-300">{profileDetails?.store_name}</h4>}
