@@ -5,7 +5,7 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import moment from "moment";
 import Loading from "../../utils/loading";
 import currency from "../../utils/formatCurrency";
-import Toast from "../../utils/Toast"
+import Toast from "../../utils/Toast";
 import { BASE_URL } from "../../utils/config"; 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -31,35 +31,31 @@ const style = {
 };
 
 const columns = [
-  { id: "to", label: "Message to" },
-  { id: "type", label: "Type" },
-  { id: "subject", label: "Msg. Subject" },
-  { id: "description", label: "Message" },
+  { id: "date", label: "Transaction Date" },
+  { id: "amount", label: "Amount" },
+  { id: "status", label: "Transaction Status" },
+  { id: "products", label: "Products" },
 ];
 
 
 function createData(
-  to,
-  type,
-  subject,
-  description,
+  date,
+  amount,
+  status,
+  products,
 ) {
   return {
-    to,
-    type,
-    subject,
-    description,
+    date,
+    amount,
+    status,
+    products,
   };
 }
 
 const TransactionOrderHistory = () => {
-  const [newMessageModal, setNewMessageModal] = useState(false);
-  const [allPackages, setAllPackages] = useState([]);
-  const [loading, setLoading] =useState(false);
+  const [transactions, setTransactions] = useState([]);
   const [toast, setToast] = useState(null);
-  const handleModalClose = () => setNewMessageModal(false);
-
-const [error, setError] = useState("");
+  const [loading, setLoading] =useState(false);
   const navigate = useNavigate();
   const { user } = useUser();
 
@@ -75,11 +71,14 @@ const [error, setError] = useState("");
     })
         .then((resp) => resp.json())
         .then((result) => {
-    console.log(result);
-    setLoading(false);
-  })
+          console.log(result);
+          setTransactions(result.sales);
+          setLoading(false);
+        })
         .catch((err) => {
             console.log(err);
+            setToast({ message: "Error Fetching Transaction log", type: "error" });
+            setTimeout(() => setToast(null), 5000);
             setLoading(false);
         });
 };
@@ -121,40 +120,43 @@ useEffect(()=> {
             </TableRow>
           </TableHead>
           <TableBody>
-            {allPackages.map((packageItem)=> (
-          <TableRow onClick={() => navigate("details")} key={packageItem.id}>
+            {transactions.map((trx)=> (
+          <TableRow key={trx.id}>
               <TableCell className="b-r">
                 <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
-                    <h4 className="uppercase">{packageItem.name} </h4>
+                    <h4 className="uppercase">{moment(trx.created_at).format("ll")} </h4>
                   </div>
                 </div>
               </TableCell>
-              <TableCell>
-              <div className="d-flex alc f-10 flex-start">
-                  <div className="lheight13">
-                    <h4 className="uppercase">
-                 { packageItem.type }
-                </h4>
-                </div>
-                </div>
-                </TableCell>
+              
               <TableCell> 
               <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <h4 className="uppercase">
-                      { currency(packageItem.price) } 
+                      { currency(trx.total_amount) } 
                       </h4>
                     </div>
               </div>
               </TableCell>
-              
               <TableCell>
               <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <h4 className="uppercase">
-                       {moment(packageItem.created_at).format("ll")}
-                       </h4>
+                 { trx.payment_status }
+                </h4>
+                </div>
+                </div>
+                </TableCell>
+              <TableCell>
+              <div className="d-flex alc f-10 flex-start">
+                  <div className="lheight13">
+                    <ol style={{lineHeight: "2em"}}>
+                      {trx?.products?.map((pro)=>(
+                      <li key={pro.id} className="capitalize">{pro.name} - ({currency(pro?.cost_price)}) </li>
+                      ))}
+                    </ol>
+                   
                        </div>
                        </div>
                </TableCell>

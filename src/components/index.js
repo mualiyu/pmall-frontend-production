@@ -6,6 +6,7 @@ import NewPasswordPage from "./auth/newPasswordPage";
 import ResetPassword from "./auth/passwordReset";
 import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
+import MobileNav from "./builder/MobileNav";
 import Products from "./products";
 import Users from "./users";
 import Vendors from "./vendors";
@@ -93,7 +94,12 @@ function Layout() {
 
         <>
           <div className="flex-container bg___chalk">
-          {isLoggedInPath && <Sidebar className="sidenav" /> }
+          {isLoggedInPath && (
+            <>
+          <Sidebar className="sidenav" />
+          <MobileNav/>
+          </>
+          ) }
             <div className="main__content">
               <Routes>
 

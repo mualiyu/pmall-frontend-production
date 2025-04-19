@@ -45,19 +45,17 @@ export default function DebitCard({currentLoggedInUser}) {
               style={{ opacity: "0.1" }}
             />
             <div className="">
-              <div className="flex justsb">
-              <img
-                src="/chip.png"
-                width="30px"
-                alt="Pmall"
-              />
-              <p style={{ textTransform: "capitalize", fontSize: 12 }}>
-                {currentLoggedInUser?.store_name
-                  ? currentLoggedInUser?.store_name
-                  : currentLoggedInUser?.fname + " " + currentLoggedInUser?.lname}
+            <div className="flex justsb align-center">
+              <img src="/chip.png" width="30" alt="Pmall" />
+
+              <p style={{ textTransform: "capitalize", fontSize: 12, marginLeft: 8 }}>
+                {["Affiliate", "Vendor", "Admin"].includes(currentLoggedInUser?.user_type)
+                  ? currentLoggedInUser?.store_name ||
+                    `${currentLoggedInUser?.fname} ${currentLoggedInUser?.lname}`
+                  : `${user?.fname} ${user?.lname}`}
               </p>
-             
-              </div>
+            </div>
+
               {/* <p className="text-right" style={{ textTransform: "capitalize", fontSize: 12 }}>
             <PackageName id={currentLoggedInUser.package_id} type={currentLoggedInUser.user_type} />
              </p> */}

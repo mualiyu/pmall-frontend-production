@@ -15,7 +15,7 @@ import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOu
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import HubIcon from "@mui/icons-material/Hub";
 import SavingsIcon from "@mui/icons-material/Savings";
-import StorefrontIcon from "@mui/icons-material/Storefront";
+
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import Table from "@mui/material/Table";
@@ -185,7 +185,9 @@ const getVendorProducts = (ref)=> {
   
   const getUsersDetails = () => {
     setLoading(true)
-    fetch(`${BASE_URL}/profile`, {
+    let endpoint = user.type !== "Admin" || user.type !== "Vendor" || user.type !== "Affiliate" ? "customer/profile" : "profile"
+    // Check if the user is a customer
+    fetch(`${BASE_URL}/${endpoint}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -199,8 +201,10 @@ const getVendorProducts = (ref)=> {
         if (result.status) {
           getMyNetwork();
           setLoading(false);
+          console.log(result.data.user);
           // setUserDetails(result.data.user);
           setPmallUser(result.data.user);
+          setPmallUser(result?.customer);
           if(result?.data?.user.user_type === 'Vendor') {
             getVendorProducts(result?.data?.user.store_id);
           }
@@ -354,14 +358,13 @@ const getVendorProducts = (ref)=> {
       </section>
       )}
       {dashboardTab && (
-        <div className="flex g-10 justsb">
+        <div className="flex g-10 justsb mobile-block">
           
-          <div style={{ width: "75%" }}>
+          <div className="w-75 mobile-full">
             <section style={{ marginBottom: 30 }}>
               <div
-                className="flex g-10"
-                style={{ justifyContent: "space-between" }}>
-                  <div className="flex g-10 justsb w-100 dash-mobile-stat">
+                className="flex g-10 justsb mobile-grid">
+              <div className="flex g-10 justsb w-100 dash-mobile-stat">
                 <div className="left_top_dashboard">
                   <div className="balance">
                     <span className="">
@@ -707,8 +710,8 @@ const getVendorProducts = (ref)=> {
             </TableContainer>
             )}
           </div>
-          <div className="g-20 flex-col" style={{width: "25%"}}>
-            <button class="btn btn-warning">
+          <div className="g-20 flex-col mobile-btn-inline" style={{width: "25%"}}>
+            <button class="btn btn-warning withdraw__btn">
               {" "}
               {user.accountType === "Vendor"
                 ? "Become an affiliate"
@@ -716,7 +719,7 @@ const getVendorProducts = (ref)=> {
                 ? "Become a vendor"
                 : "Create a New Vendor"}
             </button>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary withdraw__btn">
             Withdraw Money
             </button>
 
@@ -1038,108 +1041,7 @@ const getVendorProducts = (ref)=> {
         </Box>
       </Modal>
 
-      <section className="mobile__nav flex" >
-         {/* If user is Affiliate */}
-      {(user?.accountType === "Affiliate" && (
-        <div> 
-      <SidebarRow
-            path="/app/dashboard"
-            Icon={StorefrontIcon}
-            title="Dashboard"
-          />
-          <SidebarRow
-                path=""
-                Icon={ShoppingBasketIcon}
-                title="Vendors"
-              />
-              <SidebarRow
-                path=""
-                Icon={ShoppingCartIcon}
-                title="Affiliates"
-              />
-           <SidebarRow
-                path=""
-                Icon={EmailIcon}
-                title="Message"
-              />
-           <SidebarRow
-                path=""
-                Icon={CreditCardIcon}
-                title="Genealogy"
-              />
-           <SidebarRow
-                path=""
-                Icon={CreditCardIcon}
-                title="Profile"
-              />
-              </div>
-      ))}
-
-      {/* If user is Vendor */}
-
-      {(user?.accountType === "Vendor" && (
-        <div> 
-      <SidebarRow
-            path="/app/dashboard"
-            Icon={StorefrontIcon}
-            title="Dashboard"
-          />
-          <SidebarRow
-                path=""
-                Icon={ShoppingBasketIcon}
-                title="Market"
-              />
-              <SidebarRow
-                path=""
-                Icon={ShoppingCartIcon}
-                title="Products"
-              />
-           <SidebarRow
-                path=""
-                Icon={EmailIcon}
-                title="Message"
-              />
-           <SidebarRow
-                path=""
-                Icon={CreditCardIcon}
-                title="Orders"
-              />
-           <SidebarRow
-                path=""
-                Icon={CreditCardIcon}
-                title="Profile"
-              />
-              </div>
-      ))}
-
-       {/* If user is Customer */}
-
-      {(user?.accountType !== "Vendor") && (user?.accountType !== "Affiliate") && (user?.accountType !== "Admin") && (
-        <div> 
-      <SidebarRow
-            path="/app/dashboard"
-            Icon={StorefrontIcon}
-            title="Dashboard"
-          />
-          <SidebarRow
-                path=""
-                Icon={ShoppingCartIcon}
-                title="Market Place"
-              />
-           
-           <SidebarRow
-                path="/app/transaction-history"
-                Icon={CreditCardIcon}
-                title="My Orders"
-              />
-              <SidebarRow
-                path=""
-                Icon={EmailIcon}
-                title="Message/Support"
-              />
-              </div>
-      )}
-      </section>
+      
     </section>
   );
 };

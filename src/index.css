@@ -1865,6 +1865,9 @@ input:checked + .slider:before {
 .lh {
   line-height: 30px;
 }
+.w-75 {
+  width: 75%
+}
 .rights {
   background: #000;
   color: #fff;
@@ -2524,6 +2527,7 @@ Thanks :)*/
   font-size: 16px;
 }
 
+
 .specifications h2{
  margin-bottom: 5px;
  font-size: 16px;
@@ -2631,6 +2635,21 @@ input:checked + .slider:before {
     border-radius: 0;
   }
 
+  .dash-mobile{
+    flex-direction: column;
+   align-items: flex-start;
+   justify-content: space-between;
+  }
+  .dash-mobile-stat {
+    order: 2;
+    margin-left: 15%;
+    transform: translate(0%, 10px);
+  }
+  .dash-mobile-debit {
+   margin-left: 8%;
+   transform: translate(0%, 10px);
+  }
+
   .login-screen .left,.signup-screen .left,.reset-password .left {
     background-position: center;
     background-size: cover;
@@ -2722,20 +2741,23 @@ input:checked + .slider:before {
   width: 40% !important;
   height: 140vh !important;
  }
- .dash-mobile{
-   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+ .mobile-full{
+   width: 100%;
  }
- .dash-mobile-stat {
-   order: 2;
-   margin-left: 15%;
-   transform: translate(0%, 10px);
- }
- .dash-mobile-debit {
-  margin-left: 8%;
-  transform: translate(0%, 10px);
- }
+ .mobile-block{
+  display: block;
+}
+.mobile-grid{
+  display: grid;
+  justify-content: space-around;
+}
+.mobile-btn-inline {
+  display: inline-block
+}
+.withdraw__btn{
+  width: 40%;
+  display: none;
+}
  .debit_card{
    width: 100vw !important;
  }
@@ -2768,10 +2790,13 @@ input:checked + .slider:before {
       margin-top: 30px;
     }
     .btn{
-      width: 100%!important;
+      width: 100%;
     }
     .checkout-container{
       padding: 0;
+    }
+    .mobile-block{
+      display: block;
     }
     .checkout-right{
       width: 100%;
@@ -2782,13 +2807,36 @@ input:checked + .slider:before {
       padding: 0;
       margin: 0;
     }
+    .withdraw__btn{
+      width: 40%;
+      display: none;
+    }
     .top__top__header{
       position: relative!important;
+    }
+    .dash-mobile{
+      flex-direction: column;
+     align-items: flex-start;
+     justify-content: space-between;
+    }
+    .dash-mobile-stat {
+      order: 2;
+      margin-left: 0%;
+      transform: translate(0%, 10px);
+      justify-content: space-around;
+    }
+    .mobile-grid{
+      display: grid;
+      justify-content: space-around;
+    }
+    .dash-mobile-debit {
+     margin-left: 0%;
+     transform: translate(0%, 10px);
     }
 
 .mobile__nav {
   display: block;
-    margin-top: 55%;
+    margin-top:0;
     background-color: var(--primary-color);
     padding: 18px 0;
     color: white;
