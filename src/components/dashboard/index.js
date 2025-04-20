@@ -301,13 +301,19 @@ const getVendorProducts = (ref)=> {
       <section className="page__header">
         <div className="flex-container alc justsb w-100">
           <div>
-            <ul className="flex-container g-20 sub__title">
+            <ul className="flex-container sub__title">
               {/* {user?.accountType === "Admin" && ( */}
+                <div className="user__avatar bg-error">
+                <h3>
+                  {user?.fname[0]}
+                  {user?.lname[0]}
+                </h3>
+              </div>
               <li className="active pointer" onClick={dashboard}>
-              Hi {user?.fname}! <p className="text-muted">Dashboard</p>
+              Hi {user?.fname} {user?.lname}! <p className="text-muted">Dashboard</p>
               </li>
               {/* )} */}
-              {(user?.accountType === "Affiliate" ||
+              {/* {(user?.accountType === "Affiliate" ||
                 user?.accountType === "Admin") && (
                 <li className="pointer" onClick={affilate}>
                   Affilate Dashboard
@@ -324,7 +330,7 @@ const getVendorProducts = (ref)=> {
                 <li className="pointer" onClick={product}>
                   Product
                 </li>
-              )}
+              )} */}
             </ul>
           </div>
           {user?.accountType === "Admin" && (
@@ -353,7 +359,7 @@ const getVendorProducts = (ref)=> {
       {!loading && user?.user_type !== "Admin" && !pmallUser.acct_number && (
       <section>
         <div className="profile__notification">
-           Good to see you {user.fname} {user.lname}! Just a few steps left to hitting the ground running. Add your banking details <Link to="/app/users/details" className="f-13"> Smash this link </Link>
+           Good to see you {user.fname}! Just a few steps left to hitting the ground running. Add your banking details <Link to="/app/users/details" className="f-13"> Smash this link </Link>
             </div>
       </section>
       )}
@@ -393,11 +399,11 @@ const getVendorProducts = (ref)=> {
                     </span>
                     <span className="balance-text">
                       <h1 className="flex">{countVendors ? countVendors : 0 } </h1>
-                      <h4 className="color-grey">
+                      <p className="text-muted">
                         {user.accountType === "Vendor"
                           ? "Products Sold"
                           : "Total Vendors"}
-                      </h4>
+                      </p>
                     </span>
                   </div>
                   <div className="balance">
@@ -432,11 +438,11 @@ const getVendorProducts = (ref)=> {
                       {user.accountType === "Vendor" && (
                       <h1 className="flex">{productList?.length} </h1>
                       )}
-                      <h4 className="color-grey">
+                      <p className="text-muted">
                         {user.accountType === "Vendor"
                           ? "Total Products"
                           : "Total Affiliates"}
-                      </h4>
+                      </p>
                     </span>
                   </div>
                 </div>
@@ -508,19 +514,19 @@ const getVendorProducts = (ref)=> {
                     </span>
                     <span className="balance-text">
                     {user.accountType === "Admin"
-                          ? <h1 className="flex">0.00 </h1>
+                          ? <h1 className="flex">0 </h1>
                           : user.accountType === "Vendor"
                           ? <h1 className="flex">0.00 </h1>
                           : <h1 className="flex">{pmallUser?.wallet?.pv} </h1>
                     }
-                      <h4 className="color-grey">
+                      <p className="text-muted">
                       {user.accountType === "Admin"
                           ? "Total Affiliates"
                           : user.accountType === "Vendor"
                           ? "Daily Sales" 
                           : "Point Value"
                         }
-                      </h4>
+                      </p>
                     </span>
                   </div>
                 </div>
@@ -530,6 +536,7 @@ const getVendorProducts = (ref)=> {
                 </div>
               </div>
             </section>
+            {user?.accountType === "Vendor" && (
             <div
               style={{ width: "100%", maxHeight: "100%" }}
               className="dashboard-chart gap-10 g-20">
@@ -552,6 +559,7 @@ const getVendorProducts = (ref)=> {
               </div>
               <Line options={options} data={data} />
             </div>
+            )}
             <div className="s-divider"></div>
 {user.user_type==="Vendor" && (
             <TableContainer component={Paper}>

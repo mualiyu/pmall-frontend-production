@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
 import PackageName from "../utils/accountPackages"
 import currency from "../utils/formatCurrency"
@@ -10,6 +10,7 @@ import "../index.css";
 export default function DebitCard({currentLoggedInUser}) {
   const { user } = useUser();
   const [toast, setToast] = useState(null);
+
 
   const handleCopy = () => {
 		if (!user?.refId) {
@@ -23,6 +24,11 @@ export default function DebitCard({currentLoggedInUser}) {
 			setTimeout(() => setToast(null), 5000);
 		});
 	};
+  useEffect(() => {
+    console.log(user);
+    console.log(currentLoggedInUser);
+    
+  }, []);
 
   return (
     <>
@@ -66,7 +72,7 @@ export default function DebitCard({currentLoggedInUser}) {
               </div>
             </div>
             <div className="card-no flex">
-              <p style={{ fontSize: 18 }}  onClick={handleCopy} >{currentLoggedInUser?.my_ref_id}
+              <p style={{ fontSize: 18 }}  onClick={handleCopy} >{currentLoggedInUser?.my_ref_id ? currentLoggedInUser?.my_ref_id : user?.refId }
               </p>
               <ContentCopyIcon title="Click to copy" 
               onClick={handleCopy} 

@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import SidebarRow from "./SidebarRow";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import EmailIcon from "@mui/icons-material/Email";
+import GroupsIcon from "@mui/icons-material/Groups";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import HubIcon from "@mui/icons-material/Hub";
+import Person2Icon from "@mui/icons-material/Person2";
+import ReduceCapacityIcon from "@mui/icons-material/ReduceCapacity";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { useUser, useLogOut } from "../../context/UserContext";
@@ -36,11 +40,11 @@ function MobileNav() {
         {user?.accountType === "Affiliate" && (
           <div>
             <SidebarRow path="/app/dashboard" Icon={StorefrontIcon} title="Dashboard" />
-            <SidebarRow path="" Icon={ShoppingBasketIcon} title="Vendors" />
-            <SidebarRow path="" Icon={ShoppingCartIcon} title="Affiliates" />
+            <SidebarRow path="" Icon={GroupsIcon} title="Vendors" />
+            <SidebarRow path="" Icon={HubIcon} title="Affiliates" />
             <SidebarRow path="" Icon={EmailIcon} title="Message" />
-            <SidebarRow path="" Icon={CreditCardIcon} title="Genealogy" />
-            <SidebarRow path="" Icon={CreditCardIcon} title="Profile" />
+            <SidebarRow path="" Icon={ReduceCapacityIcon} title="Genealogy" />
+            <SidebarRow path="" Icon={Person2Icon} title="Profile" />
           </div>
         )}
   
@@ -51,7 +55,7 @@ function MobileNav() {
             <SidebarRow path="" Icon={ShoppingCartIcon} title="Products" />
             <SidebarRow path="" Icon={EmailIcon} title="Message" />
             <SidebarRow path="" Icon={CreditCardIcon} title="Orders" />
-            <SidebarRow path="" Icon={CreditCardIcon} title="Profile" />
+            <SidebarRow path="" Icon={Person2Icon} title="Profile" />
           </div>
         )}
   

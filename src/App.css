@@ -543,7 +543,7 @@ css-6od3lo-MuiChip-label {
 .main__content {
   width: 100%;
   /* margin: 0 20px; */
-  /* height: 100vh; */
+  height: 100vh;
   /* overflow-x: scroll; */
   background-color: white;
   padding: 0 20px;

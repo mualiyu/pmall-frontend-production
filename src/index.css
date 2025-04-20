@@ -2838,10 +2838,11 @@ input:checked + .slider:before {
   display: block;
     margin-top:0;
     background-color: var(--primary-color);
-    padding: 18px 0;
+    padding: 15px 0;
     color: white;
-    border-radius: 9px;
-    position: relative;
+    /* border-radius: 9px; */
+    position: absolute;
+    bottom: 0
 }
 .mobile__nav div {
     display: flex;
