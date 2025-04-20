@@ -312,25 +312,7 @@ const getVendorProducts = (ref)=> {
               <li className="active pointer" onClick={dashboard}>
               Hi {user?.fname} {user?.lname}! <p className="text-muted">Dashboard</p>
               </li>
-              {/* )} */}
-              {/* {(user?.accountType === "Affiliate" ||
-                user?.accountType === "Admin") && (
-                <li className="pointer" onClick={affilate}>
-                  Affilate Dashboard
-                </li>
-              )}
-              {(user?.accountType === "Vendor" ||
-                user?.accountType === "Admin") && (
-                <li className="pointer" onClick={vendor}>
-                  Vendor Dashboard
-                </li>
-              )}
-              {(user?.accountType === "Vendor" ||
-                user?.accountType === "Admin") && (
-                <li className="pointer" onClick={product}>
-                  Product
-                </li>
-              )} */}
+             
             </ul>
           </div>
           {user?.accountType === "Admin" && (
