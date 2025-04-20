@@ -14,7 +14,7 @@ const StoreFront = () => {
     const adverts = [
         { id: 1, image_path: "/advert/ld__banner.png", size: "large", url: "" },
         { id: 2, image_path: "fish-oil-vs-omega-3-large.webp", size: "large", url: "" },
-        { id: 3, image_path: "/advert/large__banner.png", size: "large", url: "https://product2.com" },
+        { id: 3, image_path: "/advert/large__banner.png", size: "large", url: "" },
         // { id: 4, image_path: "/ar.gif", size: "large", url: "" },
       ];
 

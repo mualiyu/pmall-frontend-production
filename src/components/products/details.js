@@ -5,34 +5,23 @@ import { useUser } from "../../context/UserContext";
 import { getCart } from "../../utils/cartUtils";
 import useProductCategories from "../../hooks/useProductCategories";
 import Rating from "@mui/material/Rating";
-import SearchIcon from '@mui/icons-material/Search';
-import Person4Icon from '@mui/icons-material/Person4';
 import Loading from "../../utils/loading";
+import { BASE_URL } from "../../utils/config"; 
 import ProductCarousel from "../../utils/productCarousel";
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import Badge from '@mui/material/Badge';
 import { useCart } from "../../context/CartContext"
 import { useCategories } from "../../context/CategoryContext"
-import ToggleOffIcon from '@mui/icons-material/ToggleOff';
-import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 
 const ProductDetails = () => {
   const { id, productName } = useParams();
   const { user } = useUser();
-  const decodedProductName = decodeURIComponent(productName);
   const [loading, setLoading] = useState(null);
   const [cartMessage, setCartMessage] = useState("");
   const [moreImages, setMoreImages] = useState([]);
   const [value, setValue] = useState(4);
   const [detail, setDetails] = useState(null);
   const [numOfItems, setNumOfItems] = useState(1)
-  const { storeCategories, error } = useCategories();
   const [categories, setProductCategories] = useState(null)
-  const [cartModalActive, setCartModalActive] = useState(false)
   const { products } = useProductCategories();
-    const { cartCount } = useCart();
 
     const extraLinks = ['Male', 'Female', 'Fitness', 'General', 'Combo Products', 'Sell On PMall', 'Become an Affiliate'];
   
@@ -50,8 +39,7 @@ const ProductDetails = () => {
   const getProductDetails = () => {
     setLoading(true);
     getProductsCategories();
-    fetch(
-      `https://api.pmall.com.ng/api/v1/public/products/single-product?product_id=${id}`,
+    fetch(`${BASE_URL}/public/products/single-product?product_id=${id}`,
       {
         method: "GET",
         headers: {
@@ -79,7 +67,7 @@ const ProductDetails = () => {
   
  const getProductsCategories = () => {
         setLoading(true);
-        fetch("https://api.pmall.com.ng/api/v1/public/products/get-all-categories", {
+        fetch(`${BASE_URL}/public/products/get-all-categories`, {
             method: "GET",
             headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -138,16 +126,6 @@ console.log(cart);
     setTimeout(() => setCartMessage(""), 7000);
   }, []);
 
-  // function addToCart(){
-  //   let cart = []
-  //   if(typeof localStorage !== "undefined") {
-  //       cart = (JSON.parse(localStorage.getItem('pmallCart'))) || []
-  //   } 
-
-  //    cart.push({...detail, amtItems:numOfItems})
-  //   localStorage.setItem('pmallCart', JSON.stringify(cart))
-  //   setCartModalActive(true)
-  // }
 
   const addCommasToNumberString = (numberString) =>{
     return  numberString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");  

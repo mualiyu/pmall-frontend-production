@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useUser } from "../context/UserContext";
 import currency from "../utils/formatCurrency";
 import Toast from "../utils/Toast";
+import { BASE_URL } from "../utils/config"; 
 import ButtonLoader from "../utils/buttonLoader";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -127,7 +128,7 @@ const CheckoutPage = () => {
         setToast({ message: "Attempting registration...", type: "warning" });
         setTimeout(() => setToast(null), 5000);
         try {
-            const response = await fetch("https://api.pmall.com.ng/api/v1/customer/register", {
+            const response = await fetch(`${BASE_URL}/customer/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json;charset=UTF-8",
@@ -152,7 +153,7 @@ const CheckoutPage = () => {
             }
             // autoLogin User
             try {
-                const response = await fetch("https://api.pmall.com.ng/api/v1/customer/login", {
+                const response = await fetch(`${BASE_URL}/customer/login`, {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json;charset=UTF-8",
@@ -232,7 +233,7 @@ const CheckoutPage = () => {
         console.log("Checkout Request Body:", requestBody);
     
         try {
-            const response = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/initiate", {
+            const response = await fetch(`${BASE_URL}/customer/checkout/initiate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json;charset=UTF-8",
@@ -280,7 +281,7 @@ const CheckoutPage = () => {
         console.log("Payment Request Body:", paymentData);
     
         try {
-            const response = await fetch("https://api.pmall.com.ng/api/v1/customer/checkout/paystack/initiate", {
+            const response = await fetch(`${BASE_URL}/customer/checkout/paystack/initiate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json;charset=UTF-8",

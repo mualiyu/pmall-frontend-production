@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { BASE_URL } from "../../utils/config"; 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import profile from "../../assets/imgs/passport.png";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -22,17 +22,13 @@ import Tab from "@mui/material/Tab";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-// import { useVendor } from "../../context/VendorSignupContext";
 import { useVendor } from "../../context/VendorSignupContext";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useUser } from "../../context/UserContext";
 import moment from "moment";
-import Vendors from "../vendors";
 import Toaster from "../../utils/toaster";
 import ButtonLoader from "../../utils/buttonLoader";
-import ToggleOffIcon from '@mui/icons-material/ToggleOff';
-import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -169,7 +165,6 @@ const ProductList = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [newProduct, setNewProduct] = useState();
   const [value, setValue] = useState(0);
-  const [pmallUsers, setPmallUsers] = useState([]);
   const [moreImages, setMoreImages] = useState([]);
   const { user } = useUser();
   const {inputValues, setState, onChangeHandler,loading, setLoading,  visible,
@@ -243,7 +238,8 @@ const ProductList = () => {
       setLoading(true)
       inputValues.more_images = moreImages?.join(", ")
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/products/create', {
+      const response = await fetch(
+        `${BASE_URL}/products/create`, {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -284,7 +280,8 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/products/update/1', {
+      const response = await fetch(
+        `${BASE_URL}/products/update/1`, {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -323,7 +320,8 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/product-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+      const response = await fetch(
+        `${BASE_URL}/product-category/update?category_id=${inputValues.id}&category_image=${inputValues.category_image}&name=${inputValues.name}&description=${inputValues.description}`, {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -362,7 +360,9 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/product-sub-category/update?category_id=' + inputValues.id + '&category_image=' + inputValues.category_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+      const response = await fetch(
+        `${BASE_URL}/product-sub-category/update?category_id=${inputValues.id}&category_image=${inputValues.category_image}&name=${inputValues.name}&description=${inputValues.description}`,
+        {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -397,7 +397,8 @@ const ProductList = () => {
     if (e) {
       e.preventDefault(); 
     try {
-      const response = await fetch('https://api.pmall.com.ng/api/v1/product-brand/update?brand_id=' + inputValues.id + '&brand_image=' + inputValues.brand_image + '&name=' + inputValues.name + '&description=' + inputValues.description , {
+      const response = await fetch(
+        `${BASE_URL}/product-brand/update?brand_id=${inputValues.id}&brand_image=${inputValues.brand_image}&name=${inputValues.name}&description=${inputValues.description}`, {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -463,7 +464,7 @@ const ProductList = () => {
 
   const getProducts = () => {
     if(user?.accountType== "Vendor"){
-      fetch("https://api.pmall.com.ng/api/v1/products", {
+      fetch(`${BASE_URL}/products`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -485,7 +486,8 @@ const ProductList = () => {
           console.log(err);
         });
     }else{
-      fetch("https://api.pmall.com.ng/api/v1/products/?store_id=" + id, {
+      fetch(
+        `${BASE_URL}/products/?store_id=${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -511,7 +513,8 @@ const ProductList = () => {
 
   const addCategory = (e) => {
     e.preventDefault()
-    fetch("https://api.pmall.com.ng/api/v1/product-category/create?category_image="+ inputValues.category_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch(
+      `${BASE_URL}/product-category/create?category_image=${inputValues.category_image}&name=${inputValues.name}&description=${inputValues.description}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -545,7 +548,7 @@ const ProductList = () => {
 
   const addSubCategory = (e) => {
     e.preventDefault()
-    fetch("https://api.pmall.com.ng/api/v1/product-sub-category/create?category_id=" + inputValues.category_id  + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch(`${BASE_URL}/product-sub-category/create?category_id=${inputValues.category_id}&name=${inputValues.name}&description=${inputValues.description}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -580,7 +583,8 @@ const ProductList = () => {
 
   const addBrand = (e) => {
     e.preventDefault()
-    fetch("https://api.pmall.com.ng/api/v1/product-brand/create?brand_image="+inputValues.brand_image + "&name=" + inputValues.name + "&description=" + inputValues.description, {
+    fetch(
+      `${BASE_URL}/product-brand/create?brand_image=${inputValues.brand_image}&name=${inputValues.name}&description=${inputValues.description}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -614,7 +618,7 @@ const ProductList = () => {
   };
 
   const getCategories = () => {
-    fetch("https://api.pmall.com.ng/api/v1/product-category/get-all",{
+    fetch(`${BASE_URL}/product-category/get-all`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -633,7 +637,7 @@ const ProductList = () => {
   };
   
   const getBrands = () => {
-    fetch("https://api.pmall.com.ng/api/v1/product-brand/get-all?store_id=" +id, {
+    fetch(`${BASE_URL}/product-brand/get-all?store_id=${id}`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -654,7 +658,7 @@ const ProductList = () => {
   const deleteProduct = (productId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this item?');
     if (isConfirmed) {
-      fetch("https://api.pmall.com.ng/api/v1/products/delete-account?product_id=" + productId, {
+      fetch(`${BASE_URL}/products/delete-account?product_id=${productId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -689,7 +693,7 @@ const ProductList = () => {
   const deleteCategory = (categoryId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this category?');
     if (isConfirmed) {
-      fetch("https://api.pmall.com.ng/api/v1/product-category/delete?category_id=" + categoryId, {
+      fetch(`${BASE_URL}/product-category/delete?category_id=${categoryId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -727,7 +731,7 @@ const ProductList = () => {
   const deleteSubCategory = (categoryId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this category?');
     if (isConfirmed) {
-      fetch("https://api.pmall.com.ng/api/v1/product-sub-category/delete?sub_category_id=" + categoryId, {
+      fetch(`${BASE_URL}/product-sub-category/delete?sub_category_id=${categoryId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -763,7 +767,7 @@ const ProductList = () => {
   const deleteBrand = (brandId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this brand?');
     if (isConfirmed) {
-      fetch("https://api.pmall.com.ng/api/v1/product-brand/delete?brand_id=" + brandId, {
+      fetch(`${BASE_URL}/product-brand/delete?brand_id=${brandId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",

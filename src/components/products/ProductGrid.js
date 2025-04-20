@@ -2,13 +2,14 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { addToCart, getCart } from "../../utils/cartUtils";
+import { BASE_URL } from "../../utils/config"; 
 import AdvertCarousel from "../../utils/adverts";
 import MiniCart from "../../utils/miniCart";
 import BackToTop from "../../utils/backToTop";
 import LimitWord from "../../utils/limitWord";
 import currency from "../../utils/formatCurrency";
-const PRODUCTS_ENDPOINT = "https://api.pmall.com.ng/api/v1/public/products/list-all";
-const CATEGORIES_ENDPOINT = "https://api.pmall.com.ng/api/v1/public/products/get-all-categories";
+const PRODUCTS_ENDPOINT = `${BASE_URL}/public/products/list-all`;
+const CATEGORIES_ENDPOINT = `${BASE_URL}/public/products/get-all-categories`;
 
 const ProductGrid = ({ categoryId = null }) => {
   const navigate = useNavigate();

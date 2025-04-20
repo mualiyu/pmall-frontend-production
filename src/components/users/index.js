@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import moment from "moment";
-import axios from "axios";
+import { BASE_URL } from "../../utils/config"; 
 import Box from "@mui/material/Box";
 import profile from "../../assets/imgs/passport.png";
 import Typography from "@mui/material/Typography";
@@ -20,7 +20,6 @@ import Paper from "@mui/material/Paper";
 import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import { Chart, ArcElement } from "chart.js";
-
 import { useUser } from "../../context/UserContext";
 import getInitials from "../../utils/getInitials";
 import { Link, useNavigate } from "react-router-dom";
@@ -142,7 +141,7 @@ const Users = () => {
 
   // Get all Users from Server
   const getUsers = () => {
-    fetch("https://api.pmall.com.ng/api/v1/get-all-users", {
+    fetch(`${BASE_URL}/get-all-users`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -162,7 +161,7 @@ const Users = () => {
   };
 
   const getAssistants = () => {
-    fetch("https://api.pmall.com.ng/api/v1/get-all-vendors", {
+    fetch(`${BASE_URL}/get-all-vendors`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -183,7 +182,7 @@ const Users = () => {
   const addVendorAssistant = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch("https://api.pmall.com.ng/api/v1/user/add-vendor", {
+    fetch(`${BASE_URL}/user/add-vendor`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -223,7 +222,7 @@ const Users = () => {
   const addAdmin = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch("https://api.pmall.com.ng/api/v1/admin/register", {
+    fetch(`${BASE_URL}/admin/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

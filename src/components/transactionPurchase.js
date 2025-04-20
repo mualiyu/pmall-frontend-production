@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useSearchParams, useLocation } from "react-router-dom";
-import axios from "axios";
-// import queryString from 'query-string';
+import { BASE_URL } from "../utils/config"; 
 import currency from "../utils/formatCurrency";
 import "./transaction.css";
 
@@ -29,7 +28,7 @@ function TransactionPurchase() {
         return;
     }
 
-    fetch(`https://api.pmall.com.ng/api/v1/customer/checkout/paystack/verify/${refId}`, {
+    fetch(`${BASE_URL}/customer/checkout/paystack/verify/${refId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json;charset=UTF-8",

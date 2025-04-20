@@ -1,10 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useUser, useLogOut } from "../../context/UserContext";
 import PersonIcon from '@mui/icons-material/Person';
-// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
-import HelpIcon from '@mui/icons-material/Help';
 import { useCart } from "../../context/CartContext"
 import Badge from '@mui/material/Badge';
 import CategoryDropdown from "../../utils/categoryDropdown"
@@ -22,26 +20,6 @@ function Header() {
     const { cartCount } = useCart();
     const { user, setUser } = useUser();
     const logOut = useLogOut(); 
-
-   
-
-        // const handleLogOut = useCallback(() => {
-        //     localStorage.removeItem("user");
-        //     localStorage.removeItem("authToken");
-        //     localStorage.removeItem("pmallCart");
-        //     sessionStorage.clear();
-        //     setUser({
-        //         token: "",
-        //         loggedIn: false,
-        //       });
-        //       setTimeout(() => {
-        //         navigate("/auth/sign-in");
-        //       }, 2000);
-        // }, [navigate]);
-
-    //  useEffect(()=>{
-    //     setItemsOnCart(JSON.parse(localStorage.getItem("pmallCart")))
-    // },[])
 
 return (
     <>

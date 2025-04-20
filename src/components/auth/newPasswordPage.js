@@ -16,7 +16,6 @@ const NewPasswordPage = () => {
     console.log(inputValues);
   };
 
-  //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(newPasswordHandler);
   const { inputValues, onChangeHandler, handleResetPassword,loading, toastMsg, toastType  } = useVendor();
   const {email} = useParams()
 

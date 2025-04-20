@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
 import Toaster from '../utils/toaster';
+import { BASE_URL } from "../utils/config"; 
 
 const VendorSignupContext = createContext();
 
@@ -21,7 +22,7 @@ export const VendorSignupProvider = ({ children }) => {
     const onSubmitHandler = async(e) => {
         if (e) {
           e.preventDefault(); 
-          fetch("https://api.pmall.com.ng/api/v1/register/vendor",{
+          fetch(`${BASE_URL}/register/vendor`,{
             method:"POST",
             headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
@@ -43,7 +44,7 @@ export const VendorSignupProvider = ({ children }) => {
       const onAffilateSubmitHandler = async(e) => {
         if (e) {
           e.preventDefault(); 
-          fetch("https://api.pmall.com.ng/api/v1/register/affiliate",{
+          fetch(`${BASE_URL}/register/affiliate`,{
             method:"POST",
             headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
@@ -68,9 +69,8 @@ export const VendorSignupProvider = ({ children }) => {
         e.preventDefault(); // Prevent default form submission
         setLoading(false);
         const loginData = { ...inputValues, device_name: 1234 };
-      
         try {
-          const response = await fetch("https://api.pmall.com.ng/api/v1/login", {
+          const response = await fetch(`${BASE_URL}/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json;charset=UTF-8",
@@ -107,7 +107,7 @@ export const VendorSignupProvider = ({ children }) => {
       const onForgotPasswordHandler = async(e) => {
         if (e) {
           e.preventDefault(); 
-          fetch("https://api.pmall.com.ng/api/v1/forgot-password",{
+          fetch(`${BASE_URL}/forgot-password`,{
             method:"POST",
             headers:{ 
             'Content-Type': 'application/json;charset=UTF-8', 
@@ -132,7 +132,7 @@ export const VendorSignupProvider = ({ children }) => {
       
         // Validate credentials 
       
-        fetch("https://api.pmall.com.ng/api/v1/reset-password",{
+        fetch(`${BASE_URL}/reset-password`,{
           method:"POST",
           headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -155,7 +155,7 @@ export const VendorSignupProvider = ({ children }) => {
         inputValues.email = "mualiyuoox@gmail.com";
         // Validate credentials 
       
-        fetch("https://api.pmall.com.ng/api/v1/verify-code",{
+        fetch(`${BASE_URL}/verify-code`,{
           method:"POST",
           headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -197,7 +197,7 @@ export const VendorSignupProvider = ({ children }) => {
           setLoading(true);
           const token = localStorage.getItem("authToken");
         try {
-          const response = await fetch('https://api.pmall.com.ng/api/v1/profile/update', {
+          const response = await fetch(`${BASE_URL}/profile/update`, {
             method: 'POST',
             headers:{ 
               'Content-Type': 'application/json;charset=UTF-8', 

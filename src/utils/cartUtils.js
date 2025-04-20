@@ -30,7 +30,7 @@ export const addToCart = (detail, numOfItems, setCartCount, setCartModalActive) 
   }
 
   if (setCartCount) {
-    setCartCount(cart.reduce((total, item) => total + item.amtItems, 0)); // Ensure count reflects total items, not just unique products
+    setCartCount(cart.reduce((total, item) => total + item.amtItems, 0)); 
   }
   
 };

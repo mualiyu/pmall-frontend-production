@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useUser } from "../context/UserContext";
 import PackageName from "../utils/accountPackages"
 import currency from "../utils/formatCurrency"
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import moment from "moment";
 import { copyToClipboard } from "./copyTextToClipboard";
 import Toast from "./Toast"
 import "../index.css";
@@ -11,7 +10,6 @@ import "../index.css";
 export default function DebitCard({currentLoggedInUser}) {
   const { user } = useUser();
   const [toast, setToast] = useState(null);
-
 
   const handleCopy = () => {
 		if (!user?.refId) {
@@ -25,11 +23,6 @@ export default function DebitCard({currentLoggedInUser}) {
 			setTimeout(() => setToast(null), 5000);
 		});
 	};
-
-  useEffect(() => {
-    console.log(user);
-    console.log(currentLoggedInUser);
-  }, [user]);
 
   return (
     <>

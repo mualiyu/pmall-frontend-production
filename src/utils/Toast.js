@@ -9,7 +9,7 @@ const Toast = ({ message, type = "success", onClose }) => {
 
         const timer = setTimeout(() => {
             setVisible(false);
-            setTimeout(onClose, 500); // Delay removal for fade-out effect
+            setTimeout(onClose, 500);
         }, 3000);
 
         return () => clearTimeout(timer);

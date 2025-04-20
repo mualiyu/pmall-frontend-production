@@ -12,7 +12,6 @@ import Users from "./users";
 import Vendors from "./vendors";
 import Header from "./builder/Header";
 import Footer from "./builder/Footer";
-import Store from "./store";
 import OrderManagement from "./orderManagement";
 import LeadershipRank from "./documentation/leadershipRank";
 import VendorDetails from "./vendors/details";

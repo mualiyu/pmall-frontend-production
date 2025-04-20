@@ -1,7 +1,5 @@
 import profile from "../../assets/imgs/passport.png";
-import Rating from "@mui/material/Rating";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import { BASE_URL } from "../../utils/config"; 
 import Box from "@mui/material/Box";
 import Person2Icon from '@mui/icons-material/Person2';
 import moment from "moment";
@@ -11,11 +9,9 @@ import { useVendor } from "../../context/VendorSignupContext";
 import PackageName from "../../utils/accountPackages"
 import Modal from "@mui/material/Modal";
 import { useUser } from "../../context/UserContext";
-import { useParams } from "react-router-dom";
 import nigeriaStateAndLgas from "../nigeriaStateAndLgas.json";
 import ButtonLoader from "../../utils/buttonLoader";
 import Toaster from "../../utils/toaster";
-import currency from "../../utils/formatCurrency";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -139,7 +135,7 @@ const UserDetails = () => {
 
   const getUsersDetails = () => {
     setLoading(true);
-    fetch("https://api.pmall.com.ng/api/v1/profile", {
+    fetch(`${BASE_URL}/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

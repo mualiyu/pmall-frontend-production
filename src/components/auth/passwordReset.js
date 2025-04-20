@@ -18,7 +18,6 @@ const ResetPassword = () => {
     console.log(inputValues);
   };
 
-  //const [inputValues, onChangeHandler, onSubmitHandler] = useForm(resetHandler);
   const { inputValues, onChangeHandler, onForgotPasswordHandler,loading, toastMsg, toastType  } = useVendor();
 
   return (

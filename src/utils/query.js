@@ -1,5 +1,6 @@
 // import axios from "axios";
 import { useState } from "react";
+import { BASE_URL } from "./config"; 
 interface QueryParams {
   method: string;
   url: string;
@@ -20,12 +21,12 @@ export default async function query({ method, url, bodyData,token='' }: QueryPar
 
   try {
     if (method=='GET') {
-    var response = await fetch(`https://api.pmall.com.ng/api/v1${url}`,{
+    var response = await fetch(`${BASE_URL}${url}`,{
      headers:conditionalHeader,
      method
     })
     }else{
-      var response = await fetch(`https://api.pmall.com.ng/api/v1${url}`, {
+      var response = await fetch(`${BASE_URL}${url}`, {
         method,
         headers:conditionalHeader,
         body: JSON.stringify(bodyData),

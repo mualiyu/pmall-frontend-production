@@ -13,17 +13,12 @@ import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import FlutterDashIcon from '@mui/icons-material/FlutterDash';
 import FortIcon from '@mui/icons-material/Fort';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import ReduceCapacityIcon from '@mui/icons-material/ReduceCapacity';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import Groups2Icon from '@mui/icons-material/Groups2';
-import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import EmailIcon from "@mui/icons-material/Email";
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import BuildIcon from "@mui/icons-material/Build";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
@@ -45,8 +40,6 @@ function Sidebar() {
   
   const logOut = useLogOut();
   const navigate = useNavigate();
-  console.log(user);
-  console.log(localStorage.getItem("authToken"));
   const getInitials = (name) => {
     if (name) {
       let arr = name?.split("");
