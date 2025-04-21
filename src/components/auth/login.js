@@ -37,21 +37,23 @@ const Login = () => {
   return (
     <section>
       <div className="login-screen">
-        <div className="left">
+      {/* <img src="/pmall-logo 1.png" alt="" /> */}
+        {/* <div className="left">
           <p className="head">Admin Login</p>
           <div className="center">
             <h3>Welcome back,</h3>
             <p className="bold">Connecting people and services</p>
           </div>
-        </div>
+        </div> */}
         <div className="right">
           <div className="container">
             <Toaster text={toastMsg} className={toastType} />
+            
             <h1>Hello again!</h1>
             <p className="bold">Welcome back, you've been missed!</p>
             <form action="">
               <div className="pos-rel">
-                <label className="abs"> Username / Email2 </label>
+                <label className="abs"> Username OR Email </label>
                 <input
                   type="text"
                   className="form-control"

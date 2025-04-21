@@ -23,13 +23,13 @@ const NewPasswordPage = () => {
     <section className="new-password">
       <Toaster text={toastMsg} className={toastType} />
       <div className="reset-password">
-        <div className="left">
+        {/* <div className="left">
           <p className="head">Admin Login</p>
           <div className="center">
             <h3>Welcome back,</h3>
             <p>Connecting people and services</p>
           </div>
-        </div>
+        </div> */}
         <div className="right">
           <div className="container">
             <h1>Set New Password</h1>

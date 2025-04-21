@@ -35,8 +35,8 @@ const SignUp = () => {
     <div className="signup-screen">
       <div
         className={`${!vendorForm ? "affiliate__banner" : "vendor__banner"}`}>
-        <p className="head">Admin Login</p>
-        <p className="copyright-footer">Copyright 2023 - All rights reserved</p>
+        {/* <p className="head">Admin Login</p>
+        <p className="copyright-footer">Copyright 2023 - All rights reserved</p> */}
       </div>
       <div className={`right ${!vendorForm && "pb-0"}`}>
         <Toaster text={toastMsg} className={toastType} />

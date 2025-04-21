@@ -201,15 +201,16 @@ const getVendorProducts = (ref)=> {
         if (result.status) {
           getMyNetwork();
           setLoading(false);
-          console.log(result.data.user);
+          console.log(result?.data?.user);
           // setUserDetails(result.data.user);
-          setPmallUser(result.data.user);
+          setPmallUser(result?.data?.user);
           setPmallUser(result?.customer);
           if(result?.data?.user.user_type === 'Vendor') {
             getVendorProducts(result?.data?.user.store_id);
           }
         }
         setLoading(false)
+        console.log(pmallUser)
       })
       .catch((err) => {
         console.log(err);
@@ -305,8 +306,8 @@ const getVendorProducts = (ref)=> {
               {/* {user?.accountType === "Admin" && ( */}
                 <div className="user__avatar bg-error">
                 <h3>
-                  {user?.fname[0]}
-                  {user?.lname[0]}
+                {user?.fname?.charAt(0)?.toUpperCase() || ''}
+                {user?.lname?.charAt(0)?.toUpperCase() || ''}
                 </h3>
               </div>
               <li className="active pointer" onClick={dashboard}>
