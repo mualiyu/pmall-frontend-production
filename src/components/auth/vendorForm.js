@@ -36,7 +36,7 @@ useEffect(()=>{
   return (
     <div>
       <div className="pos-rel flex">
-        <label className="abs py-10"> Store Name *</label>
+        <label className="abs"> Store Name *</label>
         <input
           type="text"
           name="store_name"
@@ -48,7 +48,7 @@ useEffect(()=>{
       </div>
       <span className="flex">
         <div className="pos-rel email">
-          <label className="abs py-10"> Email *</label>
+          <label className="abs"> Email *</label>
           <input
             type="email"
             name="email"
@@ -59,7 +59,7 @@ useEffect(()=>{
           />
         </div>
         <div className="pos-rel phone">
-          <label className="abs py-10"> Phone Number *</label>
+          <label className="abs"> Phone Number *</label>
           <input
             type="number"
             name="phone"
@@ -73,7 +73,7 @@ useEffect(()=>{
       </span>
       <span className="flex">
         <div className="pos-rel">
-          <label className="abs py-10"> First Name * </label>
+          <label className="abs"> First Name * </label>
           <input
             type="text"
             name="fname"
@@ -84,7 +84,7 @@ useEffect(()=>{
           />
         </div>
         <div className="pos-rel">
-          <label className="abs py-10"> Last Name * </label>
+          <label className="abs"> Last Name * </label>
           <input
             type="text"
             name="lname"
@@ -97,7 +97,7 @@ useEffect(()=>{
       </span>
       <span className="flex">
         <div className="pos-rel">
-          <label className="abs py-10">Referral id * </label>
+          <label className="abs">Referral id * </label>
           <input
             type="text"
             name="ref_id"
@@ -108,7 +108,7 @@ useEffect(()=>{
           />
         </div>
         <div className="pos-rel">
-          <label className="abs py-10"> Select Package* </label>
+          <label className="abs"> Select Package* </label>
           <select
             name="package_id"
             className="last-name form-control"

@@ -79,31 +79,29 @@ function Layout() {
     <div className="app-container">
       {/* Show Header only if NOT on auth pages */}
       {showHeaderAndFooter && <Header />}
-
+     
+      {isAuthPath && (
+        <>
       <Routes>
-
         {/* Authentication Routes */}
-
         <Route path="/auth/sign-in" element={<Login />} />
         <Route path="/auth/app/signup" element={<SignUp />} />
         <Route path="/auth/app/reset-account" element={<ResetPassword />} />
         <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
         <Route path="/auth/app/verify/:email" element={<VerifyToken />} />
       </Routes>
-
+      </>
+      )}
         <>
           <div className="flex-container bg___chalk">
-          {isLoggedInPath && (
+          {isLoggedInPath && !isAuthPath && (
             <>
           <Sidebar className="sidenav" />
           <MobileNav/>
-          </>
-          ) }
+          
             <div className="main__content">
               <Routes>
-
                 {/* User Routes */}
-
                   <Route path="/app/dashboard" element={<Dashboard />} />
                   <Route path="/app/users" element={<Users />} />
                   <Route path="/app/users/details" element={<UserDetails />} />
@@ -138,6 +136,8 @@ function Layout() {
 
               </Routes>
             </div>
+            </>
+          ) }
           </div>
           
           {showHeaderAndFooter && <Footer />}

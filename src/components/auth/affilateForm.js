@@ -46,7 +46,7 @@ useEffect(()=>{
     <span className="affilate-form">
       <span className="flex">
         <div className="pos-rel">
-          <label className="abs py-10"> First Name * </label>
+          <label className="abs"> First Name * </label>
           <input
             type="text"
             name="fname"
@@ -57,7 +57,7 @@ useEffect(()=>{
           />
         </div>
         <div className="pos-rel">
-          <label className="abs py-10"> Last Name * </label>
+          <label className="abs"> Last Name * </label>
           <input
             type="text"
             name="lname"
@@ -69,7 +69,7 @@ useEffect(()=>{
         </div>
       </span>
       <div className="pos-rel flex">
-        <label className="abs py-10"> Email *</label>
+        <label className="abs"> Email *</label>
         <input
           type="email"
           name="email"
@@ -81,7 +81,7 @@ useEffect(()=>{
       </div>
       <span className="flex">
         <div className="pos-rel">
-          <label className="abs py-10">Choose a username *</label>
+          <label className="abs">Choose a username *</label>
           <input
             type="text"
             name="username"
@@ -93,7 +93,7 @@ useEffect(()=>{
         </div>
 
         <div className="pos-rel">
-          <label className="abs py-10"> Phone Number * </label>
+          <label className="abs"> Phone Number * </label>
           <input
             type="number"
             name="phone"
@@ -106,7 +106,7 @@ useEffect(()=>{
       </span>
       <span className="flex">
         <div className="pos-rel">
-          <label className="abs py-10"> Password * </label>
+          <label className="abs"> Password * </label>
           <div
             style={{ display: "flex", alignItems: "center" }}
             className="pos-rel">
@@ -124,7 +124,7 @@ useEffect(()=>{
           </div>
         </div>
         <div className="pos-rel">
-          <label className="abs py-10"> Select Package * </label>
+          <label className="abs"> Select Package * </label>
           <select
             name="package_id"
             className="last-name form-control"
@@ -145,7 +145,7 @@ useEffect(()=>{
         </div>
       </span>
       <div className="pos-rel phone flex">
-        <label className="abs py-10"> Referral id</label>
+        <label className="abs"> Referral ID</label>
         <input
           type="text"
           name="ref_id"

@@ -24,13 +24,13 @@ const ResetPassword = () => {
     <section>
       <Toaster text={toastMsg} className={toastType} />
       <div className="reset-password">
-        <div className="left">
+        {/* <div className="left">
           <p className="head">Admin Login</p>
           <div className="center">
             <h3>Welcome back,</h3>
             <p>Connecting people and services</p>
           </div>
-        </div>
+        </div> */}
         <div className="right">
           <div className="container">
             <h1>Password Reset</h1>
