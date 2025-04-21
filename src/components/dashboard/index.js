@@ -183,42 +183,40 @@ const getVendorProducts = (ref)=> {
       });
 }
   
-  const getUsersDetails = () => {
-    setLoading(true)
-    let endpoint = user.type !== "Admin" || user.type !== "Vendor" || user.type !== "Affiliate" ? "customer/profile" : "profile"
-    // Check if the user is a customer
-    fetch(`${BASE_URL}/${endpoint}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        Accept: "application/json",
-        Authorization: "Bearer " + user?.token,
-      },
-    })
-      .then((resp) => resp.json())
-      .then((result) => {
-        console.log(result);
-        if (result.status) {
-          getMyNetwork();
-          setLoading(false);
-          console.log(result?.data?.user);
-          // setUserDetails(result.data.user);
-          setPmallUser(result?.data?.user);
-          setPmallUser(result?.customer);
-          if(result?.data?.user.user_type === 'Vendor') {
-            getVendorProducts(result?.data?.user.store_id);
-          }
+const getUsersDetails = () => {
+  setLoading(true);
+  const isPrivilegedUser = ["Admin", "Vendor", "Affiliate"].includes(user?.accountType);
+  const endpoint = isPrivilegedUser ? "profile" : "customer/profile";
+  fetch(`${BASE_URL}/${endpoint}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+      Accept: "application/json",
+      Authorization: "Bearer " + user?.token,
+    },
+  })
+    .then((resp) => resp.json())
+    .then((result) => {
+      if (result.status) {
+        const profileData = result?.data?.user || result?.customer;
+        setPmallUser(profileData);
+        getMyNetwork();
+
+        if (profileData?.user_type === "Vendor") {
+          getVendorProducts(profileData?.store_id);
         }
-        setLoading(false)
-        console.log(pmallUser)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      console.log(pmallUser);
-      
-      
-  };
+      } else {
+        console.warn("Failed to fetch user details:", result.message);
+      }
+    })
+    .catch((err) => {
+      console.error("Error fetching user details:", err);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+};
+
 
   const countTotalDownlines = (persons) => {
     let count = 0;
@@ -739,7 +737,7 @@ const getVendorProducts = (ref)=> {
               </div> */}
             {/* </div> */}
 
-            {!loading && pmallUser?.referrals?.length > 0 && user.accountType !== "Vendor" && (
+            {!loading && user.accountType !== "Vendor" && (
               <>
                 <div className="recent-vendors">
                 <div className="flex jusbtw">
