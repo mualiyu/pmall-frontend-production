@@ -93,7 +93,7 @@ function Layout() {
       </>
       )}
         <>
-          <div className="flex-container bg___chalk">
+          <div className="flex-container">
           {isLoggedInPath && !isAuthPath && (
             <>
           <Sidebar className="sidenav" />
