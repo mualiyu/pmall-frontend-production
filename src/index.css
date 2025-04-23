@@ -527,6 +527,15 @@ button {
   );
   color: #dadada;
 }
+.grey-color{
+  color: #333333
+}
+.mr-10{
+  margin-right: 10px;
+}
+.ml-10{
+  margin-left: 10px;
+}
 .dashboard .balance h1 {
   font-size: 20px;
 }
@@ -705,13 +714,17 @@ button {
 .adsfjyeee{
   justify-content: space-evenly;
   align-items: center;
-  margin: 35px 0;
-  /* border: thin dashed grey; */
-  background-color: #10ac7e3d;
-  /* color: white; */
-  border-radius: 3px;
-  padding: 25px 0;
-  display: flex;
+    margin: 35px 0;
+    /* border: thin dashed grey; */
+    background-color: #10ac7e3d;
+    /* color: white; */
+    border-radius: 10px;
+    padding: 16px 0;
+    display: flex;
+    height: 197px;
+}
+.mt-n10 {
+  margin-top: -10px;
 }
 .py-5{
   padding: 0 5px

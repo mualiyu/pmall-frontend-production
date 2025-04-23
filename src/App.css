@@ -597,6 +597,9 @@ css-6od3lo-MuiChip-label {
   display: flex;
   justify-content: space-between;
 }
+.s-around{
+  justify-content: space-around;
+}
 .alc {
   align-items: center;
 }

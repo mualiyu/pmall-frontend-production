@@ -351,7 +351,7 @@ const getUsersDetails = () => {
             <section style={{ marginBottom: 30 }}>
               <div
                 className="flex g-10 justsb mobile-grid">
-              <div className="flex g-10 justsb w-100 dash-mobile-stat">
+              <div className="flex g-10 s-around w-100 dash-mobile-stat">
                 <div className="left_top_dashboard">
                   <div className="balance">
                     <span className="">

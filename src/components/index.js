@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from
 import Affilates from "./affilates";
 import Login from "./auth/login";
 import NewPasswordPage from "./auth/newPasswordPage";
+import useNetworkStatus from '../hooks/useNetworkStatus';
 import ResetPassword from "./auth/passwordReset";
 import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
@@ -70,6 +71,7 @@ const toKebabCase = (str) => {
 
 function Layout() {
   const location = useLocation();
+  const isOnline = useNetworkStatus();
   const isAuthPath = location.pathname.includes("/auth");
   const isLoggedInPath = location.pathname.includes("/app");
 
@@ -77,6 +79,19 @@ function Layout() {
 
   return (
     <div className="app-container">
+      <div style={{
+      backgroundColor: isOnline ? '#d4edda' : '#f8d7da',
+      color: isOnline ? '#155724' : '#721c24',
+      padding: '10px',
+      textAlign: 'center',
+      fontWeight: 'bold',
+      position: 'fixed',
+      zIndex: 9999,
+      right: 0,
+      bottom: 0,
+    }}>
+      {isOnline ? 'You are online ✅' : 'You are offline ❌'}
+    </div>
       {/* Show Header only if NOT on auth pages */}
       {showHeaderAndFooter && <Header />}
      
