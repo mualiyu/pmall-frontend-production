@@ -111,13 +111,13 @@ useEffect(()=> {
         <Table sx={{ minWidth: 650 }} size="small" aria-label="Vendors Table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {columns?.map((column) => (
                 <TableCell>{column.label}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.map((trx)=> (
+            {transactions?.map((trx)=> (
           <TableRow key={trx.id}>
               <TableCell className="b-r">
                 <div className="d-flex alc f-10 flex-start">
@@ -150,7 +150,7 @@ useEffect(()=> {
                   <div className="lheight13">
                     <ol style={{lineHeight: "2em"}}>
                       {trx?.products?.map((pro)=>(
-                      <li key={pro.id} className="capitalize">{pro.name} - ({currency(pro?.cost_price)}) </li>
+                      <li key={pro.id} className="capitalize">{pro?.name} - ({currency(pro?.cost_price)}) </li>
                       ))}
                     </ol>
                    
