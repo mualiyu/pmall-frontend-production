@@ -182,7 +182,8 @@ useEffect(()=> {
         </div>
       </section>
 
-      <TableContainer component={Paper}>
+<p> Feature coming soon </p>
+      {/* <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="Vendors Table">
           <TableHead>
             <TableRow>
@@ -234,7 +235,7 @@ useEffect(()=> {
            
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
 
       {/* Modal for vendors */}
 

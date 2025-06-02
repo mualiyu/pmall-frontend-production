@@ -10,16 +10,25 @@ import "../index.css";
 export default function DebitCard({currentLoggedInUser}) {
   const { user } = useUser();
   const [toast, setToast] = useState(null);
-
+  
 
   const handleCopy = () => {
+    const refToUse = user.accountType === 'Vendor' ? 
+                                `https://pmall.com.ng/vendor/store?store_id=${user.store_id}` 
+                                : 
+                                `https://pmall.com.ng/auth/app/Signup?refLink=${user.refId}`
 		if (!user?.refId) {
-			setToast({ message: "No referral ID found!", type: "error" });
+			setToast({ message: "No reference ID found!", type: "error" });
 			setTimeout(() => setToast(null), 5000);
 			return;
 		}
-	
-		copyToClipboard(`https://pmall.com.ng/auth/app/Signup?refLink=${user.refId}`, (message, type) => {
+	// if(user?.type === 'Vendor') {
+
+  // }
+  // if(user?.type === 'Affiliate') {
+
+  // }
+		copyToClipboard(`${refToUse}`, (message, type) => {
 			setToast({ message, type });
 			setTimeout(() => setToast(null), 5000);
 		});

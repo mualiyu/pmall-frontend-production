@@ -17,6 +17,7 @@ import OrderManagement from "./orderManagement";
 import LeadershipRank from "./documentation/leadershipRank";
 import VendorDetails from "./vendors/details";
 import ProductDetails from "./products/details";
+import WithdrawalHistory from "./withdrawals";
 import AdvertMaker from "./advert";
 import AffilateDetails from "./affilates/details";
 // import MyNetwork from "./affilates/myNetwork";
@@ -28,6 +29,7 @@ import NetworkDetails from "./users/networkDetails";
 import ProductList from "./productList";
 import Categories from "./categories";
 import Gallery from "./gallery";
+import VendorStore from "./vendor/store";
 import CategoryProducts from "./productList/categoryProducts";
 import PackageList from "./packages";
 import OrderDetails from "./orderManagement/details";
@@ -101,6 +103,7 @@ function Layout() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/category/:id" element={<CategoryProducts />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/vendor/store" element={<VendorStore />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/checkout/transaction/verify" element={<TransactionPurchase />} />
       </Routes>
@@ -133,6 +136,7 @@ function Layout() {
               <Route path="/app/products/list" element={<ProductList />} />
               <Route path="/app/leadership-rank" element={<LeadershipRank />} />
               <Route path="/app/messaging" element={<Messaging />} />
+              <Route path="/app/withdrawals" element={<WithdrawalHistory />} />
               <Route path="/app/affilates" element={<Affilates />} />
               <Route path="/app/transaction/history" element={<TransactionOrderHistory />} />
               <Route path="/app/affilates/details" element={<AffilateDetails />} />

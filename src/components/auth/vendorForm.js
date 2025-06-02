@@ -15,7 +15,7 @@ const [vendorPackages, setVendorPackages] = useState([]);
 const [loading, setLoading] = useState(false);
 const { user } = useUser();
 const query = useQuery();
-const refLink = query.get('refLink');
+const refLink = query.get('store_id');
 
 
 

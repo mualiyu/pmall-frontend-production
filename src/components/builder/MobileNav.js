@@ -40,10 +40,10 @@ function MobileNav() {
         {user?.accountType === "Affiliate" && (
           <div>
             <SidebarRow path="/app/dashboard" Icon={StorefrontIcon} title="Dashboard" />
-            <SidebarRow path="" Icon={GroupsIcon} title="Vendors" />
-            <SidebarRow path="" Icon={HubIcon} title="Affiliates" />
-            <SidebarRow path="" Icon={EmailIcon} title="Message" />
-            <SidebarRow path="" Icon={ReduceCapacityIcon} title="Genealogy" />
+            <SidebarRow path="/app/vendors" Icon={GroupsIcon} title="Vendors" />
+            <SidebarRow path="/app/affilates" Icon={HubIcon} title="Affiliates" />
+            <SidebarRow path="/app/messaging" Icon={EmailIcon} title="Message" />
+            <SidebarRow path="/app/network/genealogy" Icon={ReduceCapacityIcon} title="Genealogy" />
             <SidebarRow path="" Icon={Person2Icon} title="Profile" />
           </div>
         )}
@@ -51,10 +51,10 @@ function MobileNav() {
         {user?.accountType === "Vendor" && (
           <div>
             <SidebarRow path="/app/dashboard" Icon={StorefrontIcon} title="Dashboard" />
-            <SidebarRow path="" Icon={ShoppingBasketIcon} title="Market" />
-            <SidebarRow path="" Icon={ShoppingCartIcon} title="Products" />
-            <SidebarRow path="" Icon={EmailIcon} title="Message" />
-            <SidebarRow path="" Icon={CreditCardIcon} title="Orders" />
+            <SidebarRow path="/app/store-management" Icon={ShoppingBasketIcon} title="Market" />
+            <SidebarRow path="/app/products" Icon={ShoppingCartIcon} title="Products" />
+            <SidebarRow path="/app/messaging" Icon={EmailIcon} title="Message" />
+            <SidebarRow path="/app/order-management" Icon={CreditCardIcon} title="Orders" />
             <SidebarRow path="" Icon={Person2Icon} title="Profile" />
           </div>
         )}
