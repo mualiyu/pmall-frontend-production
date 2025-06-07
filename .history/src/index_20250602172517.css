@@ -2832,7 +2832,7 @@ input:checked + .slider:before {
       position: fixed!important;
       width: 100%!important;
       z-index: 9999!important;
-      top: 0;
+      top: 
     }
     .dash-mobile-debit {
       margin-top: 23%!important;

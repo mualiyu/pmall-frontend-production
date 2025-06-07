@@ -55,7 +55,7 @@ function MobileNav() {
             <SidebarRow path="/app/products" Icon={ShoppingCartIcon} title="Products" />
             <SidebarRow path="/app/messaging" Icon={EmailIcon} title="Message" />
             <SidebarRow path="/app/order-management" Icon={CreditCardIcon} title="Orders" />
-            <SidebarRow path="/app/users/details" Icon={Person2Icon} title="Profile" />
+            <SidebarRow path="" Icon={Person2Icon} title="Profile" />
           </div>
         )}
   

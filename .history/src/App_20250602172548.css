@@ -294,13 +294,8 @@ tbody {
   justify-content: space-between;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   margin-bottom: 33px;
-  position: fixed;
-    width: 100%;
   background-color: white;
   top:0;
-}
-.dashboard {
-  margin-top: 12%;
 }
 .flex__normal {
   display: flex;
