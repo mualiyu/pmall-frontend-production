@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/static/css/main.45b9eb53.css",
+    "main.js": "/static/js/main.733b9358.js",
+    "static/js/453.265ecf80.chunk.js": "/static/js/453.265ecf80.chunk.js",
+    "static/media/8.png": "/static/media/8.f79b8ff57324da1dfcd8.png",
+    "static/media/23.png": "/static/media/23.ab32c0e2ca32489a9b54.png",
+    "static/media/36.png": "/static/media/36.98553abc3985d40187ea.png",
+    "static/media/OpenSans-Bold.ttf": "/static/media/OpenSans-Bold.dbb97fd982ce1b96b6de.ttf",
+    "static/media/BarlowCondensed-Bold.ttf": "/static/media/BarlowCondensed-Bold.e66bff88a767b38d30b6.ttf",
+    "static/media/BarlowCondensed-Italic.ttf": "/static/media/BarlowCondensed-Italic.a720be61d636e3c56d70.ttf",
+    "static/media/BarlowCondensed-LightItalic.ttf": "/static/media/BarlowCondensed-LightItalic.746a77d1812a530f5ed5.ttf",
+    "static/media/OpenSans-Light.ttf": "/static/media/OpenSans-Light.ed41bedf131bc097372a.ttf",
+    "static/media/OpenSans-SemiBold.ttf": "/static/media/OpenSans-SemiBold.a16d8201b06a03c6c365.ttf",
+    "static/media/OpenSans-Regular.ttf": "/static/media/OpenSans-Regular.1b0809d519837cb7aad3.ttf",
+    "static/media/BarlowCondensed-Regular.ttf": "/static/media/BarlowCondensed-Regular.0bac2bb11e1b52510a92.ttf",
+    "static/media/BarlowCondensed-Light.ttf": "/static/media/BarlowCondensed-Light.80cdab3479d5f392e0ad.ttf",
+    "static/media/OpenSans-BoldItalic.ttf": "/static/media/OpenSans-BoldItalic.9572470e485d8e0fd2ad.ttf",
+    "static/media/OpenSans-LightItalic.ttf": "/static/media/OpenSans-LightItalic.0e63c9e707bdfbcda307.ttf",
+    "static/media/OpenSans-Italic.ttf": "/static/media/OpenSans-Italic.20653d2fac6285bf4dea.ttf",
+    "static/media/OpenSans-SemiBoldItalic.ttf": "/static/media/OpenSans-SemiBoldItalic.63afadbae2f41f427a56.ttf",
+    "index.html": "/index.html",
+  "entrypoints": [
+    "static/css/main.b166fb2b.css",
+    "static/js/main.cccf6e55.js"
+=======
+    "main.45b9eb53.css.map": "/static/css/main.45b9eb53.css.map",
+    "main.733b9358.js.map": "/static/js/main.733b9358.js.map",
+    "453.265ecf80.chunk.js.map": "/static/js/453.265ecf80.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.45b9eb53.css",
+    "static/js/main.733b9358.js"
+>>>>>>> fa0f8e021e22d79197e6b71f75e543ee3252af18
+  ]
+}
