@@ -169,7 +169,7 @@ const Vendors = () => {
 			setTimeout(() => setToast(null), 9000);
       fetchVendors();
       // Make Payment
-      window.location.href = result?.data?.payment.authorization_url;
+      // window.location.href = result?.data?.payment.authorization_url;
     } catch (error) {
       setLoading(false);
       setToast({ message: "Failed to register vendor!", type: "error" });
@@ -454,7 +454,7 @@ useEffect(()=> {
 
               {selectParent === "no" && (
                 <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Affiliate ID</label>
+                  <label className="mb-7"> Affiliate Id</label>
                   <input
                     type="text"
                     className="form-control-input "

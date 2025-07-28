@@ -60,8 +60,10 @@ const WithdrawalHistory = () => {
   
   const fetchAllWithdrawalRequests = () => {
     setLoading(true);
-  let adminUrl = `${BASE_URL}/admin-withdrawal/list`;
+
+    let adminUrl = `${BASE_URL}/admin-withdrawal/list`;
   let otherAccountUrl = `${BASE_URL}/withdrawal/history`;
+
   let url = user.accountType === 'Admin' ? adminUrl : otherAccountUrl;
 
 
@@ -198,7 +200,7 @@ useEffect(()=> {
           </div>
           <div>
             <h3>Withdrawal History 
-              <span className="badge error">{withdrawals?.length == 0 ? '0' : withdrawals?.length }</span>
+              <span className="badge error">{withdrawals?.length === 0 ? '0' : withdrawals?.length }</span>
               </h3> 
               <p className="text-muted mt-n-5"> Here, you will find all your withdrawal history</p>
           </div>
@@ -367,7 +369,7 @@ useEffect(()=> {
         </Table>
       </TableContainer>
 
-{withdrawals?.length === 0 && (
+{(!loading && withdrawals.length === 0) && (
   <p className="text-center"> Oops! No withdrawal history found </p>
 )}
       <Modal

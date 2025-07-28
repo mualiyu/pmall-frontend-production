@@ -100,10 +100,9 @@ const Vendors = () => {
     email: "",
     phone: "",
     store_name: "",
-    ref_id: "",
+    my_ref_id: "",
     package_id: vendorPackages.length > 0 ? vendorPackages[0].id : "",
   });
-  
 
   const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -135,7 +134,6 @@ const Vendors = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(formData);
     try {
       const response = await fetch(`${BASE_URL}/register/vendor`, {
         method: "POST",
@@ -163,7 +161,7 @@ const Vendors = () => {
         email: "",
         phone: "",
         store_name: "",
-        ref_id: "",
+        my_ref_id: "",
         package_id: "",
       });
 			setTimeout(() => setToast(null), 9000);
@@ -439,12 +437,12 @@ useEffect(()=> {
                   <select
                     className="search__bar w-100"
                     value={formData.my_ref_id}
-                    name="ref_id"
+                    name="my_ref_id"
                     onChange={onChangeHandler}>
                       <option> Select Parent</option>
                       {
                         allAffiliates.map((affiliate)=>(
-                          <option value={affiliate.my_ref_id} className="title-case"> {affiliate.fname} {affiliate.lname} - ({affiliate.my_ref_id})</option>
+                          <option value={affiliate.my_ref_id} className="title-case"> {affiliate.fname} {affiliate.lname} => ({affiliate.my_ref_id})</option>
                         ))
                       }
                     
@@ -454,13 +452,13 @@ useEffect(()=> {
 
               {selectParent === "no" && (
                 <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Affiliate ID</label>
+                  <label className="mb-7"> Affiliate Id</label>
                   <input
                     type="text"
                     className="form-control-input "
-                    name="ref_id"
+                    name="my_ref_id"
                     onChange={onChangeHandler}
-                    value={formData.ref_id}
+                    value={formData.my_ref_id}
                     placeholder="e.g. PM-000000"
                   />
                 </div>

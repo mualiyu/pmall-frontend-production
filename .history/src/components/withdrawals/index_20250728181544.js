@@ -60,8 +60,10 @@ const WithdrawalHistory = () => {
   
   const fetchAllWithdrawalRequests = () => {
     setLoading(true);
-  let adminUrl = `${BASE_URL}/admin-withdrawal/list`;
+
+    let adminUrl = `${BASE_URL}/admin-withdrawal/list`;
   let otherAccountUrl = `${BASE_URL}/withdrawal/history`;
+
   let url = user.accountType === 'Admin' ? adminUrl : otherAccountUrl;
 
 
