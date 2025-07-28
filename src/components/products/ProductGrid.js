@@ -161,7 +161,7 @@ const ProductGrid = ({ categoryId = null }) => {
                 </ul>
               </div>
             </div>
-            <div className="flex justsb g-10 m-pd-0" style={{ padding: "25px" }}>
+            <div className="flex justsb g-10 m-pd-0" style={{ padding: "25px", marginTop: 15, marginBottom: 15 }}>
               <div className="row">
               {(shuffleArray(productsByCategory[category.id] || []).slice(0, 8)).map((product) => (
                   <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3 product-cart-wrap" style={{ margin: "20px 9px" }} key={product.id}>
@@ -208,7 +208,7 @@ const ProductGrid = ({ categoryId = null }) => {
             <img
               src={adverts[index].image_path}
               size={adverts[index].size}
-              style={{ maxWidth: "100%", height: "100%", borderRadius: "10px", }}
+              style={{ maxWidth: "100%", height: "100%", borderRadius: "10px", marginTop: 15, marginBottom: 15  }}
             />
           </a>
         </div>
