@@ -722,14 +722,14 @@ button {
     height: 50px!important;
 }
 .adsfjyeee{
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
     margin: 35px 0;
     /* border: thin dashed grey; */
-    background-color: #F51114;;
-    color: white;
+    background-color: #10ac7e3d;
+    /* color: white; */
     border-radius: 10px;
-    padding: 16px 40px;
+    padding: 16px 0;
     display: flex;
     height: 197px;
 }

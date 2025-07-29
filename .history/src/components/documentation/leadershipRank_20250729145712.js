@@ -82,7 +82,7 @@ useEffect(()=> {
         <div className="">
           <div className="" style={{fontSize: 20}}>
             <>
-            Pont Value Earned
+            Current Rank
             </>
             </div> &nbsp; &nbsp;
           {/* <div className="">Point Value</div> */}

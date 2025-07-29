@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import Groups2Icon from '@mui/icons-material/Groups2';
 import SchoolIcon from '@mui/icons-material/School';
 import MovingIcon from '@mui/icons-material/Moving';
 import { Typography } from '@mui/material';
 import { BASE_URL } from "../../utils/config";
-import { useUser } from "../../context/UserContext";
 
 function LeadershipRank() {
-  const { user } = useUser();
-  const navigate = useNavigate();
   const [pmallUser, setPmallUser] = useState([]);
 
   const getUsersDetails = () => {
-    // setLoading(true);
+    setLoading(true);
     const isPrivilegedUser = ["Admin", "Vendor", "Affiliate"].includes(user?.accountType);
     const endpoint = isPrivilegedUser ? "profile" : "customer/profile";
     fetch(`${BASE_URL}/${endpoint}`, {
@@ -27,7 +24,6 @@ function LeadershipRank() {
       .then((result) => {
         if (result.status) {
           const profileData = result?.data?.user || result?.customer;
-          console.log(profileData);
           setPmallUser(profileData);
         } else {
           console.warn("Failed to fetch user details:", result.message);
@@ -37,41 +33,14 @@ function LeadershipRank() {
         console.error("Error fetching user details:", err);
       })
       .finally(() => {
-        // setLoading(false);
+        setLoading(false);
       });
   };
 
-
-  const determineRank = (currentPv) => {
-    let rank = 'Influencer';
-    if (currentPv >= 1000000) {
-      rank = 'Ambassador';
-    } else if (currentPv >= 500000) {
-      rank = 'Diamond Director';
-    } else if (currentPv >= 250000) {
-      rank = 'Director';
-    } else if (currentPv >= 100000) {
-      rank = 'Elite Manager';
-    } else if (currentPv >= 60000) {
-      rank = 'Manager';
-    } else if (currentPv >= 25000) {
-      rank = 'Influencer';
-    }
-  
-    return rank;
-  };
-  
-    
-useEffect(()=> {
-  let isLoggedIn = localStorage.getItem("authToken");
-    if (!isLoggedIn) {
-      navigate("/");
-    }
-    getUsersDetails();
-}, [])
+useEffect(()=> {}, [])
   return (
     <>
-    <div className="flex flex-col gap-5 bg-white p-5 rounded-lg shadow-md" style={{ padding: 60}}>
+    <div className="flex flex-col gap-5 bg-white p-5 rounded-lg shadow-md">
             <div className="w-full flex justify-between items-center">
                 <div className="space-y-2">
                     <h1 className="text-xl font-bold mt-lg">Leadership Ranks</h1>
@@ -82,14 +51,14 @@ useEffect(()=> {
         <div className="">
           <div className="" style={{fontSize: 20}}>
             <>
-            Pont Value Earned
+            Current Rank
             </>
             </div> &nbsp; &nbsp;
           {/* <div className="">Point Value</div> */}
 
           <div className="bold" style={{fontSize: 40}}>
             <>
-            {pmallUser?.wallet?.pv}
+            12,000
             </>
             </div> &nbsp; &nbsp;
           <div className="mt-n10">Point Value</div>
@@ -97,22 +66,18 @@ useEffect(()=> {
         <div className="flex">
           <div className="flex label">
             <>
-           -
+            <SchoolIcon/>Current Rank: 
             </>
           </div>&nbsp; &nbsp;
-          {/* <div className=" c-success">{determineRank(pmallUser?.wallet?.pv)}</div> */}
+          <div className=" c-success">Member</div>
         </div>
-        <div className="">
-          <div className="" style={{fontSize: 20}}>
-           
-            </div> &nbsp; &nbsp;
-
-          <div className="bold" style={{fontSize: 40}}>
-            <>
-            {determineRank(pmallUser?.wallet?.pv)}
-            </>
-            </div> &nbsp; &nbsp;
-          <div className="mt-n10">Current Rank</div>
+        <div className="flex">
+           <div className="flex label">
+              <>
+              <MovingIcon/> Next Rank: 
+              </>
+            </div>&nbsp; &nbsp;
+          <div className="">Influencer</div>
         </div>
       </div>
 

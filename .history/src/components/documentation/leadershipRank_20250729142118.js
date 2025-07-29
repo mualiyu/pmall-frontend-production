@@ -42,25 +42,27 @@ function LeadershipRank() {
   };
 
 
-  const determineRank = (currentPv) => {
-    let rank = 'Influencer';
-    if (currentPv >= 1000000) {
-      rank = 'Ambassador';
-    } else if (currentPv >= 500000) {
-      rank = 'Diamond Director';
-    } else if (currentPv >= 250000) {
-      rank = 'Director';
-    } else if (currentPv >= 100000) {
-      rank = 'Elite Manager';
-    } else if (currentPv >= 60000) {
-      rank = 'Manager';
-    } else if (currentPv >= 25000) {
-      rank = 'Influencer';
-    }
-  
-    return rank;
-  };
-  
+    // const determineRank = ({ currentPv }) => {
+    //   switch (currentPv) {
+    //     case currentPv >= 25000 :
+    //        rank = Influencer
+    //       return <p>Loading...</p>;
+    //     //     case currentPv >= 1200 :
+    //        rank = Influencer
+    //     case currentPv >= 1200 :
+    //        rank = Influencer
+    //     case currentPv >= 1200 :
+    //        rank = Influencer
+    //     case currentPv >= 1200 :
+    //        rank = Influencer
+    //     case currentPv >= 1200 :
+    //        rank = Influencer
+    //     case currentPv >= 1200 :
+    //        rank = Influencer
+    //     default:
+    //       return <p>Unknown status.</p>;
+    //   }
+    // }
     
 useEffect(()=> {
   let isLoggedIn = localStorage.getItem("authToken");
@@ -71,7 +73,7 @@ useEffect(()=> {
 }, [])
   return (
     <>
-    <div className="flex flex-col gap-5 bg-white p-5 rounded-lg shadow-md" style={{ padding: 60}}>
+    <div className="flex flex-col gap-5 bg-white p-5 rounded-lg shadow-md">
             <div className="w-full flex justify-between items-center">
                 <div className="space-y-2">
                     <h1 className="text-xl font-bold mt-lg">Leadership Ranks</h1>
@@ -82,7 +84,7 @@ useEffect(()=> {
         <div className="">
           <div className="" style={{fontSize: 20}}>
             <>
-            Pont Value Earned
+            Current Rank
             </>
             </div> &nbsp; &nbsp;
           {/* <div className="">Point Value</div> */}
@@ -97,22 +99,18 @@ useEffect(()=> {
         <div className="flex">
           <div className="flex label">
             <>
-           -
+            <SchoolIcon/>Current Rank: 
             </>
           </div>&nbsp; &nbsp;
-          {/* <div className=" c-success">{determineRank(pmallUser?.wallet?.pv)}</div> */}
+          <div className=" c-success">Member</div>
         </div>
-        <div className="">
-          <div className="" style={{fontSize: 20}}>
-           
-            </div> &nbsp; &nbsp;
-
-          <div className="bold" style={{fontSize: 40}}>
-            <>
-            {determineRank(pmallUser?.wallet?.pv)}
-            </>
-            </div> &nbsp; &nbsp;
-          <div className="mt-n10">Current Rank</div>
+        <div className="flex">
+           <div className="flex label">
+              <>
+              <MovingIcon/> Next Rank: 
+              </>
+            </div>&nbsp; &nbsp;
+          <div className="">Influencer</div>
         </div>
       </div>
 

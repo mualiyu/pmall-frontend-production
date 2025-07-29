@@ -82,7 +82,7 @@ useEffect(()=> {
         <div className="">
           <div className="" style={{fontSize: 20}}>
             <>
-            Pont Value Earned
+            Current Rank
             </>
             </div> &nbsp; &nbsp;
           {/* <div className="">Point Value</div> */}
@@ -97,23 +97,12 @@ useEffect(()=> {
         <div className="flex">
           <div className="flex label">
             <>
-           -
+            Current Rank: 
             </>
           </div>&nbsp; &nbsp;
-          {/* <div className=" c-success">{determineRank(pmallUser?.wallet?.pv)}</div> */}
+          <div className=" c-success">{determineRank(pmallUser?.wallet?.pv)}</div>
         </div>
-        <div className="">
-          <div className="" style={{fontSize: 20}}>
-           
-            </div> &nbsp; &nbsp;
-
-          <div className="bold" style={{fontSize: 40}}>
-            <>
-            {determineRank(pmallUser?.wallet?.pv)}
-            </>
-            </div> &nbsp; &nbsp;
-          <div className="mt-n10">Current Rank</div>
-        </div>
+        
       </div>
 
       <h3 className="uppercase c-red mt-10 mx-md">Qualifying Stages</h3>
