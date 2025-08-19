@@ -1,10 +1,12 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
+import { useUser } from "../../context/UserContext";
 import Loading from "../../utils/loading";
 import LimitWord from "../../utils/limitWord";
 import currency from "../../utils/formatCurrency";
 import { useNavigate, Link } from "react-router-dom";
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { BASE_URL } from "../../utils/config";
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
@@ -13,6 +15,7 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 const VendorStore = () => {
+  const { user } = useUser();
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [productList, setProductList] = useState(null);
@@ -60,23 +63,26 @@ const VendorStore = () => {
         <section className=" w-full" style={{display:"block"}}>
             {loading && <Loading/>}
             <div className="gallery">
+              <div className="flex">
                 <div className="page__header">
-                    <h1>My Store</h1>
+                    <h1>My Store1</h1>
                 </div>
-                {/* <div className=" flex flex-col img-detail g-5">
+                <div className=" flex flex-col img-detail g-5">
                                 <p className='bold'>My Store URL</p>
                                 <div className='flex justsb url w-full'>
                                 <p>{`https://pmall.com.ng/products/?vendor_id=${user?.storeId}`}</p>
                                     <ContentCopyOutlinedIcon className='copy'/>
                                 </div>
-                            </div> */}
+                            </div>
+                </div>
+              
             
                 <div className="flex-container w-full p-y my-40 g-20">
                     <div className="left w-full flex flex-col g-20 ">
                         <div className='flex justsb alc sort'>
                         <div>
-                                <input type="text" placeholder="Search" value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}/>
+                                {/* <input type="text" placeholder="Search" value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}/> */}
                             </div>
                             <div className='flex alc g-10'>
                                 <select name="" id="">
@@ -87,11 +93,8 @@ const VendorStore = () => {
                                     <option value="1">Category 4</option>
                                     <option value="1">Category 5</option>
                                     <option value="1">Category 6</option>
-                                </select>
-                                <div className='flex alc'>
-                                <GridViewOutlinedIcon />  
-                                <FormatListBulletedOutlinedIcon />      
-                                </div>   
+                                    <option value="1">Category 6</option>
+                                </select> 
                             </div>
                         </div>
                         {/* <div className='g-10 justsb'> */}

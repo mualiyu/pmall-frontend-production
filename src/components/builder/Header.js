@@ -29,7 +29,7 @@ return (
                         <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" className="" />
                     </div>
                     <div className='px flex flex-col search-container w-90'>
-                        <div className="flex justsb alc dgcwuywsndh" style={{marginTop: '15px'}}>
+                        <div className="flex justsb alc dgcwuywsndh" style={{marginTop: '5px'}}>
                             <div className="callout">
                             <button className="callout_btn"> 
                             <MenuIcon/>
@@ -148,7 +148,7 @@ return (
                                     </div>
                             </div>
                         </div>
-                    <div className="flex justsb mb-lg  bbnex">
+                    <div className="flex justsb bbnex" style={{marginTop:'-20px', marginBottom: 8}}>
                         {loading ? 'loading...' : (
                           <CategoryDropdown />
                           )}
