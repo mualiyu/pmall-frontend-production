@@ -122,7 +122,9 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     console.log(loading);
     setLoading(true);
-    inputValues.device_name = 1234;
+    console.log(inputValues);
+    // inputValues.device_name = "192.168.0.116";
+    // console.log(inputValues);
     fetch(`${BASE_URL}/login`, {
       method: "POST",
       headers: {

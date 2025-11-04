@@ -8,7 +8,7 @@ import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Loading from "../../utils/loading";
 import SidebarRow from "../builder/SidebarRow";
-import SpeedIcon from "@material-ui/icons/Speed";
+import SpeedIcon from '@mui/icons-material/Speed';
 import EuroIcon from '@mui/icons-material/Euro';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
