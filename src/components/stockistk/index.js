@@ -103,7 +103,7 @@ useEffect(() => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`, // attach token here
+          "Authorization": `Bearer ${token}`,
         },
       });
 
@@ -113,7 +113,7 @@ useEffect(() => {
 
       const data = await response.json();
 
-      // Adjust this based on your API response structure
+      
       const refId = data.affiliate_id || data.ref_id || data.data?.ref_id;
 
       setAffiliateId(refId);
