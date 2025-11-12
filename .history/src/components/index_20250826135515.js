@@ -134,6 +134,8 @@ function Layout() {
               <Route path="/app/vendors" element={<Vendors />} />
               <Route path="/app/order-management" element={<OrderManagement />} />
               <Route path="/app/vendors/details" element={<VendorDetails />} />
+             
+              <Route path="/app/transaction-history" element={<VerifyTransaction />} />
               <Route path="/app/transaction-history" element={<TransactionHistory />} />
               <Route path="/app/products/list" element={<ProductList />} />
               <Route path="/app/leadership-rank" element={<LeadershipRank />} />
