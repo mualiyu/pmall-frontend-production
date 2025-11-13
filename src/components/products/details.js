@@ -48,7 +48,9 @@ const ProductDetails = () => {
           Authorization: "Bearer " + user?.token,
         },
       }
+      
     )
+      
       .then((resp) => resp.json())
       .then((result) => {
         console.log(result);
@@ -74,9 +76,10 @@ const ProductDetails = () => {
             Accept: "application/json",
             },
         })
+           
             .then((resp) => resp.json())
             .then((result) => {
-            // console.log(result);
+            console.log(result);
             setProductCategories(result.data);
             setLoading(false);
             })
@@ -94,7 +97,7 @@ const ProductDetails = () => {
   const handleAddToCart = useCallback(() => {
     const numOfItems = 1;
     let cart = getCart();
-console.log(cart);
+    console.log(cart);
     const isProductInCart = cart?.some((item) => item?.id === detail?.id);
 
     if (isProductInCart) {
@@ -159,7 +162,7 @@ console.log(cart);
                 <div>
 
                 {detail?.image ? (
-      <img className="main-image" src={detail.image} alt="" className="main-image" />
+      <img className="main-image" src={detail.image} alt="" />
     ) : (
       <Loading loading={loading} />
     )}

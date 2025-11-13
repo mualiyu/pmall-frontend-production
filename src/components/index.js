@@ -37,7 +37,7 @@ import TransactionOrderHistory from "./transactions";
 import { useUser } from "../context/UserContext";
 import StoreFront from "./storefront";
 import Cart from "./cart";
-import CheckoutPage from "./checkout";
+import CheckoutPage from "./checkout/checkout";
 import TransactionHistory from "./transactionhistory";
 import TransactionPurchase from "./transactionPurchase";
 

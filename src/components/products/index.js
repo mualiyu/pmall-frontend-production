@@ -1240,7 +1240,7 @@ console.log(user?.accountType)
                     value={inputValues.sub_category_id || ""}
                     name="sub_category"
                     onChange={onChangeHandler}
-                    value={inputValues.sub_categories}
+                    // value={inputValues.sub_categories}
                     disabled={!selectedCategory}
                     >
                     <option value="default"> Select Sub Category</option>
