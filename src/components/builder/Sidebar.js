@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SidebarRow from "./SidebarRow";
 import SpeedIcon from "@material-ui/icons/Speed";
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -218,6 +219,11 @@ function Sidebar() {
             path="/app/transaction/history"
             Icon={CreditCardIcon}
             title="Transaction/Order History"
+          />
+          <SidebarRow
+            path="/app/withdrawals"
+            Icon={LocalFireDepartmentIcon}
+            title="Withdrawal"
           />
           {user?.accountType === "Admin" && (
             <>

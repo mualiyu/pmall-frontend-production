@@ -231,6 +231,10 @@
   color: #ec707a;
 }
 
+.bg-success {
+  background-color: #1dc59442;
+    color: #10ac7e;
+}
 .bg-error {
   background-color: #f9e8ea;
   color: #ec707a;
@@ -294,7 +298,13 @@ tbody {
   justify-content: space-between;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   margin-bottom: 33px;
+  position: fixed;
+    width: 100%;
   background-color: white;
+  top:0;
+}
+.dashboard {
+  margin-top: 12%;
 }
 .flex__normal {
   display: flex;
@@ -543,6 +553,7 @@ css-6od3lo-MuiChip-label {
 }
 .main__content {
   width: 100%;
+  margin-top: 5%;
   /* margin: 0 20px; */
   height: 100vh;
   /* overflow-x: scroll; */

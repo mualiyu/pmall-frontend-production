@@ -17,7 +17,7 @@ const NewPasswordPage = () => {
   };
 
   const { inputValues, onChangeHandler, handleResetPassword,loading, toastMsg, toastType  } = useVendor();
-  const {email} = useParams()
+  // const {email} = useParams()
 
   return (
     <section className="new-password">
@@ -36,6 +36,16 @@ const NewPasswordPage = () => {
             <p>Please choose your new password</p>
             <form action="">
               <span className="flex gap-10">
+                <div className="pos-rel flex">
+                  <label className="abs py-10">Email </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="email"
+                    onChange={onChangeHandler}
+                    value={inputValues.email || ""}
+                  />
+                </div>
                 <div className="pos-rel flex">
                   <label className="abs py-10">New Password </label>
                   <input
@@ -61,7 +71,7 @@ const NewPasswordPage = () => {
                 <button
                   className="reset-btn"
                   type="submit"
-                  onClick={(e)=>handleResetPassword(e,email)}
+                  onClick={(e)=>handleResetPassword(e,inputValues.email)}
                   disabled={loading}>
                    {loading ? <ButtonLoader /> : "Save New Password"}
                 </button>

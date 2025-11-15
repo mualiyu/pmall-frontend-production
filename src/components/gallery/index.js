@@ -3,13 +3,10 @@ import { useState, useEffect } from "react";
 import Loading from "../../utils/loading";
 import LimitWord from "../../utils/limitWord";
 import currency from "../../utils/formatCurrency";
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { useNavigate, Link } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import { useUser } from "../../context/UserContext";
-import { useVendor } from "../../context/VendorSignupContext";
-import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
-import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
-import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 
 const Gallery = () => {
     const { user } = useUser();
@@ -70,8 +67,12 @@ const Gallery = () => {
         <section className=" w-full" style={{display:"block"}}>
             {loading && <Loading/>}
             <div className="gallery">
-                <div className="page__header">
+                <div className="page__header flex">
                     <h1>My Store</h1>
+                    <div className='flex justsb url w-full'>
+                                <p>{`https://pmall.com.ng/products/vendor/${user?.storeId}`}</p>
+                                    <ContentCopyOutlinedIcon className='copy'/>
+                                </div>
                 </div>
                 {/* <div className=" flex flex-col img-detail g-5">
                                 <p className='bold'>My Store URL</p>
@@ -97,11 +98,7 @@ const Gallery = () => {
                                     <option value="1">Category 4</option>
                                     <option value="1">Category 5</option>
                                     <option value="1">Category 6</option>
-                                </select>
-                                <div className='flex alc'>
-                                <GridViewOutlinedIcon />  
-                                <FormatListBulletedOutlinedIcon />      
-                                </div>   
+                                </select>  
                             </div>
                         </div>
                         {/* <div className='g-10 justsb'> */}
