@@ -1,13 +1,77 @@
 import React, { useEffect, useState } from "react";
-import Groups2Icon from '@mui/icons-material/Groups2';
+import { useNavigate, Link } from "react-router-dom";
 import SchoolIcon from '@mui/icons-material/School';
 import MovingIcon from '@mui/icons-material/Moving';
+import { Typography } from '@mui/material';
+import { BASE_URL } from "../../utils/config";
+import { useUser } from "../../context/UserContext";
 
 function LeadershipRank() {
+  const { user } = useUser();
+  const navigate = useNavigate();
+  const [pmallUser, setPmallUser] = useState([]);
 
+  const getUsersDetails = () => {
+    // setLoading(true);
+    const isPrivilegedUser = ["Admin", "Vendor", "Affiliate"].includes(user?.accountType);
+    const endpoint = isPrivilegedUser ? "profile" : "customer/profile";
+    fetch(`${BASE_URL}/${endpoint}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        Authorization: "Bearer " + user?.token,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        if (result.status) {
+          const profileData = result?.data?.user || result?.customer;
+          console.log(profileData);
+          setPmallUser(profileData);
+        } else {
+          console.warn("Failed to fetch user details:", result.message);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching user details:", err);
+      })
+      .finally(() => {
+        // setLoading(false);
+      });
+  };
+
+
+  const determineRank = (currentPv) => {
+    let rank = 'Influencer';
+    if (currentPv >= 1000000) {
+      rank = 'Ambassador';
+    } else if (currentPv >= 500000) {
+      rank = 'Diamond Director';
+    } else if (currentPv >= 250000) {
+      rank = 'Director';
+    } else if (currentPv >= 100000) {
+      rank = 'Elite Manager';
+    } else if (currentPv >= 60000) {
+      rank = 'Manager';
+    } else if (currentPv >= 25000) {
+      rank = 'Influencer';
+    }
+  
+    return rank;
+  };
+  
+    
+useEffect(()=> {
+  let isLoggedIn = localStorage.getItem("authToken");
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+    getUsersDetails();
+}, [])
   return (
     <>
-    <div className="flex flex-col gap-5 bg-white p-5 rounded-lg shadow-md">
+    <div className="flex flex-col gap-5 bg-white p-5 rounded-lg shadow-md" style={{ padding: 60}}>
             <div className="w-full flex justify-between items-center">
                 <div className="space-y-2">
                     <h1 className="text-xl font-bold mt-lg">Leadership Ranks</h1>
@@ -15,30 +79,40 @@ function LeadershipRank() {
             </div>
 
         <div className="flex mt-10 adsfjyeee" style={{justifyContent: "space-evenly"}}>
-        <div className="flex alc">
-          <div className="flex alc label">
+        <div className="">
+          <div className="" style={{fontSize: 20}}>
             <>
-            <Groups2Icon/>
-            Point Values:
+            Pont Value Earned
             </>
             </div> &nbsp; &nbsp;
-          <div className="">800</div>
+          {/* <div className="">Point Value</div> */}
+
+          <div className="bold" style={{fontSize: 40}}>
+            <>
+            {pmallUser?.wallet?.pv}
+            </>
+            </div> &nbsp; &nbsp;
+          <div className="mt-n10">Point Value</div>
         </div>
         <div className="flex">
-          <div className="flex alc label">
+          <div className="flex label">
             <>
-            <SchoolIcon/>Current Rank: 
+           -
             </>
           </div>&nbsp; &nbsp;
-          <div className=" c-success">Member</div>
+          {/* <div className=" c-success">{determineRank(pmallUser?.wallet?.pv)}</div> */}
         </div>
-        <div className="flex">
-           <div className="flex alc label">
-              <>
-              <MovingIcon/> Next Rank: 
-              </>
-            </div>&nbsp; &nbsp;
-          <div className="">Elite Manager</div>
+        <div className="">
+          <div className="" style={{fontSize: 20}}>
+           
+            </div> &nbsp; &nbsp;
+
+          <div className="bold" style={{fontSize: 40}}>
+            <>
+            {determineRank(pmallUser?.wallet?.pv)}
+            </>
+            </div> &nbsp; &nbsp;
+          <div className="mt-n10">Current Rank</div>
         </div>
       </div>
 
@@ -51,7 +125,12 @@ function LeadershipRank() {
           </div>
           <div className="row">
           {/* <div className="cell">1</div> */}
-          <div className="cell">Influencer</div>
+          <div className="cell">
+            <div className="flex alc">
+            <Typography variant="h4" className="grey-color"> ♟ </Typography>
+            <p className="ml-10">Influencer</p>
+            </div>
+          </div>
             <div className="cell">25,000 Point Values (PVs)</div>
             
             <div className="cell">2 Million Naira in Cash</div>
@@ -59,7 +138,12 @@ function LeadershipRank() {
           </div>
           <div className="row">
           {/* <div className="cell">2</div> */}
-            <div className="cell">Manager</div>
+            <div className="cell">
+            <div className="flex alc">
+            <Typography variant="h4" className="grey-color">♞</Typography>
+            <p className="ml-10">Manager</p>
+            </div>
+            </div>
             <div className="cell">60,000 Point Values(PVs)</div>
             
             <div className="cell">
@@ -69,7 +153,12 @@ function LeadershipRank() {
           </div>
           <div className="row">
           {/* <div className="cell">3</div> */}
-            <div className="cell">Elite Manager</div>
+            <div className="cell">
+            <div className="flex alc">
+            <Typography variant="h4" className="grey-color">♝</Typography>
+            <p className="ml-10">Elite Manager</p>
+            </div>
+            </div>
             <div className="cell">100,000 Point Values (PVs)</div>
             <div className="cell">
               7 Million Naira in Cash + 2 Million Naira Int'l Trip
@@ -78,7 +167,12 @@ function LeadershipRank() {
           </div>
           <div className="row">
             {/* <div className="cell">4</div> */}
-            <div className="cell">Director</div>
+            <div className="cell">
+            <div className="flex alc">
+            <Typography variant="h4" className="grey-color">♜</Typography>
+            <p className="ml-10">Director</p>
+            </div>
+            </div>
             <div className="cell">250,000 Point Values (PVs)</div>
             <div className="cell">
               10 Million Naira in Cash + Any Saloon Car
@@ -86,7 +180,12 @@ function LeadershipRank() {
           </div>
           <div className="row">
             {/* <div className="cell">5</div> */}
-            <div className="cell">Diamnond Director</div>
+            <div className="cell">
+            <div className="flex alc">
+            <Typography variant="h4" className="grey-color">♛</Typography>
+            <p className="ml-10">Diamond Director</p>
+            </div>
+            </div>
             <div className="cell">500,000 Point Values (PVs)</div>
             <div className="cell">
               40 Million Naira in Cash
@@ -94,7 +193,12 @@ function LeadershipRank() {
           </div>
           <div className="row">
             {/* <div className="cell">6</div> */}
-            <div className="cell">Ambassador</div>
+            <div className="cell">
+            <div className="flex alc">
+            <Typography variant="h4" className="grey-color">♚</Typography>
+            <p className="ml-10">Ambassador</p>
+            </div>
+            </div>
             <div className="cell">1,000,000 Point Values (PVs)</div>
             <div className="cell">
               70 Million Naira in Cash

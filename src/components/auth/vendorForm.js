@@ -1,13 +1,25 @@
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../utils/config";
 import { useUser } from "../../context/UserContext";
 import useForm from "../../utils/useForm";
 
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 const VendorForm = ({ inputValues, onChangeHandler }) => {
+  
 const [vendorPackages, setVendorPackages] = useState([]);
 const [loading, setLoading] = useState(false);
 const { user } = useUser();
+const query = useQuery();
+const refLink = query.get('refLink');
+
+
+
+
   const fetchAllPackages = () => {
     setLoading(true);
     fetch(`${BASE_URL}/account-packages/all`, {
@@ -99,12 +111,13 @@ useEffect(()=>{
         <div className="pos-rel">
           <label className="abs">Referral id * </label>
           <input
+          disabled={refLink}
             type="text"
             name="ref_id"
             className="first-name form-control"
             onChange={onChangeHandler}
-            value={inputValues.ref_id || ""}
-            placeholder="PM-123456789"
+            value={inputValues.ref_id || "" || refLink}
+            placeholder="PM-123456"
           />
         </div>
         <div className="pos-rel">
@@ -113,6 +126,7 @@ useEffect(()=>{
             name="package_id"
             className="last-name form-control"
             onChange={onChangeHandler}>
+              <option>Select a Package</option>
               {
                 vendorPackages.map((pack)=>(
                   <option value={pack.id} key={pack.id}>{pack.name} - {pack.price} </option>

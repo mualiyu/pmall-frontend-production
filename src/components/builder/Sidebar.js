@@ -79,9 +79,9 @@ function Sidebar() {
             user?.accountType === "Admin") && (
             <>
               <SidebarRow
-                path="/app/store"
+                path="/app/store-management"
                 Icon={AddBusinessIcon}
-                title="Store Management"
+                title="Store Products"
               />
               <SidebarRow
                 path="/app/order-management"
@@ -223,6 +223,11 @@ function Sidebar() {
             path="/app/transaction/history"
             Icon={CreditCardIcon}
             title="Transaction/Order History"
+          />
+          <SidebarRow
+            path="/app/withdrawals"
+            Icon={LocalFireDepartmentIcon}
+            title="Withdrawal"
           />
           {user?.accountType === "Admin" && (
             <>

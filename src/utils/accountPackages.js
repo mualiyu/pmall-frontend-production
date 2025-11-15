@@ -38,7 +38,7 @@ const PackageName = ({ id, type }) => {
   }, [user?.token]); 
 
   const packageItem = allPackages.find((pkg) => pkg.id === id && pkg.type === type);
-
+console.log(packageItem);
   return <span>{loading ? "Loading..." : packageItem ? packageItem.name : "Not Found"}</span>;
 };
 

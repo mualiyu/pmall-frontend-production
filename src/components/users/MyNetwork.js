@@ -45,7 +45,7 @@ function MyNetwork() {
 			return;
 		}
 	
-		copyToClipboard(`${user.refId}`, (message, type) => {
+		copyToClipboard(`https://pmall.com.ng/auth/app/Signup?refLink=${user.refId}`, (message, type) => {
 			setToast({ message, type });
 			setTimeout(() => setToast(null), 5000);
 		});

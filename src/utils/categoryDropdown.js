@@ -52,7 +52,7 @@ const CategoryDropdown = () => {
     }, []);
 
     return (
-        <div className="flex alc" ref={dropdownRef}>
+        <div className="flex alc no-display" ref={dropdownRef}>
             <div className="flex g-20 alc mr-lg">
                 <div className="category">
                     <button 

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from
 import Affilates from "./affilates";
 import Login from "./auth/login";
 import NewPasswordPage from "./auth/newPasswordPage";
+import useNetworkStatus from '../hooks/useNetworkStatus';
 import ResetPassword from "./auth/passwordReset";
 import SignUp from "./auth/signup";
 import Sidebar from "./builder/Sidebar";
@@ -11,12 +12,14 @@ import Products from "./products";
 import Users from "./users";
 import Vendors from "./vendors";
 import Stockist from "./stockistk/index";
+import MyStore from "./vendor/MyStore";
 import Header from "./builder/Header";
 import Footer from "./builder/Footer";
 import OrderManagement from "./orderManagement";
 import LeadershipRank from "./documentation/leadershipRank";
 import VendorDetails from "./vendors/details";
 import ProductDetails from "./products/details";
+import WithdrawalHistory from "./withdrawals";
 import AdvertMaker from "./advert";
 import AffilateDetails from "./affilates/details";
 // import MyNetwork from "./affilates/myNetwork";
@@ -28,6 +31,7 @@ import NetworkDetails from "./users/networkDetails";
 import ProductList from "./productList";
 import Categories from "./categories";
 import Gallery from "./gallery";
+import VendorStore from "./vendor/store";
 import CategoryProducts from "./productList/categoryProducts";
 import PackageList from "./packages";
 import OrderDetails from "./orderManagement/details";
@@ -71,6 +75,7 @@ const toKebabCase = (str) => {
 
 function Layout() {
   const location = useLocation();
+  const isOnline = useNetworkStatus();
   const isAuthPath = location.pathname.includes("/auth");
   const isLoggedInPath = location.pathname.includes("/app");
 
@@ -78,25 +83,47 @@ function Layout() {
 
   return (
     <div className="app-container">
-      {/* Show Header only if NOT on auth pages */}
+      <div style={{
+        backgroundColor: isOnline ? '#d4edda' : '#f8d7da',
+        color: isOnline ? '#155724' : '#721c24',
+        padding: '10px',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        position: 'fixed',
+        zIndex: 9999,
+        right: 0,
+        bottom: 0,
+      }}>
+        {isOnline ? 'You are online ✅' : 'You are offline ❌'}
+      </div>
+
       {showHeaderAndFooter && <Header />}
-     
-      {isAuthPath && (
-        <>
+
       <Routes>
-        {/* Authentication Routes */}
-        <Route path="/auth/sign-in" element={<Login />} />
-        <Route path="/auth/app/signup" element={<SignUp />} />
-        <Route path="/auth/app/reset-account" element={<ResetPassword />} />
-        <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
-        <Route path="/auth/app/verify/:email" element={<VerifyToken />} />
+        {/* StoreFront and public-facing routes (accessible to everyone) */}
+        <Route path="/" element={<StoreFront />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/category/:id" element={<CategoryProducts />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/products/vendor/:id" element={<MyStore />} />
+        <Route path="/vendor/store" element={<VendorStore />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/checkout/transaction/verify" element={<TransactionPurchase />} />
       </Routes>
-      </>
+
+      {isAuthPath && (
+        <Routes>
+          {/* Authentication Routes */}
+          <Route path="/auth/sign-in" element={<Login />} />
+          <Route path="/auth/app/signup" element={<SignUp />} />
+          <Route path="/auth/app/reset-account" element={<ResetPassword />} />
+          <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
+          <Route path="/auth/app/verify/:email" element={<VerifyToken />} />
+        </Routes>
       )}
-        <>
-          <div className="flex-container">
-          {isLoggedInPath && !isAuthPath && (
-            <>
+
+      {isLoggedInPath && !isAuthPath && (
+        <div className="flex-container">
           <Sidebar className="sidenav" />
           <MobileNav/>
           
@@ -140,13 +167,43 @@ function Layout() {
             </div>
             </>
           ) }
+          <MobileNav />
+          <div className="main__content">
+            <Routes>
+              {/* Protected App Routes */}
+              <Route path="/app/dashboard" element={<Dashboard />} />
+              <Route path="/app/users" element={<Users />} />
+              <Route path="/app/users/details" element={<UserDetails />} />
+              <Route path="/app/vendors" element={<Vendors />} />
+              <Route path="/app/order-management" element={<OrderManagement />} />
+              <Route path="/app/vendors/details" element={<VendorDetails />} />
+              <Route path="/app/transaction-history" element={<TransactionHistory />} />
+              <Route path="/app/products/list" element={<ProductList />} />
+              <Route path="/app/leadership-rank" element={<LeadershipRank />} />
+              <Route path="/app/messaging" element={<Messaging />} />
+              <Route path="/app/withdrawals" element={<WithdrawalHistory />} />
+              <Route path="/app/affilates" element={<Affilates />} />
+              <Route path="/app/transaction/history" element={<TransactionOrderHistory />} />
+              <Route path="/app/affilates/details" element={<AffilateDetails />} />
+              <Route path="/app/network/genealogy/" element={<MyNetwork />} />
+              <Route path="/app/account/packages" element={<PackageList />} />
+              <Route path="/app/products" element={<Products />} />
+              <Route path="/app/categories" element={<Categories />} />
+              <Route path="/app/store-management" element={<Gallery />} />
+              <Route path="/app/advert_maker" element={<AdvertMaker />} />
+              <Route path="/app/order/details" element={<OrderDetails />} />
+              <Route path="/app/network/details" element={<NetworkDetails />} />
+              <Route path="/app/settings" element={<SiteSettings />} />
+            </Routes>
           </div>
-          
-          {showHeaderAndFooter && <Footer />}
-        </>
+        </div>
+      )}
+
+      {showHeaderAndFooter && <Footer />}
     </div>
   );
 }
+
 
 function Application() {
   return (

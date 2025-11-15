@@ -231,6 +231,10 @@
   color: #ec707a;
 }
 
+.bg-success {
+  background-color: #1dc59442;
+    color: #10ac7e;
+}
 .bg-error {
   background-color: #f9e8ea;
   color: #ec707a;
@@ -294,7 +298,13 @@ tbody {
   justify-content: space-between;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   margin-bottom: 33px;
+  position: fixed;
+    width: 100%;
   background-color: white;
+  top:0;
+}
+.dashboard {
+  margin-top: 12%;
 }
 .flex__normal {
   display: flex;
@@ -543,6 +553,7 @@ css-6od3lo-MuiChip-label {
 }
 .main__content {
   width: 100%;
+  margin-top: 5%;
   /* margin: 0 20px; */
   height: 100vh;
   /* overflow-x: scroll; */
@@ -596,6 +607,9 @@ css-6od3lo-MuiChip-label {
 .d-flex {
   display: flex;
   justify-content: space-between;
+}
+.s-around{
+  justify-content: space-around;
 }
 .alc {
   align-items: center;
@@ -1179,7 +1193,7 @@ h1 {
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 }
 .lg-icon {
-    transform: scale(1.8);
+    transform: scale(1.3);
     fill: #383838!important;
 }
 .store-container__search {
@@ -1206,6 +1220,7 @@ h1 {
 
 .advert-slide {
   position: absolute;
+  width: 100% !important;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
@@ -1638,10 +1653,16 @@ h1 {
 } */
 .top__top__header {
   position: fixed;
+  top: 0;
   width: 100%;
     z-index: 99999;
     background-color: white;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+.footer-bottom {
+  position: absolute;
+    width: 90%;
+    bottom: 0;
 }
 .callout__main__menu > ul li {
   display: flex;

@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import { BASE_URL } from "../../utils/config";
 import { useUser } from "../../context/UserContext";
 import useForm from "../../utils/useForm";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 const AffilateForm = ({ inputValues, onChangeHandler }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [affiliatePackages, setAffiliatePackages] = useState([]);
+  const query = useQuery();
+const refLink = query.get('refLink');
   const { user } = useUser();
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -129,6 +136,7 @@ useEffect(()=>{
             name="package_id"
             className="last-name form-control"
             onChange={onChangeHandler}>
+              <option>Select a Package</option>
              {
                 affiliatePackages.map((pack)=>(
                   <option value={pack.id}>{pack.name} - {pack.price} </option>
@@ -147,11 +155,12 @@ useEffect(()=>{
       <div className="pos-rel phone flex">
         <label className="abs"> Referral ID</label>
         <input
+          disabled={refLink}
           type="text"
           name="ref_id"
           className="form-control"
           onChange={onChangeHandler}
-          value={inputValues.ref_id || ""}
+          value={inputValues.ref_id || "" || refLink}
           placeholder="e.g  PM-000000"
         />
       </div>

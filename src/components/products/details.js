@@ -100,34 +100,40 @@ const ProductDetails = () => {
     console.log(cart);
     const isProductInCart = cart?.some((item) => item?.id === detail?.id);
 
-    if (isProductInCart) {
-      cart = cart.map((item) =>
-        item.id === detail.id ? { ...item, amtItems: Math.max(1, (item.amtItems || 1) + numOfItems) } : item
-      );
-      setCartMessage(
-        <div className="title-case">
-          {detail.name} updated in cart! <br />
-          <Link to="/cart" style={{ color: "orange", textDecoration: "underline" }}>
-            View Cart
-          </Link>
-        </div>
-      );
-    } else {
-      cart.push({ ...detail, amtItems: numOfItems });
-      setCartMessage(
-        <div className="title-case">
-          {detail?.name} added to cart! <br />
-          <Link to="/cart" style={{ color: "orange", fontWeight: 700, textDecoration: "underline" }}>
-            View Cart
-          </Link>
-        </div>
-      );
-    }
+  if (isProductInCart) {
+    cart = cart.map((item) =>
+      item?.id === detail?.id
+        ? { ...item, amtItems: Math.max(1, (item?.amtItems || 1) + numOfItems) }
+        : item
+    );
+console.log(cart)
+console.log(isProductInCart)
+    setCartMessage(
+      <div className="title-case">
+        {detail?.name} updated in cart! <br />
+        <Link to="/cart" style={{ color: "orange", textDecoration: "underline" }}>
+          View Cart
+        </Link>
+      </div>
+    );
+  } else {
+    cart.push({ ...detail, amtItems: numOfItems });
 
-    localStorage.setItem("pmallCart", JSON.stringify(cart));
+    setCartMessage(
+      <div className="title-case">
+        {detail?.name} added to cart! <br />
+        <Link to="/cart" style={{ color: "orange", fontWeight: 700, textDecoration: "underline" }}>
+          View Cart
+        </Link>
+      </div>
+    );
+  }
 
-    setTimeout(() => setCartMessage(""), 7000);
-  }, []);
+  localStorage.setItem("pmallCart", JSON.stringify(cart));
+
+  setTimeout(() => setCartMessage(""), 7000);
+}, [detail, setCartMessage, getCart]);
+
 
 
   const addCommasToNumberString = (numberString) =>{

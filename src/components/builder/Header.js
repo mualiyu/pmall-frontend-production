@@ -29,7 +29,7 @@ return (
                         <img src="/top_banner_2.gif" style={{ width: '100%' }} alt="Promotional banner" loading="lazy" className="" />
                     </div>
                     <div className='px flex flex-col search-container w-90'>
-                        <div className="flex justsb alc dgcwuywsndh" style={{marginTop: '15px'}}>
+                        <div className="flex justsb alc dgcwuywsndh" style={{marginTop: '5px'}}>
                             <div className="callout">
                             <button className="callout_btn"> 
                             <MenuIcon/>
@@ -82,7 +82,7 @@ return (
                             <a href="/" style={{width: '15%'}}>
                                 <img src="/new PMALL logo  (10).png" alt="PMall Logo" style={{width: '100%'}} className="pmall____logo"/>
                                 </a>
-                            <form className="flex alc store-container__search no-display" aria-label="Search form">
+                            <form className="flex alc store-container__search" aria-label="Search form">
                                 <input type="text" placeholder="Search for Products, Brands, or Categories" aria-label="Search input" />
                             </form>
                             <div className='flex alc bbnex'>
@@ -124,9 +124,9 @@ return (
                                 </div>
                             ): (
                                 <Link to="/auth/sign-in" className="bold flex alc sb">
-                                        <PersonIcon />
+                                        <PersonIcon className="lg-icon" />
                                         <p>
-                                           Account Login 
+                                           <spanc className="no-display">Account</spanc> Login 
                                         </p>
                                     </Link>
                             )}
@@ -148,7 +148,7 @@ return (
                                     </div>
                             </div>
                         </div>
-                    <div className="flex justsb mb-lg  bbnex">
+                    <div className="flex justsb bbnex" style={{marginTop:'-20px', marginBottom: 8}}>
                         {loading ? 'loading...' : (
                           <CategoryDropdown />
                           )}
@@ -170,6 +170,7 @@ return (
                     </div>
                 {/* </div> */}
             {/* )} */}
+
         </>
 )
                         }

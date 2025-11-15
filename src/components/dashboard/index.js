@@ -2,22 +2,12 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
-import EmailIcon from "@mui/icons-material/Email";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Loading from "../../utils/loading";
 import SidebarRow from "../builder/SidebarRow";
 import SpeedIcon from '@mui/icons-material/Speed';
 import EuroIcon from '@mui/icons-material/Euro';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
-import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
-import HubIcon from "@mui/icons-material/Hub";
-import SavingsIcon from "@mui/icons-material/Savings";
-
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Box from "@mui/material/Box";
@@ -46,7 +36,7 @@ import DebitCard from "../../utils/debitCard";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import { useUser } from "../../context/UserContext";
+import { useUser, useLogOut } from "../../context/UserContext";
 import getInitials from "../../utils/getInitials";
 import { useVendor } from "../../context/VendorSignupContext";
 ChartJS.register(
@@ -158,6 +148,7 @@ const Dashboard = () => {
   const [pmallUser, setPmallUser] = useState([]);
   const { loading, setLoading, setProfileDetails } = useVendor();
   const userBadge = ["#ffe7c7", "#c3d0f3", "#10ac7e3d"];
+  const logOut = useLogOut(); 
   
 
 const getVendorProducts = (ref)=> {
@@ -324,7 +315,7 @@ const getUsersDetails = () => {
             Visit Mall
           </Link>
            )} */}
-           <div className="no-large-display pointer">
+           <div className="no-large-display pointer" onClick={logOut}>
            <PowerSettingsNewIcon/> Log Out
            </div>
            
@@ -351,7 +342,7 @@ const getUsersDetails = () => {
             <section style={{ marginBottom: 30 }}>
               <div
                 className="flex g-10 justsb mobile-grid">
-              <div className="flex g-10 justsb w-100 dash-mobile-stat">
+              <div className="flex g-10 s-around w-100 dash-mobile-stat">
                 <div className="left_top_dashboard">
                   <div className="balance">
                     <span className="">
@@ -897,6 +888,10 @@ const getUsersDetails = () => {
       <Modal
         open={newVendorModal}
         onClose={handleModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>

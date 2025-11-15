@@ -151,7 +151,7 @@ function Footer() {
                                 <div class="gi-bottom-info">
                                     <div class="footer-copy">
                                         <div class="footer-bottom-copy ">
-                                            <div class="gi-copy">Copyright © <a class="site-name" href="/">Grabit </a>all rights reserved. Powered by Grabit.
+                                            <div class="gi-copy">Copyright © 2025 <a class="site-name" href="home.pmall.com.ng" target="_blank"> PMall. </a>All rights reserved. Powered by Pmall Nigeria Ltd.
                                             </div>
                                             </div>
                                             </div>
