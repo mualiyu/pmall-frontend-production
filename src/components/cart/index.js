@@ -77,6 +77,7 @@ const Cart = () => {
             }
 
             const data = await res.json();
+           
             setStockists(data.data); // data is expected to be an array
         } catch (err) {
             console.error("Error fetching stockists:", err);
@@ -90,25 +91,7 @@ fetchStockists();
     }, []);
 
 
-    const handleSelectStockist = async (e) => {
-        const stockistId = e.target.value;
-        setSelectedStockist(stockistId);
-
-        try {
-        const res = await fetch("https://your-api-url.com/api/set-stockist", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ stockist_id: stockistId }),
-        });
-
-        if (!res.ok) throw new Error("Failed to send stockist selection");
-
-        console.log("Stockist selected:", stockistId);
-        } catch (error) {
-        console.error("Error posting stockist:", error);
-        }
-    };
-
+  
     return (
         <div className="cart flex g-20 mt-20p" style={{ marginBottom: '7%' }}>
             <div className="w-full flex g-20 cart-container">
@@ -202,11 +185,11 @@ fetchStockists();
                                 <select
                                 id="stockist"
                                 value={selectedStockist}
-                                onChange={handleSelectStockist}
+                                // y
                                 >
                                 <option value="">-- Choose Stockist --</option>
                                 {stockists.map((s) => (
-                                    <option key={s.affiliate_id} value={s.affiliate_id}>
+                                    <option key={s.stockist_id} value={s.stockist_id}>
                                     {`${s.name} - ${s.state}`}
                                     </option>
                                 ))}

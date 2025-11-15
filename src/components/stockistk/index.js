@@ -139,6 +139,7 @@ useEffect(() => {
       my_ref_id: "",
       country: "",
       state: "",
+      city: ""
     });
 
   const onChangeHandler = (e) => {
@@ -163,7 +164,8 @@ const handleSubmit = async (e) => {
         phone: formData.phone,
         address: formData.store_name,
         country: formData.country,
-        state: formData.state
+        state: formData.state,
+        city: formData.city
       }),
       
       });
@@ -189,6 +191,7 @@ const handleSubmit = async (e) => {
         my_ref_id: "",
         country: "",
         state: "",
+        city: "",
       });
       setTimeout(() => setToast(null), 9000);
       fetchStockists();
@@ -228,6 +231,8 @@ const handleSubmit = async (e) => {
     { id: "address", label: "Address" },
     { id: "country", label: "Country" },
     { id: "state", label: "State" },
+    { id: "city", label: "City" },
+    
   ];
 
   useEffect(() => {
@@ -447,6 +452,17 @@ const handleSubmit = async (e) => {
                   onChange={onChangeHandler}
                   value={formData.state}
                   placeholder="e.g Abuja"
+                />
+              </div>
+                 <div className="pos-rel w100-m10 ">
+                <label>City</label>
+                <input
+                  type="text"
+                  className="form-control-input "
+                  name="state"
+                  onChange={onChangeHandler}
+                  value={formData.city}
+                  placeholder="e.g Abuja Municipal"
                 />
               </div>
             </section>
