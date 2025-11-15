@@ -113,7 +113,7 @@ const CheckoutPage = () => {
         .then((resp) => resp.json())
         .then((result) => {
             console.log(result)
-            setStockists(result?.data || []);
+            setStockists(result?.data?.allDownline || []);
             setLoading(false);
         })
         .catch((err) => {
@@ -629,7 +629,7 @@ const CheckoutPage = () => {
                                             value={formDetails.lga}
                                             onChange={handleInputChange}  />
                                 </div>
-                                <div className="form-group w-full">
+                                {/* <div className="form-group w-full">
                                     <label>Select Product Pick Up Station</label>
                                     <select
                                             name="stockist_id"
@@ -643,7 +643,7 @@ const CheckoutPage = () => {
                                             }
                                         </select>
                                     
-                                </div>
+                                </div> */}
                                 </div>
                                 <div className="flex g-10">
                                     <div className="form-group w-full">

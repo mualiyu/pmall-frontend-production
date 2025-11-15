@@ -113,7 +113,7 @@ const CheckoutPage = () => {
         .then((resp) => resp.json())
         .then((result) => {
             console.log(result)
-            setStockists(result?.data || []);
+            setStockists(result?.data?.allDownline || []);
             setLoading(false);
         })
         .catch((err) => {

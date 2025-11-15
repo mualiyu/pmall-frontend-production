@@ -46,7 +46,6 @@ function TabPanel(props) {
 
 const CheckoutPage = () => {
     const { user, setUser } = useUser();
-    const [stockists, setStockists] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
     const [formDetails, setFormDetails] = useState({
         fname: '',
@@ -74,11 +73,14 @@ const CheckoutPage = () => {
       const promptLogOutCurrentlyLoggedInUser = () => {
         if (!user?.loggedIn) return
       
-        setToast({ message: `Are you sure you want to log out ${user.fname}? Double Click the "New Customer" button again to confirm.`, type: "warning" });
+        // Ask for confirmation in a custom non-blocking way
+        setToast({ message: `Are you sure you want to log out ${user.fname}? Double Click the "logout" button again to confirm.`, type: "warning" });
+        // Wait for a second click within a short time to confirm
         if (window._logoutConfirmTimeout) {
           clearTimeout(window._logoutConfirmTimeout);
         }
       
+        // Store the intention for a short window (e.g., 5 seconds)
         window._logoutConfirmTimeout = setTimeout(() => {
           window._logoutConfirmed = false;
         }, 10000);
@@ -86,9 +88,11 @@ const CheckoutPage = () => {
         if (window._logoutConfirmed) {
           localStorage.removeItem("user");
           setToast({ message: `${user.fname} has been logged out successfully.`, type: "success" });
-          window.location.reload();
+          // Optionally reload or redirect
+          // window.location.reload();
         } else {
           window._logoutConfirmed = true;
+          // Automatically reset confirmation after 5 seconds
           setTimeout(() => (window._logoutConfirmed = false), 10000);
         }
       };
@@ -99,27 +103,7 @@ const CheckoutPage = () => {
       window.location.reload();
   }
 
-  const getStockistLocation = () => {
-    setLoading(true);
-    fetch(`${BASE_URL}/stockists`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            Accept: "application/json",
-            Authorization: "Bearer " + user?.token,
-        },
 
-    })
-        .then((resp) => resp.json())
-        .then((result) => {
-            console.log(result)
-            setStockists(result?.data || []);
-            setLoading(false);
-        })
-        .catch((err) => {
-            setLoading(false);
-        });
-};
 
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -402,7 +386,6 @@ const CheckoutPage = () => {
 
     useEffect(()=>{ 
         getCart()
-        getStockistLocation();
         return;
     },[])
 
@@ -607,43 +590,19 @@ const CheckoutPage = () => {
                                             value={formDetails.address}
                                             onChange={handleInputChange} />
                                 </div>
-                                {/* <div className="form-group">
-                                    <label>State</label>
-                                    <input type="text" placeholder="Enter your city" id="state"
-                                            name="state"
-                                            value={formDetails.state}
-                                            onChange={handleInputChange}  />
-                                </div> */}
-                                <div className="flex g-10">
-                                <div className="form-group w-full">
+                                <div className="form-group">
                                     <label>State</label>
                                     <input type="text" placeholder="Enter your city" id="state"
                                             name="state"
                                             value={formDetails.state}
                                             onChange={handleInputChange}  />
                                 </div>
-                                    <div className="form-group w-full">
+                                <div className="form-group">
                                     <label>LGA</label>
                                     <input type="text" placeholder="Enter your LGA" id="lga"
                                             name="lga"
                                             value={formDetails.lga}
                                             onChange={handleInputChange}  />
-                                </div>
-                                <div className="form-group w-full">
-                                    <label>Select Product Pick Up Station</label>
-                                    <select
-                                            name="stockist_id"
-                                            className="last-name form-control"
-                                            onChange={onChangeHandler}>
-                                            <option>Select a Package</option>
-                                            {
-                                                stockists?.map((stockist)=>(
-                                                <option value={stockist.id}>{stockist.name} </option>
-                                                ))
-                                            }
-                                        </select>
-                                    
-                                </div>
                                 </div>
                                 <div className="flex g-10">
                                     <div className="form-group w-full">

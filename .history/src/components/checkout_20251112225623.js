@@ -101,19 +101,18 @@ const CheckoutPage = () => {
 
   const getStockistLocation = () => {
     setLoading(true);
-    fetch(`${BASE_URL}/stockists`, {
+    fetch(`${BASE_URL}/fetchstockist/`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json;charset=UTF-8",
             Accept: "application/json",
             Authorization: "Bearer " + user?.token,
         },
-
     })
         .then((resp) => resp.json())
         .then((result) => {
             console.log(result)
-            setStockists(result?.data || []);
+            setStockists(result?.data?.allDownline || []);
             setLoading(false);
         })
         .catch((err) => {
@@ -607,21 +606,15 @@ const CheckoutPage = () => {
                                             value={formDetails.address}
                                             onChange={handleInputChange} />
                                 </div>
-                                {/* <div className="form-group">
-                                    <label>State</label>
-                                    <input type="text" placeholder="Enter your city" id="state"
-                                            name="state"
-                                            value={formDetails.state}
-                                            onChange={handleInputChange}  />
-                                </div> */}
-                                <div className="flex g-10">
-                                <div className="form-group w-full">
+                                <div className="form-group">
                                     <label>State</label>
                                     <input type="text" placeholder="Enter your city" id="state"
                                             name="state"
                                             value={formDetails.state}
                                             onChange={handleInputChange}  />
                                 </div>
+                                <div className="flex g-10">
+                                    
                                     <div className="form-group w-full">
                                     <label>LGA</label>
                                     <input type="text" placeholder="Enter your LGA" id="lga"

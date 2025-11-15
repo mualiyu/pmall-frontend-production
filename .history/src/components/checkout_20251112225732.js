@@ -101,19 +101,18 @@ const CheckoutPage = () => {
 
   const getStockistLocation = () => {
     setLoading(true);
-    fetch(`${BASE_URL}/stockists`, {
+    fetch(`${BASE_URL}/fetchstockist/`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json;charset=UTF-8",
             Accept: "application/json",
             Authorization: "Bearer " + user?.token,
         },
-
     })
         .then((resp) => resp.json())
         .then((result) => {
             console.log(result)
-            setStockists(result?.data || []);
+            setStockists(result?.data?.allDownline || []);
             setLoading(false);
         })
         .catch((err) => {
@@ -629,7 +628,7 @@ const CheckoutPage = () => {
                                             value={formDetails.lga}
                                             onChange={handleInputChange}  />
                                 </div>
-                                <div className="form-group w-full">
+                                {/* <div className="form-group w-full">
                                     <label>Select Product Pick Up Station</label>
                                     <select
                                             name="stockist_id"
@@ -643,7 +642,7 @@ const CheckoutPage = () => {
                                             }
                                         </select>
                                     
-                                </div>
+                                </div> */}
                                 </div>
                                 <div className="flex g-10">
                                     <div className="form-group w-full">
