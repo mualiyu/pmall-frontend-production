@@ -60,36 +60,7 @@ const Cart = () => {
     const [selectedStockist, setSelectedStockist] = useState("");
     const [loadingStockists, setLoadingStockists] = useState(true);
 
-    useEffect(() => {
-        
-     const fetchStockists = async () => {
-        try {
-            const res = await fetch(`${BASE_URL}/stockists`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                Accept: "application/json",
-            },
-            });
-
-            if (!res.ok) {
-            throw new Error(`Failed to fetch stockists: ${res.status}`);
-            }
-
-            const data = await res.json();
-           
-            setStockists(data.data); // data is expected to be an array
-        } catch (err) {
-            console.error("Error fetching stockists:", err);
-        } finally {
-            setLoadingStockists(false);
-        }
-        };
-
-fetchStockists();
-
-    }, []);
-
+  
 
   
     return (
@@ -175,27 +146,7 @@ fetchStockists();
                             <p>Total</p>
                             <p className="bold">{currency((totalPrice + totalPrice * 0.075).toFixed(2))}</p>
                         </div>
-                         <div className="flex flex-col mt-3">
-                            <label htmlFor="stockist" className="bold f-12">
-                                Select Nearest Stockist
-                            </label>
-                            {loadingStockists ? (
-                                <p className="f-12">Loading stockists...</p>
-                            ) : (
-                                <select
-                                id="stockist"
-                                value={selectedStockist}
-                                // y
-                                >
-                                <option value="">-- Choose Stockist --</option>
-                                {stockists.map((s) => (
-                                    <option key={s.stockist_id} value={s.stockist_id}>
-                                    {`${s.name} - ${s.state}`}
-                                    </option>
-                                ))}
-                                </select>
-                            )}
-                            </div>
+                
                     </div>
 
                     {cart.length > 0 && (

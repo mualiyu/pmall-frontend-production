@@ -11,7 +11,7 @@ import MobileNav from "./builder/MobileNav";
 import Products from "./products";
 import Users from "./users";
 import Vendors from "./vendors";
-import Stockist from "./stockistk/index";
+import Stockists from "../components/stockistk";
 import MyStore from "./vendor/MyStore";
 import Header from "./builder/Header";
 import Footer from "./builder/Footer";
@@ -41,7 +41,7 @@ import TransactionOrderHistory from "./transactions";
 import { useUser } from "../context/UserContext";
 import StoreFront from "./storefront";
 import Cart from "./cart";
-import CheckoutPage from "./checkout/checkout";
+import CheckoutPage from "./checkout";
 import TransactionHistory from "./transactionhistory";
 import TransactionPurchase from "./transactionPurchase";
 
@@ -125,48 +125,6 @@ function Layout() {
       {isLoggedInPath && !isAuthPath && (
         <div className="flex-container">
           <Sidebar className="sidenav" />
-          <MobileNav/>
-          
-            <div className="main__content">
-              <Routes>
-                {/* User Routes */}
-                  <Route path="/app/dashboard" element={<Dashboard />} />
-                  <Route path="/app/users" element={<Users />} />
-                  <Route path="/app/users/details" element={<UserDetails />} />
-                  <Route path="/app/vendors" element={<Vendors />} />
-                  <Route path="/app/stockists" element={<Stockist />} />
-                  <Route path="/app/order-management" element={<OrderManagement />} />
-                  <Route path="/app/vendors/details" element={<VendorDetails />} />
-                  <Route path="/app/transaction-history" element={<TransactionHistory />} />
-                  <Route path="/app/products/list" element={<ProductList />} />
-                  <Route path="/app/leadership-rank" element={<LeadershipRank />} />
-                  <Route path="/app/messaging" element={<Messaging />} />
-                  <Route path="/app/affilates" element={<Affilates />} />
-                  <Route path="/app/transaction/history" element={<TransactionOrderHistory />} />
-                  <Route path="/app/affilates/details" element={<AffilateDetails />} />
-                  <Route path="/app/network/genealogy/" element={<MyNetwork />} />
-                  <Route path="/app/account/packages" element={<PackageList />} />
-                  <Route path="/app/products" element={<Products />} />
-                  <Route path="/app/categories" element={<Categories />} />
-                  <Route path="/app/gallery" element={<Gallery />} />
-                  <Route path="/app/advert_maker" element={<AdvertMaker />} />
-                  <Route path="/app/order/details" element={<OrderDetails />} />
-                  <Route path="/app/network/details" element={<NetworkDetails />} />
-                  <Route path="/app/settings" element={<SiteSettings />} />
-              
-                {/* Store Routes */}
-
-                <Route path="/" element={<StoreFront />} />
-                <Route path="/product/:id" element={<ProductDetails />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/checkout" element={<CheckoutPage />} />
-                <Route path="/checkout/transaction/verify" element={<TransactionPurchase />} />
-                <Route path="/category/:id" element={<CategoryProducts />} />
-
-              </Routes>
-            </div>
-            </>
-          ) }
           <MobileNav />
           <div className="main__content">
             <Routes>
@@ -175,6 +133,7 @@ function Layout() {
               <Route path="/app/users" element={<Users />} />
               <Route path="/app/users/details" element={<UserDetails />} />
               <Route path="/app/vendors" element={<Vendors />} />
+              <Route path="/app/stockists" element={<Stockists />} />
               <Route path="/app/order-management" element={<OrderManagement />} />
               <Route path="/app/vendors/details" element={<VendorDetails />} />
               <Route path="/app/transaction-history" element={<TransactionHistory />} />

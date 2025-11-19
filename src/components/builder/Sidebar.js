@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SidebarRow from "./SidebarRow";
-import SpeedIcon from '@mui/icons-material/Speed';
+import SpeedIcon from "@mui/icons-material/Speed";
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -112,7 +113,7 @@ function Sidebar() {
              <SidebarRow
               path="/app/stockists"
               Icon={GroupsIcon}
-              title="stockists Resources"
+              title="Stockist Resources"
             />
             <SidebarRow
             path="/app/users/details"

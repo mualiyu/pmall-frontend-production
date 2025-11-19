@@ -264,6 +264,8 @@ const CheckoutPage = () => {
         }
     };
     
+
+
     const initiatePayment = async (saleData, customerData) => {
         const tokenToUse = user?.loggedIn ? user?.token : customerData?.token;
         if (!tokenToUse) {
@@ -385,6 +387,8 @@ const CheckoutPage = () => {
         setCart(updatedCart);
         localStorage.setItem('pmallCart', JSON.stringify(updatedCart));
     };
+
+
     
     return (
         <div className="mt-20p">
@@ -483,8 +487,8 @@ const CheckoutPage = () => {
                     </div>
                     </div>
                     
-      )}
- </div>
+                    )}
+                </div>
                     </div>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
@@ -651,9 +655,12 @@ const CheckoutPage = () => {
                                 <p className="">Total</p>
                                 <p className="bold">{currency(totalPrice + (totalPrice * 0.075))}</p>
                             </div>
+
+
+                            
                         </div>
 
-
+                      
                         <button 
     className="btn bg-accent p-25 text-center uppercase"
     style={{ marginTop: 25 }}
