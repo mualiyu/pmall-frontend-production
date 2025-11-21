@@ -22,6 +22,7 @@ import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import { Chart, ArcElement } from "chart.js";
 import {CircularProgress} from "@mui/material";
+import OrderTable from "../../assets/allOrders/orders";
 
 Chart.register(ArcElement);
 
@@ -496,6 +497,7 @@ const handleSubmit = async (e) => {
           </section>
         </Box>
       </Modal>
+      <OrderTable/>
     </section>
   );
 };

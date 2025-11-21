@@ -657,18 +657,18 @@ const CheckoutPage = () => {
                             </div>
 
 
-                            
+
                         </div>
 
                       
                         <button 
-    className="btn bg-accent p-25 text-center uppercase"
-    style={{ marginTop: 25 }}
-    onClick={onSubmit}
-    disabled={btnLoader}
->
-    {btnLoader ? <ButtonLoader/> : 'Pay Now!'}
-</button>
+                            className="btn bg-accent p-25 text-center uppercase"
+                            style={{ marginTop: 25 }}
+                            onClick={onSubmit}
+                            disabled={btnLoader}
+                        >
+                            {btnLoader ? <ButtonLoader/> : 'Pay Now!'}
+                        </button>
                             {/* <FlutterWaveButton {...fwConfig} className="checkout-btn pointer"/> */}
                         </div>
                     </div>
