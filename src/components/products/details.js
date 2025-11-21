@@ -48,7 +48,9 @@ const ProductDetails = () => {
           Authorization: "Bearer " + user?.token,
         },
       }
+      
     )
+      
       .then((resp) => resp.json())
       .then((result) => {
         console.log(result);
@@ -74,9 +76,10 @@ const ProductDetails = () => {
             Accept: "application/json",
             },
         })
+           
             .then((resp) => resp.json())
             .then((result) => {
-            // console.log(result);
+            console.log(result);
             setProductCategories(result.data);
             setLoading(false);
             })
@@ -91,12 +94,11 @@ const ProductDetails = () => {
     getProductDetails();
   }, []);
 
-
-const handleAddToCart = useCallback(() => {
-  const numOfItems = 1;
-  let cart = getCart() || []; // ensure cart is an array
-
-  const isProductInCart = cart.some((item) => item?.id === detail?.id);
+  const handleAddToCart = useCallback(() => {
+    const numOfItems = 1;
+    let cart = getCart();
+    console.log(cart);
+    const isProductInCart = cart?.some((item) => item?.id === detail?.id);
 
   if (isProductInCart) {
     cart = cart.map((item) =>
@@ -166,7 +168,7 @@ console.log(isProductInCart)
                 <div>
 
                 {detail?.image ? (
-      <img className="main-image" src={detail.image} alt="" className="main-image" />
+      <img className="main-image" src={detail.image} alt="" />
     ) : (
       <Loading loading={loading} />
     )}

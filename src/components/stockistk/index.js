@@ -1,11 +1,9 @@
-
-
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/config"; 
 import Toast from "../../utils/Toast"
-import PackageName from "../../utils/accountPackages"
+// import PackageName from "../../utils/accountPackages"
 import moment from "moment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -23,6 +21,9 @@ import Paper from "@mui/material/Paper";
 import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import { Chart, ArcElement } from "chart.js";
+import {CircularProgress} from "@mui/material";
+import OrderTable from "../../assets/allOrders/orders";
+
 Chart.register(ArcElement);
 
 const style = {
@@ -36,15 +37,7 @@ const style = {
   p: 4,
 };
 
-const columns = [
-  { id: "vendor", label: "Vendor Name" },
-  { id: "location", label: "Location" },
-  { id: "email", label: "Email Address" },
-  { id: "phone", label: "Phone Number" },
-  { id: "plan", label: "Package" },
-  { id: "registered", label: "Registered" },
-  { id: "status", label: "Status" },
-];
+
 
 const data = {
   datasets: [
@@ -64,7 +57,7 @@ var config = {
 };
 
 function createData(
-  vendor,
+  stockist,
   location,
   email,
   phone,
@@ -73,7 +66,7 @@ function createData(
   registered,
 ) {
   return {
-    vendor,
+    stockist,
     location,
     email,
     phone,
@@ -83,73 +76,104 @@ function createData(
   };
 }
 
-const Vendors = () => {
-  const [newVendorModal, setNewVendorModal] = useState(false);
-  const [allAffiliates, setAllAffiliates] = useState([]);
-  const [selectParent, setSelectParent] = useState("yes");
-  const [allVendors, setAllVendors] = useState([]);
-  const [vendorPackages, setVendorPackages] = useState([]);
+const Stockists = () => {
+  const [newstockistModal, setNewstockistModal] = useState(false);
+  const [allstockists, setAllstockists] = useState([]);
+  // const [stockistPackages, setstockistPackages] = useState([]);
   const [toast, setToast] = useState(null);
   const [loading, setLoading] =useState(false);
-  const handleModalClose = () => setNewVendorModal(false);
+  const handleModalClose = () => setNewstockistModal(false);
   const navigate = useNavigate();
   const { user } = useUser();
   const [error, setError] = useState("");
+ const [allStockists, setAllStockists] = useState([]);
+  const [affiliateId, setAffiliateId] = useState('');
 
-  const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    phone: "",
-    store_name: "",
-    ref_id: "",
-    package_id: vendorPackages.length > 0 ? vendorPackages[0].id : "",
-  });
-  
+useEffect(() => {
+  const fetchAffiliateId = async () => {
+    try {
+ 
+      const token = localStorage.getItem("authToken");
+
+      if (!token) {
+        console.error("No token found. Please log in first.");
+        return;
+      }
+
+      const response = await fetch("https://stage.api.pmall.com.ng/api/v1/affiliate/ref-id", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      
+      const refId = data.affiliate_id || data.ref_id || data.data?.ref_id;
+
+      setAffiliateId(refId);
+      setFormData((prev) => ({ ...prev, my_ref_id: refId }));
+      
+      console.log("Fetched Affiliate ID:", refId);
+    } catch (error) {
+      console.error("Error fetching affiliate ID:", error);
+    }
+  };
+
+  fetchAffiliateId();
+   fetchStockists();
+}, []);
+
+
+    const [formData, setFormData] = useState({
+      fname: "",
+      lname: "",
+      email: "",
+      phone: "",
+      store_name: "",
+      my_ref_id: "",
+      country: "",
+      state: "",
+      city: ""
+    });
 
   const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const fetchAffiliates = () => {
-    setLoading(true);
-    fetch(`${BASE_URL}/get-all-affiliates`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            Accept: "application/json",
-            Authorization: "Bearer " + user?.token,
-        },
-    })
-        .then((resp) => resp.json())
-        .then((result) => {
-    console.log(result);
-    fetchAllPackages()
-      setAllAffiliates(result.data.affiliates || [])
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.log(err);
-            setLoading(false);
-        });
-};
-
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(formData);
     try {
-      const response = await fetch(`${BASE_URL}/register/vendor`, {
+        console.log(formData);
+        const response = await fetch(`${BASE_URL}/stockists/store`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + user?.token,
         },
-        body: JSON.stringify(formData),
+     body: JSON.stringify({
+        affiliate_id: formData.my_ref_id,
+        name: `${formData.fname} ${formData.lname}`,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.store_name,
+        country: formData.country,
+        state: formData.state,
+        city: formData.city
+      }),
+      
       });
-
+      
       if (!response.ok) {
-        setToast({ message: "Failed to register vendor!", type: "error" });
+        console.log(error);
+        setToast({ message: "Failed to register stockist!", type: "error" });
         setTimeout(() => setToast(null), 7000);
         setLoading(false);
       }
@@ -165,75 +189,64 @@ const Vendors = () => {
         email: "",
         phone: "",
         store_name: "",
-        ref_id: "",
-        package_id: "",
+        my_ref_id: "",
+        country: "",
+        state: "",
+        city: "",
       });
       setTimeout(() => setToast(null), 9000);
-      fetchVendors();
-      // Make Payment
-      window.location.href = result?.data?.payment.authorization_url;
+      fetchStockists();
     } catch (error) {
       setLoading(false);
-      setToast({ message: "Failed to register vendor!", type: "error" });
+      setToast({ message: "Failed to register stockist!", type: "error" });
       setTimeout(() => setToast(null), 7000);
     }
   };
 
-  const fetchVendors = () => {
+  const fetchStockists = () => {
     setLoading(true);
-    fetch(`${BASE_URL}/get-all-vendors`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            Accept: "application/json",
-            Authorization: "Bearer " + user?.token,
-        },
-    })
-        .then((resp) => resp.json())
-        .then((result) => {
-            setAllVendors(result.data.vendors || []);
-            fetchAllPackages();
-            fetchAffiliates();
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.log(err);
-            setLoading(false);
-        });
-};
-
-
-const fetchAllPackages = () => {
-  setLoading(true);
-  fetch(`${BASE_URL}/account-packages/all`, {
+    fetch(`${BASE_URL}/stockists`, {
       method: "GET",
       headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Accept: "application/json",
-          Authorization: "Bearer " + user?.token,
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
       },
-  })
+    })
       .then((resp) => resp.json())
       .then((result) => {
-  setVendorPackages(result.data.packages.filter(pkg => pkg.type === "Vendor"));
-          setLoading(false);
+        
+        setAllStockists(result.data || []);
+        setLoading(false);
       })
       .catch((err) => {
-          setLoading(false);
+        console.error("Error fetching stockists:", err);
+        setLoading(false);
       });
-};
+  };
 
+   const columns = [
+    { id: "name", label: "Name" },
+    { id: "affiliate_id", label: "Affiliate ID" },
+    { id: "email", label: "Email" },
+    { id: "phone", label: "Phone" },
+    { id: "address", label: "Address" },
+    { id: "country", label: "Country" },
+    { id: "state", label: "State" },
+    { id: "city", label: "City" },
+    
+  ];
 
-useEffect(()=> {
-  fetchVendors();
-},[])
+  useEffect(() => {
+    fetchStockists();
+  }, []);
+  
   return (
     <section>
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <section className="page__header">
         <div className="flex-container alc">
           <GroupsIcon />
-          <h3>Manage Vendors</h3>
+          <h3>Manage Stockists</h3>
         </div>
       </section>
       <div className="s-divider"></div>
@@ -244,8 +257,8 @@ useEffect(()=> {
               <Doughnut data={data} options={config} className="w80" />
             </div>
             <h3 className="stat__value ml-10">
-              {allVendors?.length}
-              <p className="sub__title">Total Vendors</p> &nbsp;
+              {allstockists?.length}
+              <p className="sub__title">Total stockists</p> &nbsp;
             </h3>
           </div>
           <div className="right__stat">
@@ -279,72 +292,64 @@ useEffect(()=> {
         <div className="">
           <button
             className="btn btn-primary p-25"
-            onClick={() => setNewVendorModal(true)}>
-            Add Vendor
+            onClick={() => setNewstockistModal(true)}>
+            Add Stockists
           </button>
           
         </div>
       </section>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="Vendors Table">
+       <TableContainer component={Paper}>
+      {loading ? (
+        <div style={{ textAlign: "center", padding: "2rem" }}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="Stockists Table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell>{column.label}</TableCell>
+                <TableCell key={column.id}>{column.label}</TableCell>
               ))}
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {allVendors?.map((vendor)=>(
-            <TableRow onClick={() => navigate("details")} key={vendor.id}>
-              <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
-                <div className={`user__avatar ${vendor.acct_number !== null ? "bg-success" : "bg-error"}`}>
-                    <h3 className="uppercase">
-                      {vendor.fname[0]}{vendor.lname[0]}</h3>
-                  </div>
-                  <div className="lheight13">
-                    <h4 className="f-300">{vendor.fname} {vendor.lname}</h4>
-                    <p className="sub__title">{vendor.store_name}</p>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell> {vendor.state ? vendor.state : 'N/A'} [{vendor.lga ? vendor.lga : 'N/A'} ]</TableCell>
-              <TableCell> {vendor.email}</TableCell>
-              <TableCell> {vendor.phone}</TableCell>
-              <TableCell> 
-                <PackageName id={vendor.package_id} type={vendor.user_type} />  
-              </TableCell>
-              <TableCell> {moment(vendor.created_at).format("ll")} </TableCell>
-              <TableCell>
-                {" "}
-                <span className={`badge ${vendor.acct_number !== null ? "bg-success" : "bg-error"}`}>
-                  {vendor.acct_number !== null ? "Active" : "Inactive"}
-                  </span>{" "}
-              </TableCell>
-            </TableRow>
-            ))}
-            
+            {allStockists.length > 0 ? (
+              allStockists.map((stockist) => (
+                <TableRow key={stockist.id}>
+                  <TableCell>{stockist.name || "N/A"}</TableCell>
+                  <TableCell>{stockist.affiliate_id || "N/A"}</TableCell>
+                  <TableCell>{stockist.email || "N/A"}</TableCell>
+                  <TableCell>{stockist.phone || "N/A"}</TableCell>
+                  <TableCell>{stockist.address || "N/A"}</TableCell>
+                  <TableCell>{stockist.country || "N/A"}</TableCell>
+                  <TableCell>{stockist.state || "N/A"}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={7} align="center">
+                  No stockists found
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
-      </TableContainer>
+      )}
+    </TableContainer>
 
-      {/* Modal for vendors */}
+      {/* Modal for Stockists */}
 
       <Modal
-        open={newVendorModal}
+        open={newstockistModal}
         onClose={handleModalClose}
-        onClose={(event, reason) => {
-          if (reason === 'backdropClick') return;
-          handleModalClose();
-        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
           <div className="mb-35">
             <Typography id="modal-modal-title">
-              <h4 className="summary__title t-xl title-case">Add Vendor</h4>
+              <h4 className="summary__title t-xl title-case">Add stockist</h4>
             </Typography>
             <div className="s-divider"></div>
           </div>
@@ -427,66 +432,55 @@ useEffect(()=> {
                   />
                 </div>
               </section>
-              <section className="flex-container mb-lg">
+         <section className="flex-container mb-lg">
               <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Select Parent For Vendor </label>
-                  <select
-                    className="search__bar w-100"
-                    name="selectParent"
-                    value={selectParent}
-                    onChange={(e) => setSelectParent(e.target.value)}
-          >
-                    <option value="yes"> Yes</option>
-                    <option value="no"> No</option>
-                  </select>
-                </div>
-                {selectParent === "yes" && (
-                <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Choose affilate</label>
-                  <select
-                    className="search__bar w-100"
-                    value={formData.my_ref_id}
-                    name="ref_id"
-                    onChange={onChangeHandler}>
-                      <option> Select Parent</option>
-                      {
-                        allAffiliates.map((affiliate)=>(
-                          <option value={affiliate.my_ref_id} className="title-case"> {affiliate.fname} {affiliate.lname} - ({affiliate.my_ref_id})</option>
-                        ))
-                      }
-                    
-                  </select>
-                </div>
-                )}
+                <label> Country</label>
+                <input
+                  type="text"
+                  className="form-control-input "
+                  name="country"
+                  onChange={onChangeHandler}
+                  value={formData.country}
+                  placeholder="e.g Nigeria"
+                />
+              </div>
+              <div className="pos-rel w100-m10 ">
+                <label> State</label>
+                <input
+                  type="text"
+                  className="form-control-input "
+                  name="state"
+                  onChange={onChangeHandler}
+                  value={formData.state}
+                  placeholder="e.g Abuja"
+                />
+              </div>
+                 <div className="pos-rel w100-m10 ">
+                <label>City</label>
+                <input
+                  type="text"
+                  className="form-control-input "
+                  name="state"
+                  onChange={onChangeHandler}
+                  value={formData.city}
+                  placeholder="e.g Abuja Municipal"
+                />
+              </div>
+            </section>
 
-              {selectParent === "no" && (
-                <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Affiliate ID</label>
-                  <input
-                    type="text"
-                    className="form-control-input "
-                    name="ref_id"
-                    onChange={onChangeHandler}
-                    value={formData.ref_id}
-                    placeholder="e.g. PM-000000"
-                  />
-                </div>
-              )}
-                <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Package Type </label>
-                  <select
-            name="package_id"
-            className="search__bar w-100"
-            value={formData.package_id}
-            onChange={onChangeHandler}>
-              {
-                vendorPackages.map((pack)=>(
-                  <option value={pack.id} key={pack.id}>{pack.name} - {pack.price} </option>
-                ))
-              }
-          </select>
-                </div>
-              </section>
+            <section className="flex-container mb-lg">
+              <div className="pos-rel w100-m10 ">
+                <label className="mb-7"> Your Affiliate ID (Auto-filled)</label>
+                <input
+                  type="text"
+                  className="form-control-input "
+                  name="my_ref_id"
+                  value={formData.my_ref_id}
+                  readOnly
+                  placeholder="Loading..."
+                />
+              </div>
+            </section>
 
               {error && <p className="text-danger">{error}</p>}
               <div className="flex__normal pull-right mt-35">
@@ -496,15 +490,16 @@ useEffect(()=> {
             Cancel
           </button>
           <button type="submit" className="btn btn-primary p-25 pull-right" disabled={loading}>
-          {loading ? "Saving record..." : "Register Vendor"} 
+          {loading ? "Saving record..." : "Register stockist"} 
           </button>
         </div>
             </form>
           </section>
         </Box>
       </Modal>
+      <OrderTable/>
     </section>
   );
 };
 
-export default Vendors;
+export default Stockists;
