@@ -176,7 +176,7 @@ const OrderDetails = () => {
                         </div>
                       </TableCell>
                       <TableCell>&#x20A6;{currency(ord?.selling_price)}</TableCell>
-                      <TableCell>&#x20A6;{currency(ord?.pivot.total)}</TableCell>
+                      <TableCell>&#x20A6;{ord?.pivot.total}</TableCell>
                       <TableCell>
                         <span
                           className="capitalize badge c-chalk"

@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/config";
 import Toast from "../../utils/Toast";
-import currency from "../../utils/formatCurrency";
 import Loading from "../../utils/loading";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -175,8 +174,8 @@ const OrderDetails = () => {
                           <p>{ord?.pivot?.quantity} </p>
                         </div>
                       </TableCell>
-                      <TableCell>&#x20A6;{currency(ord?.selling_price)}</TableCell>
-                      <TableCell>&#x20A6;{currency(ord?.pivot.total)}</TableCell>
+                      <TableCell>&#x20A6;{ord?.selling_price}</TableCell>
+                      <TableCell>&#x20A6;{ord?.pivot.total}</TableCell>
                       <TableCell>
                         <span
                           className="capitalize badge c-chalk"
@@ -235,13 +234,11 @@ const OrderDetails = () => {
           <div className=" right flex flex-col g-20 w-400">
             <div className="flex flex-col g-20">
               <p className="bold" style={{
-                    fontSize: 20,
-                    color: '#1a3e9c',
-                    borderBottom: 'thin dashed #c3c3c3',
-                    paddingBottom: 11
-              }}>
-                Summary
-                </p>
+                    font-size: 20px;
+                    color: #1a3e9c;
+                    border-bottom: thin dashed grey;
+                    padding-bottom: 11px;
+              }}>Summary</p>
               <div className=" flex g-5 img-detail underline j-spbtween">
                 <p className="bold">Order Status</p>
                 <span className="badge c-chalk" style={{ 
@@ -272,7 +269,7 @@ const OrderDetails = () => {
                 </p>
               </div>
               <div className=" flex g-5 img-detail underline j-spbtween">
-                <p className="bold"> Total Product Cost</p>
+                <p className="bold">Product Total Cost</p>
                 <p>&#x20A6;{order?.total_amount}</p>
               </div>
               <div className=" flex g-5 img-detail underline j-spbtween">
@@ -294,8 +291,6 @@ const OrderDetails = () => {
                   {order?.customer?.fname} {order?.customer?.lname}
                 </p>
               </div>
-              {user.accountType !== "vendor" && (
-                <>
               <div className=" flex g-5 img-detail underline j-spbtween">
                 <p className="bold"> Telephone</p>
                 <p>{order?.customer?.phone}</p>
@@ -306,12 +301,9 @@ const OrderDetails = () => {
                   {order?.customer?.address}
                 </p>
               </div>
-              </>
-              )}
             </div>
 
             <div className="backshadow flex flex-col g-5">
-              {user.accountType !== "stockist" && (
               <div
                 className="flex track-btn all-center "
                 onClick={() => handleTabChange("billing")}
@@ -319,7 +311,6 @@ const OrderDetails = () => {
                 <LocalShippingOutlinedIcon />
                 <p>Track order</p>
               </div>
-              )}
             </div>
           </div>
         </div>

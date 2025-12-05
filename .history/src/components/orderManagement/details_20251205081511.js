@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/config";
 import Toast from "../../utils/Toast";
-import currency from "../../utils/formatCurrency";
 import Loading from "../../utils/loading";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -175,8 +174,8 @@ const OrderDetails = () => {
                           <p>{ord?.pivot?.quantity} </p>
                         </div>
                       </TableCell>
-                      <TableCell>&#x20A6;{currency(ord?.selling_price)}</TableCell>
-                      <TableCell>&#x20A6;{currency(ord?.pivot.total)}</TableCell>
+                      <TableCell>&#x20A6;{ord?.selling_price}</TableCell>
+                      <TableCell>&#x20A6;{ord?.pivot.total}</TableCell>
                       <TableCell>
                         <span
                           className="capitalize badge c-chalk"
@@ -272,7 +271,7 @@ const OrderDetails = () => {
                 </p>
               </div>
               <div className=" flex g-5 img-detail underline j-spbtween">
-                <p className="bold"> Total Product Cost</p>
+                <p className="bold">Product Total Cost</p>
                 <p>&#x20A6;{order?.total_amount}</p>
               </div>
               <div className=" flex g-5 img-detail underline j-spbtween">
@@ -294,8 +293,6 @@ const OrderDetails = () => {
                   {order?.customer?.fname} {order?.customer?.lname}
                 </p>
               </div>
-              {user.accountType !== "vendor" && (
-                <>
               <div className=" flex g-5 img-detail underline j-spbtween">
                 <p className="bold"> Telephone</p>
                 <p>{order?.customer?.phone}</p>
@@ -306,8 +303,6 @@ const OrderDetails = () => {
                   {order?.customer?.address}
                 </p>
               </div>
-              </>
-              )}
             </div>
 
             <div className="backshadow flex flex-col g-5">

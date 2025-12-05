@@ -15,7 +15,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import currency from "../../utils/formatCurrency";
 import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import { Chart, ArcElement } from "chart.js";
