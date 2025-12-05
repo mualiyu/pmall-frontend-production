@@ -46,80 +46,47 @@ const OrderDetails = () => {
         product_id: parseInt(orderState?.pivot?.product_id),
       };
     // 👉 Check if the selected status is "push-to-stockist"
-    if (selectedStatus === "push-to-stockist") {
-      try {
-        const response = await fetch(`${BASE_URL}/orders/push`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            Accept: "application/json",
-            Authorization: "Bearer " + user?.token,
-          },
-          body: JSON.stringify(requestBody),
-        });
-  
-        const result = await response.json();
-        setLoading(false);
-        if (result.status) {
-          setToast({
-            message: `Successful!... ${result.message}`,
-            type: "success",
-          });
-          setTimeout(() => setToast(null), 5000);
-          getProductDetails();
-          console.log("Pushing Result:", result);
-        } else {
-          setToast({ message: `Failed!... ${result.message}`, type: "error" });
-          setStatuses("");
-          setTimeout(() => setToast(null), 5000);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        setToast({ message: `Failed... ${error}`, type: "error" });
-        setTimeout(() => setToast(null), 5000);
-        setLoading(false);
-        setStatuses("");
-        return false; //  failed
-      }
-    } 
-    
-    if (selectedStatus === "deliver-to-stockist") {
-      try {
-        const response = await fetch(`${BASE_URL}/orders/delivertostockist`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            Accept: "application/json",
-            Authorization: "Bearer " + user?.token,
-          },
-          body: JSON.stringify(requestBody),
-        });
-  
-        const result = await response.json();
-        setLoading(false);
-        if (result.status) {
-          setToast({
-            message: `Successful!... ${result.message}`,
-            type: "success",
-          });
-          setTimeout(() => setToast(null), 5000);
-          getProductDetails();
-          console.log("Delivered Result:", result);
-        } else {
-          setToast({ message: `Failed!... ${result.message}`, type: "error" });
-          setStatuses("");
-          setTimeout(() => setToast(null), 5000);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        setToast({ message: `Failed... ${error}`, type: "error" });
-        setTimeout(() => setToast(null), 5000);
-        setLoading(false);
-        setStatuses("");
-        return false; //  failed
-      }
-    } 
+    if (selectedStatus == "push-to-stockist") {
+      console.log("No action taken... Status not push-to-stockist");
+      return;
+    }
 
+    
+
+    try {
+      const response = await fetch(`${BASE_URL}/orders/push`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + user?.token,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const result = await response.json();
+      setLoading(false);
+      if (result.status) {
+        setToast({
+          message: `Successful!... ${result.message}`,
+          type: "success",
+        });
+        setTimeout(() => setToast(null), 5000);
+        getProductDetails();
+        console.log("Pushing Result:", result);
+      } else {
+        setToast({ message: `Failed!... ${result.message}`, type: "error" });
+        setStatuses("");
+        setTimeout(() => setToast(null), 5000);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setToast({ message: `Failed... ${error}`, type: "error" });
+      setTimeout(() => setToast(null), 5000);
+      setLoading(false);
+      setStatuses("");
+      return false; //  failed
+    }
     setLoading(false);
   };
 

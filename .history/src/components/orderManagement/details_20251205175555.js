@@ -104,7 +104,7 @@ const OrderDetails = () => {
           });
           setTimeout(() => setToast(null), 5000);
           getProductDetails();
-          console.log("Delivered Result:", result);
+          console.log("Pushing Result:", result);
         } else {
           setToast({ message: `Failed!... ${result.message}`, type: "error" });
           setStatuses("");
