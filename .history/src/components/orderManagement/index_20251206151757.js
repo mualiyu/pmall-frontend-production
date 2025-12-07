@@ -111,11 +111,10 @@ const OrderManagement = () => {
     [navigate]
   );
 
-  // Mark Order as paid or unpaid Admin Routes only
-  const handleOrderPaymentStatus = async( orderStatus, e)=> {
+  const handleOrderPaymentStatus = async( ordx, e)=> {
     setLoading(true);
     const selectedStatus = e?.target?.value;
-    console.log("Order:", orderStatus);
+    console.log("Order:", ordx);
     console.log("Selected Status:", selectedStatus);
 
     const requestBody = {
@@ -123,8 +122,9 @@ const OrderManagement = () => {
     };
   
     try {
-      const response = await fetch(`${BASE_URL}/sales/updatepayment/${orderStatus?.id}`, {
-        method: "POST",
+      // sales/updatepayment/{saleId}
+      const response = await fetch(`${BASE_URL}/sales/updatepayment/${ordx?.pivot?.sale_id}/`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           Accept: "application/json",

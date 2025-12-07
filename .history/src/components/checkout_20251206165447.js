@@ -254,12 +254,12 @@ const CheckoutPage = () => {
             console.log("Checkout Result:", result);
     
             if (!result.status) {
-                setToast({ message: `Checkout initiation failed: ${result.message}`, type: "error" });
+                setToast({ message: `1Checkout initiation failed: ${result.message}`, type: "error" });
                 if(result?.message?.stockist_id) {
                     setToast({ message: `Select a Pickup Location`, type: "error" });
                 }
             setTimeout(() => setToast(null), 5000);
-                console.error("Checkout initiation failed:", result);
+                console.error("2Checkout initiation failed:", result);
                 return false;
             }
             setToast({ message: "Product(s) mapped to user... Initiating payment...", type: "warning" });

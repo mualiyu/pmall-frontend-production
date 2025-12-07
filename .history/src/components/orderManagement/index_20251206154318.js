@@ -123,7 +123,8 @@ const OrderManagement = () => {
     };
   
     try {
-      const response = await fetch(`${BASE_URL}/sales/updatepayment/${orderStatus?.id}`, {
+      // sales/updatepayment/{saleId}
+      const response = await fetch(`${BASE_URL}/sales/updatepayment/${orderStatus?.product[0]?.pivot?.id}/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",

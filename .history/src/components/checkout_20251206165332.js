@@ -255,7 +255,7 @@ const CheckoutPage = () => {
     
             if (!result.status) {
                 setToast({ message: `Checkout initiation failed: ${result.message}`, type: "error" });
-                if(result?.message?.stockist_id) {
+                if(result.message?.stockist_id) {
                     setToast({ message: `Select a Pickup Location`, type: "error" });
                 }
             setTimeout(() => setToast(null), 5000);

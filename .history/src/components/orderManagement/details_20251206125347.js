@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/config";
 import Toast from "../../utils/Toast";
-import ButtonLoader from "../../utils/buttonLoader";
 import currency from "../../utils/formatCurrency";
 import Loading from "../../utils/loading";
 import Table from "@mui/material/Table";
@@ -30,18 +29,18 @@ const OrderDetails = () => {
   // const order = location?.state?.order;
   const [activeTab, setActiveTab] = React.useState("cart");
   const [order, setOrder] = useState(location?.state?.order);
-  const [receiving, setReceiving] = useState(false);
   const { user, setUser } = useUser();
   const [toast, setToast] = useState(null);
   const [statuses, setStatuses] = useState("");
   const [loading, setLoading] = useState(false);
 
 
-  const handleReceive = async(ordx, e)=> {
+  const receiveProduct = async(e)=> {
     console.log(e.target.value);
+console.log(`${BASE_URL}/order/${order.id}/${e.target.value}`);
+    // order/{orderID}/received
     try {
-      setReceiving(true);
-      const response = await fetch(`${BASE_URL}/order/${ordx?.order?.id}/${e.target.value}`, {
+      const response = await fetch(`${BASE_URL}/order/${order.id}/${e.target.value}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -49,30 +48,29 @@ const OrderDetails = () => {
           Authorization: "Bearer " + user?.token,
         },
       });
+
       const result = await response.json();
-      // setLoading(false);
+      setLoading(false);
       console.log(result);
-      if (result.status) {
-        setToast({
-          message: `Successful!... ${result.message}`,
-          type: "success",
-        });
-        setReceiving(false);
-        setTimeout(() => setToast(null), 5000);
-        getProductDetails();
-      } else {
-        setToast({ message: `Failed!... ${result.message}`, type: "error" });
-        setStatuses("");
-        setReceiving(false);
-        setTimeout(() => setToast(null), 5000);
-      }
+      // if (result.status) {
+      //   setToast({
+      //     message: `Successful!... ${result.message}`,
+      //     type: "success",
+      //   });
+      //   setTimeout(() => setToast(null), 5000);
+      //   getProductDetails();
+      //   console.log("Pushing Result:", result);
+      // } else {
+      //   setToast({ message: `Failed!... ${result.message}`, type: "error" });
+      //   setStatuses("");
+      //   setTimeout(() => setToast(null), 5000);
+      // }
     } catch (error) {
       console.error("Error:", error);
       setToast({ message: `Failed... ${error}`, type: "error" });
       setTimeout(() => setToast(null), 5000);
-      // setLoading(false);
+      setLoading(false);
       setStatuses("");
-      setReceiving(false);
       return false; //  failed
     }
   }
@@ -87,7 +85,6 @@ const OrderDetails = () => {
         sale_id: parseInt(orderState?.pivot?.sale_id),
         product_id: parseInt(orderState?.pivot?.product_id),
       };
-      console.log(selectedStatus);
     // 👉 Check if the selected status is "push-to-stockist"
     if (selectedStatus === "push-to-stockist") {
       try {
@@ -177,8 +174,8 @@ const OrderDetails = () => {
 
   const getProductDetails = () => {
     setLoading(true);
-    let determinWhoseOrder = user?.accountType === "Stockist" ? `stockist/order/${order?.id}` : `vendor/order/${order?.id}`;
-    fetch(`${BASE_URL}/${determinWhoseOrder}`, {
+    // let determinWhoseOrder = user.accountType === "Stockist" ? "stockist/allorder" : "sales/vendorsales";
+    fetch(`${BASE_URL}/order/${order?.id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -296,21 +293,14 @@ const OrderDetails = () => {
                           </select>
                         </TableCell>
                       )}
-                      
-                      <TableCell>
-  {user.accountType=== "Stockist" && ord?.order?.status == "Awaiting\u00a0Confirmation" && (
-    <button
-      onClick={(e) => handleReceive(ord, e)}
-      disabled={receiving}
-      value="received"
-      className="btn btn-warning p-25"
-    >
-      {receiving ? <ButtonLoader /> : "Receive"}
-    </button>
-  )}
-</TableCell>
-
-                       
+                      {user?.accountType === "Stockist" &&
+                        ord?.order?.status === "deliver_to_stockist" && (
+                          <TableCell>
+                            <button onClick={(e) => receiveProduct(e)} value="received" class="btn btn-warning p-25">
+                              Receive
+                            </button>
+                          </TableCell>
+                        )}
                     </TableRow>
                   ))}
                 </TableBody>

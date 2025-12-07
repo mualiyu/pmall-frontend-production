@@ -38,7 +38,7 @@ const OrderDetails = () => {
 
 
   const handleReceive = async(ordx, e)=> {
-    console.log(e.target.value);
+    console.log(e.target.value)
     try {
       setReceiving(true);
       const response = await fetch(`${BASE_URL}/order/${ordx?.order?.id}/${e.target.value}`, {
@@ -302,7 +302,6 @@ const OrderDetails = () => {
     <button
       onClick={(e) => handleReceive(ord, e)}
       disabled={receiving}
-      value="received"
       className="btn btn-warning p-25"
     >
       {receiving ? <ButtonLoader /> : "Receive"}

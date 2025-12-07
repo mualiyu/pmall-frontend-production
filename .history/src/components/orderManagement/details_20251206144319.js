@@ -302,7 +302,6 @@ const OrderDetails = () => {
     <button
       onClick={(e) => handleReceive(ord, e)}
       disabled={receiving}
-      value="received"
       className="btn btn-warning p-25"
     >
       {receiving ? <ButtonLoader /> : "Receive"}

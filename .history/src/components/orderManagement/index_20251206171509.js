@@ -201,7 +201,7 @@ const OrderManagement = () => {
   
     try {
       const response = await fetch(`${BASE_URL}/order/${orderStatus?.id}/status`, {
-        method: "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           Accept: "application/json",

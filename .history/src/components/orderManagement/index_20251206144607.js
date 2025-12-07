@@ -111,59 +111,10 @@ const OrderManagement = () => {
     [navigate]
   );
 
-  // Mark Order as paid or unpaid Admin Routes only
-  const handleOrderPaymentStatus = async( orderStatus, e)=> {
-    setLoading(true);
-    const selectedStatus = e?.target?.value;
-    console.log("Order:", orderStatus);
-    console.log("Selected Status:", selectedStatus);
-
-    const requestBody = {
-      status: selectedStatus
-    };
-  
-    try {
-      const response = await fetch(`${BASE_URL}/sales/updatepayment/${orderStatus?.id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Accept: "application/json",
-          Authorization: "Bearer " + user?.token,
-        },
-        body: JSON.stringify(requestBody),
-      });
-  
-      const result = await response.json();
-      setLoading(false);
-      if(result.status) {
-        setToast({ message: `Successful!... ${result.message}`, type: "success" });
-          setTimeout(() => setToast(null), 5000);
-          getMyOrder();
-      console.log("Upating Order:", result);
-      }else {
-        setToast({ message: `Failed!... ${result.message}`, type: "error" });
-        setOrderStatus("");
-        setTimeout(() => setToast(null), 5000);
-    console.log("Error Upating Order:", result);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setToast({ message: `Failed... ${error}`, type: "error" });
-          setTimeout(() => setToast(null), 5000);
-          setLoading(false);
-          setOrderStatus("");
-          return false; //  failed
-    }
-    setLoading(false);
-  }
 
   const getMyOrder = async () => {
     setLoading(true);
-    console.log(user);
-  let determinWhoseOrder = 
-  user.accountType === "Stockist" ? "stockist/allorder" : 
-  user.accountType === "Vendor" ? "sales/vendorsales" : 
-  user.accountType === "Admin" ? "sales" : "";
+  let determinWhoseOrder = user.accountType === "Stockist" ? "stockist/allorder" : "sales/vendorsales";
   console.log(determinWhoseOrder);
     try {
       const response = await fetch(`${BASE_URL}/${determinWhoseOrder}`, {
@@ -362,22 +313,31 @@ useEffect(()=>{
                     <option value="cancelled">Cancelled</option>
                     <option value="confirmed">Confirmed</option>
                     <option value="delivered">Delivered</option>
+                    <option value="paid">Paid</option>
+                    <option value="not-paid">Not Paid</option>
                     <option value="Customer Did not Answer Call">Customer Didn't Answer Call</option>
                 </select>
           </>
                    )} 
 
-            {user?.accountType === 'Admin' && (
+{user?.accountType === 'Stockist' && (
                  <>
                   <select
-                      name="mark_order"
+                      name="pickup_location"
                       className="last-name form-control"
                       value={orderStatus}
-                      onChange={(e) => handleOrderPaymentStatus(order, e)}
+                      onChange={(e) => handleOrderStatus(order, e)}
                       style={{marginTop: 4, textTransform: 'capitalize', width: '60%'}}>
                     <option value="">Manage Order</option>
+                    <option value="out_for_delivery">Out for Delivery</option>
+                    <option value="packaging">Packaging</option>
+                    <option value="returned">Returned</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="delivered">Delivered</option>
                     <option value="paid">Paid</option>
                     <option value="not-paid">Not Paid</option>
+                    <option value="Customer Did not Answer Call">Customer Didn't Answer Call</option>
                 </select>
           </>
                    )} 

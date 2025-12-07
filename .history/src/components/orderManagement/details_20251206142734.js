@@ -37,8 +37,8 @@ const OrderDetails = () => {
   const [loading, setLoading] = useState(false);
 
 
-  const handleReceive = async(ordx, e)=> {
-    console.log(e.target.value);
+  const receiveProduct = async(ordx, e)=> {
+    
     try {
       setReceiving(true);
       const response = await fetch(`${BASE_URL}/order/${ordx?.order?.id}/${e.target.value}`, {
@@ -297,19 +297,20 @@ const OrderDetails = () => {
                         </TableCell>
                       )}
                       
-                      <TableCell>
-  {user.accountType=== "Stockist" && ord?.order?.status == "Awaiting\u00a0Confirmation" && (
+                          <TableCell>
+                            {user?.accountType === "Stockist" &&
+  (ord?.order?.status === "Awaiting Confirmation" )) && (
     <button
-      onClick={(e) => handleReceive(ord, e)}
+      onClick={(e) => receiveProduct(ord, e)}
       disabled={receiving}
       value="received"
       className="btn btn-warning p-25"
     >
       {receiving ? <ButtonLoader /> : "Receive"}
     </button>
-  )}
-</TableCell>
+)}
 
+                          </TableCell>
                        
                     </TableRow>
                   ))}

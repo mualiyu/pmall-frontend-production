@@ -111,8 +111,7 @@ const OrderManagement = () => {
     [navigate]
   );
 
-  // Mark Order as paid or unpaid Admin Routes only
-  const handleOrderPaymentStatus = async( orderStatus, e)=> {
+  const handleOrderPaymentStatus = async( ordx, e)=> {
     setLoading(true);
     const selectedStatus = e?.target?.value;
     console.log("Order:", orderStatus);
@@ -123,8 +122,9 @@ const OrderManagement = () => {
     };
   
     try {
-      const response = await fetch(`${BASE_URL}/sales/updatepayment/${orderStatus?.id}`, {
-        method: "POST",
+      // sales/updatepayment/{saleId}
+      const response = await fetch(`${BASE_URL}/sales/updatepayment/${ordx?.pivot?.sale_id}/`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           Accept: "application/json",
@@ -159,11 +159,8 @@ const OrderManagement = () => {
 
   const getMyOrder = async () => {
     setLoading(true);
-    console.log(user);
-  let determinWhoseOrder = 
-  user.accountType === "Stockist" ? "stockist/allorder" : 
-  user.accountType === "Vendor" ? "sales/vendorsales" : 
-  user.accountType === "Admin" ? "sales" : "";
+  let determinWhoseOrder = user.accountType === "Stockist" ? "stockist/allorder" : 
+  user.accountType === "Vendor" ? "sales/vendorsales" : user.accountType === "Admin" ? "sales/vendorsales" : """;
   console.log(determinWhoseOrder);
     try {
       const response = await fetch(`${BASE_URL}/${determinWhoseOrder}`, {
