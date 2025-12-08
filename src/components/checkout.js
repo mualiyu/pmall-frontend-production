@@ -662,21 +662,7 @@ setLoading(true);
                                             value={formDetails.lga}
                                             onChange={handleInputChange}  />
                                 </div>
-                                <div className="form-group w-full">
-                                    <label>Select Product Pick Up Station</label>
-                                    <select
-                                            name="stockist_id"
-                                            className="last-name form-control"
-                                            onChange={onChangeHandler}>
-                                            <option>Select a Package</option>
-                                            {
-                                                stockists?.map((stockist)=>(
-                                                <option value={stockist.id}>{stockist.name} </option>
-                                                ))
-                                            }
-                                        </select>
-                                    
-                                </div>
+                               
                                 </div>
                                 <div className="flex g-10">
                                     <div className="form-group w-full">

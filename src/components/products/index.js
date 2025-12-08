@@ -13,6 +13,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import {compressImage} from "../../utils/compressImage";
+import {resizeImage} from "../../utils/resizeImage";
 import Paper from "@mui/material/Paper";
 import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
@@ -1176,45 +1178,53 @@ console.log(user?.accountType)
                 }
                 <div className="pos-rel w100-m10 ">
                   <input
-                    type="file"
-                    className="form-control-input no-border"
-                    name="file"
-                    accept=".jpg,.png,.jpeg"
-                    onChange={(e) => {
-                      // if (selectedName == "") {
-                      //   setAlert("Please Select a file name");
-                      //   return;
-                      // }
-                      const formData = new FormData();
-                      const files = e.target.files;
-                      files?.length && formData.append("file", files[0]);
-                      //setLoading(true);
-                      fetch(
-                        `${BASE_URL}/products/upload-file`,
-                        {
-                          method: "POST",
-                          body: formData,
-                          headers: {
-                            Authorization: "Bearer " + localStorage.getItem("authToken"),
-                          },
-                        }
-                      )
-                        .then((res) => res.json())
-                        .then((data) => {
-                          //setLoading(false);
-                          console.log(data)
-                          setState((inputValues) => ({
-                            ...inputValues,
-                            image: data.url, 
-                          }))
-                          console.log(inputValues)
-                        })
-                        .catch((error) => {
-                          //setLoading(false);
-                          console.log(error)
-                        });
-                    }}
-                  />
+  type="file"
+  className="form-control-input no-border"
+  name="file"
+  accept=".jpg,.png,.jpeg"
+  onChange={async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      // Step 1: Resize
+      const resizedBlob = await resizeImage(file, 800, 800);
+
+      // Step 2: Compress
+      const compressedBlob = await compressImage(resizedBlob, 0.7);
+
+      // Step 3: Convert to File to send
+      const finalFile = new File([compressedBlob], file.name, {
+        type: "image/jpeg",
+      });
+
+      // Step 4: Prepare FormData
+      const formData = new FormData();
+      formData.append("file", finalFile);
+
+      // Optional: Show preview before upload
+      const previewUrl = URL.createObjectURL(finalFile);
+      setState((prev) => ({ ...prev, preview: previewUrl }));
+
+      // Step 5: Upload
+      const res = await fetch(`${BASE_URL}/products/upload-file`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        },
+      });
+
+      const data = await res.json();
+
+      setState((prev) => ({ ...prev, image: data.url }));
+      console.log("Uploaded image URL:", data.url);
+    } catch (err) {
+      console.error("Upload error:", err);
+    }
+  }}
+/>
+
                 </div>
               </div>
             </div>
@@ -1374,39 +1384,65 @@ console.log(user?.accountType)
                 <div className="pos-rel w100-m10 ">
                   <label>More Images 1</label>
                   <input
-                    type="file"
-                    className="form-control-input no-border"
-                    name="more_images"
-                    accept=".jpg,.png,.jpeg"
-                    onChange={(e) => {
-                      const formData = new FormData();
-                      const files = e.target.files;
-                      files?.length && formData.append("file", files[0]);
-                      //setLoading(true);
-                      fetch(
-                        `${BASE_URL}/products/upload-file`,
-                        {
-                          method: "POST",
-                          body: formData,
-                          headers: {
-                            Authorization: "Bearer " + localStorage.getItem("authToken"),
-                          },
-                        }
-                      )
-                        .then((res) => res.json())
-                        .then((data) => {
-                          setLoading(false);
-                          console.log(data)
-                          setMoreImages([...moreImages, data.url])
-                          console.log(moreImages)
-                        })
-                        .catch((error) => {
-                          setLoading(false);
-                          console.log(error)
-                        });
-                    }}
-                    multiple
-                  />
+  type="file"
+  className="form-control-input no-border"
+  name="more_images"
+  accept=".jpg,.png,.jpeg"
+  multiple
+  onChange={async (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+
+    try {
+      setLoading(true);
+
+      const uploadedUrls = [];
+
+      for (let file of files) {
+        // Step 1: Resize
+        const resizedBlob = await resizeImage(file, 800, 800);
+
+        // Step 2: Compress
+        const compressedBlob = await compressImage(resizedBlob, 0.7);
+
+        // Step 3: Convert to File
+        const finalFile = new File([compressedBlob], file.name, {
+          type: "image/jpeg",
+        });
+
+        // Step 4: Optional preview (if needed)
+        const previewUrl = URL.createObjectURL(finalFile);
+        // You could store previews in state if you want to show before upload
+        // setMoreImagesPreviews((prev) => [...prev, previewUrl]);
+
+        // Step 5: Prepare FormData
+        const formData = new FormData();
+        formData.append("file", finalFile);
+
+        // Step 6: Upload
+        const res = await fetch(`${BASE_URL}/products/upload-file`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("authToken"),
+          },
+        });
+
+        const data = await res.json();
+        uploadedUrls.push(data.url);
+      }
+
+      // Step 7: Update state with all uploaded URLs
+      setMoreImages((prev) => [...prev, ...uploadedUrls]);
+      console.log("Uploaded images:", uploadedUrls);
+    } catch (err) {
+      console.error("Upload error:", err);
+    } finally {
+      setLoading(false);
+    }
+  }}
+/>
+
                 </div>
                 <div className="pos-rel w100-m10 ">
                   <label>More Images 2</label>

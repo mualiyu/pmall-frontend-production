@@ -21,6 +21,8 @@ const ProductGrid = ({ categoryId = null }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cartMessage, setCartMessage] = useState("");
+  const [visibleProducts, setVisibleProducts] = useState({});
+const PRODUCTS_PER_LOAD = 8;
 
   const backgroundColors = ["#191970", "#6A5ACD", "#4169E1", "#008080"];
 
@@ -71,6 +73,9 @@ const ProductGrid = ({ categoryId = null }) => {
     }
   }, [categoryId]); 
 
+ 
+
+
   const shuffleArray = (array) => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -80,6 +85,13 @@ const ProductGrid = ({ categoryId = null }) => {
     return shuffled;
   };
   
+   const shuffledProductsByCategory = useMemo(() => {
+  const result = {};
+  Object.keys(productsByCategory).forEach((catId) => {
+    result[catId] = shuffleArray(productsByCategory[catId] || []);
+  });
+  return result;
+}, [productsByCategory]);
 
   useEffect(() => {
     fetchCategoriesAndProducts();
@@ -163,7 +175,7 @@ const ProductGrid = ({ categoryId = null }) => {
             </div>
             <div className="flex justsb g-10 m-pd-0" style={{ padding: "25px", marginTop: 15, marginBottom: 15 }}>
               <div className="row">
-              {(shuffleArray(productsByCategory[category.id] || []).slice(0, 8)).map((product) => (
+              {(shuffledProductsByCategory[category.id] || []).slice(0, 16).map((product) => (
                   <div className="col-sssm-2 col-md-6 col-lg-3 col-xl-3 product-cart-wrap" style={{ margin: "20px 9px" }} key={product.id}>
                     <div className="product-badges product-badges-position product-badges-mrg">
                       <span className="hot">NEW</span>
@@ -176,6 +188,7 @@ const ProductGrid = ({ categoryId = null }) => {
                           className="product__image"
                           style={{ width: 150, objectFit: "cover" }}
                           onError={(e) => (e.target.src = "/default-image.jpg")}
+                          loading="lazy"
                         />
                       </Link>
                       <Link to={`/product/${product.id}`} className="no__underline">
