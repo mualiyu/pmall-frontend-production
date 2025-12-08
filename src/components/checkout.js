@@ -414,13 +414,8 @@ const CheckoutPage = () => {
 
 
     useEffect(()=>{ 
-<<<<<<< HEAD
         getCart();
         getStockist();
-=======
-        getCart()
-        getStockistLocation();
->>>>>>> 77be6e43e24b8765f85dfb51d9bfc5846765695e
         return;
     },[])
 
