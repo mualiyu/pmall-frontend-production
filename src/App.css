@@ -211,7 +211,7 @@
   justify-content: space-between;
 }
 .badge {
-  padding: 0.25em 0.4em;
+  padding: 0.4em 1em;
   border-radius: 0.25rem;
   text-align: center;
   line-height: 1;
@@ -755,7 +755,7 @@ thead {
   text-align: left !important;
   /* font-weight: 600!important; */
   padding: 15px !important;
-  font-size: 12px !important;
+  font-size: 0.9rem !important;
   color: #505b68 !important;
   font-weight: 900 !important;
 }
@@ -1155,7 +1155,7 @@ h1 {
   color: inherit;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 500;
-  font-size: 0.7rem!important;
+  font-size: 0.9rem!important;
   line-height: 1.25;
   letter-spacing: 0.02857em;
   text-transform: uppercase;

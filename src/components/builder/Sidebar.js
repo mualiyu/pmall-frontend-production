@@ -105,6 +105,11 @@ function Sidebar() {
             user?.accountType === "Affiliate") && (
               <>
             <SidebarRow
+              path="/app/stockist"
+              Icon={GroupsIcon}
+              title="Stockist Management"
+            />
+            <SidebarRow
               path="/app/vendors"
               Icon={GroupsIcon}
               title="Vendor Resources"

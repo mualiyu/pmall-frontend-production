@@ -111,6 +111,7 @@ const OrderManagement = () => {
     [navigate]
   );
 
+
   // Mark Order as paid or unpaid Admin Routes only
   const handleOrderPaymentStatus = async( orderStatus, e)=> {
     setLoading(true);
@@ -156,6 +157,15 @@ const OrderManagement = () => {
     }
     setLoading(false);
   }
+
+
+  const getProcessedCount = (products) => {
+    if (!products) return 0;
+    return products.filter(
+      (p) => p?.order?.status === "pushed" || p?.order?.status === "received"
+    ).length;
+  };
+
 
   const getMyOrder = async () => {
     setLoading(true);
@@ -319,7 +329,11 @@ useEffect(()=>{
               <TableBody>
               { allOrders
                   ?.filter(order => order?.stockist_id) // only orders with a stockist id
-                  .map((order, i) => (
+                  .map((order, i) => {
+                    const shouldShowDropdown =
+                      user?.accountType === "Stockist" &&
+                      getProcessedCount(order?.products) === order?.products?.length;
+                    return (
                 <TableRow key={order?.id} style={{textTransform: 'capitalize'}}>
                   <TableCell> 
                   {moment(order.created_at).format("ll")} @{" "}
@@ -329,12 +343,20 @@ useEffect(()=>{
                   {user.accountType !== "Stockist" && (
                   <TableCell>{order?.stockist?.name}</TableCell>
                   )}
-                  <TableCell> 0/{order?.products?.length} </TableCell>
+
+                 <TableCell style={{textTransform: "lowercase"}}>
+                   {user.accountType === "Stockist" && (
+                      <>
+                       {getProcessedCount(order?.products)} of &nbsp; 
+                      </>
+                    )}
+                    {order?.products?.length || 0}
+                  </TableCell>
                   <TableCell> {currency(order?.total_amount)}</TableCell>
                   <TableCell> {order?.customer?.fname} {order?.customer?.lname} </TableCell>
 
                   <TableCell>
-                    <span className="badge bg-success">{order?.payment_status}</span>  
+                    <span className="badge bg-success">{order?.payment_status === "" ? "Pending" : order?.payment_status}</span>  
                     </TableCell>
                   <TableCell>
                     <span className="badge bg-error">{order.status}</span>
@@ -343,18 +365,21 @@ useEffect(()=>{
 
                   <TableCell style={{ display: 'flex',
                                       alignItems: 'center',
-                                      justifyContent: 'space-around'}}> 
+                                      justifyContent: shouldShowDropdown ? "space-between" : "flex-start",
+                                      gap: 8,}}> 
                   <button  onClick={() => handleViewOrder(order)}  class="btn btn-primary p-25" style={{width: '30%'}}>
-                    View Details
+                     Details
                   </button>
-                  {user?.accountType === 'Stockist' && (
-                 <>
+                  {user?.accountType === "Stockist" &&
+                    getProcessedCount(order?.products) === (order?.products?.length || 0) && (
+                  <>
                   <select
                       name="pickup_location"
                       className="last-name form-control"
                       value={orderStatus}
                       onChange={(e) => handleOrderStatus(order, e)}
-                      style={{marginTop: 4, textTransform: 'capitalize', width: '60%'}}>
+                      style={{marginTop: 18, textTransform: 'capitalize', width: '60%', height: 37,
+                      padding: 10}}>
                     <option value="">Manage Order</option>
                     <option value="out_for_delivery">Out for Delivery</option>
                     <option value="packaging">Packaging</option>
@@ -362,7 +387,7 @@ useEffect(()=>{
                     <option value="cancelled">Cancelled</option>
                     <option value="confirmed">Confirmed</option>
                     <option value="delivered">Delivered</option>
-                    <option value="Customer Did not Answer Call">Customer Didn't Answer Call</option>
+                    <option value="customer_did_not_answer">Customer Didn't Answer Call</option>
                 </select>
           </>
                    )} 
@@ -383,7 +408,8 @@ useEffect(()=>{
                    )} 
                   </TableCell>
                 </TableRow>
-              ))}
+                    )}
+              )}
                 
               </TableBody>
             </Table>

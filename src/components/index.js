@@ -12,6 +12,7 @@ import MobileNav from "./builder/MobileNav";
 import Products from "./products";
 import Users from "./users";
 import Vendors from "./vendors";
+import Stockist from "./stockist";
 import Header from "./builder/Header";
 import Footer from "./builder/Footer";
 import OrderManagement from "./orderManagement";
@@ -129,6 +130,7 @@ function Layout() {
               <Route path="/app/users" element={<Users />} />
               <Route path="/app/users/details" element={<UserDetails />} />
               <Route path="/app/vendors" element={<Vendors />} />
+              <Route path="/app/stockist" element={<Stockist />} />
               <Route path="/app/order-management" element={<OrderManagement />} />
               <Route path="/app/vendors/details" element={<VendorDetails />} />
               <Route path="/app/transaction-history" element={<TransactionHistory />} />
