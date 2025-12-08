@@ -96,10 +96,6 @@ return (
                                         <p className="bold"> {`Hello ${user?.fname}`} </p>
                                         <p className="fw-400">Manage Account</p>
                                         </div>
-                                        
-                                {/* <span style={{color: 'rebeccapurple'}}>
-                                Manage Account
-                                </span> */}
                              </button>
                             <div className="myaccount_menu">
                                 <div className="flex justsb">
@@ -123,12 +119,44 @@ return (
                                 </div>
                                 </div>
                             ): (
-                                <Link to="/auth/sign-in" className="bold flex alc sb">
-                                        <PersonIcon className="lg-icon" />
-                                        <p>
-                                           <spanc className="no-display">Account</spanc> Login 
-                                        </p>
-                                    </Link>
+
+                                <>
+<div className="myaccount">
+                            <button className="myaccount_btn flex"> 
+                                <PersonIcon className="lg-icon" /> 
+                                <div className="text-left">
+                                        <span className="no-display">Account</span> Login 
+                                        </div>
+                             </button>
+                            <div className="myaccount_menu">
+                                <div className="flex justsb">
+                                    <div className="myaccount__main__menu">
+                                        <ul>
+                                            <Link to="/auth/customer/login" className="no-underline pointer">
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span>  Login as Customer</li>
+                                            </Link>
+                                            <Link to="/auth/stockist/login" className="no-underline pointer">
+                                            <li><span class="material-icons">keyboard_double_arrow_right</span> Login as Stockist</li>
+                                            </Link>
+                                            <Link to="/auth/sign-in" className="no-underline pointer">
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span> Login as Affiliate/Vendor </li>
+                                            </Link>
+                                            <Link to="/auth/sign-in" className="no-underline pointer">
+                                            <li> <span class="material-icons">keyboard_double_arrow_right</span>  Admin </li>
+                                            </Link>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                </div>
+                                </div>
+                                </>
+                                // <Link to="/auth/sign-in" className="bold flex alc sb">
+                                //         <PersonIcon className="lg-icon" />
+                                //         <p>
+                                //            <span className="no-display">Account</span> Login 
+                                //         </p>
+                                //     </Link>
                             )}
 
 

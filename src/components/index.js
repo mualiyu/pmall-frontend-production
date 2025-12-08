@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from
 import Affilates from "./affilates";
 import Login from "./auth/login";
 import StockistLogin from "./auth/StockistLogin";
+import CustomerLogin from "./auth/customerLogin";
 import NewPasswordPage from "./auth/newPasswordPage";
 import useNetworkStatus from '../hooks/useNetworkStatus';
 import ResetPassword from "./auth/passwordReset";
@@ -120,6 +121,7 @@ function Layout() {
           {/* Authentication Routes */}
           <Route path="/auth/sign-in" element={<Login />} />
           <Route path="/auth/stockist/login" element={<StockistLogin />} />
+          <Route path="/auth/customer/login" element={<CustomerLogin />} />
           <Route path="/auth/app/signup" element={<SignUp />} />
           <Route path="/auth/app/reset-account" element={<ResetPassword />} />
           <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
