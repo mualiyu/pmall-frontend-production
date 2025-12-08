@@ -162,7 +162,8 @@ const Stockist = () => {
         city : ""
       });
 			setTimeout(() => setToast(null), 9000);
-      // fetchVendors();
+      setToast({ message: "Stockist has been added successfully!", type: "success" });
+      fetchStockists();
       // Make Payment
       // window.location.href = result?.data?.payment.authorization_url;
     } catch (error) {
@@ -279,6 +280,10 @@ useEffect(()=> {
       <Modal
         open={newStockistModal}
         onClose={handleModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>

@@ -122,7 +122,9 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     console.log(loading);
     setLoading(true);
-    inputValues.device_name = 1234;
+    console.log(inputValues);
+    // inputValues.device_name = "192.168.0.116";
+    // console.log(inputValues);
     fetch(`${BASE_URL}/login`, {
       method: "POST",
       headers: {
@@ -145,6 +147,10 @@ export const AuthProvider = ({ children }) => {
             accountType: result.data.user.user_type,
             storeName: result.data.user.store_name,
             storeId: result.data.user.store_id,
+            wallet: result.data.user.wallet?.amount,
+            walletID: result.data.user.wallet?.id,
+            pmt: result.data.user.wallet?.pmt,
+            pv: result.data.user.wallet?.pv,
             loggedIn: true,
             fname: result.data.user.fname,
             lname: result.data.user.lname,

@@ -20,9 +20,6 @@ import { Chart, ArcElement } from "chart.js";
 // import Chip from "@mui/material/Chip";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-// import Autocomplete from "@mui/material/Autocomplete";
-// import TextField from "@mui/material/TextField";
-// import Stack from "@mui/material/Stack";
 import { useVendor } from "../../context/VendorSignupContext";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -202,6 +199,8 @@ const ProductList = () => {
   const handleEditCategoryModalClose = () => setEditCategoryModal(false);
   const handleEditSubCategoryModalClose = () => setEditSubCategoryModal(false);
   const handleEditBrandModalClose = () => setEditBrandModal(false);
+  const [selectedProduct, setSelectedProduct] = useState(null); 
+const [isEditMode, setIsEditMode] = useState(false);
   const navigate = useNavigate();
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -239,7 +238,9 @@ const ProductList = () => {
       console.log(inputValues)
     try {
       const response = await fetch(
-        `${BASE_URL}/products/create`, {
+        !isEditMode ? `${BASE_URL}/products/create` :
+        `${BASE_URL}/products/update/${selectedProduct.id}`, 
+        {
         method: 'POST',
         headers:{ 
           'Content-Type': 'application/json;charset=UTF-8', 
@@ -976,7 +977,14 @@ console.log(user?.accountType)
                     : <span className="badge">unpublished</span>
                     }
                   </TableCell>
-                  <TableCell  onClick={() => setNewProductModal(true)}>
+                  <TableCell  
+                  onClick={() => {
+                    console.log(product);
+                                    setSelectedProduct(product); 
+                                    setIsEditMode(true);
+                                    setNewProductModal(true);
+                                  }}
+>
                     {" "}
                     <EditIcon />{" "}
                   </TableCell>
@@ -1146,6 +1154,10 @@ console.log(user?.accountType)
       <Modal
         open={newProductModal}
         onClose={handleModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
@@ -1216,14 +1228,14 @@ console.log(user?.accountType)
                     name="name"
                     placeholder="e.g Herbal jinger"
                     onChange={onChangeHandler}
-                    value={inputValues.name || ""}
+                    value={selectedProduct?.name || inputValues.name || ""}
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
                   <label className="mb-7"> Product Category</label>
                   <select
                     className="search__bar w-100"
-                    value={inputValues.category_id || ""}
+                    value={selectedProduct?.category_id || inputValues.category_id || ""}
                     name="category_id"
                     onChange={handleCategoryChange}
                     >
@@ -1240,7 +1252,7 @@ console.log(user?.accountType)
                     value={inputValues.sub_category_id || ""}
                     name="sub_category"
                     onChange={onChangeHandler}
-                    value={inputValues.sub_categories}
+                    // value={inputValues.sub_categories}
                     disabled={!selectedCategory}
                     >
                     <option value="default"> Select Sub Category</option>
@@ -1257,7 +1269,7 @@ console.log(user?.accountType)
                   <select
                     className="search__bar w-100"
                     name="brand_id"
-                    value={inputValues.brand_id || ""}
+                    value={selectedProduct?.brand_id || inputValues.brand_id || ""}
                     onChange={onChangeHandler}
                     >
                     <option value="default"> Select Brand</option>
@@ -1275,7 +1287,7 @@ console.log(user?.accountType)
                     name="cost_price"
                     placeholder="1500"
                     onChange={onChangeHandler}
-                    value={inputValues.cost_price || ""}
+                    value={selectedProduct?.cost_price || inputValues.cost_price || ""}
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
@@ -1286,7 +1298,7 @@ console.log(user?.accountType)
                     name="selling_price"
                     placeholder="1200"
                     onChange={onChangeHandler}
-                    value={inputValues.selling_price || ""}
+                    value={selectedProduct?.selling_price || inputValues.selling_price || ""}
                   />
                 </div>
               </section>
@@ -1299,7 +1311,7 @@ console.log(user?.accountType)
                     // value={inputValues.category_id || ""}
                     // name="category_id"
                     onChange={onChangeHandler}
-                    value={inputValues.inStock || ""}
+                    value={selectedProduct?.inStock || inputValues.inStock || ""}
                     >
                     <option value="default"> Select Product availability</option>
                     
@@ -1325,7 +1337,7 @@ console.log(user?.accountType)
                     name="quantity"
                     placeholder="500"
                     onChange={onChangeHandler}
-                    value={inputValues.quantity || ""}
+                    value={selectedProduct?.quantity || inputValues.quantity || ""}
                   />
                 </div>
               </section>
@@ -1338,7 +1350,7 @@ console.log(user?.accountType)
             freeSolo
             id="tags-outlined"
             options={[]}
-            value={inputValues.tags}
+            value={selectedProduct?.tags || inputValues.tags}
             onChange={handleChange}
             filterSelectedOptions
             renderTags={(value, getTagProps) =>
@@ -1528,7 +1540,7 @@ console.log(user?.accountType)
                     className="form-textarea w-100 mt-10"
                     name="description"
                     onChange={onChangeHandler}
-                    value={inputValues.description || ""}
+                    value={selectedProduct?.description || inputValues.description || ""}
                     ></textarea>
                 </div>
 
@@ -1545,7 +1557,7 @@ console.log(user?.accountType)
                  onClick={ VendorCreateProduct}
                 disabled={loading}
                 >
-                {loading ?<ButtonLoader /> : "Save Product"}
+                {loading ? <ButtonLoader /> : isEditMode ? "Update Product"  : "Save Product" }
                 </button>
               </div>
             </form>
@@ -1557,6 +1569,10 @@ console.log(user?.accountType)
       <Modal
         open={editProductModal}
         onClose={handleEditProductModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleEditProductModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
@@ -1832,7 +1848,7 @@ console.log(user?.accountType)
                   className="btn btn-secondary p-25 pull-right mr-10">
                   Cancel
                 </button>
-                <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateProduct} disabled={loading}
+                <button className="btn btn-primary p-25 pull-right" onClick={vendorUpdateProduct} disabled={loading} style={{marginBottom: 90}}
                 >
                 {loading ?<ButtonLoader /> : " Save Product"}
                 </button>
@@ -1845,6 +1861,10 @@ console.log(user?.accountType)
       <Modal
         open={newCategoryModal}
         onClose={handleCategoryModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleCategoryModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
@@ -1949,6 +1969,10 @@ console.log(user?.accountType)
       <Modal
         open={editCategoryModal}
         onClose={handleEditCategoryModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleEditCategoryModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
@@ -2050,6 +2074,10 @@ console.log(user?.accountType)
       <Modal
         open={newSubCategoryModal}
         onClose={handleSubCategoryModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleSubCategoryModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
@@ -2129,6 +2157,10 @@ console.log(user?.accountType)
       <Modal
         open={newBrandModal}
         onClose={handleBrandModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleBrandModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>
@@ -2233,6 +2265,10 @@ console.log(user?.accountType)
       <Modal
         open={editBrandModal}
         onClose={handleEditBrandModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleEditBrandModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>

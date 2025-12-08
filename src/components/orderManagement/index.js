@@ -432,6 +432,10 @@ useEffect(()=>{
       <Modal
         open={newVendorModal}
         onClose={handleModalClose}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick') return;
+          handleModalClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={style}>

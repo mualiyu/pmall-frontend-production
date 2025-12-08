@@ -139,6 +139,7 @@ const ProductList = () => {
             <option value="Status 2"> Status 2</option>
             <option value="Status 3"> Status 3</option>
             <option value="Status 4"> Status 4</option>
+            <option value="Status 4"> Status 5</option>
           </select>
           <select className="search__bar" ref={selectRef} onChange={handleSelectChange} defaultValue={'default'}>
             <option value="default">Apply discount to</option>
@@ -155,6 +156,7 @@ const ProductList = () => {
                  <option value="Status 3"> product 3</option>
                  <option value="Status 3"> product 4</option>
                  <option value="Status 3"> product 5</option>
+                 <option value="Status 3"> product 6</option>
                </select>
                <select className="search__bar" defaultValue={'default'}>
                  <option value="default">Fixed Value</option>
@@ -197,6 +199,10 @@ const ProductList = () => {
       <Modal
           open={newVendorModal}
           onClose={handleModalClose}
+          onClose={(event, reason) => {
+            if (reason === 'backdropClick') return;
+            handleModalClose();
+          }}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
