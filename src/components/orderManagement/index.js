@@ -1,8 +1,11 @@
 import * as React from "react";
-import { useState } from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import GroupsIcon from "@mui/icons-material/Groups";
 import Table from "@mui/material/Table";
+import { useUser } from "../../context/UserContext";
+import { BASE_URL } from "../../utils/config"; 
+import moment from "moment";
 import TableBody from "@mui/material/TableBody";
 import Box from "@mui/material/Box";
 import profile from "../../assets/imgs/passport.png";
@@ -12,10 +15,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import currency from "../../utils/formatCurrency";
 import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import { Chart, ArcElement } from "chart.js";
-import Chip from "@mui/material/Chip";
+import Loading from "../../utils/loading";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -25,21 +29,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useVendor } from "../../context/VendorSignupContext";
 import CloseIcon from '@mui/icons-material/Close';
 Chart.register(ArcElement);
-const top100Films = [
-  { title: "Beauty" },
-  { title: "Phones" },
-  { title: "Gadgets" },
-  { title: "Electronics", year: 2008 },
-  { title: "Makeup", year: 1957 },
-  { title: "Cough", year: 1993 },
-  { title: " Summer", year: 1994 },
-  { title: "Clothing", year: 2001 },
-  { title: "Ceramics", year: 1971 },
-  { title: "Footwear", year: 2007 },
-  { title: "Foodstuff", year: 1976 },
-  { title: "Toys", year: 1962 },
-  { title: "Children", year: 1944 },
-];
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -50,16 +40,6 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const columns = [
-  { id: "ref", label: "Ref" },
-  { id: "store", label: "Store" },
-  { id: "item", label: "Item" },
-  { id: "product_cost", label: "Product Cost" },
-  { id: "customer_name", label: "Customer Name" },
-  { id: "status", label: "Status" },
-  { id: "payment", label: "Payment" },
-  { id: "date", label: "Date" },
-];
 const data = {
   datasets: [
     {
@@ -99,30 +79,13 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-function createData(
-  ref,
-  store,
-  item,
-  product_cost,
-  customer_name,
-  status,
-  payment,
-  date,
-  action
-) {
-  return {
-    ref,
-    store,
-    item,
-    product_cost,
-    customer_name,
-    status,
-    payment,
-    date,
-    action,
-  };
-}
 const OrderManagement = () => {
+  const { user, setUser } = useUser();
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
+  const [toast, setToast] = useState(null);
+  const [orderStatus, setOrderStatus] = useState("");
+  const [allOrders, setAllOrders] = useState([]);
   const [newVendorModal, setNewVendorModal] = useState(false);
   const handleModalClose = () => setNewVendorModal(false);
   const [value, setValue] = React.useState(0);
@@ -139,8 +102,157 @@ const OrderManagement = () => {
   const hideSidebar = () => {
     setVisible(false)
   }
+
+
+  const handleViewOrder = useCallback(
+    (order) => {
+      navigate(`/app/order/${order?.id}`, { state: { order } });
+    },
+    [navigate]
+  );
+
+
+  // Mark Order as paid or unpaid Admin Routes only
+  const handleOrderPaymentStatus = async( orderStatus, e)=> {
+    setLoading(true);
+    const selectedStatus = e?.target?.value;
+    console.log("Order:", orderStatus);
+    console.log("Selected Status:", selectedStatus);
+
+    const requestBody = {
+      status: selectedStatus
+    };
+  
+    try {
+      const response = await fetch(`${BASE_URL}/sales/updatepayment/${orderStatus?.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + user?.token,
+        },
+        body: JSON.stringify(requestBody),
+      });
+  
+      const result = await response.json();
+      setLoading(false);
+      if(result.status) {
+        setToast({ message: `Successful!... ${result.message}`, type: "success" });
+          setTimeout(() => setToast(null), 5000);
+          getMyOrder();
+      console.log("Upating Order:", result);
+      }else {
+        setToast({ message: `Failed!... ${result.message}`, type: "error" });
+        setOrderStatus("");
+        setTimeout(() => setToast(null), 5000);
+    console.log("Error Upating Order:", result);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setToast({ message: `Failed... ${error}`, type: "error" });
+          setTimeout(() => setToast(null), 5000);
+          setLoading(false);
+          setOrderStatus("");
+          return false; //  failed
+    }
+    setLoading(false);
+  }
+
+
+  const getProcessedCount = (products) => {
+    if (!products) return 0;
+    return products.filter(
+      (p) => p?.order?.status === "pushed" || p?.order?.status === "received"
+    ).length;
+  };
+
+
+  const getMyOrder = async () => {
+    setLoading(true);
+    console.log(user);
+  let determinWhoseOrder = 
+  user.accountType === "Stockist" ? "stockist/allorder" : 
+  user.accountType === "Vendor" ? "sales/vendorsales" : 
+  user.accountType === "Admin" ? "sales" : "";
+  console.log(determinWhoseOrder);
+    try {
+      const response = await fetch(`${BASE_URL}/${determinWhoseOrder}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: `Bearer ${user?.token}`,
+        },
+      });
+  
+      const result = await response.json();
+      console.log(result);
+      if(result.status) {
+        setAllOrders(result?.data || []);
+      }
+      
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  const handleOrderStatus = async (orderStatus, e) => {
+    setLoading(true);
+    const selectedStatus = e?.target?.value;
+    console.log("Order:", orderStatus);
+    console.log("Selected Status:", selectedStatus);
+
+    const requestBody = {
+      status: selectedStatus
+    };
+  
+    try {
+      const response = await fetch(`${BASE_URL}/order/${orderStatus?.id}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          Authorization: "Bearer " + user?.token,
+        },
+        body: JSON.stringify(requestBody),
+      });
+  
+      const result = await response.json();
+      setLoading(false);
+      if(result.status) {
+        setToast({ message: `Successful!... ${result.message}`, type: "success" });
+          setTimeout(() => setToast(null), 5000);
+          getMyOrder();
+      console.log("Upating Order:", result);
+      }else {
+        setToast({ message: `Failed!... ${result.message}`, type: "error" });
+        setOrderStatus("");
+        setTimeout(() => setToast(null), 5000);
+    console.log("Error Upating Order:", result);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setToast({ message: `Failed... ${error}`, type: "error" });
+          setTimeout(() => setToast(null), 5000);
+          setLoading(false);
+          setOrderStatus("");
+          return false; //  failed
+    }
+    setLoading(false);
+  };
+  
+
+useEffect(()=>{ 
+  getMyOrder();
+  console.log(user);
+  return;
+},[])
   return (
     <section>
+          <Loading loading={loading} />
       <section className="page__header">
         <div className="flex-container alc">
           <GroupsIcon />
@@ -162,7 +274,7 @@ const OrderManagement = () => {
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example">
-            <Tab label="All Orders" {...a11yProps(0)} />
+            <Tab label="All Orders" {...a11yProps(0)} /> 
             <Tab label="Completed" {...a11yProps(1)} />
             <Tab label="Pending" {...a11yProps(2)} />
             <Tab label="Delievered" {...a11yProps(3)} />
@@ -188,7 +300,7 @@ const OrderManagement = () => {
             <button
               className="btn btn-primary p-25"
               onClick={() => setNewVendorModal(true)}>
-              Add product
+              Back to Store
             </button>
           </div>
         </section>
@@ -200,120 +312,105 @@ const OrderManagement = () => {
               aria-label="Vendors Table">
               <TableHead>
                 <TableRow>
-                  {columns.map((column) => (
-                    <TableCell>{column.label}</TableCell>
-                  ))}
+                  <TableCell>Order Date</TableCell>
+                <TableCell>Ref</TableCell>
+                {user.accountType !== "Stockist" && (
+                  <TableCell>Stockist</TableCell>
+                )}
+                <TableCell>Products</TableCell>
+                <TableCell>Total</TableCell>
+                <TableCell>Customer</TableCell>
+                <TableCell>Payment</TableCell>
+                <TableCell>Delivery</TableCell>
+                <TableCell>Actions</TableCell>
+                
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell className="b-r">Adf908</TableCell>
-                  <TableCell>Calista Outfits</TableCell>
-                  <TableCell> Puma Bag </TableCell>
-                  <TableCell> &#x20A6;200 </TableCell>
-                  <TableCell> Dada Philip </TableCell>
+              { allOrders
+                  ?.filter(order => order?.stockist_id) // only orders with a stockist id
+                  .map((order, i) => {
+                    const shouldShowDropdown =
+                      user?.accountType === "Stockist" &&
+                      getProcessedCount(order?.products) === order?.products?.length;
+                    return (
+                <TableRow key={order?.id} style={{textTransform: 'capitalize'}}>
+                  <TableCell> 
+                  {moment(order.created_at).format("ll")} @{" "}
+                            {moment(order.created_at).format("LT")}{" "}
+                    </TableCell>
+                  <TableCell className="b-r">{ order?.id}</TableCell>
+                  {user.accountType !== "Stockist" && (
+                  <TableCell>{order?.stockist?.name}</TableCell>
+                  )}
 
-                  <TableCell> Credit Card </TableCell>
-                  <TableCell> Jan 3, 2001 </TableCell>
-                  <TableCell>
-                    {" "}
-                    <span className="badge bg-success">Completed</span>{" "}
+                 <TableCell style={{textTransform: "lowercase"}}>
+                   {user.accountType === "Stockist" && (
+                      <>
+                       {getProcessedCount(order?.products)} of &nbsp; 
+                      </>
+                    )}
+                    {order?.products?.length || 0}
                   </TableCell>
+                  <TableCell> {currency(order?.total_amount)}</TableCell>
+                  <TableCell> {order?.customer?.fname} {order?.customer?.lname} </TableCell>
+
                   <TableCell>
-                    {" "}
-                    <MoreVertIcon />{" "}
+                    <span className="badge bg-success">{order?.payment_status === "" ? "Pending" : order?.payment_status}</span>  
+                    </TableCell>
+                  <TableCell>
+                    <span className="badge bg-error">{order.status}</span>
+                  </TableCell>
+                  
+
+                  <TableCell style={{ display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: shouldShowDropdown ? "space-between" : "flex-start",
+                                      gap: 8,}}> 
+                  <button  onClick={() => handleViewOrder(order)}  class="btn btn-primary p-25" style={{width: '30%'}}>
+                     Details
+                  </button>
+                  {user?.accountType === "Stockist" &&
+                    getProcessedCount(order?.products) === (order?.products?.length || 0) && (
+                  <>
+                  <select
+                      name="pickup_location"
+                      className="last-name form-control"
+                      value={orderStatus}
+                      onChange={(e) => handleOrderStatus(order, e)}
+                      style={{marginTop: 18, textTransform: 'capitalize', width: '60%', height: 37,
+                      padding: 10}}>
+                    <option value="">Manage Order</option>
+                    <option value="out_for_delivery">Out for Delivery</option>
+                    <option value="packaging">Packaging</option>
+                    <option value="returned">Returned</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="customer_did_not_answer">Customer Didn't Answer Call</option>
+                </select>
+          </>
+                   )} 
+
+            {user?.accountType === 'Admin' && (
+                 <>
+                  <select
+                      name="mark_order"
+                      className="last-name form-control"
+                      value={orderStatus}
+                      onChange={(e) => handleOrderPaymentStatus(order, e)}
+                      style={{marginTop: 4, textTransform: 'capitalize', width: '60%'}}>
+                    <option value="">Manage Order</option>
+                    <option value="paid">Paid</option>
+                    <option value="not-paid">Not Paid</option>
+                </select>
+          </>
+                   )} 
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell className="b-r">EPT708</TableCell>
-                  <TableCell>Hooli Stores</TableCell>
-                  <TableCell> Gucci Shoe </TableCell>
-                  <TableCell> &#x20A6;1000 </TableCell>
-                  <TableCell> Bolu Stephen </TableCell>
-
-                  <TableCell> Bank Transfer </TableCell>
-                  <TableCell> Jun 13, 2006 </TableCell>
-                  <TableCell>
-                    {" "}
-                    <span className="badge bg-warning">pending</span>{" "}
-                  </TableCell>
-                  <TableCell>
-                    {" "}
-                    <MoreVertIcon />{" "}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="b-r">HAS084</TableCell>
-                  <TableCell>Big Brains Groceries</TableCell>
-                  <TableCell>Wig </TableCell>
-                  <TableCell> &#x20A6;350 </TableCell>
-                  <TableCell> Ashien Benedict </TableCell>
-
-                  <TableCell> Paypal </TableCell>
-                  <TableCell> Nov 11, 2021 </TableCell>
-                  <TableCell>
-                    {" "}
-                    <span className="badge bg-error">Cancelled</span>{" "}
-                  </TableCell>
-                  <TableCell>
-                    {" "}
-                    <MoreVertIcon />{" "}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="b-r">Adf908</TableCell>
-                  <TableCell>SurePlug Cosmetics</TableCell>
-                  <TableCell> Puma Bag </TableCell>
-                  <TableCell> &#x20A6;200 </TableCell>
-                  <TableCell> Ogunbure Busayo </TableCell>
-
-                  <TableCell> Credit Card </TableCell>
-                  <TableCell> Jan 3, 2001 </TableCell>
-                  <TableCell>
-                    {" "}
-                    <span className="badge bg-success">Completed</span>{" "}
-                  </TableCell>
-                  <TableCell>
-                    {" "}
-                    <MoreVertIcon />{" "}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="b-r">EPT708</TableCell>
-                  <TableCell>Fortune's Palace</TableCell>
-                  <TableCell> Gucci Shoe </TableCell>
-                  <TableCell> &#x20A6;1000 </TableCell>
-                  <TableCell> Oladeji Ife </TableCell>
-
-                  <TableCell> Bank Transfer </TableCell>
-                  <TableCell> Jun 13, 2006 </TableCell>
-                  <TableCell>
-                    {" "}
-                    <span className="badge bg-warning">pending</span>{" "}
-                  </TableCell>
-                  <TableCell>
-                    {" "}
-                    <MoreVertIcon />{" "}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="b-r">Adf908</TableCell>
-                  <TableCell>Stacey's Herbal Stores</TableCell>
-                  <TableCell> Puma Bag </TableCell>
-                  <TableCell> &#x20A6;200 </TableCell>
-                  <TableCell> Bodunde Donald</TableCell>
-
-                  <TableCell> Credit Card </TableCell>
-                  <TableCell> Jan 3, 2001 </TableCell>
-                  <TableCell>
-                    {" "}
-                    <span className="badge bg-success">Completed</span>{" "}
-                  </TableCell>
-                  <TableCell>
-                    {" "}
-                    <MoreVertIcon />{" "}
-                  </TableCell>
-                </TableRow>
+                    )}
+              )}
+                
               </TableBody>
             </Table>
           </TableContainer>
@@ -415,7 +512,7 @@ const OrderManagement = () => {
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
-                  <Stack spacing={3} sx={{ width: 500 }}>
+                  {/* <Stack spacing={3} sx={{ width: 500 }}>
                     <Autocomplete
                       multiple
                       id="tags-outlined"
@@ -430,7 +527,7 @@ const OrderManagement = () => {
                         />
                       )}
                     />
-                  </Stack>
+                  </Stack> */}
                 </div>
               </section>
               <section className="flex-container mb-lg">

@@ -4,6 +4,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import Loading from "../../utils/loading";
+import SidebarRow from "../builder/SidebarRow";
+import SpeedIcon from '@mui/icons-material/Speed';
+import EuroIcon from '@mui/icons-material/Euro';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -291,13 +294,20 @@ const getUsersDetails = () => {
             <ul className="flex-container sub__title">
               {/* {user?.accountType === "Admin" && ( */}
                 <div className="user__avatar bg-error">
+
                 <h3>
-                {user?.fname?.charAt(0)?.toUpperCase() || ''}
-                {user?.lname?.charAt(0)?.toUpperCase() || ''}
-                </h3>
+                {user.accountType === "Stockist"
+                  ? getInitials(user?.name)
+                  : `${user?.fname?.charAt(0)?.toUpperCase() || ''} ${user?.lname?.charAt(0)?.toUpperCase() || ''}`
+                }
+              </h3>
               </div>
               <li className="active pointer" onClick={dashboard}>
-              Hi {user?.fname} {user?.lname}! <p className="text-muted">Dashboard</p>
+              Hi { user.accountType === "Stockist" 
+                      ? user?.name 
+                      : `${user?.fname} ${user?.lname}` }!
+                <p className="text-muted">Dashboard</p>
+
               </li>
              
             </ul>

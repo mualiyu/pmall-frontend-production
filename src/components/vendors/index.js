@@ -1,3 +1,5 @@
+
+
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
@@ -148,7 +150,7 @@ const Vendors = () => {
 
       if (!response.ok) {
         setToast({ message: "Failed to register vendor!", type: "error" });
-			  setTimeout(() => setToast(null), 7000);
+        setTimeout(() => setToast(null), 7000);
         setLoading(false);
       }
       const result = await response.json();
@@ -166,14 +168,14 @@ const Vendors = () => {
         ref_id: "",
         package_id: "",
       });
-			setTimeout(() => setToast(null), 9000);
+      setTimeout(() => setToast(null), 9000);
       fetchVendors();
       // Make Payment
       window.location.href = result?.data?.payment.authorization_url;
     } catch (error) {
       setLoading(false);
       setToast({ message: "Failed to register vendor!", type: "error" });
-			setTimeout(() => setToast(null), 7000);
+      setTimeout(() => setToast(null), 7000);
     }
   };
 
@@ -280,6 +282,7 @@ useEffect(()=> {
             onClick={() => setNewVendorModal(true)}>
             Add Vendor
           </button>
+          
         </div>
       </section>
 

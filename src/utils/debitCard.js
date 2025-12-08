@@ -29,8 +29,8 @@ export default function DebitCard({currentLoggedInUser}) {
 		});
 	};
   useEffect(() => {
-    console.log(user);
-    console.log(currentLoggedInUser);
+    // console.log(user);
+    // console.log(currentLoggedInUser);
     
   }, []);
 

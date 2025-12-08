@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Affilates from "./affilates";
 import Login from "./auth/login";
+import StockistLogin from "./auth/StockistLogin";
 import NewPasswordPage from "./auth/newPasswordPage";
 import useNetworkStatus from '../hooks/useNetworkStatus';
 import ResetPassword from "./auth/passwordReset";
@@ -11,6 +12,8 @@ import MobileNav from "./builder/MobileNav";
 import Products from "./products";
 import Users from "./users";
 import Vendors from "./vendors";
+import Stockist from "./stockist";
+// import Stockists from "../components/stockistk";
 import MyStore from "./vendor/MyStore";
 import Header from "./builder/Header";
 import Footer from "./builder/Footer";
@@ -31,6 +34,7 @@ import ProductList from "./productList";
 import Categories from "./categories";
 import Gallery from "./gallery";
 import VendorStore from "./vendor/store";
+
 import CategoryProducts from "./productList/categoryProducts";
 import PackageList from "./packages";
 import OrderDetails from "./orderManagement/details";
@@ -38,6 +42,7 @@ import SiteSettings from "./siteSettings";
 import VerifyToken from "./auth/verifyToken";
 import TransactionOrderHistory from "./transactions";
 import { useUser } from "../context/UserContext";
+
 import StoreFront from "./storefront";
 import Cart from "./cart";
 import CheckoutPage from "./checkout";
@@ -114,6 +119,7 @@ function Layout() {
         <Routes>
           {/* Authentication Routes */}
           <Route path="/auth/sign-in" element={<Login />} />
+          <Route path="/auth/stockist/login" element={<StockistLogin />} />
           <Route path="/auth/app/signup" element={<SignUp />} />
           <Route path="/auth/app/reset-account" element={<ResetPassword />} />
           <Route path="/auth/app/reset/" element={<NewPasswordPage />} />
@@ -132,6 +138,7 @@ function Layout() {
               <Route path="/app/users" element={<Users />} />
               <Route path="/app/users/details" element={<UserDetails />} />
               <Route path="/app/vendors" element={<Vendors />} />
+              <Route path="/app/stockist" element={<Stockist />} />
               <Route path="/app/order-management" element={<OrderManagement />} />
               <Route path="/app/vendors/details" element={<VendorDetails />} />
               <Route path="/app/transaction-history" element={<TransactionHistory />} />
@@ -148,7 +155,7 @@ function Layout() {
               <Route path="/app/categories" element={<Categories />} />
               <Route path="/app/store-management" element={<Gallery />} />
               <Route path="/app/advert_maker" element={<AdvertMaker />} />
-              <Route path="/app/order/details" element={<OrderDetails />} />
+              <Route path="/app/order/:id" element={<OrderDetails />} />
               <Route path="/app/network/details" element={<NetworkDetails />} />
               <Route path="/app/settings" element={<SiteSettings />} />
             </Routes>

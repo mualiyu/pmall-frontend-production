@@ -211,7 +211,7 @@
   justify-content: space-between;
 }
 .badge {
-  padding: 0.25em 0.4em;
+  padding: 0.4em 1em;
   border-radius: 0.25rem;
   text-align: center;
   line-height: 1;
@@ -226,7 +226,23 @@
 .c-success {
   color: #10ac7e;
 }
-
+.py-10 {
+  padding: 3px 10px;
+}
+.pos-rel {
+  position: relative;
+}
+.abs {
+  position: absolute;
+}
+.login__bg {
+  background: url(./assets//imgs/truck.jpeg);
+  height: 90vh;
+  width: 50%;
+  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right top;
+}
 .c-error {
   color: #ec707a;
 }
@@ -563,7 +579,9 @@ css-6od3lo-MuiChip-label {
 .css-1t4lqmc-MuiButtonBase-root-MuiTab-root {
   min-width: 0 !important;
 }
-
+.j-spbtween {
+  justify-content: space-between;
+}
 .flex-start {
   justify-content: flex-start !important;
 }
@@ -748,7 +766,7 @@ thead {
   text-align: left !important;
   /* font-weight: 600!important; */
   padding: 15px !important;
-  font-size: 12px !important;
+  font-size: 0.9rem !important;
   color: #505b68 !important;
   font-weight: 900 !important;
 }
@@ -957,7 +975,7 @@ thead {
 }
 
 .button-loader {
-  position: absolute;
+  position: relative;
 }
 
 .spinner {
@@ -969,7 +987,7 @@ thead {
   animation: spin 2s linear infinite;
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 32%;
   margin-top: -8px;
   margin-left: -8px;
 }
@@ -984,7 +1002,7 @@ thead {
 }
 
 button:disabled {
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .alert {
@@ -1148,7 +1166,7 @@ h1 {
   color: inherit;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 500;
-  font-size: 0.7rem!important;
+  font-size: 0.9rem!important;
   line-height: 1.25;
   letter-spacing: 0.02857em;
   text-transform: uppercase;

@@ -32,6 +32,7 @@ const columns = [
   { id: "amount", label: "Amount" },
   { id: "status", label: "Transaction Status" },
   { id: "products", label: "Products" },
+  { id: "actions", label: "Action" },
 ];
 
 
@@ -40,12 +41,14 @@ function createData(
   amount,
   status,
   products,
+  action
 ) {
   return {
     date,
     amount,
     status,
     products,
+    action
   };
 }
 
@@ -156,6 +159,13 @@ useEffect(()=> {
                    
                        </div>
                        </div>
+               </TableCell>
+               <TableCell>
+                 {trx.payment_status === "not-paid" && (
+               <button class="btn btn-warning p-25">
+                  Pay Now
+              </button>
+              )}
                </TableCell>
             </TableRow>
             ))}

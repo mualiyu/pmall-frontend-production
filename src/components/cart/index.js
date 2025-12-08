@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
@@ -5,6 +6,7 @@ import { useUser } from "../../context/UserContext";
 import currency from "../../utils/formatCurrency";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { BASE_URL } from "../../utils/config"; 
 
 const Cart = () => {
     const [cart, setCart] = useState(() => {
@@ -54,6 +56,13 @@ const Cart = () => {
         localStorage.removeItem("pmallCart");
     };
 
+    const [stockists, setStockists] = useState([]);
+    const [selectedStockist, setSelectedStockist] = useState("");
+    const [loadingStockists, setLoadingStockists] = useState(true);
+
+  
+
+  
     return (
         <div className="cart flex g-20 mt-20p" style={{ marginBottom: '7%' }}>
             <div className="w-full flex g-20 cart-container">
@@ -137,6 +146,7 @@ const Cart = () => {
                             <p>Total</p>
                             <p className="bold">{currency((totalPrice + totalPrice * 0.075).toFixed(2))}</p>
                         </div>
+                
                     </div>
 
                     {cart.length > 0 && (

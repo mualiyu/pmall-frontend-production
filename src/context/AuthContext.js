@@ -122,7 +122,9 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault(); // Prevent default form submission
     console.log(loading);
     setLoading(true);
-    inputValues.device_name = 1234;
+    console.log(inputValues);
+    // inputValues.device_name = "192.168.0.116";
+    // console.log(inputValues);
     fetch(`${BASE_URL}/login`, {
       method: "POST",
       headers: {
@@ -222,6 +224,65 @@ export const AuthProvider = ({ children }) => {
           console.log(result.message);
           setToastMsg(
             "Oops! there seems to be an error. Confirm login credientials"
+          );
+          setToastType("error");
+          setTimeout(() => {
+            setToastMsg("");
+          }, 4000);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+  // Stockist Login
+  const stockistLogin = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    setLoading(true);
+    inputValues.device_name = 1234;
+
+    fetch(`${BASE_URL}/stockists/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(inputValues),
+    })
+      .then((resp) => resp.json())
+      .then((result) => {
+        setLoading(false);
+        console.log(result);
+        if (result.status) {
+          localStorage.setItem("authToken", result?.token);
+          // dispatch(
+          setUser({
+            id: result.stockist.id,
+            name: result.stockist.name,
+            email: result.stockist.email,
+            token: result.token,
+            address: result.stockist.user_type,
+            loggedIn: true,
+            is_active: 1,
+            accountType: "Stockist",
+            address: result.stockist.address,
+            country: result.stockist.country,
+            city: result.stockist.city,
+            regDate: result.stockist.created_at,
+            affiliate_id: result.stockist.affiliate_id,
+          });
+          setToast({ message: "Boom! Login successful. It's great to have you back!", type: "success" });
+            setTimeout(() => setToast(null), 5000);
+          setTimeout(() => {
+            window.location.href = "/app/dashboard";
+          }, 2000);
+        } else {
+          console.log(result.message);
+          setToastMsg(
+            result.message
           );
           setToastType("error");
           setTimeout(() => {
@@ -429,6 +490,7 @@ export const AuthProvider = ({ children }) => {
         onSubmitHandler,
         handleLogin,
         customerLogin,
+        stockistLogin,
         onAffilateSubmitHandler,
         onForgotPasswordHandler,
         handleResetPassword,

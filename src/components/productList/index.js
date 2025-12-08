@@ -84,6 +84,8 @@ const ProductList = () => {
   const handleModalClose = () => setNewVendorModal(false);
   function handleSelectChange(event) {
     const selectedValue = selectRef.current.value;
+
+    
     if(selectedValue == "Single product"){
       setApplyProductDiscount(true)
     }else{

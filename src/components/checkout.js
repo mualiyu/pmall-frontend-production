@@ -66,11 +66,10 @@ const CheckoutPage = () => {
     const [value, setValue] = useState(0);
    
     const handleChange = (event, newValue) => {
+        console.log(newValue);
         setValue(newValue);
       };
 
-   
-      
       const promptLogOutCurrentlyLoggedInUser = () => {
         if (!user?.loggedIn) return
       
@@ -109,6 +108,7 @@ const CheckoutPage = () => {
             Authorization: "Bearer " + user?.token,
         },
 
+
     })
         .then((resp) => resp.json())
         .then((result) => {
@@ -120,6 +120,7 @@ const CheckoutPage = () => {
             setLoading(false);
         });
 };
+
 
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -140,8 +141,16 @@ const CheckoutPage = () => {
           [name]: value,
         });
       };
+      const handleSelectedStockist = (e) => {
+        const selectedValue = e.target.value;
+        setSelectedStockist(parseInt(selectedValue));
+        console.log("Selected stockist id:", selectedValue);
+      };
+
     const [cart,setCart] =  useState([]);
     const [toast, setToast] = useState(null);
+    const [allStockist, setAllStockist] = useState(null);
+    const [selectedStockist, setSelectedStockist] = useState(null);
     const [btnLoader, setBtnLoader] = useState(false);
     const [checkoutMessage, setCheckoutMessage] = useState("");
     const totalPrice = cart.map(item => item.selling_price * item.amtItems).reduce((acc, curr) => acc + curr, 0);
@@ -269,6 +278,7 @@ const CheckoutPage = () => {
     
         const requestBody = {
             customer_id: customerId,
+            stockist_id : selectedStockist,
             products: checkingOutProducts.map(product => ({
                 product_id: product.id,
                 quantity: product.amtItems
@@ -293,6 +303,9 @@ const CheckoutPage = () => {
     
             if (!result.status) {
                 setToast({ message: `Checkout initiation failed: ${result.message}`, type: "error" });
+                if(result?.message?.stockist_id) {
+                    setToast({ message: `Select a Pickup Location`, type: "error" });
+                }
             setTimeout(() => setToast(null), 5000);
                 console.error("Checkout initiation failed:", result);
                 return false;
@@ -401,8 +414,13 @@ const CheckoutPage = () => {
 
 
     useEffect(()=>{ 
+<<<<<<< HEAD
+        getCart();
+        getStockist();
+=======
         getCart()
         getStockistLocation();
+>>>>>>> 77be6e43e24b8765f85dfb51d9bfc5846765695e
         return;
     },[])
 
@@ -418,6 +436,26 @@ const CheckoutPage = () => {
         });
     };
     
+    const getStockist = () => {
+setLoading(true);
+        fetch(`${BASE_URL}/stockists/fetchstockist`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                Accept: "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((result) => {
+				console.log(result);
+                setAllStockist(result?.data || []);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setLoading(false);
+            });
+    };
+
 
     const decrementItemAmt = (id) => {
         const updatedCart = cart
@@ -682,6 +720,24 @@ const CheckoutPage = () => {
                 <div className='cart flex flex-col g-20'>
                 <div className="g-20 flex flex-col">
                     <div className="w-full maincart">
+                        {/* Diplay Stores */}
+                        <div className="pos-rel">
+          <label className=""> Select Pickup Location </label>
+          <select
+            name="pickup_location"
+            className="last-name form-control"
+            onChange={handleSelectedStockist}
+            style={{marginTop: 4, textTransform: 'capitalize'}}>
+              <option>Pickup Location</option>
+             {
+                allStockist?.map((stockist)=>(
+                  <option value={stockist.id}>
+                      {stockist.state} - ({stockist.city}) 
+                  </option>
+                ))
+              }
+          </select>
+          </div>
                         <div className="cart-items">
                             {cart?.length>0 && cart.map(item => (
                                 <div className="cart-item">
