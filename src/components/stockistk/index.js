@@ -205,7 +205,12 @@ const handleSubmit = async (e) => {
 
   const fetchStockists = () => {
     setLoading(true);
-    fetch(`${BASE_URL}/stockists`, {
+
+    let determineWhoIsLoggedIn = 
+  user.accountType === "Admin" ? "stockists/fetchstockist" : 
+  user.accountType === "Affiliate" ? "stockists/affiliate_stockist"  "";
+  
+    fetch(`${BASE_URL}/{determineWhoIsLoggedIn}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

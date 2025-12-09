@@ -434,7 +434,7 @@ const CheckoutPage = () => {
     const getStockist = () => {
 setLoading(true);
         fetch(`${BASE_URL}/stockists/fetchstockist`, {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
                 Accept: "application/json",
