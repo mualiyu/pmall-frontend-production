@@ -80,7 +80,7 @@ const CheckoutPage = () => {
       
         window._logoutConfirmTimeout = setTimeout(() => {
           window._logoutConfirmed = false;
-        }, 100000);
+        }, 10000);
       
         if (window._logoutConfirmed) {
           localStorage.removeItem("user");

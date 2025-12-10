@@ -80,7 +80,7 @@ const CheckoutPage = () => {
       
         window._logoutConfirmTimeout = setTimeout(() => {
           window._logoutConfirmed = false;
-        }, 100000);
+        }, 10000);
       
         if (window._logoutConfirmed) {
           localStorage.removeItem("user");
@@ -98,28 +98,28 @@ const CheckoutPage = () => {
       window.location.reload();
   }
 
-//   const getStockistLocation = () => {
-//     setLoading(true);
-//     fetch(`${BASE_URL}/stockists`, {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json;charset=UTF-8",
-//             Accept: "application/json",
-//             Authorization: "Bearer " + user?.token,
-//         },
+  const getStockistLocation = () => {
+    setLoading(true);
+    fetch(`${BASE_URL}/stockists`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json",
+            Authorization: "Bearer " + user?.token,
+        },
 
 
-//     })
-//         .then((resp) => resp.json())
-//         .then((result) => {
-//             console.log(result)
-//             setStockists(result?.data || []);
-//             setLoading(false);
-//         })
-//         .catch((err) => {
-//             setLoading(false);
-//         });
-// };
+    })
+        .then((resp) => resp.json())
+        .then((result) => {
+            console.log(result)
+            setStockists(result?.data || []);
+            setLoading(false);
+        })
+        .catch((err) => {
+            setLoading(false);
+        });
+};
 
 
   const togglePassword = () => {
@@ -414,10 +414,11 @@ const CheckoutPage = () => {
 
 
     useEffect(()=>{ 
+        console.log(user);
         getCart();
         getStockist();
         return;
-    },[user])
+    },[])
 
     const incrementItemAmt = (id) => {
         setCart(prevCart => {

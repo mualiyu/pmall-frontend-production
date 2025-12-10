@@ -208,7 +208,7 @@ export const AuthProvider = ({ children }) => {
             username: result.customer.username,
             email: result.customer.email,
             token: result.token,
-            accountType: "Customer",
+            accountType: result.customer.user_type",
             loggedIn: true,
             fname: result.customer.fname,
             lname: result.customer.lname,
