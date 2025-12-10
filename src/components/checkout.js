@@ -703,7 +703,7 @@ setLoading(true);
                     <div className="w-full maincart">
                         {/* Diplay Stores */}
                         <div className="pos-rel">
-          <label className=""> Select Pickup Location </label>
+          <label className="c-red"> Select Pickup Location </label>
           <select
             name="pickup_location"
             className="last-name form-control"
@@ -726,7 +726,7 @@ setLoading(true);
                                         <img src={item.image} alt="" />
                                         <div>
                                             <p className="f-12 bold title-case">{item.name}</p>
-                                            <p>{item.tags}</p>
+                                            {/* <p>{item.tags}</p> */}
                                             <p className="f-12">{currency(item.selling_price)}</p>
                                         </div>
                                     </div>
