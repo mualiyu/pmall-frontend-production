@@ -1242,21 +1242,6 @@ console.log(user?.accountType)
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
-                  <label className="mb-7"> Product Type</label>
-                  <select
-                    className="search__bar w-100"
-                    name="product_type"
-                    value={selectedProduct?.product_type || inputValues.product_type || ""}
-                    onChange={onChangeHandler}
-                    >
-                    <option value="default"> Select Product Type</option>
-                      <option value="single">Single Product</option>
-                      <option value="combo">Combo Product</option>
-                  </select>
-                </div>
-                </section>
-                <section className="flex-container mb-lg">
-                <div className="pos-rel w100-m10 ">
                   <label className="mb-7"> Product Category</label>
                   <select
                     className="search__bar w-100"
@@ -1275,7 +1260,7 @@ console.log(user?.accountType)
                   <select
                     className="search__bar w-100"
                     value={inputValues.sub_category_id || ""}
-                    name="sub_category_id"
+                    name="sub_category"
                     onChange={onChangeHandler}
                     // value={inputValues.sub_categories}
                     disabled={!selectedCategory}
@@ -1286,6 +1271,9 @@ console.log(user?.accountType)
                     ))}
                   </select>
                 </div>
+              </section>
+
+              <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
                   <label className="mb-7"> Product Brand</label>
                   <select
@@ -1300,10 +1288,6 @@ console.log(user?.accountType)
                     ))}
                   </select>
                 </div>
-              </section>
-
-              <section className="flex-container mb-lg">
-                
 
                 <div className="pos-rel w100-m10 ">
                   <label> Cost Price</label>
@@ -1328,12 +1312,12 @@ console.log(user?.accountType)
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
-                  <label> Combo Price (lower than Selling price)</label>
+                  <label>Selling Price (lower than cost price)</label>
                   <input
                     type="number"
                     className="form-control-input "
                     name="combo_price"
-                    placeholder="800"
+                    placeholder="1200"
                     onChange={onChangeHandler}
                     value={selectedProduct?.combo_price || inputValues.combo_price || ""}
                   />
@@ -1341,7 +1325,7 @@ console.log(user?.accountType)
               </section>
               <section className="flex-container mb-lg">
               <div className="pos-rel w100-m10 ">
-                  <label> Product Available for Purchase?</label>
+                  <label> PRODUCT AVAILABLE FOR PURCHASE?</label>
                   <select
                   className="form-control-input "
                   name="inStock"
@@ -1367,7 +1351,7 @@ console.log(user?.accountType)
                 </div>
 
                 <div className="pos-rel w100-m10 ">
-                  <label>Quantity AAvailable</label>
+                  <label>Quantity AVAILABLE</label>
                   <input
                     type="number"
                     className="form-control-input "
@@ -1380,7 +1364,7 @@ console.log(user?.accountType)
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w-100 ">
-                  <label style={{marginBottom: 7}}>Select Tags Associated with Product </label>
+                  <label style={{marginBottom: 7}}>SELECT TAGS ASSOCIATED WITH PRODUCT </label>
                   <Stack spacing={3} sx={{ width: "100%" }}>
                   <Autocomplete
             multiple

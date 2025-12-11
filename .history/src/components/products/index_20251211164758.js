@@ -1286,6 +1286,9 @@ console.log(user?.accountType)
                     ))}
                   </select>
                 </div>
+              </section>
+
+              <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
                   <label className="mb-7"> Product Brand</label>
                   <select
@@ -1300,10 +1303,6 @@ console.log(user?.accountType)
                     ))}
                   </select>
                 </div>
-              </section>
-
-              <section className="flex-container mb-lg">
-                
 
                 <div className="pos-rel w100-m10 ">
                   <label> Cost Price</label>
