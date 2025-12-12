@@ -53,7 +53,7 @@ pipelines:
                 SET_ARGS: "ssl:verify-certificate false"
                 EXTRA_ARGS: "--transfer-all"
       - step:
-          deployment: Staging
+          deployment: Test
           name: Deploy To AWS
           script:
             - pipe: atlassian/aws-s3-deploy:0.3.8
