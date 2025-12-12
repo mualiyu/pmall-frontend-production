@@ -20,12 +20,12 @@ pipelines:
             - echo installing...
             - npm install # - yarn install
             - echo setting production environment variables
-            - sed -i -e 's%$PROD_CLIENT_ID%'"$PROD_CLIENT_ID"'%g' ./env.production
-            - sed -i -e 's%$PROD_CLIENT_SECRET%'"$PROD_CLIENT_SECRET"'%g' ./env.production
-            - sed -i -e 's%$PROD_SERVER_URL%'"$PROD_SERVER_URL"'%g' ./env.production
-            # - cp ./env.production ./env.development
+            - sed -i -e 's%$PROD_CLIENT_ID%'"$PROD_CLIENT_ID"'%g' .env.production
+            - sed -i -e 's%$PROD_CLIENT_SECRET%'"$PROD_CLIENT_SECRET"'%g' .env.production
+            - sed -i -e 's%$PROD_SERVER_URL%'"$PROD_SERVER_URL"'%g' .env.production
+            # - cp ./env.production .env.development
             - echo lint...
-            # - yarn run lint
+            - npm run lint # - yarn run lint
             - echo test...
             # - >
             #   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
