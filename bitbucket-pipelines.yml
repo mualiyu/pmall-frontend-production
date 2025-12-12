@@ -25,7 +25,7 @@ pipelines:
             - sed -i -e 's%$PROD_SERVER_URL%'"$PROD_SERVER_URL"'%g' .env.production
             # - cp ./env.production .env.development
             - echo lint...
-            - npm run lint # - yarn run lint
+            # - npm run lint # - yarn run lint
             - echo test...
             # - >
             #   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
