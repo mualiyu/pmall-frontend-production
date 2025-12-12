@@ -40,6 +40,18 @@ pipelines:
             - build/**
             - node_modules/** # Save modules for next steps
       - step:
+          deployment: Test
+          name: Deploy To AWS
+          script:
+            - pipe: atlassian/aws-s3-deploy:0.3.8
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
+                AWS_DEFAULT_REGION: $REGION
+                S3_BUCKET: $BUCKET_NAME
+                LOCAL_PATH: build
+                ACL: public-read
+      - step:
           deployment: Staging
           name: Deploy To Shared Host
           script:
@@ -52,18 +64,6 @@ pipelines:
                 LOCAL_PATH: build
                 SET_ARGS: "ssl:verify-certificate false"
                 EXTRA_ARGS: "--transfer-all"
-      - step:
-          deployment: Test
-          name: Deploy To AWS
-          script:
-            - pipe: atlassian/aws-s3-deploy:0.3.8
-              variables:
-                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
-                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
-                AWS_DEFAULT_REGION: $REGION
-                S3_BUCKET: $BUCKET_NAME
-                LOCAL_PATH: build
-                ACL: public-read
     # master:
     #   - step:
     #       name: Build
