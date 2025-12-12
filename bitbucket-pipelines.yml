@@ -40,7 +40,7 @@ pipelines:
             - build/**
             - node_modules/** # Save modules for next steps
       - step:
-          deployment: Development
+          deployment: Staging
           name: Deploy To Shared Host
           script:
             - pipe: atlassian/ftp-deploy:0.6.1
@@ -53,7 +53,7 @@ pipelines:
                 SET_ARGS: "ssl:verify-certificate false"
                 EXTRA_ARGS: "--transfer-all"
       - step:
-          deployment: Development
+          deployment: Staging
           name: Deploy To AWS
           script:
             - pipe: atlassian/aws-s3-deploy:0.3.8
