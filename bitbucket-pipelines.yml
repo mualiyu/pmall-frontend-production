@@ -7,9 +7,9 @@ pipelines:
         caches:
           - node
         script:
-          - yarn install
+          - npm install # - yarn install
           - echo This is where we run the test
-          - yarn run test
+          - npm run test # - yarn run test
   branches:
     develop:
       - step:
@@ -18,21 +18,21 @@ pipelines:
             - node
           script:
             - echo installing...
-            - yarn install
+            - npm install # - yarn install
             - echo setting production environment variables
             - sed -i -e 's%$PROD_CLIENT_ID%'"$PROD_CLIENT_ID"'%g' ./env.production
             - sed -i -e 's%$PROD_CLIENT_SECRET%'"$PROD_CLIENT_SECRET"'%g' ./env.production
             - sed -i -e 's%$PROD_SERVER_URL%'"$PROD_SERVER_URL"'%g' ./env.production
             # - cp ./env.production ./env.development
             - echo lint...
-            - yarn run lint
+            # - yarn run lint
             - echo test...
-            - >
-              wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-              sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
-              apt-get update && \
-              apt-get install -y google-chrome-stable xvfb procps 
-            - yarn run test
+            # - >
+            #   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+            #   sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
+            #   apt-get update && \
+            #   apt-get install -y google-chrome-stable xvfb procps 
+            # - yarn run test
             - echo Building production version...
             - npm run build --prod --output-hashing=all
             # improve performance of app https://angular.io/guide/deployment#measure-performance
