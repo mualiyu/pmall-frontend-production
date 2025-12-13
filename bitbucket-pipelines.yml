@@ -34,7 +34,7 @@ pipelines:
             #   apt-get install -y google-chrome-stable xvfb procps 
             # - yarn run test
             - echo Building production version...
-            - npm run build # --prod --output-hashing=all
+            - CI=false npm run build # --prod --output-hashing=all
             # improve performance of app https://angular.io/guide/deployment#measure-performance
           artifacts:
             - build/**
