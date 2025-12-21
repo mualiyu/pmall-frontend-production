@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import moment from "moment";
 import Toast from "../../utils/Toast"
-import usePaginatedFilter from "../../hooks/usePaginatedFilters";
-import PaginationControls from "../../utils/PaginationControls";
 import PackageName from "../../utils/accountPackages"
 import { BASE_URL } from "../../utils/config"; 
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -257,11 +255,20 @@ useEffect(()=> {
       </section>
 
       <section className="flex-container alc p-y my-40">
-           {/* Starts Here */}
         <div className="">
-        <PaginationControls {...pagination} />
-      </div>
-      {/* Ends Here */}
+          <input
+            type="text"
+            className="search__bar w-200"
+            placeholder="Search by name or ID"
+          />
+          <select className="search__bar w-200" defaultValue={"default"}>
+            <option value="default"> Select Status</option>
+            <option value="Status 1"> Status 1</option>
+            <option value="Status 2"> Status 2</option>
+            <option value="Status 3"> Status 3</option>
+            <option value="Status 4"> Status 4</option>
+          </select>
+        </div>
         <div className="">
           <button
             className="btn btn-primary p-25"

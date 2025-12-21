@@ -257,6 +257,7 @@ useEffect(()=> {
       </section>
 
       <section className="flex-container alc p-y my-40">
+        <div className="">
            {/* Starts Here */}
         <div className="">
         <PaginationControls {...pagination} />

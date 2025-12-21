@@ -257,11 +257,20 @@ useEffect(()=> {
       </section>
 
       <section className="flex-container alc p-y my-40">
-           {/* Starts Here */}
         <div className="">
-        <PaginationControls {...pagination} />
-      </div>
-      {/* Ends Here */}
+          <input
+            type="text"
+            className="search__bar w-200"
+            placeholder="Search by name or ID"
+          />
+          <select className="search__bar w-200" defaultValue={"default"}>
+            <option value="default"> Select Status</option>
+            <option value="Status 1"> Status 1</option>
+            <option value="Status 2"> Status 2</option>
+            <option value="Status 3"> Status 3</option>
+            <option value="Status 4"> Status 4</option>
+          </select>
+        </div>
         <div className="">
           <button
             className="btn btn-primary p-25"
