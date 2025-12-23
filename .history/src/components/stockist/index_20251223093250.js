@@ -102,7 +102,7 @@ const Stockist = () => {
 
   const pagination = usePaginatedFilter({
     data: allStockist,
-    searchKey: ["name", "email"],
+    searchKey: ["name", "tags"],
     statusKey: "status",
     statusOptions: STOCKIST_STATUSES,
   });

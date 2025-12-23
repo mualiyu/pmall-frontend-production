@@ -103,7 +103,7 @@ const Affilates = () => {
 
   const pagination = usePaginatedFilter({
     data: allAffiliates,
-    searchKey: ["fname", "lname", "username", "phone"],
+    searchKey: "name",
     statusKey: "status",
     statusOptions: AFFILIATE_STATUSES,
   });

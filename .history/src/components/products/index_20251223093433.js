@@ -190,7 +190,7 @@ const ProductList = () => {
 
   const pagination = usePaginatedFilter({
     data: products,
-    searchKey: ["name", "cost"],
+    searchKey: "name",
     statusKey: "status",
     statusOptions: PRODUCT_STATUSES,
   });

@@ -14,7 +14,13 @@ const usePaginatedFilter = ({
   const filteredData = useMemo(() => {
     let result = [...data];
 
-  
+    // if (searchTerm && searchKey) {
+    //   result = result.filter((item) =>
+    //     item?.[searchKey]
+    //       ?.toLowerCase()
+    //       .includes(searchTerm.toLowerCase())
+    //   );
+    // }
 
     if (searchTerm && searchKey) {
       const keys = Array.isArray(searchKey) ? searchKey : [searchKey];
@@ -27,9 +33,9 @@ const usePaginatedFilter = ({
         )
       );
     }
+    
 
-
-    if (statusFilter && statusFilter !== "all") {
+    if (statusFilter !== "") {
       result = result.filter(
         (item) => String(item?.[statusKey]) === String(statusFilter)
       );

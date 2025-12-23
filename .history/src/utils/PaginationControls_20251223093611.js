@@ -68,7 +68,7 @@ const PaginationControls = ({
   
           <button
           className="btn btn-secondary p-25"
-            disabled={currentPage === totalPages || totalPages === 0}
+            disabled={currentPage === totalPages || totalPages?.length == 0}
             onClick={() => setCurrentPage((p) => p + 1)}
           >
             Next
