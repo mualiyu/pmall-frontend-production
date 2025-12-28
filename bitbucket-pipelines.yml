@@ -54,6 +54,7 @@ pipelines:
       - step:
           deployment: Staging
           name: Deploy To Shared Host
+          trigger: manual
           script:
             - pipe: atlassian/ftp-deploy:0.6.1
               variables:
@@ -61,21 +62,29 @@ pipelines:
                 PASSWORD: $FTP_PASSWORD
                 SERVER: $FTP_HOST
                 REMOTE_PATH: $FTP_REMOTE_PATH
-                LOCAL_PATH: build
+                LOCAL_PATH: $BUILD_LOCAL_PATH
                 SET_ARGS: "ssl:verify-certificate false"
                 EXTRA_ARGS: "--transfer-all"
-    # master:
-    #   - step:
-    #       name: Build
-    #       caches:
-    #         - node
-    #       script:
-    #         - yarn install
-    #         - yarn run build
-    #       artifacts:
-    #         - dist/**
-    #   - step:
-    #       deployment: Production
-    #       name: Deploy
-    #       script:
-    #         - echo deploying application to production environment
+    production:
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run build
+          artifacts:
+            - dist/**
+      - step:
+          deployment: Production
+          name: Deploy to Pmall.com.ng
+          script:
+            - pipe: atlassian/ftp-deploy:0.6.1
+              variables:
+                USER: $FTP_USERNAME
+                PASSWORD: $FTP_PASSWORD
+                SERVER: $FTP_HOST
+                REMOTE_PATH: $FTP_REMOTE_PATH
+                LOCAL_PATH: $BUILD_LOCAL_PATH
+                SET_ARGS: "ssl:verify-certificate false"
+                EXTRA_ARGS: "--transfer-all"
