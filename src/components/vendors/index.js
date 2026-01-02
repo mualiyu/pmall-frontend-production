@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/config"; 
 import Toast from "../../utils/Toast"
+import Loading from "../../utils/loading";
 import usePaginatedFilter from "../../hooks/usePaginatedFilters";
 import PaginationControls from "../../utils/PaginationControls";
 import PackageName from "../../utils/accountPackages"
@@ -248,6 +249,7 @@ useEffect(()=> {
 },[])
   return (
     <section>
+      {loading && <Loading/>}
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <section className="page__header">
         <div className="flex-container alc">
