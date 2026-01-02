@@ -228,7 +228,7 @@ function Sidebar() {
           <SidebarRow
             path="/app/transaction/history"
             Icon={CreditCardIcon}
-            title="Transaction/Order History"
+            title="Transactions"
           />
           <SidebarRow
             path="/app/withdrawals"
