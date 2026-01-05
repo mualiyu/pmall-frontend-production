@@ -6,16 +6,11 @@ import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import GroupsIcon from "@mui/icons-material/Groups";
-import EuroIcon from '@mui/icons-material/Euro';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import MoneyIcon from '@mui/icons-material/Money';
-import FlagIcon from '@mui/icons-material/Flag';
-import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import FlutterDashIcon from '@mui/icons-material/FlutterDash';
 import FortIcon from '@mui/icons-material/Fort';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import ReduceCapacityIcon from '@mui/icons-material/ReduceCapacity';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import EmailIcon from "@mui/icons-material/Email";
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
@@ -73,12 +68,6 @@ function Sidebar() {
               />
                {user?.accountType !== "Customer" && (
             <>
-           <SidebarRow
-                path=""
-                Icon={EuroIcon}
-                title="Wallet"
-              />
-         
               <SidebarRow
                 path="/app/store-management"
                 Icon={AddBusinessIcon}
@@ -91,14 +80,9 @@ function Sidebar() {
               />
               
                <SidebarRow
-                path="/app/users/details/"
-                Icon={Person2Icon}
-                title="My Profile"
-              />
-               <SidebarRow
             path="/app/users"
             Icon={FlutterDashIcon}
-            title="Store Manager"
+            title="Vendor Store Managers"
           />
             </>
           )}
@@ -106,14 +90,9 @@ function Sidebar() {
             user?.accountType === "Affiliate") && (
               <>
             <SidebarRow
-              path="/app/stockist"
-              Icon={GroupsIcon}
-              title="Stockist Management"
-            />
-            <SidebarRow
               path="/app/vendors"
               Icon={GroupsIcon}
-              title="Vendor Resources"
+              title="Vendor Management"
             />
             <SidebarRow
             path="/app/users/details"
@@ -151,25 +130,8 @@ function Sidebar() {
               />
               <SidebarRow
                 path="/app/leadership-rank"
-                Icon={FortIcon}
+                Icon={MilitaryTechIcon}
                 title="Leadership Rank"
-              />
-              <SidebarRow
-                path=""
-                Icon={DisplaySettingsIcon}
-                title="Marketing"
-              />
-              <SidebarRow
-                path=""
-                Icon={MoneyIcon}
-                title="Sales"
-              />
-           
-              
-              <SidebarRow
-                path=""
-                Icon={ShoppingCartIcon}
-                title="Transaction Reports"
               />
               </>
           )}
@@ -181,39 +143,12 @@ function Sidebar() {
               Icon={ShoppingCartIcon}
               title="Product Management"
             />
-           {/* <SidebarRow
-                path=""
-                Icon={ShoppingCartIcon}
-                title="My Store"
-              /> */}
-           <SidebarRow
-                path=""
-                Icon={CardGiftcardIcon}
-                title="Promotions"
-              />
-              
-              <SidebarRow
-                path=""
-                Icon={LocalOfferIcon}
-                title="Coupons"
-              />
-              
-              <SidebarRow
-                path=""
-                Icon={LocalShippingIcon}
-                title="Locate a Stockiest"
-              />
-              <SidebarRow
-                path=""
-                Icon={ShoppingBasketIcon}
-                title="Market Place"
-              />
               </>
           )}
           {(user?.accountType === "Stockiest" ||
             user?.accountType === "Admin") && (
             <SidebarRow
-              path="/app"
+              path="/app/stockist"
               Icon={DirectionsCarIcon}
               title="Dispatch Management"
             />
@@ -245,10 +180,10 @@ function Sidebar() {
               title="PMall Reports"
             />
             <SidebarRow
-              path="/app/advert_maker"
-              Icon={FlagIcon}
-              title="Advert Maker"
-            />
+                path="/app/advert_maker"
+                Icon={CardGiftcardIcon}
+                title="Promotions"
+              />
             </>
           )}
           <SidebarRow
@@ -278,6 +213,7 @@ function Sidebar() {
             />
             </>
             )}
+
             <div className="header__info" style={{marginTop: 20}}>
               <div className="user__avatar bg-warning">
               <h3>

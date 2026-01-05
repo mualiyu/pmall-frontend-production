@@ -192,25 +192,25 @@ useEffect(()=> {
             {allPackages.map((packageItem)=> (
           <TableRow onClick={() => navigate("details")} key={packageItem.id}>
               <TableCell className="b-r">
-                <div className="d-flex alc f-10 flex-start">
+                <div className="d-flex alc flex-start">
                   <div className="lheight13">
-                    <h4 className="uppercase">{packageItem.name} </h4>
+                    <h4 className="title-case capitalize">{packageItem.name} </h4>
                   </div>
                 </div>
               </TableCell>
               <TableCell>
-              <div className="d-flex alc f-10 flex-start">
+              <div className="d-flex alc flex-start">
                   <div className="lheight13">
-                    <h4 className="uppercase">
+                    <h4 className="title-case capitalize">
                  { packageItem.type }
                 </h4>
                 </div>
                 </div>
                 </TableCell>
               <TableCell> 
-              <div className="d-flex alc f-10 flex-start">
+              <div className="d-flex alc flex-start">
                   <div className="lheight13">
-                    <h4 className="uppercase">
+                    <h4 className="title-case capitalize">
                       { currency(packageItem.price) } 
                       </h4>
                     </div>
@@ -218,9 +218,9 @@ useEffect(()=> {
               </TableCell>
               
               <TableCell>
-              <div className="d-flex alc f-10 flex-start">
+              <div className="d-flex alc flex-start">
                   <div className="lheight13">
-                    <h4 className="uppercase">
+                    <h4 className="title-case capitalize">
                        {moment(packageItem.created_at).format("ll")}
                        </h4>
                        </div>
