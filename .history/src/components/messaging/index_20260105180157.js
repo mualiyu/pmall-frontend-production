@@ -32,6 +32,15 @@ const style = {
   p: 4,
 };
 
+  // Filter Mechanism
+
+  // const STOCKIST_STATUSES = [
+  //   { label: "Active", value: "1" },
+  //   { label: "In-Active", value: "0" },
+  //   { label: "Barred", value: "2" },
+  // // ];
+
+  
 
 const Messaging = () => {
   const [newMessageModal, setNewMessageModal] = useState(false);
@@ -161,14 +170,14 @@ useEffect(()=> {
       <div className="s-divider"></div>
       
       
-      <section className="flex-container alc p-y my-40">
+      <section className="flex-container alc mb-10">
         {/* Starts Here */}
         <div className="">
         <PaginationControls {...pagination} />
       </div>
       {/* Ends Here */}
       {user?.accountType === "Admin" && (
-        <div className="">
+        <div className="" style={{marginTop: 30}}>
           <button
             className="btn btn-primary p-25"
             onClick={() => setNewMessageModal(true)}>

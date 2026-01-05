@@ -32,6 +32,22 @@ const style = {
   p: 4,
 };
 
+  // Filter Mechanism
+
+  const STOCKIST_STATUSES = [
+    { label: "Active", value: "1" },
+    { label: "In-Active", value: "0" },
+    { label: "Barred", value: "2" },
+  ];
+
+  const pagination = usePaginatedFilter({
+    data: allStockist,
+    searchKey: ["name", "email"],
+    statusKey: "status",
+    statusOptions: STOCKIST_STATUSES,
+  });
+
+  const {  paginatedData, currentPage, totalPages, pageSize, searchTerm, statusFilter, setCurrentPage, setPageSize, setSearchTerm, setStatusFilter } = pagination;
 
 const Messaging = () => {
   const [newMessageModal, setNewMessageModal] = useState(false);
@@ -39,16 +55,6 @@ const Messaging = () => {
   const [loading, setLoading] =useState(false);
   const [toast, setToast] = useState(null);
   const handleModalClose = () => setNewMessageModal(false);
-
-  const pagination = usePaginatedFilter({
-    data: allMessages,
-    searchKey: ["subject", "body", "email"],
-    statusKey: "status",
-    // statusOptions: MESSAGE_STATUSES,
-  });
-
-  const {  paginatedData, currentPage, totalPages, pageSize, searchTerm, statusFilter, setCurrentPage, setPageSize, setSearchTerm, setStatusFilter } = pagination;
-
 
 const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -160,24 +166,22 @@ useEffect(()=> {
       </section>
       <div className="s-divider"></div>
       
-      
-      <section className="flex-container alc p-y my-40">
+      {user?.accountType === "Admin" && (
+      <section className="flex-container alc mb-10" style={{float: 'right'}}>
         {/* Starts Here */}
         <div className="">
         <PaginationControls {...pagination} />
       </div>
       {/* Ends Here */}
-      {user?.accountType === "Admin" && (
-        <div className="">
+        <div className="" style={{marginTop: 30}}>
           <button
             className="btn btn-primary p-25"
             onClick={() => setNewMessageModal(true)}>
             Create New Message
           </button>
         </div>
-        )}
       </section>
-      
+      )}
 
 
       <TableContainer component={Paper}>
@@ -197,7 +201,7 @@ useEffect(()=> {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedData.map((msg)=> (
+            {allMessages.map((msg)=> (
           <TableRow onClick={() => navigate("details")} key={msg.id}>
             <TableCell>
               <div className="d-flex alc f-10 flex-start">

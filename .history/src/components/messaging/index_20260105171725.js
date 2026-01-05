@@ -7,8 +7,8 @@ import Loading from "../../utils/loading";
 import currency from "../../utils/formatCurrency";
 import Toast from "../../utils/Toast"
 import { BASE_URL } from "../../utils/config"; 
-import usePaginatedFilter from "../../hooks/usePaginatedFilters";
-import PaginationControls from "../../utils/PaginationControls";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import GroupsIcon from "@mui/icons-material/Groups";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Box from "@mui/material/Box";
@@ -32,23 +32,34 @@ const style = {
   p: 4,
 };
 
+const columns = [
+  { id: "to", label: "Message to" },
+  { id: "type", label: "Type" },
+  { id: "subject", label: "Msg. Subject" },
+  { id: "description", label: "Message" },
+];
+
+
+function createData(
+  to,
+  type,
+  subject,
+  description,
+) {
+  return {
+    to,
+    type,
+    subject,
+    description,
+  };
+}
 
 const Messaging = () => {
   const [newMessageModal, setNewMessageModal] = useState(false);
-  const [allMessages, setAllMessages] = useState([]);
+  const [allPackages, setAllPackages] = useState([]);
   const [loading, setLoading] =useState(false);
   const [toast, setToast] = useState(null);
   const handleModalClose = () => setNewMessageModal(false);
-
-  const pagination = usePaginatedFilter({
-    data: allMessages,
-    searchKey: ["subject", "body", "email"],
-    statusKey: "status",
-    // statusOptions: MESSAGE_STATUSES,
-  });
-
-  const {  paginatedData, currentPage, totalPages, pageSize, searchTerm, statusFilter, setCurrentPage, setPageSize, setSearchTerm, setStatusFilter } = pagination;
-
 
 const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -64,7 +75,7 @@ const [error, setError] = useState("");
 
   const fetchAllMessages = () => {
     setLoading(true);
-    fetch(`${BASE_URL}/message/inbox`, {
+    fetch(`${BASE_URL}/account-packages/all`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -75,7 +86,7 @@ const [error, setError] = useState("");
         .then((resp) => resp.json())
         .then((result) => {
     console.log(result);
-    setAllMessages(result.data.inbox || [])
+    setAllPackages(result.data.packages || [])
             setLoading(false);
         })
         .catch((err) => {
@@ -98,15 +109,15 @@ const handleSubmit = async (e) => {
   setError("");
 
   const payload = {
-      body: inputValues.body,
-      subject: inputValues.subject,
-      recipient_type: inputValues.recipient_type, 
-      recipient_email: inputValues.recipient_email,
+      body: inputValues.name,
+      subject: inputValues.title,
+      recipient_type: inputValues.title, 
+      recipient_email: inputValues.to,
       send_email: true,
   };
 console.log(payload);
   try {
-      const response = await fetch(`${BASE_URL}/message/new`, {
+      const response = await fetch(`${BASE_URL}/`, {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -160,69 +171,42 @@ useEffect(()=> {
       </section>
       <div className="s-divider"></div>
       
-      
-      <section className="flex-container alc p-y my-40">
-        {/* Starts Here */}
-        <div className="">
-        <PaginationControls {...pagination} />
-      </div>
-      {/* Ends Here */}
-      {user?.accountType === "Admin" && (
-        <div className="">
+
+      <section className="flex-container alc mb-10" style={{float: 'right'}}>
+        <div className="" >
           <button
             className="btn btn-primary p-25"
             onClick={() => setNewMessageModal(true)}>
             Create New Message
           </button>
         </div>
-        )}
       </section>
-      
 
-
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="messages Table">
+<p> Feature coming soon </p>
+      {/* <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="Vendors Table">
           <TableHead>
             <TableRow>
-              
-                <TableCell>Date</TableCell>
-                <TableCell>Msg. Subject</TableCell>
-                {user.accountType=== "Admin" && (
-                  <>
-                <TableCell>Message Type</TableCell>
-                <TableCell>Email To</TableCell>
-                </>
-                )}
-                <TableCell>Message</TableCell>
+              {columns.map((column) => (
+                <TableCell>{column.label}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedData.map((msg)=> (
-          <TableRow onClick={() => navigate("details")} key={msg.id}>
-            <TableCell>
-              <div className="d-flex alc f-10 flex-start">
-                  <div className="lheight13">
-                    <h4 className="uppercase">
-                       {moment(msg.created_at).format("ll")}
-                       </h4>
-                       </div>
-                       </div>
-               </TableCell>
-
+            {allPackages.map((packageItem)=> (
+          <TableRow onClick={() => navigate("details")} key={packageItem.id}>
               <TableCell className="b-r">
                 <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
-                    <h4 className="uppercase">{msg.subject} </h4>
+                    <h4 className="uppercase">{packageItem.name} </h4>
                   </div>
                 </div>
               </TableCell>
-              {user.accountType=== "Admin" && (
-                  <>
               <TableCell>
               <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <h4 className="uppercase">
-                 { msg.recipient_type }
+                 { packageItem.type }
                 </h4>
                 </div>
                 </div>
@@ -231,32 +215,29 @@ useEffect(()=> {
               <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <h4 className="uppercase">
-                      { msg.recipient_email } 
+                      { currency(packageItem.price) } 
                       </h4>
                     </div>
               </div>
               </TableCell>
-              </>
-              )}
-              <TableCell> 
+              
+              <TableCell>
               <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <h4 className="uppercase">
-                      { msg.body } 
-                      </h4>
-                    </div>
-              </div>
-              </TableCell>
-              
-              
+                       {moment(packageItem.created_at).format("ll")}
+                       </h4>
+                       </div>
+                       </div>
+               </TableCell>
             </TableRow>
             ))}
            
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
 
-      {/* Modal for message */}
+      {/* Modal for vendors */}
 
       <Modal
         open={newMessageModal}
@@ -307,26 +288,26 @@ useEffect(()=> {
                         </select>
                 </div>
                 <div className="pos-rel w100-m10 ">
-                  <label> Recipient Email </label>
+                  <label> Package Price </label>
                   <input
-                    type="email"
+                    type="number"
                     className="form-control-input "
-                    name="recipient_email"
+                    name="price"
                     onChange={onChangeHandler}
-                    value={inputValues.recipient_email || ""}
-                    placeholder="e.g email@example.com"
+                    value={inputValues.price || ""}
+                    placeholder="20000"
                   />
                 </div>
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100 ">
-                  <label className="mb-7">  Message </label>
+                  <label className="mb-7"> Package Description </label>
                   <textarea
                     placeholder="Provide description for package"
                     className="form-textarea w-100i"
-                    name="body"
+                    name="description"
                     onChange={onChangeHandler}
-                    value={inputValues.body || ""}
+                    value={inputValues.description || ""}
                     ></textarea>
                 </div>
               </section>
@@ -343,7 +324,7 @@ useEffect(()=> {
                         Cancel
                     </button>
                     <button type="submit" className="btn btn-primary p-25 pull-right" disabled={loading}>
-                        {loading ? "Sending Message..." : "Send Message"}
+                        {loading ? "Saving package..." : "Save Record"}
                     </button>
               </div>
             </form>
