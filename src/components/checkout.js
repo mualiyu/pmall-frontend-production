@@ -47,6 +47,7 @@ function TabPanel(props) {
 const CheckoutPage = () => {
     const { user, setUser } = useUser();
     const [stockists, setStockists] = useState(null);
+    const [stockistError, setStockistError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [formDetails, setFormDetails] = useState({
         fname: '',
@@ -144,7 +145,7 @@ const CheckoutPage = () => {
       const handleSelectedStockist = (e) => {
         const selectedValue = e.target.value;
         setSelectedStockist(parseInt(selectedValue));
-        console.log("Selected stockist id:", selectedValue);
+        setStockistError(false);
       };
 
     const [cart,setCart] =  useState([]);
@@ -260,11 +261,17 @@ const CheckoutPage = () => {
     
     const initiateCheckout = async (customerData) => {
         const tokenToUse = user?.loggedIn ? user?.token : customerData?.token;
-        const customerId = user?.loggedIn ? user?.id : customerData?.customer.id;
+        const customerId = user?.loggedIn ? user?.id : customerData?.customer?.id;
         
         if (!tokenToUse || !customerId) {
             setToast({ message: "Token or Customer ID missing! Cannot proceed. Kindly login again as we couldn't verify the user", type: "error" });
             setTimeout(() => setToast(null), 5000);
+            return false;
+        }
+
+        if (!selectedStockist) {
+            setToast({ message: "Select a Pickup Location", type: "error" });
+            setStockistError(true);
             return false;
         }
     
@@ -272,7 +279,6 @@ const CheckoutPage = () => {
         if (checkingOutProducts.length === 0) {
             setToast({ message: "Cart is empty! Cannot proceed.", type: "error" });
             setTimeout(() => setToast(null), 5000);
-            console.error("Cart is empty! Cannot proceed.");
             return false;
         }
     
@@ -284,9 +290,6 @@ const CheckoutPage = () => {
                 quantity: product.amtItems
             }))
         };
-    
-        console.log("Checkout Request Body:", requestBody);
-    
         try {
             const response = await fetch(`${BASE_URL}/customer/checkout/initiate`, {
                 method: "POST",
@@ -301,33 +304,62 @@ const CheckoutPage = () => {
             const result = await response.json();
             console.log("Checkout Result:", result);
     
-            if (!result.status) {
-                setToast({ message: `Checkout initiation failed: ${result.message}`, type: "error" });
-                if(result?.message?.stockist_id) {
-                    setToast({ message: `Select a Pickup Location`, type: "error" });
-                }
-            setTimeout(() => setToast(null), 5000);
+            if (!result?.status) {
+                let errorMessage =
+                    typeof result?.message === "string"
+                        ? result.message
+                        : result?.message?.stockist_id
+                        ? "Select a Pickup Location"
+                        : "Checkout initiation failed";
+            
+                setToast({ message: errorMessage, type: "error" });
+                setTimeout(() => setToast(null), 5000);
+            
                 console.error("Checkout initiation failed:", result);
                 return false;
             }
-            setToast({ message: "Product(s) mapped to user... Initiating payment...", type: "warning" });
+            setToast({
+                message: "Product(s) mapped to user. Initiating payment...",
+                type: "warning",
+            });
             setTimeout(() => setToast(null), 5000);
-            return result.sale; // Return sale data for payment
     
-        } catch (error) {
-            setToast({ message: "Error during checkout initiation:", type: "error" });
-            setTimeout(() => setToast(null), 5000);
-            console.error("Error during checkout initiation:", error);
-            return false;
-        }
+            return result.sale;
+        } 
+
+        catch (error) {
+    const errorMessage =
+        error?.message ||
+        "An unexpected error occurred while initiating checkout.";
+
+    setToast({ message: errorMessage, type: "error" });
+    setTimeout(() => setToast(null), 5000);
+    setLoading(false);
+    return false;
+}
+
+
     };
     
     const initiatePayment = async (saleData, customerData) => {
-        const tokenToUse = user?.loggedIn ? user?.token : customerData?.token;
-        if (!tokenToUse) {
-            setToast({ message: "Token is missing! Cannot proceed.", type: "error" });
+        // HARD GUARD — never proceed with invalid sale data
+        if (!saleData || !saleData.id) {
+            setToast({
+                message: "Invalid sale data. Please restart checkout.",
+                type: "error",
+            });
             setTimeout(() => setToast(null), 5000);
-            console.error("Token is missing! Cannot proceed.");
+            return false;
+        }
+    
+        const tokenToUse = user?.loggedIn ? user?.token : customerData?.token;
+    
+        if (!tokenToUse) {
+            setToast({
+                message: "Authentication token is missing. Please log in again.",
+                type: "error",
+            });
+            setTimeout(() => setToast(null), 5000);
             return false;
         }
     
@@ -336,41 +368,52 @@ const CheckoutPage = () => {
             amount: saleData.total_amount,
         };
     
-        console.log("Payment Request Body:", paymentData);
-    
         try {
-            const response = await fetch(`${BASE_URL}/customer/checkout/paystack/initiate`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                    Accept: "application/json",
-                    Authorization: "Bearer " + tokenToUse,
-                },
-                body: JSON.stringify(paymentData),
-            });
+            const response = await fetch(
+                `${BASE_URL}/customer/checkout/paystack/initiate`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json;charset=UTF-8",
+                        Accept: "application/json",
+                        Authorization: `Bearer ${tokenToUse}`,
+                    },
+                    body: JSON.stringify(paymentData),
+                }
+            );
     
             const result = await response.json();
-            console.log("Payment Result:", result);
     
-            if (!result.status) {
-                setToast({message: `Payment initiation failed: ${result.message}`, type: "error" });
-            setTimeout(() => setToast(null), 5000);
-                console.error("Payment initiation failed:", result);
+            if (!result?.status) {
+                const errorMessage =
+                    typeof result?.message === "string"
+                        ? result.message
+                        : "Payment initiation failed.";
+    
+                setToast({ message: errorMessage, type: "error" });
+                setTimeout(() => setToast(null), 5000);
                 return false;
             }
     
-            console.log("Redirecting to payment page...");
-            window.location.href = result.authorization_url;
+            // SUCCESS — redirect handled here
             localStorage.removeItem("pmallCart");
-            return true; // Payment initiated successfully
+            window.location.href = result.authorization_url;
+    
+            return true;
     
         } catch (error) {
-            setToast({message: `Error during payment initiation: ${error}`, type: "error" });
+            const errorMessage =
+                error?.message ||
+                "An unexpected error occurred during payment initiation.";
+    
+            setToast({ message: errorMessage, type: "error" });
             setTimeout(() => setToast(null), 5000);
-            console.error("Error during payment initiation:", error);
+    
+            console.error("Payment initiation error:", error);
             return false;
         }
     };
+    
     
     const onSubmit = async () => {
         try {
@@ -383,22 +426,16 @@ const CheckoutPage = () => {
                 setBtnLoader(false);
                 return;
             }
-    
             const saleData = await initiateCheckout(customerData);
-            if (!saleData) {
-                setToast({message: `Oops! Not your fault, try logging back in again`, type: "error" });
-            setTimeout(() => setToast(null), 9000);
-                console.error("Checkout step failed!");
+            if (saleData === false) {
                 setBtnLoader(false);
-                return;
+                return false;
             }
     
             const paymentSuccess = await initiatePayment(saleData, customerData);
-            if (!paymentSuccess) {
-                setToast({message: `Payment step failed!`, type: "error" });
-                setTimeout(() => setToast(null), 5000);
-                console.error("Payment step failed!");
+            if (paymentSuccess === false) {
                 setBtnLoader(false);
+                return false;
             }
             
         } catch (error) {
@@ -416,8 +453,13 @@ const CheckoutPage = () => {
     useEffect(()=>{ 
         getCart();
         getStockist();
+        if (stockistError) {
+            document
+                .querySelector(".stockist-select")
+                ?.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
         return;
-    },[user])
+    },[user, stockistError])
 
     const incrementItemAmt = (id) => {
         setCart(prevCart => {
@@ -706,7 +748,7 @@ setLoading(true);
           <label className="c-red"> Select Pickup Location </label>
           <select
             name="pickup_location"
-            className="last-name form-control"
+            className={`last-name form-control stockist-select ${stockistError ? "stockist-error" : ""}`}
             onChange={handleSelectedStockist}
             style={{marginTop: 4, textTransform: 'capitalize'}}>
               <option>Pickup Location</option>
@@ -718,6 +760,11 @@ setLoading(true);
                 ))
               }
           </select>
+          {stockistError && (
+    <small className="text-danger">
+        Pickup location is required
+    </small>
+)}
           </div>
                         <div className="cart-items">
                             {cart?.length>0 && cart.map(item => (

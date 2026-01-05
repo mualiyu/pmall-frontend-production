@@ -33,10 +33,12 @@ const style = {
 };
 
 const columns = [
-  { id: "to", label: "Message to" },
+  { id: "date", label: "Date" },
   { id: "type", label: "Type" },
+  { id: "to", label: "Message To" },
   { id: "subject", label: "Msg. Subject" },
   { id: "description", label: "Message" },
+  
 ];
 
 
@@ -56,7 +58,7 @@ function createData(
 
 const Messaging = () => {
   const [newMessageModal, setNewMessageModal] = useState(false);
-  const [allPackages, setAllPackages] = useState([]);
+  const [allMessages, setAllMessages] = useState([]);
   const [loading, setLoading] =useState(false);
   const [toast, setToast] = useState(null);
   const handleModalClose = () => setNewMessageModal(false);
@@ -66,16 +68,16 @@ const [error, setError] = useState("");
   const { user } = useUser();
 
   const [inputValues, setInputValues] = useState({
-    to: "",
-    type: "",
+    body: "",
     subject: "",
-    description: "",
+    recipient_type: "",
+    recipient_email: "",
   });
 
 
   const fetchAllMessages = () => {
     setLoading(true);
-    fetch(`${BASE_URL}/account-packages/all`, {
+    fetch(`${BASE_URL}/message/inbox`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -86,7 +88,7 @@ const [error, setError] = useState("");
         .then((resp) => resp.json())
         .then((result) => {
     console.log(result);
-    setAllPackages(result.data.packages || [])
+    setAllMessages(result.data.inbox || [])
             setLoading(false);
         })
         .catch((err) => {
@@ -109,15 +111,15 @@ const handleSubmit = async (e) => {
   setError("");
 
   const payload = {
-      message: inputValues.name,
-      title: inputValues.title,
-      type: inputValues.title, // Convert to integer
-      to: inputValues.to,
-      description: inputValues.description,
+      body: inputValues.body,
+      subject: inputValues.subject,
+      recipient_type: inputValues.recipient_type, 
+      recipient_email: inputValues.recipient_email,
+      send_email: true,
   };
 console.log(payload);
   try {
-      const response = await fetch(`${BASE_URL}/`, {
+      const response = await fetch(`${BASE_URL}/message/new`, {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -171,9 +173,9 @@ useEffect(()=> {
       </section>
       <div className="s-divider"></div>
       
-
+      {user?.accountType === "Admin" && (
       <section className="flex-container alc mb-10" style={{float: 'right'}}>
-        <div className="" >
+        <div className="" style={{marginTop: 30}}>
           <button
             className="btn btn-primary p-25"
             onClick={() => setNewMessageModal(true)}>
@@ -181,32 +183,52 @@ useEffect(()=> {
           </button>
         </div>
       </section>
+      )}
 
-<p> Feature coming soon </p>
-      {/* <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="Vendors Table">
+
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="messages Table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
-                <TableCell>{column.label}</TableCell>
-              ))}
+              
+                <TableCell>Date</TableCell>
+                <TableCell>Msg. Subject</TableCell>
+                {user.accountType=== "Admin" && (
+                  <>
+                <TableCell>Message Type</TableCell>
+                <TableCell>Email To</TableCell>
+                </>
+                )}
+                <TableCell>Message</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {allPackages.map((packageItem)=> (
-          <TableRow onClick={() => navigate("details")} key={packageItem.id}>
+            {allMessages.map((msg)=> (
+          <TableRow onClick={() => navigate("details")} key={msg.id}>
+            <TableCell>
+              <div className="d-flex alc f-10 flex-start">
+                  <div className="lheight13">
+                    <h4 className="uppercase">
+                       {moment(msg.created_at).format("ll")}
+                       </h4>
+                       </div>
+                       </div>
+               </TableCell>
+
               <TableCell className="b-r">
                 <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
-                    <h4 className="uppercase">{packageItem.name} </h4>
+                    <h4 className="uppercase">{msg.subject} </h4>
                   </div>
                 </div>
               </TableCell>
+              {user.accountType=== "Admin" && (
+                  <>
               <TableCell>
               <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <h4 className="uppercase">
-                 { packageItem.type }
+                 { msg.recipient_type }
                 </h4>
                 </div>
                 </div>
@@ -215,29 +237,32 @@ useEffect(()=> {
               <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <h4 className="uppercase">
-                      { currency(packageItem.price) } 
+                      { msg.recipient_email } 
+                      </h4>
+                    </div>
+              </div>
+              </TableCell>
+              </>
+              )}
+              <TableCell> 
+              <div className="d-flex alc f-10 flex-start">
+                  <div className="lheight13">
+                    <h4 className="uppercase">
+                      { msg.body } 
                       </h4>
                     </div>
               </div>
               </TableCell>
               
-              <TableCell>
-              <div className="d-flex alc f-10 flex-start">
-                  <div className="lheight13">
-                    <h4 className="uppercase">
-                       {moment(packageItem.created_at).format("ll")}
-                       </h4>
-                       </div>
-                       </div>
-               </TableCell>
+              
             </TableRow>
             ))}
            
           </TableBody>
         </Table>
-      </TableContainer> */}
+      </TableContainer>
 
-      {/* Modal for vendors */}
+      {/* Modal for message */}
 
       <Modal
         open={newMessageModal}
@@ -261,51 +286,53 @@ useEffect(()=> {
 
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100-m10 ">
-                  <label> Package Name</label>
+                  <label> Subject of Message</label>
                   <input
                     type="text"
                     className="form-control-input "
-                    name="name"
-                    placeholder="Gold"
+                    name="subject"
+                    placeholder="Subject of message"
                     onChange={onChangeHandler}
-                    value={inputValues.name || ""}
+                    value={inputValues.subject || ""}
                   />
                 </div>
                 <div className="pos-rel w100-m10 ">
-                <label className="mb-7"> Select Package Type</label>
+                <label className="mb-7"> Send this Message To</label>
                 <select
                             className="search__bar w-100"
-                            name="type"
+                            name="recipient_type"
                             onChange={onChangeHandler}
-                            value={inputValues.type}
+                            value={inputValues.recipient_type}
                             required
                         >
                             <option value="">Select Type</option>
-                            <option value="Vendor">Vendor</option>
-                            <option value="Affiliate">Affiliate</option>
+                            <option value="vendors">To all  Vendor</option>
+                            <option value="affiliates"> To all Affiliate</option>
+                            <option value="customers">To all Customers</option>
+                            <option value="single">To a Single User</option>
                         </select>
                 </div>
                 <div className="pos-rel w100-m10 ">
-                  <label> Package Price </label>
+                  <label> Recipient Email </label>
                   <input
-                    type="number"
+                    type="email"
                     className="form-control-input "
-                    name="price"
+                    name="recipient_email"
                     onChange={onChangeHandler}
-                    value={inputValues.price || ""}
-                    placeholder="20000"
+                    value={inputValues.recipient_email || ""}
+                    placeholder="e.g email@example.com"
                   />
                 </div>
               </section>
               <section className="flex-container mb-lg">
                 <div className="pos-rel w100 ">
-                  <label className="mb-7"> Package Description </label>
+                  <label className="mb-7">  Message </label>
                   <textarea
                     placeholder="Provide description for package"
                     className="form-textarea w-100i"
-                    name="description"
+                    name="body"
                     onChange={onChangeHandler}
-                    value={inputValues.description || ""}
+                    value={inputValues.body || ""}
                     ></textarea>
                 </div>
               </section>
@@ -322,7 +349,7 @@ useEffect(()=> {
                         Cancel
                     </button>
                     <button type="submit" className="btn btn-primary p-25 pull-right" disabled={loading}>
-                        {loading ? "Saving package..." : "Save Record"}
+                        {loading ? "Sending Message..." : "Send Message"}
                     </button>
               </div>
             </form>

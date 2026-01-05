@@ -2780,6 +2780,26 @@ input:checked + .slider:before {
    top:0;
    display: block;
   }
+  .stockist-select {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+  }
+  
+  .stockist-error {
+    border-color: #dc3545;
+    animation: shake 0.4s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+  }
+  
  .sidebar{
   left: 0;
   top:0 !important;
