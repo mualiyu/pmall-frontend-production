@@ -115,6 +115,11 @@ function Sidebar() {
               Icon={GroupsIcon}
               title="Vendor Resources"
             />
+             <SidebarRow
+              path="/app/stockists"
+              Icon={GroupsIcon}
+              title="Stockist Resources"
+            />
             <SidebarRow
             path="/app/users/details"
             Icon={Person2Icon}

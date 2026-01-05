@@ -7,8 +7,8 @@ import Loading from "../../utils/loading";
 import currency from "../../utils/formatCurrency";
 import Toast from "../../utils/Toast"
 import { BASE_URL } from "../../utils/config"; 
-import usePaginatedFilter from "../../hooks/usePaginatedFilters";
-import PaginationControls from "../../utils/PaginationControls";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import GroupsIcon from "@mui/icons-material/Groups";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Box from "@mui/material/Box";
@@ -32,6 +32,28 @@ const style = {
   p: 4,
 };
 
+const columns = [
+  { id: "to", label: "Message to" },
+  { id: "type", label: "Type" },
+  { id: "subject", label: "Msg. Subject" },
+  { id: "description", label: "Message" },
+  { id: "date", label: "Message" },
+];
+
+
+function createData(
+  to,
+  type,
+  subject,
+  description,
+) {
+  return {
+    to,
+    type,
+    subject,
+    description,
+  };
+}
 
 const Messaging = () => {
   const [newMessageModal, setNewMessageModal] = useState(false);
@@ -39,16 +61,6 @@ const Messaging = () => {
   const [loading, setLoading] =useState(false);
   const [toast, setToast] = useState(null);
   const handleModalClose = () => setNewMessageModal(false);
-
-  const pagination = usePaginatedFilter({
-    data: allMessages,
-    searchKey: ["subject", "body", "email"],
-    statusKey: "status",
-    // statusOptions: MESSAGE_STATUSES,
-  });
-
-  const {  paginatedData, currentPage, totalPages, pageSize, searchTerm, statusFilter, setCurrentPage, setPageSize, setSearchTerm, setStatusFilter } = pagination;
-
 
 const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -75,7 +87,7 @@ const [error, setError] = useState("");
         .then((resp) => resp.json())
         .then((result) => {
     console.log(result);
-    setAllMessages(result.data.inbox || [])
+    setAllMessages(result.data.packages || [])
             setLoading(false);
         })
         .catch((err) => {
@@ -160,44 +172,30 @@ useEffect(()=> {
       </section>
       <div className="s-divider"></div>
       
-      
-      <section className="flex-container alc p-y my-40">
-        {/* Starts Here */}
-        <div className="">
-        <PaginationControls {...pagination} />
-      </div>
-      {/* Ends Here */}
       {user?.accountType === "Admin" && (
-        <div className="">
+      <section className="flex-container alc mb-10" style={{float: 'right'}}>
+        <div className="" >
           <button
             className="btn btn-primary p-25"
             onClick={() => setNewMessageModal(true)}>
             Create New Message
           </button>
         </div>
-        )}
       </section>
-      
+      )}
 
 
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="messages Table">
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="Vendors Table">
           <TableHead>
             <TableRow>
-              
-                <TableCell>Date</TableCell>
-                <TableCell>Msg. Subject</TableCell>
-                {user.accountType=== "Admin" && (
-                  <>
-                <TableCell>Message Type</TableCell>
-                <TableCell>Email To</TableCell>
-                </>
-                )}
-                <TableCell>Message</TableCell>
+              {columns.map((column) => (
+                <TableCell>{column.label}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedData.map((msg)=> (
+            {allMessages.map((msg)=> (
           <TableRow onClick={() => navigate("details")} key={msg.id}>
             <TableCell>
               <div className="d-flex alc f-10 flex-start">
@@ -216,8 +214,6 @@ useEffect(()=> {
                   </div>
                 </div>
               </TableCell>
-              {user.accountType=== "Admin" && (
-                  <>
               <TableCell>
               <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
@@ -236,8 +232,6 @@ useEffect(()=> {
                     </div>
               </div>
               </TableCell>
-              </>
-              )}
               <TableCell> 
               <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">

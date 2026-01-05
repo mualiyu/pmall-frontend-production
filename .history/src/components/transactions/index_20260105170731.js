@@ -131,7 +131,7 @@ useEffect(()=> {
               </TableCell>
               
               <TableCell> 
-              <div className="d-flex alc flex-start">
+              <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <h4 className="uppercase">
                       { currency(trx.total_amount) } 
@@ -140,7 +140,7 @@ useEffect(()=> {
               </div>
               </TableCell>
               <TableCell>
-              <div className="d-flex alc flex-start">
+              <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <h4 className="uppercase">
                  { trx.payment_status }
@@ -149,7 +149,7 @@ useEffect(()=> {
                 </div>
                 </TableCell>
               <TableCell>
-              <div className="d-flex alc flex-start">
+              <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
                     <ol style={{lineHeight: "2em"}}>
                       {trx?.products?.map((pro)=>(

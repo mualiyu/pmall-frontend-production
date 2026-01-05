@@ -47,7 +47,6 @@ function TabPanel(props) {
 const CheckoutPage = () => {
     const { user, setUser } = useUser();
     const [stockists, setStockists] = useState(null);
-    const [stockistError, setStockistError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [formDetails, setFormDetails] = useState({
         fname: '',
@@ -145,7 +144,7 @@ const CheckoutPage = () => {
       const handleSelectedStockist = (e) => {
         const selectedValue = e.target.value;
         setSelectedStockist(parseInt(selectedValue));
-        setStockistError(false);
+        console.log("Selected stockist id:", selectedValue);
       };
 
     const [cart,setCart] =  useState([]);
@@ -271,7 +270,6 @@ const CheckoutPage = () => {
 
         if (!selectedStockist) {
             setToast({ message: "Select a Pickup Location", type: "error" });
-            setStockistError(true);
             return false;
         }
     
@@ -279,6 +277,7 @@ const CheckoutPage = () => {
         if (checkingOutProducts.length === 0) {
             setToast({ message: "Cart is empty! Cannot proceed.", type: "error" });
             setTimeout(() => setToast(null), 5000);
+            console.error("Cart is empty! Cannot proceed.");
             return false;
         }
     
@@ -290,6 +289,9 @@ const CheckoutPage = () => {
                 quantity: product.amtItems
             }))
         };
+    
+        console.log("Checkout Request Body:", requestBody);
+    
         try {
             const response = await fetch(`${BASE_URL}/customer/checkout/initiate`, {
                 method: "POST",
@@ -318,13 +320,22 @@ const CheckoutPage = () => {
                 console.error("Checkout initiation failed:", result);
                 return false;
             }
-            setToast({
-                message: "Product(s) mapped to user. Initiating payment...",
-                type: "warning",
-            });
+
+
+
+            // if (!result.status) {
+            //     setToast({ message: `Checkout initiation failed: ${result.message}`, type: "error" });
+            //     if(result?.message?.stockist_id) {
+            //         setToast({ message: `Select a Pickup Location`, type: "error" });
+            //     }
+            // setTimeout(() => setToast(null), 5000);
+            //     console.error("Checkout initiation failed:", result);
+            //     return false;
+            // }
+            setToast({ message: "Product(s) mapped to user... Initiating payment...", type: "warning" });
             setTimeout(() => setToast(null), 5000);
+            return result.sale; // Return sale data for payment
     
-            return result.sale;
         } 
 
         catch (error) {
@@ -334,6 +345,8 @@ const CheckoutPage = () => {
 
     setToast({ message: errorMessage, type: "error" });
     setTimeout(() => setToast(null), 5000);
+
+    console.error("Checkout error:", error);
     setLoading(false);
     return false;
 }
@@ -342,24 +355,11 @@ const CheckoutPage = () => {
     };
     
     const initiatePayment = async (saleData, customerData) => {
-        // HARD GUARD — never proceed with invalid sale data
-        if (!saleData || !saleData.id) {
-            setToast({
-                message: "Invalid sale data. Please restart checkout.",
-                type: "error",
-            });
-            setTimeout(() => setToast(null), 5000);
-            return false;
-        }
-    
         const tokenToUse = user?.loggedIn ? user?.token : customerData?.token;
-    
         if (!tokenToUse) {
-            setToast({
-                message: "Authentication token is missing. Please log in again.",
-                type: "error",
-            });
+            setToast({ message: "Token is missing! Cannot proceed.", type: "error" });
             setTimeout(() => setToast(null), 5000);
+            console.error("Token is missing! Cannot proceed.");
             return false;
         }
     
@@ -368,52 +368,41 @@ const CheckoutPage = () => {
             amount: saleData.total_amount,
         };
     
+        console.log("Payment Request Body:", paymentData);
+    
         try {
-            const response = await fetch(
-                `${BASE_URL}/customer/checkout/paystack/initiate`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json;charset=UTF-8",
-                        Accept: "application/json",
-                        Authorization: `Bearer ${tokenToUse}`,
-                    },
-                    body: JSON.stringify(paymentData),
-                }
-            );
+            const response = await fetch(`${BASE_URL}/customer/checkout/paystack/initiate`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + tokenToUse,
+                },
+                body: JSON.stringify(paymentData),
+            });
     
             const result = await response.json();
+            console.log("Payment Result:", result);
     
-            if (!result?.status) {
-                const errorMessage =
-                    typeof result?.message === "string"
-                        ? result.message
-                        : "Payment initiation failed.";
-    
-                setToast({ message: errorMessage, type: "error" });
-                setTimeout(() => setToast(null), 5000);
+            if (!result.status) {
+                setToast({message: `Payment initiation failed: ${result.message}`, type: "error" });
+            setTimeout(() => setToast(null), 5000);
+                console.error("Payment initiation failed:", result);
                 return false;
             }
     
-            // SUCCESS — redirect handled here
-            localStorage.removeItem("pmallCart");
+            console.log("Redirecting to payment page...");
             window.location.href = result.authorization_url;
-    
-            return true;
+            localStorage.removeItem("pmallCart");
+            return true; // Payment initiated successfully
     
         } catch (error) {
-            const errorMessage =
-                error?.message ||
-                "An unexpected error occurred during payment initiation.";
-    
-            setToast({ message: errorMessage, type: "error" });
+            setToast({message: `Error during payment initiation: ${error}`, type: "error" });
             setTimeout(() => setToast(null), 5000);
-    
-            console.error("Payment initiation error:", error);
+            console.error("Error during payment initiation:", error);
             return false;
         }
     };
-    
     
     const onSubmit = async () => {
         try {
@@ -427,13 +416,16 @@ const CheckoutPage = () => {
                 return;
             }
             const saleData = await initiateCheckout(customerData);
+
             if (saleData === false) {
+                console.error("Checkout step failed!");
                 setBtnLoader(false);
                 return false;
             }
     
             const paymentSuccess = await initiatePayment(saleData, customerData);
             if (paymentSuccess === false) {
+                console.error("Payment step failed!");
                 setBtnLoader(false);
                 return false;
             }
@@ -453,13 +445,8 @@ const CheckoutPage = () => {
     useEffect(()=>{ 
         getCart();
         getStockist();
-        if (stockistError) {
-            document
-                .querySelector(".stockist-select")
-                ?.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
         return;
-    },[user, stockistError])
+    },[user])
 
     const incrementItemAmt = (id) => {
         setCart(prevCart => {
@@ -748,7 +735,7 @@ setLoading(true);
           <label className="c-red"> Select Pickup Location </label>
           <select
             name="pickup_location"
-            className={`last-name form-control stockist-select ${stockistError ? "stockist-error" : ""}`}
+            className="last-name form-control"
             onChange={handleSelectedStockist}
             style={{marginTop: 4, textTransform: 'capitalize'}}>
               <option>Pickup Location</option>
@@ -760,11 +747,6 @@ setLoading(true);
                 ))
               }
           </select>
-          {stockistError && (
-    <small className="text-danger">
-        Pickup location is required
-    </small>
-)}
           </div>
                         <div className="cart-items">
                             {cart?.length>0 && cart.map(item => (

@@ -71,14 +71,14 @@ function Sidebar() {
                 Icon={ShoppingBasketIcon}
                 title="Market Place"
               />
-               {user?.accountType !== "Customer" && (
-            <>
            <SidebarRow
                 path=""
                 Icon={EuroIcon}
                 title="Wallet"
               />
-         
+          {(user?.accountType === "Vendor" ||
+            user?.accountType === "Admin" || user?.accountType === "Stockist") && (
+            <>
               <SidebarRow
                 path="/app/store-management"
                 Icon={AddBusinessIcon}
@@ -114,6 +114,11 @@ function Sidebar() {
               path="/app/vendors"
               Icon={GroupsIcon}
               title="Vendor Resources"
+            />
+             <SidebarRow
+              path="/app/stockists"
+              Icon={GroupsIcon}
+              title="Stockist Resources"
             />
             <SidebarRow
             path="/app/users/details"
@@ -256,11 +261,9 @@ function Sidebar() {
             title="Log Out"
             onClick={logOut}
           />
-
+{user?.accountType !== "Customer" && (
           <div className="w-100 f-bottom">
             <div className="s-divider"></div>
-            {user?.accountType !== "Customer" && (
-              <>
             <SidebarRow
               path="/app/config"
               Icon={FingerprintIcon}
@@ -276,7 +279,6 @@ function Sidebar() {
               Icon={NotificationsActiveIcon}
               title="Notification"
             />
-            </>
             )}
             <div className="header__info" style={{marginTop: 20}}>
               <div className="user__avatar bg-warning">
