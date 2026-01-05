@@ -20,7 +20,8 @@ import { Doughnut } from "react-chartjs-2";
 import Modal from "@mui/material/Modal";
 import { Chart, ArcElement } from "chart.js";
 import Loading from "../../utils/loading";
-import Toast from "../../utils/Toast"
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -252,7 +253,6 @@ useEffect(()=>{
   return (
     <section>
           <Loading loading={loading} />
-          {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <section className="page__header">
         <div className="flex-container alc">
           <GroupsIcon />

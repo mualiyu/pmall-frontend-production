@@ -249,7 +249,7 @@ useEffect(()=> {
 },[])
   return (
     <section>
-      {loading && <Loading/>}
+      {loading && <Loading}
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <section className="page__header">
         <div className="flex-container alc">
