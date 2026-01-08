@@ -1,0 +1,89 @@
+image: node:14
+
+pipelines:
+  default:
+    - step:
+        name: Run Test
+        caches:
+          - node
+        script:
+          - npm install # - yarn install
+          - echo This is where we run the test
+          - npm run test # - yarn run test
+  branches:
+    develop:
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - echo installing...
+            - npm install # - yarn install
+            - echo setting production environment variables
+            - sed -i -e 's%$REACT_APP_BASE_URL%'"$STAGING_SERVER_URL"'%g' .env.production
+            # - cp ./env.production .env.development
+            - echo lint...
+            # - npm run lint # - yarn run lint
+            - echo test...
+            # - >
+            #   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+            #   sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
+            #   apt-get update && \
+            #   apt-get install -y google-chrome-stable xvfb procps 
+            # - yarn run test
+            - echo Building production version...
+            - CI=false npm run build # --prod --output-hashing=all
+            # improve performance of app https://angular.io/guide/deployment#measure-performance
+          artifacts:
+            - build/**
+            - node_modules/** # Save modules for next steps
+      - step:
+          deployment: Test
+          name: Deploy To AWS Test Site
+          script:
+            - pipe: atlassian/aws-s3-deploy:0.3.8
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
+                AWS_DEFAULT_REGION: $REGION
+                S3_BUCKET: $BUCKET_NAME
+                LOCAL_PATH: build
+                ACL: public-read
+      - step:
+          deployment: Staging
+          name: Deploy To Shared Host Staging
+          script:
+            - pipe: atlassian/ftp-deploy:0.6.1
+              variables:
+                USER: $FTP_USERNAME
+                PASSWORD: $FTP_PASSWORD
+                SERVER: $FTP_HOST
+                REMOTE_PATH: $FTP_REMOTE_PATH
+                LOCAL_PATH: $BUILD_LOCAL_PATH
+                SET_ARGS: "ssl:verify-certificate false"
+                EXTRA_ARGS: "--transfer-all"
+    production:
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm install
+            - echo setting production environment variables
+            - sed -i -e 's%$REACT_APP_BASE_URL%'"$PRODUCTION_SERVER_URL"'%g' .env.production
+            - CI=false npm run build
+          artifacts:
+            - dist/**
+      - step:
+          deployment: Production
+          name: Deploy to Pmall.com.ng
+          script:
+            - pipe: atlassian/ftp-deploy:0.6.1
+              variables:
+                USER: $FTP_USERNAME
+                PASSWORD: $FTP_PASSWORD
+                SERVER: $FTP_HOST
+                REMOTE_PATH: $FTP_REMOTE_PATH
+                LOCAL_PATH: $BUILD_LOCAL_PATH
+                SET_ARGS: "ssl:verify-certificate false"
+                EXTRA_ARGS: "--transfer-all"
