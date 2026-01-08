@@ -20,9 +20,7 @@ pipelines:
             - echo installing...
             - npm install # - yarn install
             - echo setting production environment variables
-            - sed -i -e 's%$PROD_CLIENT_ID%'"$PROD_CLIENT_ID"'%g' .env.production
-            - sed -i -e 's%$PROD_CLIENT_SECRET%'"$PROD_CLIENT_SECRET"'%g' .env.production
-            - sed -i -e 's%$PROD_SERVER_URL%'"$PROD_SERVER_URL"'%g' .env.production
+            - sed -i -e 's%$REACT_APP_BASE_URL%'"$STAGING_SERVER_URL"'%g' .env.production
             # - cp ./env.production .env.development
             - echo lint...
             # - npm run lint # - yarn run lint
@@ -41,7 +39,7 @@ pipelines:
             - node_modules/** # Save modules for next steps
       - step:
           deployment: Test
-          name: Deploy To AWS
+          name: Deploy To AWS Test Site
           script:
             - pipe: atlassian/aws-s3-deploy:0.3.8
               variables:
@@ -53,8 +51,7 @@ pipelines:
                 ACL: public-read
       - step:
           deployment: Staging
-          name: Deploy To Shared Host
-          trigger: manual
+          name: Deploy To Shared Host Staging
           script:
             - pipe: atlassian/ftp-deploy:0.6.1
               variables:
@@ -72,7 +69,9 @@ pipelines:
             - node
           script:
             - npm install
-            - npm run build
+            - echo setting production environment variables
+            - sed -i -e 's%$REACT_APP_BASE_URL%'"$PRODUCTION_SERVER_URL"'%g' .env.production
+            - CI=false npm run build
           artifacts:
             - dist/**
       - step:
