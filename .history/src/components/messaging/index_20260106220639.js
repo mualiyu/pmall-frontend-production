@@ -42,7 +42,7 @@ const Messaging = () => {
 
   const pagination = usePaginatedFilter({
     data: allMessages,
-    searchKey: ["created_at","subject", "body", "email", "recipient_role"],
+    searchKey: ["subject", "body", "email"],
     statusKey: "status",
     // statusOptions: MESSAGE_STATUSES,
   });
@@ -64,9 +64,7 @@ const [error, setError] = useState("");
 
   const fetchAllMessages = () => {
     setLoading(true);
-    // let determinWhoseOrder = user?.accountType === "Stockist" ? `stockist/order/${order?.id}` : `vendor/order/${order?.id}`;
-    let userType = user?.accountType === "Customer" ? "customer.message/inbox" : "message/inbox"
-    fetch(`${BASE_URL}/${userType}`, {
+    fetch(`${BASE_URL}/message/inbox`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -77,7 +75,7 @@ const [error, setError] = useState("");
         .then((resp) => resp.json())
         .then((result) => {
     console.log(result);
-    setAllMessages(result?.data || [])
+    setAllMessages(result || [])
             setLoading(false);
         })
         .catch((err) => {
@@ -199,53 +197,53 @@ useEffect(()=> {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedData?.map((msg)=> (
+            {paginatedData.map((msg)=> (
           <TableRow onClick={() => navigate("details")} key={msg.id}>
             <TableCell>
-              <div className="d-flex alc  flex-start">
+              <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
-                    <p className="title-case">
+                    <h4 className="uppercase">
                        {moment(msg?.message?.created_at).format("ll")}
-                       </p>
+                       </h4>
                        </div>
                        </div>
                </TableCell>
 
               <TableCell className="b-r">
-                <div className="d-flex alc  flex-start">
+                <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
-                    <p className="title-case">{msg?.message?.subject} </p>
+                    <h4 className="uppercase">{msg?.message?.subject} </h4>
                   </div>
                 </div>
               </TableCell>
               {user.accountType=== "Admin" && (
                   <>
               <TableCell>
-              <div className="d-flex alc  flex-start">
+              <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
-                    <p className="title-case">
-                 { msg?.recipient_role }
-                </p>
+                    <h4 className="uppercase">
+                 { msg?.message?.recipient_type }
+                </h4>
                 </div>
                 </div>
                 </TableCell>
               <TableCell> 
-              <div className="d-flex alc  flex-start">
+              <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
-                    <p className="title-case">
-                    { msg?.recipient_role === "single" ? msg?.message?.recipient?.email : `all ${msg?.recipient_role}s` }
-                      </p>
+                    <h4 className="uppercase">
+                      { msg?.message?.recipient_email } 
+                      </h4>
                     </div>
               </div>
               </TableCell>
               </>
               )}
               <TableCell> 
-              <div className="d-flex alc  flex-start">
+              <div className="d-flex alc f-10 flex-start">
                   <div className="lheight13">
-                    <p className="title-case">
+                    <h4 className="uppercase">
                       { msg?.message?.body } 
-                      </p>
+                      </h4>
                     </div>
               </div>
               </TableCell>
@@ -302,9 +300,9 @@ useEffect(()=> {
                             required
                         >
                             <option value="">Select Type</option>
-                            <option value="vendors">To all  Vendors</option>
-                            <option value="affiliates"> To all Affiliates</option>
-                            <option value="customer">To all Customers</option>
+                            <option value="vendors">To all  Vendor</option>
+                            <option value="affiliates"> To all Affiliate</option>
+                            <option value="customers">To all Customers</option>
                             <option value="single">To a Single User</option>
                         </select>
                 </div>

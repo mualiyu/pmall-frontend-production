@@ -302,9 +302,9 @@ useEffect(()=> {
                             required
                         >
                             <option value="">Select Type</option>
-                            <option value="vendors">To all  Vendors</option>
-                            <option value="affiliates"> To all Affiliates</option>
-                            <option value="customer">To all Customers</option>
+                            <option value="vendors">To all  Vendor</option>
+                            <option value="affiliates"> To all Affiliate</option>
+                            <option value="customers">To all Customers</option>
                             <option value="single">To a Single User</option>
                         </select>
                 </div>

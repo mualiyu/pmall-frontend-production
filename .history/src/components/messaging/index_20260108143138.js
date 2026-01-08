@@ -233,7 +233,7 @@ useEffect(()=> {
               <div className="d-flex alc  flex-start">
                   <div className="lheight13">
                     <p className="title-case">
-                    { msg?.recipient_role === "single" ? msg?.message?.recipient?.email : `all ${msg?.recipient_role}s` }
+                    { msg?.recipient_type === "single" ? msg?.message?.recipient?.email : `all ${msg?.recipient_role}s` }
                       </p>
                     </div>
               </div>
@@ -302,9 +302,9 @@ useEffect(()=> {
                             required
                         >
                             <option value="">Select Type</option>
-                            <option value="vendors">To all  Vendors</option>
-                            <option value="affiliates"> To all Affiliates</option>
-                            <option value="customer">To all Customers</option>
+                            <option value="vendors">To all  Vendor</option>
+                            <option value="affiliates"> To all Affiliate</option>
+                            <option value="customers">To all Customers</option>
                             <option value="single">To a Single User</option>
                         </select>
                 </div>

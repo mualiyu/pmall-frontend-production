@@ -38,11 +38,11 @@ const usePaginatedFilter = ({
     return result;
   }, [data, searchTerm, statusFilter, searchKey, statusKey]);
 
-  const totalPages = Math.ceil(filteredData?.length / pageSize);
+  const totalPages = Math.ceil(filteredData.length / pageSize);
 
   const paginatedData = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
-    return filteredData?.slice(start, start + pageSize);
+    return filteredData.slice(start, start + pageSize);
   }, [filteredData, currentPage, pageSize]);
 
   return {
