@@ -198,6 +198,7 @@ useEffect(()=> {
                 <TableCell>Message</TableCell>
             </TableRow>
           </TableHead>
+          
           <TableBody>
             {paginatedData?.map((msg)=> (
           <TableRow onClick={() => navigate("details")} key={msg.id}>
