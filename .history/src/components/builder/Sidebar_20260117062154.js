@@ -150,8 +150,8 @@ function Sidebar() {
 {/* <div className="s-divider"></div> */}
           <h5 className="sidebar_title_menu"> Stockist Resources </h5>
           <div className="s-divider"></div>
-          {(user?.accountType === "Admin" ||
-            user?.accountType === "Affiliate") && (
+          {(user?.accountType == "Admin" ||
+            user?.accountType !== "A") && (
             <SidebarRow
               path="/app/stockist"
               Icon={DirectionsCarIcon}

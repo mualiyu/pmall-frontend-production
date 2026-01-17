@@ -105,11 +105,7 @@
 .c-grey {
   color: #252525;
 }
-.sidebar_title_menu {
-  color: white;
-    font-size: 13px;
-    padding: 9px 11px;
-}
+.side_bar
 .c-chalk {
   color: var(--color-chalk);
 }

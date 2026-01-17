@@ -58,8 +58,7 @@ function Sidebar() {
           </div>
 {/* <h3 className="ml-20p" style={{fontSize: 11, color: '#ffb31f'}}> Administrators </h3> */}
           <div className="s-divider"></div>
-          <h5 className="sidebar_title_menu"> Vendor Resources </h5>
-          <div className="s-divider"></div>
+          <h5 className="sidebar__"> Vendor Resources </h5>
           <SidebarRow
             path="/app/dashboard"
             Icon={SpeedIcon}
@@ -107,9 +106,6 @@ function Sidebar() {
           )}
          
 
-          {/* <div className="s-divider"></div> */}
-
-          <h5 className="sidebar_title_menu"> Affiliate Resources </h5>
           <div className="s-divider"></div>
           {/* <SidebarRow path="/app/front-desk"  Icon={HomeWorkIcon} title="Front Desk"/> */}
           {(user?.accountType === "Affiliate" ||
@@ -146,12 +142,8 @@ function Sidebar() {
               title="Product Management"
             />
           )}
-
-{/* <div className="s-divider"></div> */}
-          <h5 className="sidebar_title_menu"> Stockist Resources </h5>
-          <div className="s-divider"></div>
-          {(user?.accountType === "Admin" ||
-            user?.accountType === "Affiliate") && (
+          {(user?.accountType === "Stockiest" ||
+            user?.accountType === "Admin") && (
             <SidebarRow
               path="/app/stockist"
               Icon={DirectionsCarIcon}
@@ -172,12 +164,6 @@ function Sidebar() {
             title="Withdrawal"
           />
           )}
-
-{/* <div className="s-divider"></div> */}
-          <h5 className="sidebar_title_menu"> Administration </h5>
-          <div className="s-divider"></div>
-
-
           {user?.accountType === "Admin" && (
             <>
             {/* <SidebarRow

@@ -2,7 +2,6 @@ import * as React from "react";
 import { useState, useEffect, useMemo } from "react";
 import usePaginatedFilter from "../../hooks/usePaginatedFilters";
 import PaginationControls from "../../utils/PaginationControls";
-import Loading from "../../utils/loading";
 import { BASE_URL } from "../../utils/config"; 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Table from "@mui/material/Table";
